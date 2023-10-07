@@ -1,0 +1,2181 @@
+<!doctype html>
+<html lang="fr" dir="ltr" data-theme="robot">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Micro:bit · 54 activités — Workshop DIY</title>
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+/* ═══════════════════════════════════════════════════════════════════ */
+[data-theme="mosque-gold"]{--bg:#08091a;--panel:#0b0d24;--accent:#d4a03c;--accent2:#0ea5e9;--glow:rgba(212,160,60,.15);--glow2:rgba(14,165,233,.1);--text:#e4ddd0;--text-muted:#8a7e6e;--border:rgba(212,160,60,.18);--band1:#d4a03c;--band2:#c08c2e;--band3:#f0c96e;--font-h:'Righteous','Tajawal',sans-serif;--font-b:'Tajawal',system-ui,sans-serif;--card-ornament:"✦";--summary-marker:"◆";--bism-color:#d4a03c}
+[data-theme="zellige"]{--bg:#041c2c;--panel:#06253a;--accent:#38bdf8;--accent2:#f0abfc;--glow:rgba(56,189,248,.12);--glow2:rgba(240,171,252,.08);--text:#d6eaf8;--text-muted:#6b9cc0;--border:rgba(56,189,248,.18);--band1:#38bdf8;--band2:#0284c7;--band3:#7dd3fc;--font-h:'Righteous','Tajawal',sans-serif;--font-b:'Tajawal',system-ui,sans-serif;--card-ornament:"✧";--summary-marker:"◇";--bism-color:#7dd3fc}
+[data-theme="andalus"]{--bg:#0a1a0a;--panel:#0d200e;--accent:#4ade80;--accent2:#fbbf24;--glow:rgba(74,222,128,.12);--glow2:rgba(251,191,36,.08);--text:#d5eed5;--text-muted:#6b9e6b;--border:rgba(74,222,128,.18);--band1:#4ade80;--band2:#16a34a;--band3:#fbbf24;--font-h:'Righteous','Tajawal',sans-serif;--font-b:'Tajawal',system-ui,sans-serif;--card-ornament:"❋";--summary-marker:"✿";--bism-color:#86efac}
+[data-theme="space"]{--bg:#0c0020;--panel:#110030;--accent:#c084fc;--accent2:#22d3ee;--glow:rgba(192,132,252,.15);--glow2:rgba(34,211,238,.1);--text:#e8dff8;--text-muted:#8b7aad;--border:rgba(192,132,252,.2);--band1:#c084fc;--band2:#7c3aed;--band3:#22d3ee;--font-h:'Orbitron','Righteous',sans-serif;--font-b:'Tajawal',system-ui,sans-serif;--card-ornament:"⚡";--summary-marker:"▸";--bism-color:#c084fc}
+[data-theme="jungle"]{--bg:#071407;--panel:#0c1f0a;--accent:#a3e635;--accent2:#fb923c;--glow:rgba(163,230,53,.12);--glow2:rgba(251,146,60,.08);--text:#e2f0d0;--text-muted:#7a9e5c;--border:rgba(163,230,53,.2);--band1:#a3e635;--band2:#65a30d;--band3:#fb923c;--font-h:'Bangers','Righteous',sans-serif;--font-b:'Tajawal',system-ui,sans-serif;--card-ornament:"🌿";--summary-marker:"▸";--bism-color:#a3e635}
+[data-theme="robot"]{--bg:#0a0f1e;--panel:#0e1529;--accent:#3b82f6;--accent2:#f97316;--glow:rgba(59,130,246,.12);--glow2:rgba(249,115,22,.08);--text:#d0ddf0;--text-muted:#5e7499;--border:rgba(59,130,246,.2);--band1:#3b82f6;--band2:#1d4ed8;--band3:#f97316;--font-h:'Orbitron','Righteous',sans-serif;--font-b:'Tajawal',system-ui,sans-serif;--card-ornament:"⚙";--summary-marker:"▹";--bism-color:#60a5fa}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--font-b);display:flex;align-items:stretch;justify-content:center;padding:16px;overflow-x:hidden;transition:background .4s ease}
+[dir="rtl"]{font-family:'Tajawal','Amiri',sans-serif}
+[dir="rtl"] h1,[dir="rtl"] .card-title,[dir="rtl"] .tab-btn{font-family:'Tajawal',sans-serif!important;letter-spacing:0!important}
+
+.app{display:flex;flex-direction:column;max-width:1100px;width:100%;background:radial-gradient(ellipse at top,var(--glow),transparent 55%),radial-gradient(ellipse at bottom right,var(--glow2),transparent 55%),var(--panel);border-radius:18px;box-shadow:0 0 0 1px var(--border),0 30px 60px rgba(0,0,0,.5);position:relative;z-index:1;overflow:hidden;transition:background .4s ease,box-shadow .4s ease}
+.rows-container{position:relative;z-index:1;padding:0 4px}
+.deco-band{height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),var(--accent),transparent);opacity:.5}
+.bottom-band{margin-top:auto}
+
+.header{position:relative;padding:14px 16px 6px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.header-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+[dir="rtl"] .header-right{align-items:flex-start}
+.title-block{display:flex;align-items:center;gap:14px}
+.logo-wrap{width:68px;height:68px;flex-shrink:0}.logo-wrap svg{width:100%;height:100%}
+.title-block h1{font-family:var(--font-h);font-size:1.3rem;letter-spacing:.06em;text-transform:uppercase;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent));background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gradShift 5s ease infinite}
+@keyframes gradShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.title-block .subtitle{font-size:.78rem;color:var(--text-muted);margin-top:2px;letter-spacing:.04em;animation:subtitlePulse 4s ease infinite}
+@keyframes subtitlePulse{0%,100%{opacity:.7}50%{opacity:1}}
+.bismillah{position:absolute;top:3px;inset-inline:0;display:flex;justify-content:center;align-items:center;gap:6px;font-family:'Amiri',serif;font-size:.72rem;color:var(--bism-color);opacity:.5;pointer-events:none}
+.bism-ornament{font-size:.55rem;opacity:.6}
+.header-dropdowns{display:flex;gap:5px}
+.mini-select{padding:2px 4px;border-radius:6px;font-size:.65rem;font-weight:600;font-family:var(--font-b);background:rgba(0,0,0,.4);color:var(--text-muted);border:1px solid var(--border);cursor:pointer;transition:all .2s;outline:none;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 4px center;padding-right:14px}
+[dir="rtl"] .mini-select{background-position:left 4px center;padding-right:4px;padding-left:14px}
+.mini-select:hover{border-color:var(--accent)}
+.mini-select option{background:var(--panel);color:var(--text)}
+.status-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:999px;font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;border:1px solid rgba(255,255,255,.12);color:var(--text);background:rgba(0,0,0,.5)}
+.status-dot{width:7px;height:7px;border-radius:999px;background:#3b82f6;box-shadow:0 0 6px rgba(59,130,246,.6)}
+
+.controls-bar{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:8px;padding:10px 12px;margin:0 4px 8px;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:14px}
+@media(max-width:780px){.controls-bar{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.controls-bar{grid-template-columns:1fr}}
+.ctrl-group{display:flex;flex-direction:column;gap:4px}
+.ctrl-group label{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.ctrl-group select,.ctrl-group input[type="search"]{width:100%;padding:7px 10px;border-radius:10px;font-size:.78rem;border:1px solid var(--border);background:rgba(0,0,0,.4);color:var(--text);font-family:var(--font-b);outline:none;transition:border-color .2s}
+.ctrl-group select:focus,.ctrl-group input:focus{border-color:var(--accent)}
+.options-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:0 12px 8px;margin:0 4px}
+.pill-opt{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(0,0,0,.25);color:var(--text-muted);cursor:pointer;font-size:.72rem;user-select:none;transition:all .2s}
+.pill-opt:hover{border-color:var(--accent)}
+.pill-opt input{accent-color:var(--accent2);width:14px;height:14px}
+.stats-row{display:flex;gap:12px;flex-wrap:wrap;padding:0 16px 8px;font-size:.72rem;color:var(--text-muted)}
+.stats-row strong{color:var(--text)}
+
+button{border:none;border-radius:999px;padding:6px 11px;font-size:.75rem;font-family:var(--font-b);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:5px;background:rgba(0,0,0,.4);color:var(--text);border:1px solid rgba(255,255,255,.1);transition:all .2s}
+button:hover:not(:disabled){border-color:var(--accent);box-shadow:0 0 12px var(--glow);transform:translateY(-1px)}
+button:disabled{opacity:.4;cursor:default}
+button.primary{background:linear-gradient(135deg,var(--accent),var(--band2));color:var(--bg);font-weight:700;border-color:var(--accent);box-shadow:0 6px 20px var(--glow)}
+.btn-sm{padding:4px 9px;font-size:.7rem}
+
+.activity-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 4px 10px}
+@media(max-width:860px){.activity-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.activity-grid{grid-template-columns:1fr}}
+.act-card{border-radius:14px;border:1px solid var(--border);background:var(--panel);padding:12px;position:relative;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;gap:8px;min-height:140px;transition:all .25s}
+.act-card::before{content:var(--card-ornament);position:absolute;top:6px;inset-inline-end:10px;font-size:10px;color:var(--accent);opacity:.18;pointer-events:none}
+.act-card:hover{border-color:var(--accent);box-shadow:0 0 18px var(--glow);transform:translateY(-2px)}
+.act-card .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:6px}
+.act-card .tags{display:flex;gap:4px;flex-wrap:wrap}
+.act-card .card-id{font-size:.68rem;color:var(--text-muted);white-space:nowrap}
+.act-card h3{font-size:.88rem;line-height:1.25;font-weight:600}
+.act-card .preview{font-size:.74rem;color:var(--text-muted);line-height:1.3}
+.act-card .card-bottom{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tag{padding:2px 7px;border-radius:999px;font-size:.62rem;font-weight:600;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.12);white-space:nowrap;letter-spacing:.03em}
+.tag.v2{border-color:rgba(74,222,128,.4);color:rgba(74,222,128,.95)}
+.tag.ia{border-color:rgba(255,214,107,.4);color:rgba(255,214,107,.95)}
+.tag.adv{border-color:rgba(122,167,255,.4);color:rgba(122,167,255,.95)}
+.tag.simple{border-color:rgba(255,255,255,.12);color:var(--text-muted)}
+.tag.d1{border-color:rgba(74,222,128,.3);color:rgba(74,222,128,.9)}
+.tag.d2{border-color:rgba(251,191,36,.3);color:rgba(251,191,36,.9)}
+.tag.d3{border-color:rgba(255,107,138,.3);color:rgba(255,107,138,.9)}
+.chip{padding:3px 8px;border-radius:999px;font-size:.66rem;font-weight:600;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.1)}
+.chip.done{border-color:rgba(107,255,149,.35);color:rgba(107,255,149,.95)}
+.chip.todo{border-color:rgba(255,255,255,.12);color:var(--text-muted)}
+.chip.fav{border-color:rgba(255,214,107,.35);color:rgba(255,214,107,.95)}
+.act-card[data-diff="1"]{border-inline-start:3px solid rgba(74,222,128,.5)}
+.act-card[data-diff="2"]{border-inline-start:3px solid rgba(251,191,36,.5)}
+.act-card[data-diff="3"]{border-inline-start:3px solid rgba(255,107,138,.5)}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:100;padding:16px;overflow-y:auto;backdrop-filter:blur(4px);animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+.modal{max-width:720px;width:100%;margin:20px auto;background:rgba(14,21,41,.95);border:1px solid var(--border);border-radius:18px;box-shadow:0 30px 60px rgba(0,0,0,.5);overflow:hidden;animation:modalSlide .25s ease}
+@keyframes modalSlide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.modal-head{padding:14px 16px 10px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.modal-head h2{font-size:1rem;font-family:var(--font-h);letter-spacing:.04em}
+.modal-head .tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.close-btn{background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);color:var(--text);border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:700;font-size:.85rem;flex-shrink:0}
+.tab-bar{display:flex;border-bottom:1px solid rgba(255,255,255,.08);overflow-x:auto}
+.tab-btn{flex:1;padding:10px 8px;text-align:center;font-size:.74rem;font-weight:600;color:var(--text-muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap;border-radius:0;font-family:var(--font-b)}
+.tab-btn:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(255,255,255,.04)}
+.tab-panel{display:none;padding:14px 16px}.tab-panel.active{display:block}
+.goal-text{font-size:.85rem;line-height:1.5;margin-bottom:10px}
+.needs-list{list-style:none;padding:0;display:flex;gap:6px;flex-wrap:wrap}
+.needs-list li{padding:4px 10px;border-radius:999px;font-size:.72rem;border:1px solid var(--border);background:rgba(0,0,0,.25);color:var(--text-muted)}
+.tip-box{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px dashed rgba(255,214,107,.3);background:rgba(255,214,107,.05);font-size:.78rem;color:rgba(255,214,107,.9);line-height:1.4}
+.block-step{padding:8px 10px;border-radius:10px;font-size:.78rem;line-height:1.4;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.15);color:var(--text-muted);margin-bottom:6px}
+.block-step .step-num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:.62rem;font-weight:700;background:var(--accent);color:var(--bg);margin-inline-end:8px;flex-shrink:0}
+.code-toggle{display:flex;gap:6px;margin-bottom:10px}
+.code-toggle button{padding:5px 14px;border-radius:999px;font-size:.72rem;font-weight:700;border:1px solid var(--border);background:rgba(0,0,0,.3);color:var(--text-muted);cursor:pointer;transition:all .2s}
+.code-toggle button.active{border-color:var(--accent);color:var(--accent);background:rgba(0,0,0,.5)}
+.code-block{position:relative;border-radius:12px;border:1px solid var(--border);background:rgba(0,0,0,.45);padding:12px 14px;overflow-x:auto;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.76rem;line-height:1.5;color:var(--text);white-space:pre;max-height:280px;overflow-y:auto;direction:ltr;text-align:left}
+.copy-btn{position:absolute;top:8px;right:8px;padding:4px 10px;border-radius:8px;font-size:.66rem;font-weight:700;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:var(--text-muted);cursor:pointer;transition:all .2s;z-index:2}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+.copy-btn.copied{border-color:rgba(74,222,128,.5);color:rgba(74,222,128,.9)}
+.challenge{padding:10px 12px;border-radius:12px;margin-bottom:8px;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.15);display:flex;gap:10px;align-items:flex-start}
+.challenge-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.challenge-text{font-size:.78rem;line-height:1.4;color:var(--text-muted)}
+.challenge-text code{padding:1px 5px;border-radius:4px;font-size:.72rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--accent);font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;direction:ltr;display:inline-block}
+.challenge .diff-star{font-size:.65rem;color:rgba(255,214,107,.7)}
+.modal-actions{display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px 14px;border-top:1px solid rgba(255,255,255,.08);justify-content:space-between;align-items:center}
+.modal-actions .left,.modal-actions .right{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.hint-text{font-size:.66rem;color:var(--text-muted)}
+.badge{font-size:.68rem;padding:1px 6px;border-radius:999px;border:1px solid var(--border);color:var(--text-muted)}.badge strong{color:var(--accent)}
+.empty-state{text-align:center;padding:30px 16px;color:var(--text-muted);font-size:.85rem}
+.toast-indicator{display:none;position:fixed;bottom:20px;inset-inline-end:20px;background:linear-gradient(135deg,var(--accent),var(--band2));padding:10px 18px;border-radius:50px;box-shadow:0 4px 16px var(--glow);z-index:9999;animation:slideIn .3s ease-out}
+.toast-inner{display:flex;align-items:center;gap:8px}
+.toast-text{color:var(--bg);font-weight:700;font-size:.85rem}
+@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+@media(max-width:600px){.header{flex-wrap:wrap;gap:6px}.logo-wrap{width:52px;height:52px}.title-block h1{font-size:1rem}.modal{border-radius:14px}.tab-btn{font-size:.68rem;padding:8px 6px}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span>بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 id="mainTitle">Micro:bit · 54 activités</h1>
+            <div class="subtitle" id="mainSub">🧩 blocs · 💻 code · 🚀 défis</div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="header-dropdowns">
+            <select id="langSelect" class="mini-select" aria-label="Language">
+              <option value="fr" selected>FR</option>
+              <option value="en">EN</option>
+              <option value="ar">عربي</option>
+            </select>
+            <select id="themeSelect" class="mini-select" aria-label="Theme">
+              <option value="robot">Robot</option><option value="space">Space</option><option value="jungle">Jungle</option>
+              <option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option>
+            </select>
+          </div>
+          <div class="status-pill"><span class="status-dot"></span><span id="statsText">0 / 54</span></div>
+        </div>
+      </div>
+
+      <div class="controls-bar">
+        <div class="ctrl-group"><label id="lSearch">🔍 Recherche</label><input id="searchInput" type="search" placeholder="" /></div>
+        <div class="ctrl-group"><label id="lPart">📂 Partie</label><select id="partSelect"><option value="all" id="optAllParts"></option><option value="simple" id="optSimple"></option><option value="advanced" id="optAdv"></option></select></div>
+        <div class="ctrl-group"><label id="lDiff">⭐ Difficulté</label><select id="diffSelect"><option value="all" id="optAllDiff"></option><option value="1" id="optD1"></option><option value="2" id="optD2"></option><option value="3" id="optD3"></option></select></div>
+        <div class="ctrl-group"><label id="lStatus">📊 Statut</label><select id="statusSelect"><option value="all" id="optAllStat"></option><option value="todo" id="optTodo"></option><option value="done" id="optDone"></option><option value="fav" id="optFav"></option></select></div>
+      </div>
+
+      <div class="options-row">
+        <label class="pill-opt"><input id="onlyV2" type="checkbox" /> <span id="lV2">V2 uniquement</span></label>
+        <label class="pill-opt"><input id="onlyIA" type="checkbox" /> <span id="lIA">IA uniquement</span></label>
+        <button class="btn-sm" id="resetBtn"><span id="lReset">🔄 Réinit.</span></button>
+        <button class="btn-sm" id="randomBtn"><span id="lRandom">🎲 Au hasard</span></button>
+      </div>
+
+      <div class="stats-row" id="statsRow"></div>
+      <div class="activity-grid" id="grid"></div>
+    </div>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="overlay">
+    <div class="modal" id="modal">
+      <div class="modal-head"><div><h2 id="mTitle"></h2><div class="tags" id="mTags"></div></div><button class="close-btn" id="closeBtn">✕</button></div>
+      <div class="tab-bar" id="tabBar">
+        <button class="tab-btn active" data-tab="info" id="tabInfo">🎯 C'est quoi ?</button>
+        <button class="tab-btn" data-tab="blocks" id="tabBlocks">🧩 Blocs</button>
+        <button class="tab-btn" data-tab="code" id="tabCode">💻 Code</button>
+        <button class="tab-btn" data-tab="challenges" id="tabChal">🚀 À toi !</button>
+      </div>
+      <div class="tab-panel active" id="tab-info">
+        <div class="goal-text" id="mGoal"></div>
+        <div style="font-size:.74rem;color:var(--text-muted);margin-bottom:6px;font-weight:600" id="mNeedsLabel"></div>
+        <ul class="needs-list" id="mNeeds"></ul>
+        <div class="tip-box" id="mTip"></div>
+      </div>
+      <div class="tab-panel" id="tab-blocks"><div id="mBlocks"></div></div>
+      <div class="tab-panel" id="tab-code">
+        <div class="code-toggle" id="codeToggle"><button class="active" data-lang="js">JavaScript</button><button data-lang="py">Python</button></div>
+        <div style="position:relative"><button class="copy-btn" id="copyCodeBtn">📋</button><pre class="code-block" id="codeBlock"></pre></div>
+        <div class="tip-box" style="margin-top:10px;border-color:rgba(122,167,255,.3);color:rgba(122,167,255,.9);background:rgba(122,167,255,.05)" id="codeTip"></div>
+      </div>
+      <div class="tab-panel" id="tab-challenges"><div id="mChallenges"></div></div>
+      <div class="modal-actions">
+        <div class="left"><button id="markDoneBtn"></button><button id="markFavBtn"></button><span class="hint-text" id="saveHint"></span></div>
+        <div class="right"><button id="prevBtn"></button><button id="nextBtn"></button></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast-indicator"><div class="toast-inner"><div class="toast-text" id="toastMsg"></div></div></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// LOGO + UI i18n
+// ═══════════════════════════════════════════════════════════════════
+const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6.0 3.214096" preserveAspectRatio="xMidYMid meet" role="img"><g transform="translate(92.820084,-179.975632)" fill="currentColor" fill-rule="evenodd"><path d="M-90.269,180.707C-90.27,180.704,-90.281,180.555,-90.293,180.376C-90.305,180.197,-90.316,180.042,-90.317,180.032L-90.319,180.014L-90.296,180.014C-90.284,180.014,-90.259,180.012,-90.241,180.01C-90.222,180.008,-90.192,180.006,-90.173,180.005L-90.137,180.003L-90.129,180.131C-90.124,180.202,-90.119,180.27,-90.118,180.282L-90.116,180.304L-90.055,180.206C-90.022,180.153,-89.977,180.081,-89.957,180.048L-89.919,179.987L-89.883,179.985C-89.864,179.984,-89.825,179.981,-89.797,179.978C-89.769,179.976,-89.739,179.975,-89.73,179.976L-89.714,179.977L-89.826,180.146L-89.938,180.315L-89.797,180.491C-89.719,180.587,-89.656,180.668,-89.656,180.669C-89.656,180.671,-89.657,180.672,-89.659,180.672C-89.676,180.672,-89.857,180.684,-89.861,180.686C-89.866,180.687,-89.896,180.651,-89.971,180.554C-90.028,180.481,-90.076,180.421,-90.078,180.423C-90.08,180.424,-90.087,180.434,-90.093,180.446L-90.105,180.467L-90.097,180.582C-90.091,180.667,-90.09,180.697,-90.094,180.699C-90.099,180.703,-90.137,180.706,-90.21,180.709C-90.258,180.712,-90.268,180.711,-90.269,180.707z"/><path d="M-89.191,180.769C-89.268,180.753,-89.311,180.74,-89.36,180.717C-89.394,180.7,-89.472,180.651,-89.481,180.64C-89.485,180.635,-89.483,180.628,-89.446,180.493C-89.44,180.47,-89.428,180.473,-89.404,180.504C-89.35,180.572,-89.267,180.622,-89.189,180.636C-89.153,180.642,-89.15,180.642,-89.129,180.635C-89.093,180.624,-89.075,180.598,-89.082,180.566C-89.086,180.544,-89.122,180.514,-89.183,180.482C-89.255,180.445,-89.277,180.431,-89.31,180.4C-89.366,180.347,-89.383,180.292,-89.367,180.217C-89.35,180.135,-89.299,180.085,-89.207,180.06C-89.169,180.049,-89.099,180.048,-89.053,180.058C-88.98,180.074,-88.906,180.105,-88.844,180.146C-88.811,180.168,-88.807,180.171,-88.809,180.18C-88.811,180.186,-88.82,180.221,-88.83,180.258C-88.848,180.323,-88.849,180.326,-88.858,180.325C-88.863,180.324,-88.871,180.319,-88.875,180.313C-88.886,180.297,-88.933,180.252,-88.952,180.239C-89.003,180.204,-89.07,180.181,-89.113,180.185C-89.166,180.19,-89.196,180.228,-89.177,180.266C-89.168,180.285,-89.144,180.302,-89.079,180.337C-88.975,180.393,-88.925,180.435,-88.901,180.486C-88.888,180.514,-88.885,180.566,-88.894,180.603C-88.922,180.711,-89.011,180.774,-89.136,180.772C-89.157,180.772,-89.181,180.771,-89.191,180.769z"/><path d="M-91.104,180.904C-91.135,180.835,-91.199,180.692,-91.247,180.585C-91.294,180.479,-91.333,180.392,-91.332,180.391C-91.33,180.39,-91.249,180.353,-91.135,180.302C-91.081,180.278,-91.022,180.254,-91.004,180.248C-90.924,180.223,-90.849,180.234,-90.8,180.279C-90.776,180.3,-90.758,180.33,-90.743,180.373C-90.733,180.402,-90.731,180.413,-90.731,180.444C-90.731,180.474,-90.733,180.485,-90.742,180.507C-90.753,180.537,-90.772,180.572,-90.781,180.579C-90.784,180.582,-90.787,180.585,-90.787,180.587C-90.787,180.59,-90.751,180.61,-90.581,180.697C-90.521,180.729,-90.467,180.757,-90.462,180.76C-90.453,180.766,-90.457,180.768,-90.547,180.808C-90.599,180.831,-90.645,180.85,-90.65,180.85C-90.654,180.85,-90.72,180.816,-90.796,180.775L-90.934,180.7L-90.96,180.712C-90.974,180.718,-90.987,180.724,-90.987,180.724C-90.987,180.725,-90.965,180.775,-90.938,180.836C-90.91,180.898,-90.887,180.95,-90.887,180.953C-90.886,180.957,-90.91,180.97,-90.963,180.994C-91.005,181.013,-91.042,181.029,-91.044,181.029C-91.046,181.029,-91.073,180.972,-91.104,180.904z"/><path d="M-88.329,181.181C-88.367,181.155,-88.399,181.132,-88.4,181.131C-88.401,181.13,-88.362,181.073,-88.314,181.003C-88.266,180.933,-88.228,180.875,-88.229,180.874C-88.232,180.871,-88.365,180.779,-88.401,180.754L-88.419,180.742L-88.506,180.868C-88.554,180.937,-88.594,180.994,-88.596,180.994C-88.6,180.994,-88.742,180.897,-88.742,180.894C-88.742,180.893,-88.563,180.634,-88.382,180.374C-88.362,180.345,-88.345,180.321,-88.343,180.32C-88.34,180.32,-88.23,180.394,-88.196,180.419C-88.196,180.419,-88.227,180.465,-88.265,180.521C-88.304,180.576,-88.336,180.624,-88.337,180.626C-88.338,180.63,-88.305,180.655,-88.246,180.695C-88.195,180.73,-88.152,180.76,-88.15,180.76C-88.148,180.761,-88.114,180.715,-88.075,180.659C-88.036,180.602,-88.003,180.556,-88.001,180.556C-87.997,180.556,-87.857,180.653,-87.857,180.656C-87.857,180.662,-88.252,181.23,-88.256,181.23C-88.258,181.23,-88.291,181.208,-88.329,181.181z"/><path d="M-91.754,181.531C-91.889,181.512,-92.043,181.367,-92.083,181.222C-92.093,181.183,-92.092,181.109,-92.081,181.069C-92.049,180.958,-91.935,180.846,-91.825,180.817C-91.785,180.806,-91.704,180.807,-91.664,180.819C-91.604,180.836,-91.541,180.876,-91.484,180.932C-91.431,180.985,-91.395,181.04,-91.375,181.099C-91.365,181.129,-91.362,181.143,-91.361,181.18C-91.359,181.232,-91.363,181.26,-91.379,181.302C-91.403,181.365,-91.466,181.44,-91.53,181.482C-91.599,181.528,-91.67,181.544,-91.754,181.531z"/><path d="M-90.371,181.625C-90.383,181.62,-90.391,181.607,-90.417,181.549C-90.474,181.422,-90.475,181.421,-90.488,181.418C-90.495,181.417,-90.549,181.416,-90.608,181.416L-90.716,181.416L-90.724,181.431C-90.736,181.452,-90.772,181.484,-90.795,181.495C-90.86,181.525,-90.931,181.513,-90.977,181.463C-90.989,181.451,-91.003,181.43,-91.009,181.418C-91.02,181.397,-91.021,181.391,-91.021,181.36C-91.021,181.328,-91.02,181.322,-91.009,181.299C-90.993,181.265,-90.965,181.238,-90.931,181.222C-90.908,181.21,-90.901,181.209,-90.87,181.209C-90.808,181.208,-90.765,181.23,-90.732,181.277L-90.715,181.303L-90.576,181.304C-90.436,181.306,-90.436,181.306,-90.417,181.315C-90.398,181.324,-90.396,181.327,-90.375,181.369C-90.363,181.394,-90.335,181.456,-90.312,181.507C-90.289,181.558,-90.268,181.604,-90.265,181.608C-90.253,181.626,-90.259,181.629,-90.313,181.629C-90.34,181.628,-90.366,181.627,-90.371,181.625z"/><path d="M-87.689,181.815C-87.787,181.79,-87.87,181.716,-87.921,181.607C-87.961,181.522,-87.962,181.428,-87.925,181.347C-87.88,181.252,-87.77,181.161,-87.654,181.122C-87.641,181.117,-87.612,181.111,-87.59,181.107C-87.544,181.1,-87.501,181.104,-87.452,181.12C-87.349,181.153,-87.252,181.266,-87.222,181.386C-87.208,181.442,-87.216,181.523,-87.241,181.578C-87.277,181.657,-87.359,181.734,-87.458,181.782C-87.517,181.811,-87.551,181.819,-87.611,181.821C-87.649,181.822,-87.666,181.821,-87.689,181.815z"/><path d="M-91.18,182.039C-91.241,182.015,-91.284,181.955,-91.284,181.892C-91.285,181.847,-91.273,181.82,-91.236,181.783C-91.198,181.745,-91.182,181.739,-91.12,181.739C-91.078,181.739,-91.074,181.74,-91.05,181.751C-91.022,181.765,-90.989,181.795,-90.974,181.822L-90.964,181.838L-90.802,181.838L-90.64,181.838L-90.64,181.876C-90.64,181.897,-90.641,181.922,-90.642,181.932L-90.644,181.95L-90.804,181.95L-90.964,181.95L-90.981,181.974C-91,182.002,-91.037,182.034,-91.058,182.04C-91.065,182.042,-91.091,182.045,-91.116,182.046C-91.154,182.047,-91.163,182.046,-91.18,182.039z"/><path d="M-90.43,182.097C-90.443,182.092,-90.446,182.087,-90.446,182.064L-90.446,182.044L-90.474,182.031C-90.51,182.014,-90.523,182.002,-90.537,181.977C-90.553,181.948,-90.555,181.903,-90.543,181.874C-90.532,181.848,-90.495,181.813,-90.473,181.807C-90.455,181.802,-90.451,181.798,-90.448,181.778C-90.443,181.749,-90.442,181.746,-90.432,181.742C-90.426,181.739,-90.403,181.737,-90.376,181.737L-90.329,181.737L-90.326,181.748C-90.323,181.754,-90.322,181.818,-90.323,181.926C-90.324,182.07,-90.325,182.094,-90.33,182.098C-90.337,182.102,-90.418,182.102,-90.43,182.097z"/><path d="M-88.591,182.128L-88.591,181.999L-88.701,181.812C-88.762,181.709,-88.811,181.623,-88.811,181.621C-88.811,181.618,-88.783,181.617,-88.72,181.618L-88.628,181.619L-88.568,181.729C-88.535,181.789,-88.507,181.838,-88.505,181.838C-88.504,181.838,-88.477,181.789,-88.445,181.729L-88.387,181.619L-88.297,181.618C-88.248,181.618,-88.207,181.618,-88.207,181.619C-88.207,181.621,-88.414,181.971,-88.423,181.983C-88.427,181.989,-88.428,182.018,-88.428,182.124L-88.428,182.256L-88.509,182.256L-88.591,182.256L-88.591,182.128z"/><path d="M-89.308,182.253C-89.309,182.252,-89.31,182.227,-89.309,182.198L-89.309,182.146L-89.264,182.145L-89.218,182.144L-89.218,181.937L-89.218,181.73L-89.264,181.729L-89.309,181.728L-89.309,181.673L-89.309,181.619L-89.136,181.618L-88.962,181.617L-88.962,181.673L-88.962,181.73L-89.007,181.73L-89.052,181.73L-89.052,181.937L-89.052,182.144L-89.007,182.144L-88.962,182.144L-88.962,182.2L-88.962,182.256L-89.135,182.256C-89.229,182.256,-89.307,182.255,-89.308,182.253z"/><path d="M-89.906,182.262C-89.962,182.248,-89.99,182.234,-90.052,182.192C-90.115,182.15,-90.15,182.131,-90.192,182.113L-90.219,182.103L-90.219,182.053C-90.218,182.025,-90.218,181.942,-90.218,181.868L-90.217,181.733L-90.201,181.726C-90.162,181.711,-90.115,181.686,-90.064,181.652C-90.005,181.613,-89.953,181.586,-89.917,181.577C-89.823,181.553,-89.733,181.562,-89.646,181.605C-89.56,181.648,-89.498,181.721,-89.464,181.821C-89.453,181.85,-89.453,181.856,-89.453,181.919L-89.453,181.987L-89.467,182.025C-89.487,182.08,-89.51,182.117,-89.545,182.155C-89.598,182.21,-89.66,182.246,-89.739,182.264C-89.787,182.275,-89.858,182.274,-89.906,182.262z"/><path d="M-92.152,182.549C-92.178,182.546,-92.225,182.541,-92.257,182.537C-92.288,182.534,-92.338,182.529,-92.367,182.526C-92.396,182.522,-92.435,182.518,-92.454,182.516C-92.473,182.514,-92.513,182.509,-92.542,182.506C-92.571,182.503,-92.62,182.498,-92.651,182.494C-92.681,182.491,-92.729,182.486,-92.757,182.483C-92.786,182.48,-92.81,182.477,-92.811,182.476C-92.813,182.474,-92.8,182.436,-92.783,182.391C-92.754,182.314,-92.752,182.309,-92.742,182.307C-92.736,182.307,-92.705,182.311,-92.672,182.316C-92.64,182.321,-92.588,182.329,-92.559,182.334C-92.529,182.338,-92.495,182.343,-92.483,182.345C-92.471,182.347,-92.437,182.353,-92.408,182.357C-92.378,182.362,-92.339,182.368,-92.32,182.37C-92.302,182.373,-92.287,182.375,-92.287,182.375C-92.286,182.374,-92.373,182.314,-92.479,182.241C-92.586,182.168,-92.674,182.107,-92.675,182.106C-92.675,182.104,-92.663,182.068,-92.646,182.024L-92.616,181.945L-92.597,181.945C-92.587,181.945,-92.555,181.948,-92.528,181.951C-92.5,181.955,-92.455,181.961,-92.427,181.964C-92.399,181.967,-92.365,181.972,-92.351,181.974C-92.329,181.977,-92.302,181.98,-92.197,181.993C-92.178,181.995,-92.159,181.997,-92.154,181.997C-92.148,181.997,-92.215,181.952,-92.34,181.872C-92.448,181.804,-92.537,181.747,-92.538,181.745C-92.542,181.742,-92.481,181.576,-92.477,181.577C-92.471,181.578,-91.883,181.983,-91.883,181.986C-91.883,181.99,-91.945,182.161,-91.948,182.164C-91.951,182.167,-91.989,182.163,-92.237,182.138C-92.267,182.135,-92.31,182.131,-92.332,182.128C-92.354,182.126,-92.376,182.123,-92.38,182.122C-92.387,182.12,-92.388,182.121,-92.382,182.126C-92.379,182.129,-92.3,182.184,-92.206,182.249C-92.112,182.313,-92.034,182.368,-92.031,182.37C-92.024,182.377,-92.09,182.555,-92.099,182.554C-92.103,182.554,-92.126,182.551,-92.152,182.549z"/><path d="M-87.128,182.564C-87.143,182.559,-87.167,182.547,-87.182,182.537C-87.243,182.495,-87.275,182.442,-87.301,182.339C-87.31,182.305,-87.317,182.277,-87.318,182.277C-87.318,182.277,-87.335,182.28,-87.355,182.285C-87.475,182.316,-87.535,182.329,-87.537,182.328C-87.541,182.326,-87.582,182.16,-87.58,182.158C-87.579,182.158,-87.527,182.145,-87.466,182.129C-87.404,182.114,-87.299,182.089,-87.233,182.072C-87.167,182.056,-87.067,182.031,-87.011,182.018C-86.955,182.004,-86.907,181.993,-86.903,181.994C-86.898,181.995,-86.89,182.022,-86.867,182.117C-86.824,182.288,-86.82,182.309,-86.82,182.357C-86.82,182.467,-86.873,182.536,-86.98,182.566C-87.022,182.578,-87.092,182.577,-87.128,182.564z"/><path d="M-90.937,182.607C-90.969,182.591,-90.996,182.563,-91.011,182.532C-91.019,182.513,-91.021,182.505,-91.021,182.473C-91.021,182.439,-91.02,182.434,-91.008,182.41C-90.992,182.377,-90.966,182.351,-90.934,182.336C-90.911,182.325,-90.905,182.324,-90.864,182.324C-90.823,182.324,-90.818,182.325,-90.798,182.335C-90.769,182.35,-90.741,182.375,-90.725,182.4L-90.712,182.419L-90.597,182.418C-90.518,182.417,-90.48,182.416,-90.477,182.413C-90.474,182.41,-90.451,182.362,-90.425,182.304L-90.378,182.2L-90.329,182.199C-90.302,182.198,-90.276,182.2,-90.27,182.202C-90.26,182.206,-90.26,182.206,-90.266,182.22C-90.268,182.228,-90.285,182.266,-90.302,182.305C-90.32,182.343,-90.346,182.401,-90.36,182.432C-90.389,182.497,-90.407,182.52,-90.431,182.525C-90.438,182.527,-90.505,182.529,-90.581,182.53L-90.717,182.532L-90.73,182.552C-90.746,182.577,-90.771,182.599,-90.796,182.611C-90.813,182.619,-90.821,182.62,-90.863,182.62C-90.909,182.62,-90.91,182.62,-90.937,182.607z"/><path d="M-89.824,182.831C-89.825,182.829,-89.826,182.809,-89.826,182.786L-89.826,182.744L-88.327,182.744L-86.828,182.744L-86.828,182.789L-86.828,182.833L-88.325,182.833C-89.148,182.833,-89.822,182.832,-89.824,182.831z"/><path d="M-90.825,182.969L-90.825,182.926L-88.827,182.926L-86.828,182.926L-86.828,182.969L-86.828,183.012L-88.827,183.012L-90.825,183.012L-90.825,182.969z"/><path d="M-92.82,183.147L-92.82,183.105L-89.824,183.105L-86.828,183.105L-86.828,183.147L-86.828,183.19L-89.824,183.19L-92.82,183.19L-92.82,183.147z"/></g></svg>`;
+
+const UI = {
+fr:{
+  title:"Micro:bit · 54 activités",sub:"🧩 blocs · 💻 code · 🚀 défis",
+  search:"🔍 Recherche",ph:"dés, radio, IA, servo…",part:"📂 Partie",diff:"⭐ Difficulté",status:"📊 Statut",
+  allParts:"Toutes",simple:"Simple",advanced:"Avancée",
+  allDiff:"Toutes",d1:"⭐ Débutant",d2:"⭐⭐ Inter.",d3:"⭐⭐⭐ Avancé",
+  allStat:"Tous",todo:"À faire",done:"Fait ✅",fav:"Favoris ⭐",
+  v2only:"V2 uniquement",iaonly:"IA uniquement",reset:"🔄 Réinit.",random:"🎲 Au hasard",
+  results:"Résultats",of:"/ 54",doneL:"Fait",favL:"Favoris",
+  tabInfo:"🎯 C'est quoi ?",tabBlocks:"🧩 Blocs",tabCode:"💻 Code",tabChal:"🚀 À toi !",
+  needsLabel:"Tu as besoin de :",codeTip:"💡 Ouvre <strong>MakeCode</strong> → passe en mode <strong>JavaScript</strong> ou <strong>Python</strong> → colle le code → reviens en <strong>Blocs</strong> si tu veux.",
+  markDone:"Marquer Fait ✅",unmarkDone:"Annuler Fait ✅",markFav:"Favori ⭐",unmarkFav:"Retirer ⭐",
+  saveHint:"Sauvegardé sur cet appareil",prev:"◀ Préc.",next:"Suiv. ▶",
+  copied:"Copié !",copyBtn:"📋 Copier",resetConfirm:"Réinitialiser la progression ?",resetDone:"Progression réinitialisée",
+  noResults:"Aucune activité trouvée.",simpleTag:"Simple",advTag:"Avancée",chipDone:"Fait ✅",chipFav:"Favori ⭐",chipTodo:"À faire",go:"GO ▶"
+},
+en:{
+  title:"Micro:bit · 54 Activities",sub:"🧩 blocks · 💻 code · 🚀 challenges",
+  search:"🔍 Search",ph:"dice, radio, AI, servo…",part:"📂 Part",diff:"⭐ Difficulty",status:"📊 Status",
+  allParts:"All",simple:"Simple",advanced:"Advanced",
+  allDiff:"All",d1:"⭐ Beginner",d2:"⭐⭐ Inter.",d3:"⭐⭐⭐ Advanced",
+  allStat:"All",todo:"To do",done:"Done ✅",fav:"Favorites ⭐",
+  v2only:"V2 only",iaonly:"AI only",reset:"🔄 Reset",random:"🎲 Random",
+  results:"Results",of:"/ 54",doneL:"Done",favL:"Favorites",
+  tabInfo:"🎯 What is it?",tabBlocks:"🧩 Blocks",tabCode:"💻 Code",tabChal:"🚀 Your turn!",
+  needsLabel:"You need:",codeTip:"💡 Open <strong>MakeCode</strong> → switch to <strong>JavaScript</strong> or <strong>Python</strong> → paste the code → switch back to <strong>Blocks</strong> if you like.",
+  markDone:"Mark Done ✅",unmarkDone:"Undo Done ✅",markFav:"Favorite ⭐",unmarkFav:"Remove ⭐",
+  saveHint:"Saved on this device",prev:"◀ Prev",next:"Next ▶",
+  copied:"Copied!",copyBtn:"📋 Copy",resetConfirm:"Reset progress?",resetDone:"Progress reset",
+  noResults:"No activity found.",simpleTag:"Simple",advTag:"Advanced",chipDone:"Done ✅",chipFav:"Favorite ⭐",chipTodo:"To do",go:"GO ▶"
+},
+ar:{
+  title:"Micro:bit · 54 نشاطاً",sub:"🧩 مكعبات · 💻 كود · 🚀 تحديات",
+  search:"🔍 بحث",ph:"نرد، راديو، ذكاء اصطناعي…",part:"📂 القسم",diff:"⭐ الصعوبة",status:"📊 الحالة",
+  allParts:"الكل",simple:"بسيط",advanced:"متقدم",
+  allDiff:"الكل",d1:"⭐ مبتدئ",d2:"⭐⭐ متوسط",d3:"⭐⭐⭐ متقدم",
+  allStat:"الكل",todo:"للعمل",done:"تم ✅",fav:"مفضل ⭐",
+  v2only:"V2 فقط",iaonly:"ذ.إ. فقط",reset:"🔄 إعادة",random:"🎲 عشوائي",
+  results:"النتائج",of:"/ 54",doneL:"تم",favL:"مفضل",
+  tabInfo:"🎯 ما هذا؟",tabBlocks:"🧩 المكعبات",tabCode:"💻 الكود",tabChal:"🚀 دورك!",
+  needsLabel:"تحتاج إلى:",codeTip:"💡 افتح <strong>MakeCode</strong> ← انتقل إلى وضع <strong>JavaScript</strong> أو <strong>Python</strong> ← الصق الكود ← عُد إلى <strong>المكعبات</strong> إن أردت.",
+  markDone:"تم الإنجاز ✅",unmarkDone:"إلغاء الإنجاز ✅",markFav:"مفضل ⭐",unmarkFav:"إزالة ⭐",
+  saveHint:"محفوظ على هذا الجهاز",prev:"السابق ◀",next:"▶ التالي",
+  copied:"تم النسخ!",copyBtn:"📋 نسخ",resetConfirm:"إعادة تعيين التقدم؟",resetDone:"تمت إعادة التعيين",
+  noResults:"لم يُعثر على نشاط.",simpleTag:"بسيط",advTag:"متقدم",chipDone:"تم ✅",chipFav:"مفضل ⭐",chipTodo:"للعمل",go:"▶ ابدأ"
+}
+};
+function mk(id,title,part,meta,goal,needs,tip,blocks,codeJS,codePY,challenges){
+  return {id,title,part,difficulty:meta.difficulty||1,time:meta.time||"—",v2:!!meta.v2,ia:!!meta.ia,goal,needs,tip,blocks,codeJS,codePY,challenges};
+}
+
+const A = [
+mk(1,"Afficher un texte","simple",{difficulty:1,time:"5–10 min"},
+"Afficher un message sur l'écran LED de ta micro:bit.",
+["micro:bit","Câble USB","MakeCode"],
+"Commence par un mot court (ex: SALUT).",
+["Au démarrage → Afficher texte \"Bonjour\""],
+`basic.showString("Bonjour")`,
+`basic.show_string("Bonjour")`,
+[{t:"Change le texte par ton prénom",d:1},{t:"Ajoute une icône après le texte avec <code>basic.showIcon(IconNames.Heart)</code>",d:1}]
+),
+
+mk(2,"Faire défiler un texte","simple",{difficulty:1,time:"5–10 min"},
+"Faire défiler un message en boucle sur les LEDs.",
+["micro:bit","MakeCode"],
+"Ajoute une pause pour que ce soit lisible.",
+["Répéter indéfiniment → Afficher texte \"HELLO\"","Pause 200 ms (optionnel)"],
+`basic.forever(function () {
+    basic.showString("HELLO")
+    basic.pause(200)
+})`,
+`def on_forever():
+    basic.show_string("HELLO")
+    basic.pause(200)
+basic.forever(on_forever)`,
+[{t:"Change la pause : essaie <code>100</code>, <code>300</code>, <code>600</code> ms",d:1},{t:"Fais défiler 2 messages différents",d:1}]
+),
+
+mk(3,"Afficher un dessin","simple",{difficulty:1,time:"5–10 min"},
+"Afficher une icône (un petit dessin) sur les LEDs.",
+["micro:bit","MakeCode"],
+"Les icônes sont dans le menu Base.",
+["Au démarrage → Montrer l'icône (Cœur)"],
+`basic.showIcon(IconNames.Heart)`,
+`basic.show_icon(IconNames.HEART)`,
+[{t:"Change l'icône : <code>IconNames.House</code>, <code>IconNames.Happy</code>, <code>IconNames.Duck</code>…",d:1}]
+),
+
+mk(4,"Créer sa propre icône","simple",{difficulty:1,time:"10–15 min"},
+"Dessiner ta propre icône en LED (5x5 pixels).",
+["micro:bit","MakeCode"],
+"Une lettre simple (A, M, O) marche très bien.",
+["Au démarrage → Montrer LEDs (dessine ton motif 5×5)"],
+`basic.showLeds(\`
+    # . # . #
+    . # . # .
+    # . # . #
+    . # . # .
+    # . # . #
+\`)`,
+`basic.show_leds("""
+    # . # . #
+    . # . # .
+    # . # . #
+    . # . # .
+    # . # . #
+""")`,
+[{t:"Dessine ta première lettre (initiale)",d:1},{t:"Fais 2 dessins qui alternent avec une pause",d:2}]
+),
+
+mk(5,"Faire clignoter une icône","simple",{difficulty:1,time:"10–15 min"},
+"Faire clignoter une icône comme une alarme.",
+["micro:bit","MakeCode"],
+"Clignote = afficher puis effacer.",
+["Répéter indéfiniment → Montrer icône (Cœur)","Pause 300 ms","Effacer l'écran","Pause 300 ms"],
+`basic.forever(function () {
+    basic.showIcon(IconNames.Heart)
+    basic.pause(300)
+    basic.clearScreen()
+    basic.pause(300)
+})`,
+`def on_forever():
+    basic.show_icon(IconNames.HEART)
+    basic.pause(300)
+    basic.clear_screen()
+    basic.pause(300)
+basic.forever(on_forever)`,
+[{t:"Essaie <code>100</code> ms (rapide) puis <code>800</code> ms (lent)",d:1},{t:"Alterne entre 2 icônes différentes",d:2}]
+),
+
+mk(6,"Utiliser les boutons","simple",{difficulty:1,time:"10–15 min"},
+"Déclencher des actions avec les boutons A et B.",
+["micro:bit","MakeCode"],
+"Tu peux mettre un son, un texte ou une icône.",
+["Quand bouton A pressé → Afficher texte \"A\"","Quand bouton B pressé → Afficher texte \"B\"","A+B → Montrer icône Cœur"],
+`input.onButtonPressed(Button.A, function () {
+    basic.showString("A")
+})
+input.onButtonPressed(Button.B, function () {
+    basic.showString("B")
+})
+input.onButtonPressed(Button.AB, function () {
+    basic.showIcon(IconNames.Heart)
+})`,
+`def on_button_a():
+    basic.show_string("A")
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_button_b():
+    basic.show_string("B")
+input.on_button_pressed(Button.B, on_button_b)
+
+def on_button_ab():
+    basic.show_icon(IconNames.HEART)
+input.on_button_pressed(Button.AB, on_button_ab)`,
+[{t:"Fais A = 😀 et B = 😢 (avec des icônes)",d:1},{t:"Ajoute un compteur : A = +1, B = afficher le total",d:2}]
+),
+
+mk(7,"Secouer la carte","simple",{difficulty:1,time:"10–15 min"},
+"Faire une action quand on secoue la carte.",
+["micro:bit","MakeCode"],
+"En simulation, clique sur SHAKE.",
+["Lorsque secouer → Montrer icône Éclair","Pause 500 ms","Effacer l'écran"],
+`input.onGesture(Gesture.Shake, function () {
+    basic.showIcon(IconNames.Flash)
+    basic.pause(500)
+    basic.clearScreen()
+})`,
+`def on_shake():
+    basic.show_icon(IconNames.FLASH)
+    basic.pause(500)
+    basic.clear_screen()
+input.on_gesture(Gesture.SHAKE, on_shake)`,
+[{t:"Change l'icône selon l'énergie du moment",d:1},{t:"Ajoute un son avec <code>music.playTone()</code>",d:2}]
+),
+
+mk(8,"Utiliser la touche sensitive V2","simple",{difficulty:1,time:"10–15 min",v2:true},
+"Utiliser le logo tactile comme un bouton magique.",
+["micro:bit V2","MakeCode"],
+"Le logo doré est tactile (seulement sur V2).",
+["Quand logo pressé → Jouer mélodie"],
+`input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
+})`,
+`def on_logo_pressed():
+    music.start_melody(music.built_in_melody(Melodies.DADADADUM), MelodyOptions.ONCE)
+input.on_logo_event(TouchButtonEvent.PRESSED, on_logo_pressed)`,
+[{t:"Essaie différentes mélodies : <code>Melodies.Birthday</code>, <code>Melodies.Entertainer</code>",d:1},{t:"Ajoute un affichage de notes en même temps",d:2}]
+),
+
+mk(9,"Micro déclenché par le bruit V2","simple",{difficulty:2,time:"15–20 min",v2:true},
+"Réagir au bruit ambiant (clap = action).",
+["micro:bit V2","MakeCode"],
+"Commence avec un seuil ~120, puis ajuste.",
+["Répéter indéfiniment → Si niveau sonore > SEUIL → 😀 sinon 😴"],
+`basic.forever(function () {
+    if (input.soundLevel() > 120) {
+        basic.showIcon(IconNames.Happy)
+    } else {
+        basic.showIcon(IconNames.Asleep)
+    }
+})`,
+`def on_forever():
+    if input.sound_level() > 120:
+        basic.show_icon(IconNames.HAPPY)
+    else:
+        basic.show_icon(IconNames.ASLEEP)
+basic.forever(on_forever)`,
+[{t:"Change le seuil <code>120</code> → essaie <code>80</code> ou <code>200</code>",d:1},{t:"Affiche le niveau sonore exact avec <code>basic.showNumber()</code>",d:2}]
+),
+
+mk(10,"Jouer aux dés","simple",{difficulty:1,time:"10–15 min"},
+"Créer un dé qui sort un nombre au hasard quand on secoue.",
+["micro:bit","MakeCode"],
+"Le hasard se trouve dans le menu Maths.",
+["Lorsque secouer → ROLL = hasard 1 à 6","Afficher nombre ROLL"],
+`let roll = 0
+input.onGesture(Gesture.Shake, function () {
+    roll = randint(1, 6)
+    basic.showNumber(roll)
+})`,
+`roll = 0
+def on_shake():
+    global roll
+    roll = randint(1, 6)
+    basic.show_number(roll)
+input.on_gesture(Gesture.SHAKE, on_shake)`,
+[{t:"Change <code>randint(1, 6)</code> en <code>randint(1, 20)</code> pour un dé de JDR",d:1},{t:"Ajoute un son quand tu tombes sur 6",d:2},{t:"Affiche une face de dé en LEDs au lieu d'un nombre",d:3}]
+),
+
+mk(11,"Pierre-feuille-ciseaux","simple",{difficulty:2,time:"15–20 min"},
+"Choisir au hasard entre 3 symboles en secouant.",
+["micro:bit","MakeCode"],
+"Utilise un nombre 0..2 puis des conditions.",
+["Lorsque secouer → N = hasard 0..2","Si N=0 → Pierre","Si N=1 → Ciseaux","Sinon → Feuille"],
+`let n = 0
+input.onGesture(Gesture.Shake, function () {
+    n = randint(0, 2)
+    if (n == 0) {
+        basic.showIcon(IconNames.SmallSquare)
+    } else if (n == 1) {
+        basic.showIcon(IconNames.Scissors)
+    } else {
+        basic.showIcon(IconNames.Square)
+    }
+})`,
+`n = 0
+def on_shake():
+    global n
+    n = randint(0, 2)
+    if n == 0:
+        basic.show_icon(IconNames.SMALL_SQUARE)
+    elif n == 1:
+        basic.show_icon(IconNames.SCISSORS)
+    else:
+        basic.show_icon(IconNames.SQUARE)
+input.on_gesture(Gesture.SHAKE, on_shake)`,
+[{t:"Ajoute un son différent pour chaque choix",d:1},{t:"Ajoute un compteur de victoires entre 2 joueurs (radio)",d:3}]
+),
+
+mk(12,"Afficher la température","simple",{difficulty:1,time:"10–15 min"},
+"Afficher la température mesurée par la carte (approximative).",
+["micro:bit","MakeCode"],
+"Affiche quand tu appuies, c'est plus lisible.",
+["Bouton A → Afficher nombre Température (°C)"],
+`input.onButtonPressed(Button.A, function () {
+    basic.showNumber(input.temperature())
+    basic.showString("C")
+})`,
+`def on_button_a():
+    basic.show_number(input.temperature())
+    basic.show_string("C")
+input.on_button_pressed(Button.A, on_button_a)`,
+[{t:"Compare intérieur / extérieur",d:1},{t:"Ajoute une icône soleil si T > 25, flocon si T < 10",d:2}]
+),
+
+mk(13,"Créer une boussole","simple",{difficulty:2,time:"15–25 min"},
+"Afficher la direction (N/E/S/O).",
+["micro:bit","MakeCode"],
+"Il faut calibrer la boussole la première fois (suivre le jeu de LEDs).",
+["Bouton A → Calibrer","Répéter → DIR = direction boussole (°)","Afficher N/E/S/O selon l'angle"],
+`basic.forever(function () {
+    let dir = input.compassHeading()
+    if (dir < 45 || dir >= 315) {
+        basic.showString("N")
+    } else if (dir < 135) {
+        basic.showString("E")
+    } else if (dir < 225) {
+        basic.showString("S")
+    } else {
+        basic.showString("O")
+    }
+})`,
+`def on_forever():
+    dir = input.compass_heading()
+    if dir < 45 or dir >= 315:
+        basic.show_string("N")
+    elif dir < 135:
+        basic.show_string("E")
+    elif dir < 225:
+        basic.show_string("S")
+    else:
+        basic.show_string("O")
+basic.forever(on_forever)`,
+[{t:"Tourne doucement sur toi-même et observe",d:1},{t:"Ajoute NE, NO, SE, SO pour 8 directions",d:2}]
+),
+
+mk(14,"Détecter des émotions","simple",{difficulty:2,time:"15–20 min"},
+"Lire une valeur sur la broche P0 et afficher une émotion.",
+["micro:bit","Fils / pinces croco (option)","MakeCode"],
+"C'est un jeu, pas une mesure scientifique.",
+["Répéter → V = lire analogique P0","Si V > seuil → 😀 sinon 😐"],
+`basic.forever(function () {
+    let v = pins.analogReadPin(AnalogPin.P0)
+    if (v > 500) {
+        basic.showIcon(IconNames.Happy)
+    } else {
+        basic.showIcon(IconNames.Meh)
+    }
+})`,
+`def on_forever():
+    v = pins.analog_read_pin(AnalogPin.P0)
+    if v > 500:
+        basic.show_icon(IconNames.HAPPY)
+    else:
+        basic.show_icon(IconNames.MEH)
+basic.forever(on_forever)`,
+[{t:"Touche P0 et GND avec tes doigts pour voir",d:1},{t:"Ajoute 3 niveaux d'émotion avec des seuils différents",d:2}]
+),
+
+mk(15,"Concevoir un podomètre","simple",{difficulty:2,time:"15–25 min"},
+"Compter tes pas avec l'accéléromètre.",
+["micro:bit","MakeCode"],
+"Reset facile avec le bouton B !",
+["Au démarrage → STEPS = 0","Lorsque secouer → STEPS += 1","Bouton A → Afficher STEPS","Bouton B → STEPS = 0"],
+`let steps = 0
+input.onGesture(Gesture.Shake, function () {
+    steps += 1
+})
+input.onButtonPressed(Button.A, function () {
+    basic.showNumber(steps)
+})
+input.onButtonPressed(Button.B, function () {
+    steps = 0
+    basic.showIcon(IconNames.Yes)
+})`,
+`steps = 0
+def on_shake():
+    global steps
+    steps += 1
+input.on_gesture(Gesture.SHAKE, on_shake)
+
+def on_button_a():
+    basic.show_number(steps)
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_button_b():
+    global steps
+    steps = 0
+    basic.show_icon(IconNames.YES)
+input.on_button_pressed(Button.B, on_button_b)`,
+[{t:"Fixe la carte à ta cheville et marche",d:1},{t:"Ajoute un objectif : affiche 🎉 quand STEPS > 100",d:2}]
+),
+
+mk(16,"Mesurer la luminosité","simple",{difficulty:1,time:"10–20 min"},
+"Mesurer la lumière (0..255) et l'afficher.",
+["micro:bit","MakeCode"],
+"Couvre les LEDs avec ta main pour voir la différence.",
+["Bouton A → Afficher nombre Niveau de lumière","Répéter → Tracer graphique barres"],
+`input.onButtonPressed(Button.A, function () {
+    basic.showNumber(input.lightLevel())
+})
+basic.forever(function () {
+    led.plotBarGraph(input.lightLevel(), 255)
+})`,
+`def on_button_a():
+    basic.show_number(input.light_level())
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_forever():
+    led.plot_bar_graph(input.light_level(), 255)
+basic.forever(on_forever)`,
+[{t:"Va près d'une fenêtre puis dans une zone sombre",d:1},{t:"Ajoute un seuil : si lumière < 50, allume toutes les LEDs",d:2}]
+),
+
+mk(17,"Utiliser le mode radio","simple",{difficulty:2,time:"20–30 min"},
+"Envoyer des messages entre 2 micro:bits.",
+["2× micro:bit","MakeCode"],
+"Même groupe radio sur les 2 cartes !",
+["Au démarrage → Radio groupe 7","Bouton A → Envoyer 1","Bouton B → Envoyer 2","Quand reçu → si 1 → 😀, si 2 → 😢"],
+`radio.setGroup(7)
+input.onButtonPressed(Button.A, function () {
+    radio.sendNumber(1)
+    basic.showIcon(IconNames.Happy)
+})
+input.onButtonPressed(Button.B, function () {
+    radio.sendNumber(2)
+    basic.showIcon(IconNames.Sad)
+})
+radio.onReceivedNumber(function (receivedNumber) {
+    if (receivedNumber == 1) {
+        basic.showIcon(IconNames.Happy)
+    } else {
+        basic.showIcon(IconNames.Sad)
+    }
+})`,
+`radio.set_group(7)
+
+def on_button_a():
+    radio.send_number(1)
+    basic.show_icon(IconNames.HAPPY)
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_button_b():
+    radio.send_number(2)
+    basic.show_icon(IconNames.SAD)
+input.on_button_pressed(Button.B, on_button_b)
+
+def on_received(n):
+    if n == 1:
+        basic.show_icon(IconNames.HAPPY)
+    else:
+        basic.show_icon(IconNames.SAD)
+radio.on_received_number(on_received)`,
+[{t:"Testez à 2 dans la même salle, puis plus loin",d:1},{t:"Envoie du texte avec <code>radio.sendString()</code>",d:2}]
+),
+
+mk(18,"Créer un minuteur","simple",{difficulty:2,time:"20–30 min"},
+"Faire un compte à rebours.",
+["micro:bit","MakeCode"],
+"A règle le temps, B lance le décompte.",
+["Au démarrage → T = 0","Bouton A → T += 1","Bouton B → Décompte → \"OK\" + son"],
+`let t = 0
+input.onButtonPressed(Button.A, function () {
+    t += 1
+    basic.showNumber(t)
+})
+input.onButtonPressed(Button.B, function () {
+    while (t > 0) {
+        basic.showNumber(t)
+        basic.pause(1000)
+        t -= 1
+    }
+    basic.showString("OK")
+    music.playTone(988, 500)
+})`,
+`t = 0
+def on_button_a():
+    global t
+    t += 1
+    basic.show_number(t)
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_button_b():
+    global t
+    while t > 0:
+        basic.show_number(t)
+        basic.pause(1000)
+        t -= 1
+    basic.show_string("OK")
+    music.play_tone(988, 500)
+input.on_button_pressed(Button.B, on_button_b)`,
+[{t:"Utilise-le pour un mini défi : 10s pour ranger !",d:1},{t:"Ajoute un bip chaque seconde pendant le décompte",d:2}]
+),
+
+mk(19,"Buzzer de la carte V2","simple",{difficulty:1,time:"10–15 min",v2:true},
+"Jouer un son avec le haut-parleur intégré (V2).",
+["micro:bit V2","MakeCode"],
+"Commence dans un endroit calme.",
+["Bouton A → Jouer mélodie"],
+`input.onButtonPressed(Button.A, function () {
+    music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
+})`,
+`def on_button_a():
+    music.start_melody(music.built_in_melody(Melodies.DADADADUM), MelodyOptions.ONCE)
+input.on_button_pressed(Button.A, on_button_a)`,
+[{t:"Crée un jingle de 3 notes avec <code>music.playTone()</code>",d:1},{t:"Fais un bouton B pour arrêter la musique",d:1}]
+),
+
+mk(20,"Jeu de la cible","simple",{difficulty:2,time:"15–25 min"},
+"Appuyer sur B quand le bon chiffre apparaît.",
+["micro:bit","MakeCode"],
+"Choisis une cible (ex: 5).",
+["Bouton A → N = hasard 0..9 → Afficher","Bouton B → Si N==5 → 😀 sinon 😢"],
+`let n = 0
+input.onButtonPressed(Button.A, function () {
+    n = randint(0, 9)
+    basic.showNumber(n)
+})
+input.onButtonPressed(Button.B, function () {
+    if (n == 5) {
+        basic.showIcon(IconNames.Happy)
+    } else {
+        basic.showIcon(IconNames.Sad)
+    }
+})`,
+`n = 0
+def on_button_a():
+    global n
+    n = randint(0, 9)
+    basic.show_number(n)
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_button_b():
+    if n == 5:
+        basic.show_icon(IconNames.HAPPY)
+    else:
+        basic.show_icon(IconNames.SAD)
+input.on_button_pressed(Button.B, on_button_b)`,
+[{t:"Change la cible de <code>5</code> à un autre chiffre",d:1},{t:"Ajoute un compteur de score",d:2}]
+),
+
+mk(21,"Jouer avec des sprites","simple",{difficulty:3,time:"25–40 min"},
+"Petit jeu : éviter des obstacles qui tombent.",
+["micro:bit","MakeCode"],
+"Va doucement : d'abord le joueur, puis l'obstacle.",
+["Au démarrage → Joueur X=2, Y=4, SCORE=0","Bouton A/B → déplacer joueur","Répéter → obstacle descend → collision = game over"],
+`let player = game.createSprite(2, 4)
+let score = 0
+let obstacle = game.createSprite(randint(0, 4), 0)
+
+input.onButtonPressed(Button.A, function () {
+    player.change(LedSpriteProperty.X, -1)
+})
+input.onButtonPressed(Button.B, function () {
+    player.change(LedSpriteProperty.X, 1)
+})
+basic.forever(function () {
+    obstacle.change(LedSpriteProperty.Y, 1)
+    basic.pause(400)
+    if (obstacle.get(LedSpriteProperty.Y) == 4) {
+        if (obstacle.isTouching(player)) {
+            game.gameOver()
+        } else {
+            score += 1
+            obstacle.set(LedSpriteProperty.Y, 0)
+            obstacle.set(LedSpriteProperty.X, randint(0, 4))
+        }
+    }
+})`,
+`player = game.create_sprite(2, 4)
+score = 0
+obstacle = game.create_sprite(randint(0, 4), 0)
+
+def on_button_a():
+    player.change(LedSpriteProperty.X, -1)
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_button_b():
+    player.change(LedSpriteProperty.X, 1)
+input.on_button_pressed(Button.B, on_button_b)
+
+def on_forever():
+    global score
+    obstacle.change(LedSpriteProperty.Y, 1)
+    basic.pause(400)
+    if obstacle.get(LedSpriteProperty.Y) == 4:
+        if obstacle.is_touching(player):
+            game.game_over()
+        else:
+            score += 1
+            obstacle.set(LedSpriteProperty.Y, 0)
+            obstacle.set(LedSpriteProperty.X, randint(0, 4))
+basic.forever(on_forever)`,
+[{t:"Augmente la vitesse quand le score monte (réduis la pause)",d:2},{t:"Ajoute plusieurs obstacles en même temps",d:3}]
+),
+
+mk(22,"Coffre au trésor V2","simple",{difficulty:3,time:"30–45 min",v2:true},
+"Entrer un code secret pour ouvrir le coffre (jeu).",
+["micro:bit V2","MakeCode"],
+"Garde un code court au début (3 gestes).",
+["A → ajouter \"A\" au code","B → ajouter \"B\"","Logo → vérifier le code"],
+`let code = ""
+input.onButtonPressed(Button.A, function () {
+    code += "A"
+    music.playTone(262, 100)
+})
+input.onButtonPressed(Button.B, function () {
+    code += "B"
+    music.playTone(330, 100)
+})
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    if (code == "ABA") {
+        basic.showIcon(IconNames.Happy)
+        music.startMelody(music.builtInMelody(Melodies.PowerUp), MelodyOptions.Once)
+    } else {
+        basic.showIcon(IconNames.Sad)
+        music.startMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.Once)
+    }
+    code = ""
+})`,
+`code = ""
+def on_button_a():
+    global code
+    code += "A"
+    music.play_tone(262, 100)
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_button_b():
+    global code
+    code += "B"
+    music.play_tone(330, 100)
+input.on_button_pressed(Button.B, on_button_b)
+
+def on_logo():
+    global code
+    if code == "ABA":
+        basic.show_icon(IconNames.HAPPY)
+        music.start_melody(music.built_in_melody(Melodies.POWER_UP), MelodyOptions.ONCE)
+    else:
+        basic.show_icon(IconNames.SAD)
+        music.start_melody(music.built_in_melody(Melodies.WAWAWAWAA), MelodyOptions.ONCE)
+    code = ""
+input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)`,
+[{t:'Change le code secret : <code>"ABA"</code> → <code>"ABBA"</code>',d:1},{t:"Inventez 3 codes différents en équipe",d:2}]
+),
+
+// ── ADVANCED 23–54 ──
+
+mk(23,"Jeu du yoga","advanced",{difficulty:2,time:"20–30 min"},
+"Rester immobile : si tu bouges trop, tu perds.",
+["micro:bit","MakeCode"],
+"Mesure le mouvement avec l'accéléromètre.",
+["Au démarrage → PROGRESS=0","Répéter → Si mouvement faible → +1 LED","Si trop de mouvement → X + reset"],
+`let progress = 0
+basic.forever(function () {
+    let force = input.acceleration(Dimension.Strength)
+    if (Math.abs(force - 1024) < 100) {
+        progress = Math.min(progress + 1, 25)
+        led.plot(progress % 5, Math.floor(progress / 5))
+    } else {
+        basic.showIcon(IconNames.No)
+        basic.pause(500)
+        basic.clearScreen()
+        progress = 0
+    }
+    basic.pause(200)
+})`,
+`progress = 0
+def on_forever():
+    global progress
+    force = input.acceleration(Dimension.STRENGTH)
+    if abs(force - 1024) < 100:
+        progress = min(progress + 1, 25)
+        led.plot(progress % 5, progress // 5)
+    else:
+        basic.show_icon(IconNames.NO)
+        basic.pause(500)
+        basic.clear_screen()
+        progress = 0
+    basic.pause(200)
+basic.forever(on_forever)`,
+[{t:"Défi : tenir 15 secondes sans bouger",d:1},{t:"Ajuste le seuil <code>100</code> pour rendre plus facile/dur",d:2}]
+),
+
+mk(24,"Créer ses propres blocs","advanced",{difficulty:2,time:"20–35 min"},
+"Créer une fonction pour réutiliser un effet.",
+["micro:bit","MakeCode"],
+"Une fonction = un bloc réutilisable.",
+["Créer fonction PLUIE()","Appeler PLUIE() en boucle"],
+`function rain() {
+    let x = randint(0, 4)
+    for (let y = 0; y <= 4; y++) {
+        led.plot(x, y)
+        basic.pause(80)
+        led.unplot(x, y)
+    }
+}
+basic.forever(function () {
+    rain()
+})`,
+`def rain():
+    x = randint(0, 4)
+    for y in range(5):
+        led.plot(x, y)
+        basic.pause(80)
+        led.unplot(x, y)
+
+def on_forever():
+    rain()
+basic.forever(on_forever)`,
+[{t:"Change la vitesse de la pluie (pause 40 vs 150)",d:1},{t:"Fais tomber 2 gouttes en même temps",d:2}]
+),
+
+mk(25,"Piloter un servomoteur","advanced",{difficulty:2,time:"25–40 min"},
+"Faire bouger un servo comme une barrière.",
+["micro:bit","Servomoteur","Fils/pinces","MakeCode"],
+"Positions classiques : 0°, 90°, 180°.",
+["Bouton A → servo 0°","Logo → servo 90°","Bouton B → servo 180°"],
+`input.onButtonPressed(Button.A, function () {
+    pins.servoWritePin(AnalogPin.P0, 0)
+})
+input.onButtonPressed(Button.B, function () {
+    pins.servoWritePin(AnalogPin.P0, 180)
+})
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    pins.servoWritePin(AnalogPin.P0, 90)
+})`,
+`def on_button_a():
+    pins.servo_write_pin(AnalogPin.P0, 0)
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_button_b():
+    pins.servo_write_pin(AnalogPin.P0, 180)
+input.on_button_pressed(Button.B, on_button_b)
+
+def on_logo():
+    pins.servo_write_pin(AnalogPin.P0, 90)
+input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)`,
+[{t:"Ajoute une pause et fais une 'danse' du servo",d:2},{t:"Contrôle l'angle avec la luminosité",d:3}]
+),
+
+mk(26,"Testeur de métaux","advanced",{difficulty:2,time:"25–40 min"},
+"Jeu : détecter si un matériau conduit (métal).",
+["micro:bit","Fils/pinces croco","MakeCode"],
+"Fais des seuils 'métal / pas métal'.",
+["Répéter → V = lire P0","Si V > seuil → 😀 + son","Sinon → 😢"],
+`basic.forever(function () {
+    let v = pins.analogReadPin(AnalogPin.P0)
+    if (v > 500) {
+        basic.showIcon(IconNames.Happy)
+        music.playTone(880, 200)
+    } else {
+        basic.showIcon(IconNames.Sad)
+    }
+    basic.pause(300)
+})`,
+`def on_forever():
+    v = pins.analog_read_pin(AnalogPin.P0)
+    if v > 500:
+        basic.show_icon(IconNames.HAPPY)
+        music.play_tone(880, 200)
+    else:
+        basic.show_icon(IconNames.SAD)
+    basic.pause(300)
+basic.forever(on_forever)`,
+[{t:"Teste : trombone, alu, plastique, bois",d:1},{t:"Affiche la valeur brute avec le bouton A",d:2}]
+),
+
+mk(27,"Humidité d'une plante","advanced",{difficulty:2,time:"25–45 min"},
+"Lire un capteur d'humidité et afficher sec/ok/humide.",
+["micro:bit","Capteur humidité (analogique)","MakeCode"],
+"Commence par afficher le nombre brut pour calibrer.",
+["Bouton A → Afficher valeur brute","Répéter → sec=😢, ok=🙂, humide=😀"],
+`input.onButtonPressed(Button.A, function () {
+    basic.showNumber(pins.analogReadPin(AnalogPin.P0))
+})
+basic.forever(function () {
+    let v = pins.analogReadPin(AnalogPin.P0)
+    if (v < 300) {
+        basic.showIcon(IconNames.Sad)
+    } else if (v < 600) {
+        basic.showIcon(IconNames.Meh)
+    } else {
+        basic.showIcon(IconNames.Happy)
+    }
+    basic.pause(2000)
+})`,
+`def on_button_a():
+    basic.show_number(pins.analog_read_pin(AnalogPin.P0))
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_forever():
+    v = pins.analog_read_pin(AnalogPin.P0)
+    if v < 300:
+        basic.show_icon(IconNames.SAD)
+    elif v < 600:
+        basic.show_icon(IconNames.MEH)
+    else:
+        basic.show_icon(IconNames.HAPPY)
+    basic.pause(2000)
+basic.forever(on_forever)`,
+[{t:"Note les valeurs 'sec' et 'mouillé' pour calibrer",d:1},{t:"Ajoute une alerte sonore quand c'est trop sec",d:2}]
+),
+
+mk(28,"Thermomètre d'extérieur","advanced",{difficulty:2,time:"25–45 min"},
+"Lire un capteur de température externe.",
+["micro:bit","Capteur température externe","MakeCode"],
+"Affiche toutes les 10 secondes, pas en continu.",
+["Répéter → T = lire capteur → Afficher T → Pause 10s"],
+`basic.forever(function () {
+    let t = pins.analogReadPin(AnalogPin.P0)
+    let temp = Math.round(t * 0.1)
+    basic.showNumber(temp)
+    basic.showString("C")
+    basic.pause(10000)
+})`,
+`def on_forever():
+    t = pins.analog_read_pin(AnalogPin.P0)
+    temp = round(t * 0.1)
+    basic.show_number(temp)
+    basic.show_string("C")
+    basic.pause(10000)
+basic.forever(on_forever)`,
+[{t:"Ajoute MIN et MAX (variables) avec boutons A/B",d:2},{t:"Affiche un graphique barres de la température",d:2}]
+),
+
+mk(29,"Jouer de la musique V2","advanced",{difficulty:2,time:"20–35 min",v2:true},
+"Composer des mélodies et les jouer.",
+["micro:bit V2","MakeCode"],
+"Tempo + notes = musique !",
+["Bouton A → régler tempo","Bouton B → jouer mélodie"],
+`music.setTempo(120)
+input.onButtonPressed(Button.A, function () {
+    music.playTone(262, music.beat(BeatFraction.Whole))
+    music.playTone(330, music.beat(BeatFraction.Whole))
+    music.playTone(392, music.beat(BeatFraction.Whole))
+})
+input.onButtonPressed(Button.B, function () {
+    music.startMelody(music.builtInMelody(Melodies.Birthday), MelodyOptions.Once)
+})`,
+`music.set_tempo(120)
+
+def on_button_a():
+    music.play_tone(262, music.beat(BeatFraction.WHOLE))
+    music.play_tone(330, music.beat(BeatFraction.WHOLE))
+    music.play_tone(392, music.beat(BeatFraction.WHOLE))
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_button_b():
+    music.start_melody(music.built_in_melody(Melodies.BIRTHDAY), MelodyOptions.ONCE)
+input.on_button_pressed(Button.B, on_button_b)`,
+[{t:"Compose une chanson joyeuse et une triste",d:1},{t:"Change le tempo avec <code>music.setTempo(180)</code>",d:1}]
+),
+
+mk(30,"Piloter en Bluetooth","advanced",{difficulty:3,time:"35–60 min"},
+"Connecter la carte à un téléphone via Bluetooth.",
+["micro:bit","App Bluetooth","MakeCode"],
+"Utilise les événements 'connected / disconnected'.",
+["Démarrer services Bluetooth","Connecté → 😀","Déconnecté → 😢"],
+`bluetooth.onBluetoothConnected(function () {
+    basic.showIcon(IconNames.Happy)
+})
+bluetooth.onBluetoothDisconnected(function () {
+    basic.showIcon(IconNames.Sad)
+})
+bluetooth.startUartService()`,
+`def on_connected():
+    basic.show_icon(IconNames.HAPPY)
+bluetooth.on_bluetooth_connected(on_connected)
+
+def on_disconnected():
+    basic.show_icon(IconNames.SAD)
+bluetooth.on_bluetooth_disconnected(on_disconnected)
+
+bluetooth.start_uart_service()`,
+[{t:"Envoie 1 = allumer, 0 = éteindre depuis le téléphone",d:2},{t:"Affiche le texte reçu par UART",d:3}]
+),
+
+mk(31,"Modules Grove + Bitmaker V2","advanced",{difficulty:2,time:"30–50 min",v2:true},
+"Brancher un module externe (Grove) et l'utiliser.",
+["micro:bit V2","Bitmaker / Grove","MakeCode"],
+"Lis la valeur → affiche → transforme en son ou LED.",
+["Bouton A → lire capteur → afficher","Répéter → mapper valeur → bar graph"],
+`input.onButtonPressed(Button.A, function () {
+    basic.showNumber(pins.analogReadPin(AnalogPin.P0))
+})
+basic.forever(function () {
+    led.plotBarGraph(pins.analogReadPin(AnalogPin.P0), 1023)
+    basic.pause(200)
+})`,
+`def on_button_a():
+    basic.show_number(pins.analog_read_pin(AnalogPin.P0))
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_forever():
+    led.plot_bar_graph(pins.analog_read_pin(AnalogPin.P0), 1023)
+    basic.pause(200)
+basic.forever(on_forever)`,
+[{t:"Choisis un capteur simple : lumière, bouton, potentiomètre",d:1},{t:"Mappe la valeur vers une fréquence sonore",d:2}]
+),
+
+mk(32,"Afficheur 7 segments","advanced",{difficulty:2,time:"25–45 min"},
+"Afficher la température sur un afficheur 7 segments.",
+["micro:bit","Afficheur 7 segments","MakeCode"],
+"Utilise l'extension TM1637 dans MakeCode.",
+["Initialiser TM1637","Répéter → afficher température"],
+`// Nécessite extension TM1637
+let tm = TM1637.create(DigitalPin.P1, DigitalPin.P2, 7, 4)
+basic.forever(function () {
+    tm.showNumber(input.temperature())
+    basic.pause(5000)
+})`,
+`# Nécessite extension TM1637
+tm = TM1637.create(DigitalPin.P1, DigitalPin.P2, 7, 4)
+
+def on_forever():
+    tm.show_number(input.temperature())
+    basic.pause(5000)
+basic.forever(on_forever)`,
+[{t:"Affiche '----' si capteur absent",d:2},{t:"Alterne entre température et luminosité",d:2}]
+),
+
+mk(33,"Buzzer externe","advanced",{difficulty:2,time:"25–40 min"},
+"Faire des sons avec un buzzer branché.",
+["micro:bit","Buzzer externe","MakeCode"],
+"Change la fréquence avec un capteur.",
+["Répéter → F = 200 + (lumière × 3)","Jouer ton à fréquence F"],
+`basic.forever(function () {
+    let freq = 200 + input.lightLevel() * 3
+    music.playTone(freq, 100)
+    basic.pause(50)
+})`,
+`def on_forever():
+    freq = 200 + input.light_level() * 3
+    music.play_tone(freq, 100)
+    basic.pause(50)
+basic.forever(on_forever)`,
+[{t:"Couvre la carte : le son change !",d:1},{t:"Utilise l'accéléromètre au lieu de la lumière",d:2}]
+),
+
+mk(34,"Concevoir un télémètre","advanced",{difficulty:2,time:"30–50 min"},
+"Mesurer la distance avec un capteur ultrason.",
+["micro:bit","Capteur ultrason (HC-SR04)","MakeCode"],
+"Affiche distance, puis fais une alarme.",
+["Répéter → D = distance en cm","Si D < 10 → alarme"],
+`// Nécessite extension sonar
+basic.forever(function () {
+    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)
+    basic.showNumber(d)
+    if (d < 10) {
+        music.playTone(880, 200)
+    }
+    basic.pause(500)
+})`,
+`# Nécessite extension sonar
+def on_forever():
+    d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.CENTIMETERS)
+    basic.show_number(d)
+    if d < 10:
+        music.play_tone(880, 200)
+    basic.pause(500)
+basic.forever(on_forever)`,
+[{t:"Fais une 'alarme de recul' qui bipe plus vite quand c'est proche",d:2},{t:"Affiche un graphique barres de la distance",d:2}]
+),
+
+mk(35,"Alarme de chambre","advanced",{difficulty:2,time:"30–50 min"},
+"Déclencher une alarme si quelqu'un entre.",
+["micro:bit","MakeCode"],
+"Choisis un capteur : lumière ou mouvement.",
+["Logo → armer/désarmer","Si armé et lumière change → alarme"],
+`let armed = false
+let baseline = 0
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    armed = !armed
+    if (armed) {
+        baseline = input.lightLevel()
+        basic.showIcon(IconNames.Target)
+    } else {
+        basic.showIcon(IconNames.Asleep)
+    }
+})
+basic.forever(function () {
+    if (armed && Math.abs(input.lightLevel() - baseline) > 30) {
+        music.playTone(880, 500)
+        basic.showIcon(IconNames.Skull)
+        basic.pause(500)
+    }
+})`,
+`armed = False
+baseline = 0
+
+def on_logo():
+    global armed, baseline
+    armed = not armed
+    if armed:
+        baseline = input.light_level()
+        basic.show_icon(IconNames.TARGET)
+    else:
+        basic.show_icon(IconNames.ASLEEP)
+input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)
+
+def on_forever():
+    if armed and abs(input.light_level() - baseline) > 30:
+        music.play_tone(880, 500)
+        basic.show_icon(IconNames.SKULL)
+        basic.pause(500)
+basic.forever(on_forever)`,
+[{t:"Teste la nuit avec une lampe de poche",d:1},{t:"Ajuste le seuil <code>30</code>",d:2}]
+),
+
+mk(36,"Alarme de tiroir","advanced",{difficulty:2,time:"30–50 min"},
+"Déclencher une alarme quand un tiroir s'ouvre.",
+["micro:bit","Interrupteur / contact","MakeCode"],
+"Lis une entrée numérique (0/1).",
+["Bouton A → armer","Répéter → si armé et P0 == 1 → alarme"],
+`let armed = false
+input.onButtonPressed(Button.A, function () {
+    armed = !armed
+    basic.showIcon(armed ? IconNames.Target : IconNames.Asleep)
+})
+basic.forever(function () {
+    if (armed && pins.digitalReadPin(DigitalPin.P0) == 1) {
+        music.playTone(988, 300)
+        basic.showIcon(IconNames.Skull)
+        basic.pause(300)
+    }
+})`,
+`armed = False
+
+def on_button_a():
+    global armed
+    armed = not armed
+    if armed:
+        basic.show_icon(IconNames.TARGET)
+    else:
+        basic.show_icon(IconNames.ASLEEP)
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_forever():
+    if armed and pins.digital_read_pin(DigitalPin.P0) == 1:
+        music.play_tone(988, 300)
+        basic.show_icon(IconNames.SKULL)
+        basic.pause(300)
+basic.forever(on_forever)`,
+[{t:"Fixe le contact pour qu'il détecte l'ouverture",d:1},{t:"Ajoute un délai de 3 secondes avant l'alarme",d:2}]
+),
+
+mk(37,"Guirlande arc-en-ciel","advanced",{difficulty:2,time:"25–45 min"},
+"Piloter des LEDs RGB (NeoPixel) avec un dégradé.",
+["micro:bit","Bande NeoPixel","MakeCode"],
+"Commence avec 5 LEDs puis augmente.",
+["Initialiser NeoPixel","Répéter → dégradé arc-en-ciel → afficher"],
+`// Nécessite extension neopixel
+let strip = neopixel.create(DigitalPin.P0, 8, NeoPixelMode.RGB)
+strip.showRainbow(1, 360)
+basic.forever(function () {
+    strip.rotate(1)
+    strip.show()
+    basic.pause(100)
+})`,
+`# Nécessite extension neopixel
+strip = neopixel.create(DigitalPin.P0, 8, NeoPixelMode.RGB)
+strip.show_rainbow(1, 360)
+
+def on_forever():
+    strip.rotate(1)
+    strip.show()
+    basic.pause(100)
+basic.forever(on_forever)`,
+[{t:"Bouton A pour changer la vitesse",d:1},{t:"Bouton B pour changer le nombre de couleurs",d:2}]
+),
+
+mk(38,"Niveau sonore V2","advanced",{difficulty:2,time:"20–35 min",v2:true},
+"Afficher un bargraphe du bruit ambiant.",
+["micro:bit V2","MakeCode"],
+"Mappe 0..255 vers 0..5 barres.",
+["Répéter → S = niveau sonore → Tracer graphique barres"],
+`basic.forever(function () {
+    led.plotBarGraph(input.soundLevel(), 255)
+    basic.pause(100)
+})`,
+`def on_forever():
+    led.plot_bar_graph(input.sound_level(), 255)
+    basic.pause(100)
+basic.forever(on_forever)`,
+[{t:"Défi : chuchoter vs applaudir",d:1},{t:"Ajoute un seuil d'alerte avec un son",d:2}]
+),
+
+mk(39,"Robot : parcourir un carré","advanced",{difficulty:3,time:"40–60 min"},
+"Programmer un robot pour faire un carré.",
+["Robot (micro:bit)","MakeCode"],
+"Carré = avancer + tourner 4 fois.",
+["Créer AVANCER(t) et TOURNER90()","Répéter 4 fois"],
+`// Adapter les pins/vitesses à ton robot
+function forward(ms: number) {
+    pins.analogWritePin(AnalogPin.P0, 512)
+    pins.analogWritePin(AnalogPin.P1, 512)
+    basic.pause(ms)
+    pins.analogWritePin(AnalogPin.P0, 0)
+    pins.analogWritePin(AnalogPin.P1, 0)
+}
+function turnRight() {
+    pins.analogWritePin(AnalogPin.P0, 512)
+    pins.analogWritePin(AnalogPin.P1, 0)
+    basic.pause(500)
+    pins.analogWritePin(AnalogPin.P0, 0)
+}
+input.onButtonPressed(Button.A, function () {
+    for (let i = 0; i < 4; i++) {
+        forward(1000)
+        turnRight()
+    }
+})`,
+`# Adapter les pins/vitesses à ton robot
+def forward(ms):
+    pins.analog_write_pin(AnalogPin.P0, 512)
+    pins.analog_write_pin(AnalogPin.P1, 512)
+    basic.pause(ms)
+    pins.analog_write_pin(AnalogPin.P0, 0)
+    pins.analog_write_pin(AnalogPin.P1, 0)
+
+def turn_right():
+    pins.analog_write_pin(AnalogPin.P0, 512)
+    pins.analog_write_pin(AnalogPin.P1, 0)
+    basic.pause(500)
+    pins.analog_write_pin(AnalogPin.P0, 0)
+
+def on_button_a():
+    for i in range(4):
+        forward(1000)
+        turn_right()
+input.on_button_pressed(Button.A, on_button_a)`,
+[{t:"Ajuste les temps selon ton robot",d:1},{t:"Fais un triangle, un hexagone…",d:2}]
+),
+
+mk(40,"Robot : éviter obstacles (ultrasons)","advanced",{difficulty:3,time:"40–60 min"},
+"Éviter un obstacle grâce aux ultrasons.",
+["Robot","Capteur ultrason","MakeCode"],
+"Si proche → stop et tourner.",
+["Répéter → D = distance","Si D < 15 → reculer + tourner","Sinon → avancer"],
+`// Adapter à ton robot + extension sonar
+basic.forever(function () {
+    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)
+    if (d < 15) {
+        // stop + reculer + tourner
+        basic.showIcon(IconNames.No)
+        basic.pause(500)
+    } else {
+        // avancer
+        basic.showIcon(IconNames.ArrowNorth)
+    }
+    basic.pause(200)
+})`,
+`# Adapter à ton robot + extension sonar
+def on_forever():
+    d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.CENTIMETERS)
+    if d < 15:
+        basic.show_icon(IconNames.NO)
+        basic.pause(500)
+    else:
+        basic.show_icon(IconNames.ARROW_NORTH)
+    basic.pause(200)
+basic.forever(on_forever)`,
+[{t:"Test avec une boîte comme obstacle",d:1},{t:"Ajoute un son quand l'obstacle est détecté",d:2}]
+),
+
+mk(41,"Robot : obstacles (interrupteurs)","advanced",{difficulty:3,time:"40–60 min"},
+"Détecter une collision via micro-interrupteurs.",
+["Robot","Micro-interrupteurs","MakeCode"],
+"Collision = contact fermé = P0 ou P1 = 1.",
+["Répéter → si P0==1 ou P1==1 : reculer + tourner","Sinon : avancer"],
+`basic.forever(function () {
+    if (pins.digitalReadPin(DigitalPin.P0) == 1 || pins.digitalReadPin(DigitalPin.P1) == 1) {
+        basic.showIcon(IconNames.No)
+        basic.pause(500)
+        // reculer + tourner (adapter à ton robot)
+    } else {
+        basic.showIcon(IconNames.ArrowNorth)
+        // avancer
+    }
+    basic.pause(100)
+})`,
+`def on_forever():
+    if pins.digital_read_pin(DigitalPin.P0) == 1 or pins.digital_read_pin(DigitalPin.P1) == 1:
+        basic.show_icon(IconNames.NO)
+        basic.pause(500)
+    else:
+        basic.show_icon(IconNames.ARROW_NORTH)
+    basic.pause(100)
+basic.forever(on_forever)`,
+[{t:"Place l'interrupteur à l'avant du robot",d:1},{t:"Ajoute un compteur de collisions",d:2}]
+),
+
+mk(42,"Robot : labyrinthe","advanced",{difficulty:3,time:"45–75 min"},
+"Suivre des règles pour franchir un labyrinthe.",
+["Robot","Capteurs selon robot","MakeCode"],
+"Commence par 'avancer + tourner si obstacle'.",
+["Répéter → si obstacle : tourner droite","Sinon : avancer"],
+`// Pseudo-code — adapter aux capteurs de ton robot
+basic.forever(function () {
+    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)
+    if (d < 12) {
+        // tourner droite
+        basic.showString("D")
+    } else {
+        // avancer
+        basic.showIcon(IconNames.ArrowNorth)
+    }
+    basic.pause(200)
+})`,
+`# Pseudo-code — adapter aux capteurs de ton robot
+def on_forever():
+    d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.CENTIMETERS)
+    if d < 12:
+        basic.show_string("D")
+    else:
+        basic.show_icon(IconNames.ARROW_NORTH)
+    basic.pause(200)
+basic.forever(on_forever)`,
+[{t:"Dessine un labyrinthe au scotch au sol",d:1},{t:"Ajoute 'longer le mur' comme stratégie",d:3}]
+),
+
+mk(43,"Robot en autonomie","advanced",{difficulty:3,time:"45–75 min"},
+"Explorer sans télécommande en évitant les obstacles.",
+["Robot","Capteurs","MakeCode"],
+"Varie les directions pour ne pas rester bloqué.",
+["Répéter → si obstacle : hasard gauche/droite","Sinon → avancer"],
+`basic.forever(function () {
+    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)
+    if (d < 15) {
+        if (randint(0, 1) == 0) {
+            basic.showString("G")
+        } else {
+            basic.showString("D")
+        }
+        basic.pause(500)
+    } else {
+        basic.showIcon(IconNames.ArrowNorth)
+    }
+    basic.pause(200)
+})`,
+`def on_forever():
+    d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.CENTIMETERS)
+    if d < 15:
+        if randint(0, 1) == 0:
+            basic.show_string("G")
+        else:
+            basic.show_string("D")
+        basic.pause(500)
+    else:
+        basic.show_icon(IconNames.ARROW_NORTH)
+    basic.pause(200)
+basic.forever(on_forever)`,
+[{t:"Ajoute un son quand il change de direction",d:1},{t:"Fais-le tracer un chemin sur une grille",d:3}]
+),
+
+mk(44,"Télécommande robot (radio)","advanced",{difficulty:3,time:"45–75 min"},
+"Télécommander un robot avec une autre micro:bit.",
+["2× micro:bit","Robot","MakeCode"],
+"Un émetteur, un récepteur.",
+["Émetteur : A=avant, B=stop, incliner=tourner","Récepteur : réagir aux commandes"],
+`// ÉMETTEUR
+radio.setGroup(7)
+input.onButtonPressed(Button.A, function () {
+    radio.sendNumber(1) // avant
+})
+input.onButtonPressed(Button.B, function () {
+    radio.sendNumber(2) // stop
+})
+input.onGesture(Gesture.TiltRight, function () {
+    radio.sendNumber(3)
+})
+input.onGesture(Gesture.TiltLeft, function () {
+    radio.sendNumber(4)
+})`,
+`# ÉMETTEUR
+radio.set_group(7)
+
+def on_a():
+    radio.send_number(1)
+input.on_button_pressed(Button.A, on_a)
+
+def on_b():
+    radio.send_number(2)
+input.on_button_pressed(Button.B, on_b)
+
+def on_tilt_right():
+    radio.send_number(3)
+input.on_gesture(Gesture.TILT_RIGHT, on_tilt_right)
+
+def on_tilt_left():
+    radio.send_number(4)
+input.on_gesture(Gesture.TILT_LEFT, on_tilt_left)`,
+[{t:"Ajoute une LED pour voir ce que tu envoies",d:1},{t:"Ajoute une commande 'marche arrière'",d:2}]
+),
+
+mk(45,"Barrière de parking (PlanetX)","advanced",{difficulty:2,time:"30–55 min"},
+"Faire une barrière qui s'ouvre quand un véhicule arrive.",
+["micro:bit","Module PlanetX + servo","MakeCode"],
+"Détection → servo ouvre → temporisation → ferme.",
+["Répéter → si capteur détecte : servo 90° → pause → servo 0°"],
+`basic.forever(function () {
+    if (pins.digitalReadPin(DigitalPin.P0) == 1) {
+        pins.servoWritePin(AnalogPin.P1, 90)
+        basic.showIcon(IconNames.Yes)
+        basic.pause(3000)
+        pins.servoWritePin(AnalogPin.P1, 0)
+        basic.showIcon(IconNames.No)
+    }
+    basic.pause(200)
+})`,
+`def on_forever():
+    if pins.digital_read_pin(DigitalPin.P0) == 1:
+        pins.servo_write_pin(AnalogPin.P1, 90)
+        basic.show_icon(IconNames.YES)
+        basic.pause(3000)
+        pins.servo_write_pin(AnalogPin.P1, 0)
+        basic.show_icon(IconNames.NO)
+    basic.pause(200)
+basic.forever(on_forever)`,
+[{t:"Teste avec ta main comme 'voiture'",d:1},{t:"Ajoute un son de bip quand la barrière s'ouvre",d:1}]
+),
+
+mk(46,"Serrure codée","advanced",{difficulty:2,time:"30–50 min"},
+"Entrer un code (A/B/logo) pour déverrouiller.",
+["micro:bit","MakeCode"],
+"Stocke la séquence dans un texte.",
+["A → CODE+='A'","B → CODE+='B'","Logo → vérifier"],
+`let code = ""
+let secret = "ABBA"
+input.onButtonPressed(Button.A, function () {
+    code += "A"
+    basic.showString("A")
+})
+input.onButtonPressed(Button.B, function () {
+    code += "B"
+    basic.showString("B")
+})
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    if (code == secret) {
+        basic.showIcon(IconNames.Happy)
+    } else {
+        basic.showIcon(IconNames.Sad)
+    }
+    code = ""
+})`,
+`code = ""
+secret = "ABBA"
+
+def on_a():
+    global code
+    code += "A"
+    basic.show_string("A")
+input.on_button_pressed(Button.A, on_a)
+
+def on_b():
+    global code
+    code += "B"
+    basic.show_string("B")
+input.on_button_pressed(Button.B, on_b)
+
+def on_logo():
+    global code
+    if code == secret:
+        basic.show_icon(IconNames.HAPPY)
+    else:
+        basic.show_icon(IconNames.SAD)
+    code = ""
+input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)`,
+[{t:'Augmente le code : <code>"ABBA"</code> → <code>"AABBA"</code>',d:1},{t:"Ajoute 3 tentatives max avant blocage",d:2}]
+),
+
+mk(47,"Feux tricolores","advanced",{difficulty:2,time:"25–40 min"},
+"Simuler un feu rouge/orange/vert avec LEDs.",
+["micro:bit","3 LEDs + résistances","MakeCode"],
+"Ordre : Vert → Orange → Rouge.",
+["Répéter → Vert 5s → Orange 2s → Rouge 5s"],
+`basic.forever(function () {
+    pins.digitalWritePin(DigitalPin.P0, 1) // Vert
+    basic.pause(5000)
+    pins.digitalWritePin(DigitalPin.P0, 0)
+    pins.digitalWritePin(DigitalPin.P1, 1) // Orange
+    basic.pause(2000)
+    pins.digitalWritePin(DigitalPin.P1, 0)
+    pins.digitalWritePin(DigitalPin.P2, 1) // Rouge
+    basic.pause(5000)
+    pins.digitalWritePin(DigitalPin.P2, 0)
+})`,
+`def on_forever():
+    pins.digital_write_pin(DigitalPin.P0, 1)
+    basic.pause(5000)
+    pins.digital_write_pin(DigitalPin.P0, 0)
+    pins.digital_write_pin(DigitalPin.P1, 1)
+    basic.pause(2000)
+    pins.digital_write_pin(DigitalPin.P1, 0)
+    pins.digital_write_pin(DigitalPin.P2, 1)
+    basic.pause(5000)
+    pins.digital_write_pin(DigitalPin.P2, 0)
+basic.forever(on_forever)`,
+[{t:"Bouton A pour mode 'piéton' (rouge plus long)",d:2},{t:"Affiche un compte à rebours sur les LEDs",d:2}]
+),
+
+mk(48,"Lampe intelligente","advanced",{difficulty:2,time:"30–55 min"},
+"Allumer une lampe quand il fait sombre.",
+["micro:bit","LED / relais","MakeCode"],
+"Seuil de lumière = déclencheur.",
+["Répéter → L = lumière","Si L < seuil → allumer P0","Sinon → éteindre"],
+`basic.forever(function () {
+    if (input.lightLevel() < 50) {
+        pins.digitalWritePin(DigitalPin.P0, 1)
+        basic.showIcon(IconNames.Heart)
+    } else {
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        basic.clearScreen()
+    }
+    basic.pause(500)
+})`,
+`def on_forever():
+    if input.light_level() < 50:
+        pins.digital_write_pin(DigitalPin.P0, 1)
+        basic.show_icon(IconNames.HEART)
+    else:
+        pins.digital_write_pin(DigitalPin.P0, 0)
+        basic.clear_screen()
+    basic.pause(500)
+basic.forever(on_forever)`,
+[{t:"Couvre l'écran : la lampe s'allume",d:1},{t:"Ajuste le seuil <code>50</code>",d:1}]
+),
+
+mk(49,"Vittascience","advanced",{difficulty:1,time:"15–25 min"},
+"Refaire une activité simple dans Vittascience.",
+["micro:bit","Compte Vittascience"],
+"Reprends 'dés' ou 'température' pour démarrer.",
+["Choisir un projet Vittascience","Recréer : bouton A → température","Téléverser"],
+`// Même code que activité 12 !
+input.onButtonPressed(Button.A, function () {
+    basic.showNumber(input.temperature())
+})`,
+`# Même code que activité 12 !
+def on_button_a():
+    basic.show_number(input.temperature())
+input.on_button_pressed(Button.A, on_button_a)`,
+[{t:"Compare les menus Vittascience vs MakeCode",d:1},{t:"Refais l'activité 10 (dés) dans Vittascience",d:1}]
+),
+
+mk(50,"Caméra IA : suivre un objet","advanced",{difficulty:3,time:"60–90 min",ia:true},
+"Caméra IA : suivre un objet/couleur pour diriger un véhicule.",
+["Robot","Caméra IA (HuskyLens)","MakeCode"],
+"Lis la position X de l'objet détecté.",
+["Répéter → lire caméra → gauche/centre/droite","Si rien détecté → stop"],
+`// Nécessite extension HuskyLens
+basic.forever(function () {
+    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
+        let x = huskylens.readBox_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.xCenter)
+        if (x < 100) {
+            basic.showString("G")
+        } else if (x > 220) {
+            basic.showString("D")
+        } else {
+            basic.showIcon(IconNames.ArrowNorth)
+        }
+    } else {
+        basic.showIcon(IconNames.No)
+    }
+    basic.pause(200)
+})`,
+`# Nécessite extension HuskyLens
+def on_forever():
+    if huskylens.is_appear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock):
+        x = huskylens.read_box_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.xCenter)
+        if x < 100:
+            basic.show_string("G")
+        elif x > 220:
+            basic.show_string("D")
+        else:
+            basic.show_icon(IconNames.ARROW_NORTH)
+    else:
+        basic.show_icon(IconNames.NO)
+    basic.pause(200)
+basic.forever(on_forever)`,
+[{t:"Commence à faible vitesse, puis augmente",d:1},{t:"Entraîne la caméra sur un objet de couleur",d:2}]
+),
+
+mk(51,"Caméra IA : reconnaître un visage","advanced",{difficulty:3,time:"60–90 min",ia:true},
+"Caméra IA : enregistrer un visage puis reconnaître.",
+["Caméra IA","micro:bit","MakeCode"],
+"Entraîne 1–2 visages pour tester.",
+["Bouton A → mode apprentissage","Répéter → si visage reconnu → 😀"],
+`// Nécessite extension HuskyLens
+input.onButtonPressed(Button.A, function () {
+    huskylens.initI2c()
+    basic.showString("GO")
+})
+basic.forever(function () {
+    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
+        basic.showIcon(IconNames.Happy)
+    } else {
+        basic.showIcon(IconNames.Meh)
+    }
+    basic.pause(500)
+})`,
+`# Nécessite extension HuskyLens
+def on_button_a():
+    huskylens.init_i2c()
+    basic.show_string("GO")
+input.on_button_pressed(Button.A, on_button_a)
+
+def on_forever():
+    if huskylens.is_appear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock):
+        basic.show_icon(IconNames.HAPPY)
+    else:
+        basic.show_icon(IconNames.MEH)
+    basic.pause(500)
+basic.forever(on_forever)`,
+[{t:"Teste différentes distances et lumières",d:1},{t:"Ajoute une action différente par visage reconnu",d:2}]
+),
+
+mk(52,"Caméra IA : lire un QR code","advanced",{difficulty:3,time:"60–90 min",ia:true},
+"Caméra IA : lire un code simple et déclencher une action.",
+["Caméra IA","micro:bit","MakeCode"],
+"Prépare 2–3 codes différents.",
+["Répéter → lire code → action A/B/C selon code"],
+`// Nécessite extension HuskyLens en mode Tag
+basic.forever(function () {
+    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
+        let id = huskylens.readBox_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.ID)
+        basic.showNumber(id)
+    }
+    basic.pause(500)
+})`,
+`# Nécessite extension HuskyLens en mode Tag
+def on_forever():
+    if huskylens.is_appear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock):
+        id = huskylens.read_box_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.ID)
+        basic.show_number(id)
+    basic.pause(500)
+basic.forever(on_forever)`,
+[{t:"Fais un jeu : 'scanne le bon code pour gagner'",d:1},{t:"Associe chaque code à un son/action différent",d:2}]
+),
+
+mk(53,"Micro:bit Create AI V2","advanced",{difficulty:3,time:"60–90 min",ia:true,v2:true},
+"Créer un mini modèle ML et l'utiliser sur micro:bit.",
+["micro:bit V2","Site Create AI","MakeCode"],
+"Fais 2 classes simples : 'calme' vs 'bouge'.",
+["Créer 2 catégories de données","Collecter exemples","Entraîner → exporter","Répéter → si classe 1 → 😀"],
+`// Code généré par Create AI — adapter
+basic.forever(function () {
+    // Le modèle ML est intégré au fichier .hex
+    // Si prédiction = classe 1
+    basic.showIcon(IconNames.Happy)
+    // Si prédiction = classe 2
+    // basic.showIcon(IconNames.Sad)
+    basic.pause(500)
+})`,
+`# Code généré par Create AI — adapter
+def on_forever():
+    # Le modèle ML est intégré au fichier .hex
+    basic.show_icon(IconNames.HAPPY)
+    basic.pause(500)
+basic.forever(on_forever)`,
+[{t:"Ajoute un son différent par classe",d:1},{t:"Crée 3 classes au lieu de 2",d:2}]
+),
+
+mk(54,"Make: AI Robots V2","advanced",{difficulty:3,time:"60–90 min",ia:true,v2:true},
+"Projet robot IA guidé par une plateforme en ligne.",
+["micro:bit V2","Plateforme Make: AI Robots","Robot (option)"],
+"Commence par un tutoriel 'détecter / réagir'.",
+["Suivre un tutoriel","Configurer entrées/sorties","Tester → ajuster"],
+`// Code dépend du tutoriel choisi
+// Exemple: réagir à un son
+basic.forever(function () {
+    if (input.soundLevel() > 100) {
+        basic.showIcon(IconNames.Happy)
+        // action robot
+    } else {
+        basic.showIcon(IconNames.Asleep)
+    }
+    basic.pause(200)
+})`,
+`# Code dépend du tutoriel choisi
+def on_forever():
+    if input.sound_level() > 100:
+        basic.show_icon(IconNames.HAPPY)
+    else:
+        basic.show_icon(IconNames.ASLEEP)
+    basic.pause(200)
+basic.forever(on_forever)`,
+[{t:"Garde un carnet : ce que tu changes et ce que ça fait",d:1},{t:"Combine 2 capteurs pour une décision plus maline",d:3}]
+),
+];
+
+// Activity translations: {title, goal, tip, needs[], blocks[], challenges[].t}
+// Code (JS/PY) is universal — not translated
+const TR = { en: {
+1:{t:"Display text",g:"Display a message on the micro:bit LED screen.",tip:"Start with a short word (e.g.: HELLO).",n:["micro:bit","USB Cable","MakeCode"],b:["On start → Show string \"Hello\""],c:["Change the text to your first name","Add an icon after the text with <code>basic.showIcon(IconNames.Heart)</code>"]},
+2:{t:"Scroll text",g:"Scroll a message in a loop on the LEDs.",tip:"Add a pause to make it readable.",n:["micro:bit","MakeCode"],b:["Forever → Show string \"HELLO\"","Pause 200 ms (optional)"],c:["Change the pause: try <code>100</code>, <code>300</code>, <code>600</code> ms","Scroll 2 different messages"]},
+3:{t:"Show a picture",g:"Display an icon (small picture) on the LEDs.",tip:"Icons are in the Basic menu.",n:["micro:bit","MakeCode"],b:["On start → Show icon (Heart)"],c:["Change the icon: <code>IconNames.House</code>, <code>IconNames.Happy</code>, <code>IconNames.Duck</code>…"]},
+4:{t:"Create your own icon",g:"Draw your own LED icon (5x5 pixels).",tip:"A simple letter (A, M, O) works great.",n:["micro:bit","MakeCode"],b:["On start → Show LEDs (draw your 5×5 pattern)"],c:["Draw your initial letter","Make 2 pictures alternate with a pause"]},
+5:{t:"Blink an icon",g:"Make an icon blink like an alarm.",tip:"Blink = show then clear.",n:["micro:bit","MakeCode"],b:["Forever → Show icon (Heart)","Pause 300 ms","Clear screen","Pause 300 ms"],c:["Try <code>100</code> ms (fast) then <code>800</code> ms (slow)","Alternate between 2 different icons"]},
+6:{t:"Use the buttons",g:"Trigger actions with buttons A and B.",tip:"You can show a sound, text, or icon.",n:["micro:bit","MakeCode"],b:["On button A → Show \"A\"","On button B → Show \"B\"","A+B → Show icon Heart"],c:["Make A = 😀 and B = 😢 (with icons)","Add a counter: A = +1, B = show total"]},
+7:{t:"Shake the board",g:"Trigger an action when you shake the board.",tip:"In simulator, click SHAKE.",n:["micro:bit","MakeCode"],b:["On shake → Show icon Flash","Pause 500 ms","Clear screen"],c:["Change the icon based on your mood","Add a sound with <code>music.playTone()</code>"]},
+8:{t:"Touch-sensitive logo V2",g:"Use the gold touch logo as a magic button.",tip:"The gold logo is touch-sensitive (V2 only).",n:["micro:bit V2","MakeCode"],b:["On logo pressed → Play melody"],c:["Try different melodies: <code>Melodies.Birthday</code>, <code>Melodies.Entertainer</code>","Add a display while playing"]},
+9:{t:"Sound-triggered action V2",g:"React to ambient noise (clap = action).",tip:"Start with threshold ~120, then adjust.",n:["micro:bit V2","MakeCode"],b:["Forever → If sound level > THRESHOLD → 😀 else 😴"],c:["Change threshold <code>120</code> → try <code>80</code> or <code>200</code>","Show exact sound level with <code>basic.showNumber()</code>"]},
+10:{t:"Play dice",g:"Create a die that shows a random number when shaken.",tip:"Random is in the Math menu.",n:["micro:bit","MakeCode"],b:["On shake → ROLL = random 1 to 6","Show number ROLL"],c:["Change <code>randint(1, 6)</code> to <code>randint(1, 20)</code> for RPG dice","Add a sound when you roll a 6","Show a dice face in LEDs instead of a number"]},
+11:{t:"Rock-paper-scissors",g:"Randomly choose between 3 symbols by shaking.",tip:"Use a number 0..2 then conditions.",n:["micro:bit","MakeCode"],b:["On shake → N = random 0..2","If N=0 → Rock","If N=1 → Scissors","Else → Paper"],c:["Add a different sound for each choice","Add a win counter between 2 players (radio)"]},
+12:{t:"Show temperature",g:"Display the temperature measured by the board (approximate).",tip:"Display on button press — it's more readable.",n:["micro:bit","MakeCode"],b:["Button A → Show number Temperature (°C)"],c:["Compare indoors / outdoors","Add a sun icon if T > 25, snowflake if T < 10"]},
+13:{t:"Create a compass",g:"Show the direction (N/E/S/W).",tip:"You need to calibrate the compass first (follow the LED game).",n:["micro:bit","MakeCode"],b:["Button A → Calibrate","Forever → DIR = compass heading (°)","Show N/E/S/W based on angle"],c:["Turn slowly and observe","Add NE, NW, SE, SW for 8 directions"]},
+14:{t:"Detect emotions",g:"Read a value on pin P0 and show an emotion.",tip:"It's a game, not a scientific measurement!",n:["micro:bit","Wires / croc clips (optional)","MakeCode"],b:["Forever → V = analog read P0","If V > threshold → 😀 else 😐"],c:["Touch P0 and GND with your fingers","Add 3 emotion levels with different thresholds"]},
+15:{t:"Build a pedometer",g:"Count your steps with the accelerometer.",tip:"Easy reset with button B!",n:["micro:bit","MakeCode"],b:["On start → STEPS = 0","On shake → STEPS += 1","Button A → Show STEPS","Button B → STEPS = 0"],c:["Attach the board to your ankle and walk","Add a goal: show 🎉 when STEPS > 100"]},
+16:{t:"Measure light",g:"Measure light level (0..255) and display it.",tip:"Cover the LEDs with your hand to see the difference.",n:["micro:bit","MakeCode"],b:["Button A → Show number Light level","Forever → Plot bar graph"],c:["Go near a window then to a dark area","Add a threshold: if light < 50, turn all LEDs on"]},
+17:{t:"Use radio mode",g:"Send messages between 2 micro:bits.",tip:"Same radio group on both boards!",n:["2× micro:bit","MakeCode"],b:["On start → Radio set group 7","Button A → Send 1","Button B → Send 2","On received → if 1 → 😀, if 2 → 😢"],c:["Test with 2 boards in the same room, then further apart","Send text with <code>radio.sendString()</code>"]},
+18:{t:"Create a timer",g:"Make a countdown timer.",tip:"A sets the time, B starts the countdown.",n:["micro:bit","MakeCode"],b:["On start → T = 0","Button A → T += 1","Button B → Countdown → \"OK\" + sound"],c:["Use it for a mini challenge: 10s to tidy up!","Add a beep every second during countdown"]},
+19:{t:"Board buzzer V2",g:"Play a sound with the built-in speaker (V2).",tip:"Start in a quiet place.",n:["micro:bit V2","MakeCode"],b:["Button A → Play melody"],c:["Create a 3-note jingle with <code>music.playTone()</code>","Add button B to stop the music"]},
+20:{t:"Target game",g:"Press B when the right number appears.",tip:"Choose a target (e.g.: 5).",n:["micro:bit","MakeCode"],b:["Button A → N = random 0..9 → Show","Button B → If N==5 → 😀 else 😢"],c:["Change the target from <code>5</code> to another number","Add a score counter"]},
+21:{t:"Play with sprites",g:"Mini game: dodge falling obstacles.",tip:"Go slowly: first the player, then the obstacle.",n:["micro:bit","MakeCode"],b:["On start → Player X=2, Y=4, SCORE=0","Button A/B → move player","Forever → obstacle falls → collision = game over"],c:["Speed up when score increases (reduce pause)","Add multiple obstacles at once"]},
+22:{t:"Treasure chest V2",g:"Enter a secret code to open the chest (game).",tip:"Keep the code short at first (3 gestures).",n:["micro:bit V2","MakeCode"],b:["A → add \"A\" to code","B → add \"B\"","Logo → check code"],c:["Change the secret: <code>\"ABA\"</code> → <code>\"ABBA\"</code>","Invent 3 different codes as a team"]},
+23:{t:"Yoga game",g:"Stay still: if you move too much, you lose.",tip:"Measure movement with the accelerometer.",n:["micro:bit","MakeCode"],b:["On start → PROGRESS=0","Forever → If low movement → +1 LED","If too much movement → X + reset"],c:["Challenge: stay still for 15 seconds","Adjust threshold <code>100</code> to make it easier/harder"]},
+24:{t:"Create custom blocks",g:"Create a function to reuse an effect.",tip:"A function = a reusable block.",n:["micro:bit","MakeCode"],b:["Create function RAIN()","Call RAIN() in a loop"],c:["Change rain speed (pause 40 vs 150)","Make 2 drops fall at the same time"]},
+25:{t:"Control a servo",g:"Move a servo like a barrier.",tip:"Classic positions: 0°, 90°, 180°.",n:["micro:bit","Servo motor","Wires/clips","MakeCode"],b:["Button A → servo 0°","Logo → servo 90°","Button B → servo 180°"],c:["Add a pause and make the servo 'dance'","Control the angle with light level"]},
+26:{t:"Metal tester",g:"Game: detect if a material conducts (metal).",tip:"Set thresholds for 'metal / not metal'.",n:["micro:bit","Wires/croc clips","MakeCode"],b:["Forever → V = read P0","If V > threshold → 😀 + sound","Else → 😢"],c:["Test: paperclip, foil, plastic, wood","Show the raw value with button A"]},
+27:{t:"Plant moisture",g:"Read a moisture sensor and show dry/ok/wet.",tip:"Start by showing the raw number to calibrate.",n:["micro:bit","Moisture sensor (analog)","MakeCode"],b:["Button A → Show raw value","Forever → dry=😢, ok=🙂, wet=😀"],c:["Note the 'dry' and 'wet' values to calibrate","Add a sound alert when too dry"]},
+28:{t:"Outdoor thermometer",g:"Read an external temperature sensor.",tip:"Display every 10 seconds, not continuously.",n:["micro:bit","External temp sensor","MakeCode"],b:["Forever → T = read sensor → Show T → Pause 10s"],c:["Add MIN and MAX variables with buttons A/B","Show a bar graph of temperature"]},
+29:{t:"Play music V2",g:"Compose melodies and play them.",tip:"Tempo + notes = music!",n:["micro:bit V2","MakeCode"],b:["Button A → set tempo","Button B → play melody"],c:["Compose a happy song and a sad one","Change tempo with <code>music.setTempo(180)</code>"]},
+30:{t:"Bluetooth control",g:"Connect the board to a phone via Bluetooth.",tip:"Use 'connected / disconnected' events.",n:["micro:bit","Bluetooth app","MakeCode"],b:["Start Bluetooth services","Connected → 😀","Disconnected → 😢"],c:["Send 1 = on, 0 = off from the phone","Display text received via UART"]},
+31:{t:"Grove modules + Bitmaker V2",g:"Plug in an external module (Grove) and use it.",tip:"Read value → display → transform to sound or LED.",n:["micro:bit V2","Bitmaker / Grove","MakeCode"],b:["Button A → read sensor → show number","Forever → map value → bar graph"],c:["Choose a simple sensor: light, button, potentiometer","Map the value to a sound frequency"]},
+32:{t:"7-segment display",g:"Show temperature on a 7-segment display.",tip:"Use the TM1637 extension in MakeCode.",n:["micro:bit","7-segment display","MakeCode"],b:["Initialize TM1637","Forever → show temperature"],c:["Show '----' if sensor absent","Alternate between temperature and light"]},
+33:{t:"External buzzer",g:"Make sounds with a plugged-in buzzer.",tip:"Change frequency with a sensor.",n:["micro:bit","External buzzer","MakeCode"],b:["Forever → F = 200 + (light × 3)","Play tone at frequency F"],c:["Cover the board: the sound changes!","Use the accelerometer instead of light"]},
+34:{t:"Build a rangefinder",g:"Measure distance with an ultrasonic sensor.",tip:"Show distance, then make an alarm.",n:["micro:bit","Ultrasonic sensor (HC-SR04)","MakeCode"],b:["Forever → D = distance in cm","If D < 10 → alarm"],c:["Make a 'reverse alarm' that beeps faster when close","Show a bar graph of distance"]},
+35:{t:"Room alarm",g:"Trigger an alarm if someone enters.",tip:"Choose a sensor: light or motion.",n:["micro:bit","MakeCode"],b:["Logo → arm/disarm","If armed and light changes → alarm"],c:["Test at night with a flashlight","Adjust threshold <code>30</code>"]},
+36:{t:"Drawer alarm",g:"Trigger an alarm when a drawer opens.",tip:"Read a digital input (0/1).",n:["micro:bit","Switch / contact","MakeCode"],b:["Button A → arm","Forever → if armed and P0 == 1 → alarm"],c:["Attach the contact to detect opening","Add a 3-second delay before the alarm"]},
+37:{t:"Rainbow garland",g:"Drive RGB LEDs (NeoPixel) with a gradient.",tip:"Start with 5 LEDs then increase.",n:["micro:bit","NeoPixel strip","MakeCode"],b:["Initialize NeoPixel","Forever → rainbow gradient → show"],c:["Button A to change speed","Button B to change number of colors"]},
+38:{t:"Sound level V2",g:"Show a bar graph of ambient noise.",tip:"Map 0..255 to 0..5 bars.",n:["micro:bit V2","MakeCode"],b:["Forever → S = sound level → Plot bar graph"],c:["Challenge: whisper vs clap","Add a threshold alert with a sound"]},
+39:{t:"Robot: drive a square",g:"Program a robot to drive in a square.",tip:"Square = forward + turn 4 times.",n:["Robot (micro:bit)","MakeCode"],b:["Create FORWARD(t) and TURN90()","Repeat 4 times"],c:["Adjust times for your robot","Make a triangle, hexagon…"]},
+40:{t:"Robot: ultrasonic obstacle",g:"Avoid an obstacle using ultrasonics.",tip:"If close → stop and turn.",n:["Robot","Ultrasonic sensor","MakeCode"],b:["Forever → D = distance","If D < 15 → reverse + turn","Else → forward"],c:["Test with a box as obstacle","Add a sound when obstacle detected"]},
+41:{t:"Robot: switch obstacles",g:"Detect a collision via micro-switches.",tip:"Collision = closed contact = P0 or P1 = 1.",n:["Robot","Micro-switches","MakeCode"],b:["Forever → if P0==1 or P1==1: reverse + turn","Else: forward"],c:["Place the switch at the front of the robot","Add a collision counter"]},
+42:{t:"Robot: maze",g:"Follow rules to navigate a maze.",tip:"Start with 'forward + turn if obstacle'.",n:["Robot","Sensors","MakeCode"],b:["Forever → if obstacle: turn right","Else: forward"],c:["Draw a maze with tape on the floor","Add 'follow the wall' as a strategy"]},
+43:{t:"Autonomous robot",g:"Explore without a remote, avoiding obstacles.",tip:"Vary directions to avoid getting stuck.",n:["Robot","Sensors","MakeCode"],b:["Forever → if obstacle: random left/right","Else: forward"],c:["Add a sound when it changes direction","Make it trace a path on a grid"]},
+44:{t:"Radio remote-control robot",g:"Control a robot with another micro:bit (radio).",tip:"One transmitter, one receiver.",n:["2× micro:bit","Robot","MakeCode"],b:["Transmitter: A=forward, B=stop, tilt=turn","Receiver: react to commands"],c:["Add an LED to show what you're sending","Add a 'reverse' command"]},
+45:{t:"Parking barrier (PlanetX)",g:"A barrier that opens when a vehicle arrives.",tip:"Detection → servo opens → delay → closes.",n:["micro:bit","PlanetX module + servo","MakeCode"],b:["Forever → if sensor detects: servo 90° → pause → servo 0°"],c:["Test with your hand as a 'car'","Add a beep when the barrier opens"]},
+46:{t:"Coded lock",g:"Enter a code (A/B/logo) to unlock.",tip:"Store the sequence in a string.",n:["micro:bit","MakeCode"],b:["A → CODE+='A'","B → CODE+='B'","Logo → verify"],c:["Increase code: <code>\"ABBA\"</code> → <code>\"AABBA\"</code>","Add 3 max attempts before lockout"]},
+47:{t:"Traffic lights",g:"Simulate red/amber/green traffic lights with LEDs.",tip:"Order: Green → Amber → Red.",n:["micro:bit","3 LEDs + resistors","MakeCode"],b:["Forever → Green 5s → Amber 2s → Red 5s"],c:["Button A for 'pedestrian' mode (longer red)","Show a countdown on the LEDs"]},
+48:{t:"Smart lamp",g:"Turn on a lamp when it's dark.",tip:"Light threshold = trigger.",n:["micro:bit","LED / relay","MakeCode"],b:["Forever → L = light","If L < threshold → turn on P0","Else → turn off"],c:["Cover the screen: the lamp turns on","Adjust threshold <code>50</code>"]},
+49:{t:"Vittascience",g:"Redo a simple activity in Vittascience.",tip:"Start with 'dice' or 'temperature'.",n:["micro:bit","Vittascience account"],b:["Choose a Vittascience project","Recreate: button A → temperature","Upload to board"],c:["Compare Vittascience vs MakeCode menus","Redo activity 10 (dice) in Vittascience"]},
+50:{t:"AI camera: follow object",g:"AI camera: follow an object/color to steer a vehicle.",tip:"Read the X position of the detected object.",n:["Robot","AI Camera (HuskyLens)","MakeCode"],b:["Forever → read camera → left/center/right","If nothing detected → stop"],c:["Start at low speed, then increase","Train the camera on a colored object"]},
+51:{t:"AI camera: face recognition",g:"AI camera: register a face then recognize it.",tip:"Train 1–2 faces to test.",n:["AI Camera","micro:bit","MakeCode"],b:["Button A → learning mode","Forever → if face recognized → 😀"],c:["Test at different distances and lighting","Add a different action per recognized face"]},
+52:{t:"AI camera: read QR code",g:"AI camera: read a simple code and trigger an action.",tip:"Prepare 2–3 different codes.",n:["AI Camera","micro:bit","MakeCode"],b:["Forever → read detected code → action A/B/C"],c:["Make a game: 'scan the right code to win'","Associate each code with a different sound/action"]},
+53:{t:"Micro:bit Create AI V2",g:"Create a mini ML model and use it on micro:bit.",tip:"Make 2 simple classes: 'calm' vs 'moving'.",n:["micro:bit V2","Create AI website","MakeCode"],b:["Create 2 data categories","Collect examples","Train → export","Forever → if class 1 → 😀"],c:["Add a different sound per class","Create 3 classes instead of 2"]},
+54:{t:"Make: AI Robots V2",g:"AI robot project guided by an online platform.",tip:"Start with a 'detect / react' tutorial.",n:["micro:bit V2","Make: AI Robots platform","Robot (optional)"],b:["Follow a tutorial","Configure inputs/outputs","Test → adjust"],c:["Keep a notebook: what you change and what happens","Combine 2 sensors for a smarter decision"]}
+}, ar: {
+1:{t:"عرض نص",g:"عرض رسالة على شاشة LED للمايكروبت.",tip:"ابدأ بكلمة قصيرة (مثال: مرحبا).",n:["micro:bit","كابل USB","MakeCode"],b:["عند البدء ← عرض نص \"مرحبا\""],c:["غيّر النص إلى اسمك","أضف أيقونة بعد النص بـ <code>basic.showIcon(IconNames.Heart)</code>"]},
+2:{t:"تمرير نص",g:"تمرير رسالة بشكل متكرر على شاشة LED.",tip:"أضف توقفاً ليكون مقروءاً.",n:["micro:bit","MakeCode"],b:["تكرار دائم ← عرض نص \"HELLO\"","توقف 200 مللي ثانية"],c:["غيّر التوقف: جرّب <code>100</code> أو <code>300</code> أو <code>600</code> مللي ثانية","مرّر رسالتين مختلفتين"]},
+3:{t:"عرض رسمة",g:"عرض أيقونة (رسمة صغيرة) على الشاشة.",tip:"الأيقونات في قائمة Base.",n:["micro:bit","MakeCode"],b:["عند البدء ← عرض أيقونة (قلب)"],c:["غيّر الأيقونة: <code>IconNames.House</code>، <code>IconNames.Happy</code>، <code>IconNames.Duck</code>…"]},
+4:{t:"صمّم أيقونتك",g:"ارسم أيقونتك الخاصة بالـ LED (5×5 بكسل).",tip:"حرف بسيط (A, M, O) يعمل جيداً.",n:["micro:bit","MakeCode"],b:["عند البدء ← عرض LEDs (ارسم نمطك 5×5)"],c:["ارسم حرفك الأول","اصنع رسمتين تتناوبان مع توقف"]},
+5:{t:"وميض أيقونة",g:"اجعل أيقونة تومض كالإنذار.",tip:"وميض = عرض ثم مسح.",n:["micro:bit","MakeCode"],b:["تكرار ← عرض أيقونة قلب","توقف 300 مللي ثانية","مسح الشاشة","توقف 300 مللي ثانية"],c:["جرّب <code>100</code> مللي ثانية (سريع) ثم <code>800</code> (بطيء)","بدّل بين أيقونتين مختلفتين"]},
+6:{t:"استخدام الأزرار",g:"تفعيل إجراءات بالأزرار A و B.",tip:"يمكنك وضع صوت أو نص أو أيقونة.",n:["micro:bit","MakeCode"],b:["زر A ← عرض \"A\"","زر B ← عرض \"B\"","A+B ← عرض أيقونة قلب"],c:["اجعل A = 😀 و B = 😢","أضف عدّاداً: A = +1، B = عرض المجموع"]},
+7:{t:"هزّ البطاقة",g:"تنفيذ إجراء عند هزّ البطاقة.",tip:"في المحاكاة، اضغط SHAKE.",n:["micro:bit","MakeCode"],b:["عند الهزّ ← عرض أيقونة برق","توقف 500 مللي ثانية","مسح الشاشة"],c:["غيّر الأيقونة حسب مزاجك","أضف صوتاً بـ <code>music.playTone()</code>"]},
+8:{t:"اللمس الحساس V2",g:"استخدم الشعار الذهبي كزر سحري.",tip:"الشعار الذهبي حساس للمس (V2 فقط).",n:["micro:bit V2","MakeCode"],b:["عند لمس الشعار ← تشغيل لحن"],c:["جرّب ألحاناً مختلفة: <code>Melodies.Birthday</code>","أضف عرضاً أثناء التشغيل"]},
+9:{t:"استجابة للصوت V2",g:"الاستجابة للضوضاء (تصفيق = إجراء).",tip:"ابدأ بعتبة ~120 ثم اضبط.",n:["micro:bit V2","MakeCode"],b:["تكرار ← إذا مستوى الصوت > العتبة ← 😀 وإلا 😴"],c:["غيّر العتبة <code>120</code> ← جرّب <code>80</code> أو <code>200</code>","اعرض مستوى الصوت الدقيق بـ <code>basic.showNumber()</code>"]},
+10:{t:"لعبة النرد",g:"صنع نرد يُظهر رقماً عشوائياً عند الهزّ.",tip:"العشوائي في قائمة Math.",n:["micro:bit","MakeCode"],b:["عند الهزّ ← ROLL = عشوائي 1 إلى 6","عرض العدد ROLL"],c:["غيّر <code>randint(1, 6)</code> إلى <code>randint(1, 20)</code> لنرد أدوار","أضف صوتاً عند الحصول على 6","اعرض وجه النرد بالـ LED بدل الرقم"]},
+11:{t:"حجر-ورقة-مقص",g:"اختيار عشوائي بين 3 رموز بالهزّ.",tip:"استخدم رقماً 0..2 ثم شروط.",n:["micro:bit","MakeCode"],b:["عند الهزّ ← N = عشوائي 0..2","إذا N=0 ← حجر","إذا N=1 ← مقص","وإلا ← ورقة"],c:["أضف صوتاً مختلفاً لكل اختيار","أضف عدّاد انتصارات بين لاعبين (راديو)"]},
+12:{t:"عرض درجة الحرارة",g:"عرض درجة الحرارة التي تقيسها البطاقة.",tip:"اعرض عند الضغط لتكون مقروءة.",n:["micro:bit","MakeCode"],b:["زر A ← عرض عدد الحرارة (°C)"],c:["قارن الداخل / الخارج","أضف أيقونة شمس إذا T > 25، ثلج إذا T < 10"]},
+13:{t:"صنع بوصلة",g:"عرض الاتجاه (ش/ق/ج/غ).",tip:"يجب معايرة البوصلة أولاً.",n:["micro:bit","MakeCode"],b:["زر A ← معايرة","تكرار ← DIR = اتجاه البوصلة","عرض ش/ق/ج/غ حسب الزاوية"],c:["استدر ببطء ولاحظ","أضف 8 اتجاهات"]},
+14:{t:"كشف المشاعر",g:"قراءة قيمة من المنفذ P0 وعرض مشاعر.",tip:"إنها لعبة وليست قياساً علمياً!",n:["micro:bit","أسلاك / مشابك","MakeCode"],b:["تكرار ← V = قراءة تناظرية P0","إذا V > عتبة ← 😀 وإلا 😐"],c:["المس P0 و GND بأصابعك","أضف 3 مستويات مشاعر بعتبات مختلفة"]},
+15:{t:"عدّاد خطوات",g:"عدّ خطواتك بمقياس التسارع.",tip:"إعادة تعيين سهلة بالزر B!",n:["micro:bit","MakeCode"],b:["عند البدء ← STEPS = 0","عند الهزّ ← STEPS += 1","زر A ← عرض STEPS","زر B ← STEPS = 0"],c:["ثبّت البطاقة على كاحلك وامشِ","أضف هدفاً: اعرض 🎉 عند STEPS > 100"]},
+16:{t:"قياس الإضاءة",g:"قياس مستوى الضوء (0..255) وعرضه.",tip:"غطِّ الشاشة بيدك لترى الفرق.",n:["micro:bit","MakeCode"],b:["زر A ← عرض مستوى الضوء","تكرار ← رسم بياني"],c:["اذهب قرب نافذة ثم لمنطقة مظلمة","أضف عتبة: إذا الضوء < 50 أشعل كل الـ LED"]},
+17:{t:"وضع الراديو",g:"إرسال رسائل بين 2 مايكروبت.",tip:"نفس مجموعة الراديو على البطاقتين!",n:["2× micro:bit","MakeCode"],b:["عند البدء ← مجموعة راديو 7","زر A ← إرسال 1","زر B ← إرسال 2","عند الاستقبال ← إذا 1 ← 😀، إذا 2 ← 😢"],c:["اختبر ببطاقتين في نفس الغرفة ثم أبعد","أرسل نصاً بـ <code>radio.sendString()</code>"]},
+18:{t:"صنع مؤقت",g:"صنع عدّ تنازلي.",tip:"A يضبط الوقت، B يبدأ العدّ.",n:["micro:bit","MakeCode"],b:["عند البدء ← T = 0","زر A ← T += 1","زر B ← عدّ تنازلي ← \"OK\" + صوت"],c:["استخدمه لتحدٍّ: 10 ثوانٍ للترتيب!","أضف صفيراً كل ثانية أثناء العدّ"]},
+19:{t:"مكبر صوت V2",g:"تشغيل صوت بالمكبر المدمج (V2).",tip:"ابدأ في مكان هادئ.",n:["micro:bit V2","MakeCode"],b:["زر A ← تشغيل لحن"],c:["أنشئ نغمة من 3 نوتات بـ <code>music.playTone()</code>","أضف زر B لإيقاف الموسيقى"]},
+20:{t:"لعبة الهدف",g:"اضغط B عندما يظهر الرقم الصحيح.",tip:"اختر هدفاً (مثال: 5).",n:["micro:bit","MakeCode"],b:["زر A ← N = عشوائي 0..9 ← عرض","زر B ← إذا N==5 ← 😀 وإلا 😢"],c:["غيّر الهدف من <code>5</code> لرقم آخر","أضف عدّاد نقاط"]},
+21:{t:"اللعب بالكائنات",g:"لعبة صغيرة: تفادي عوائق تسقط.",tip:"ابدأ ببطء: أولاً اللاعب ثم العائق.",n:["micro:bit","MakeCode"],b:["عند البدء ← لاعب X=2، Y=4، SCORE=0","زر A/B ← تحريك اللاعب","تكرار ← عائق يسقط ← تصادم = نهاية"],c:["زِد السرعة عند ارتفاع النقاط","أضف عدة عوائق في وقت واحد"]},
+22:{t:"صندوق الكنز V2",g:"أدخل رمزاً سرياً لفتح الصندوق.",tip:"اجعل الرمز قصيراً في البداية (3 حركات).",n:["micro:bit V2","MakeCode"],b:["A ← إضافة \"A\" للرمز","B ← إضافة \"B\"","الشعار ← التحقق"],c:["غيّر الرمز: <code>\"ABA\"</code> ← <code>\"ABBA\"</code>","اخترعوا 3 رموز مختلفة كفريق"]},
+23:{t:"لعبة اليوغا",g:"ابقَ ثابتاً: إذا تحركت كثيراً تخسر.",tip:"قِس الحركة بمقياس التسارع.",n:["micro:bit","MakeCode"],b:["عند البدء ← PROGRESS=0","تكرار ← حركة قليلة = +1 LED","حركة كثيرة = X + إعادة"],c:["تحدٍّ: ابقَ ثابتاً 15 ثانية","اضبط العتبة <code>100</code> للتسهيل/التصعيب"]},
+24:{t:"إنشاء مكعبات خاصة",g:"إنشاء دالة لإعادة استخدام تأثير.",tip:"الدالة = مكعب قابل لإعادة الاستخدام.",n:["micro:bit","MakeCode"],b:["إنشاء دالة RAIN()","استدعاء RAIN() في حلقة"],c:["غيّر سرعة المطر (توقف 40 مقابل 150)","اصنع قطرتين تسقطان في نفس الوقت"]},
+25:{t:"التحكم بمحرك سيرفو",g:"تحريك سيرفو كحاجز.",tip:"المواقع الكلاسيكية: 0°، 90°، 180°.",n:["micro:bit","محرك سيرفو","أسلاك","MakeCode"],b:["زر A ← سيرفو 0°","الشعار ← سيرفو 90°","زر B ← سيرفو 180°"],c:["أضف توقفاً واصنع 'رقصة' للسيرفو","تحكم بالزاوية عبر مستوى الضوء"]},
+26:{t:"كاشف المعادن",g:"لعبة: كشف التوصيل (معدن).",tip:"اضبط عتبات 'معدن / ليس معدن'.",n:["micro:bit","أسلاك/مشابك","MakeCode"],b:["تكرار ← V = قراءة P0","إذا V > عتبة ← 😀 + صوت","وإلا ← 😢"],c:["اختبر: مشبك ورق، ألمنيوم، بلاستيك، خشب","اعرض القيمة الخام بالزر A"]},
+27:{t:"رطوبة النبتة",g:"قراءة مستشعر رطوبة وعرض جاف/جيد/رطب.",tip:"ابدأ بعرض الرقم الخام للمعايرة.",n:["micro:bit","مستشعر رطوبة","MakeCode"],b:["زر A ← عرض القيمة الخام","تكرار ← جاف=😢، جيد=🙂، رطب=😀"],c:["سجّل قيم 'جاف' و'مبلل' للمعايرة","أضف تنبيهاً صوتياً عند الجفاف"]},
+28:{t:"ميزان حرارة خارجي",g:"قراءة مستشعر حرارة خارجي.",tip:"اعرض كل 10 ثوانٍ وليس باستمرار.",n:["micro:bit","مستشعر حرارة خارجي","MakeCode"],b:["تكرار ← T = قراءة المستشعر ← عرض T ← توقف 10 ثوانٍ"],c:["أضف متغيرات MIN و MAX بالأزرار A/B","اعرض رسماً بيانياً للحرارة"]},
+29:{t:"عزف موسيقى V2",g:"تأليف ألحان وعزفها.",tip:"إيقاع + نوتات = موسيقى!",n:["micro:bit V2","MakeCode"],b:["زر A ← ضبط الإيقاع","زر B ← عزف لحن"],c:["ألّف أغنية سعيدة وأخرى حزينة","غيّر الإيقاع بـ <code>music.setTempo(180)</code>"]},
+30:{t:"التحكم بالبلوتوث",g:"توصيل البطاقة بهاتف عبر البلوتوث.",tip:"استخدم أحداث 'متصل / غير متصل'.",n:["micro:bit","تطبيق بلوتوث","MakeCode"],b:["بدء خدمات البلوتوث","متصل ← 😀","غير متصل ← 😢"],c:["أرسل 1 = تشغيل، 0 = إيقاف من الهاتف","اعرض النص المستلم عبر UART"]},
+31:{t:"وحدات Grove + Bitmaker V2",g:"توصيل وحدة خارجية (Grove) واستخدامها.",tip:"اقرأ القيمة ← اعرض ← حوّل لصوت أو LED.",n:["micro:bit V2","Bitmaker / Grove","MakeCode"],b:["زر A ← قراءة المستشعر ← عرض","تكرار ← تعيين القيمة ← رسم بياني"],c:["اختر مستشعراً بسيطاً: ضوء، زر، مقاومة متغيرة","عيّن القيمة لتردد صوتي"]},
+32:{t:"شاشة 7 أجزاء",g:"عرض الحرارة على شاشة 7 أجزاء.",tip:"استخدم إضافة TM1637 في MakeCode.",n:["micro:bit","شاشة 7 أجزاء","MakeCode"],b:["تهيئة TM1637","تكرار ← عرض الحرارة"],c:["اعرض '----' إذا المستشعر غائب","بدّل بين الحرارة والإضاءة"]},
+33:{t:"جرس خارجي",g:"إصدار أصوات بجرس موصول.",tip:"غيّر التردد بمستشعر.",n:["micro:bit","جرس خارجي","MakeCode"],b:["تكرار ← F = 200 + (ضوء × 3)","عزف نغمة بتردد F"],c:["غطِّ البطاقة: الصوت يتغير!","استخدم مقياس التسارع بدل الضوء"]},
+34:{t:"قياس المسافات",g:"قياس المسافة بمستشعر فوق صوتي.",tip:"اعرض المسافة ثم اصنع إنذاراً.",n:["micro:bit","مستشعر فوق صوتي","MakeCode"],b:["تكرار ← D = المسافة بالسنتيمتر","إذا D < 10 ← إنذار"],c:["اصنع 'إنذار رجوع' يصفر أسرع عند الاقتراب","اعرض رسماً بيانياً للمسافة"]},
+35:{t:"إنذار الغرفة",g:"تفعيل إنذار إذا دخل أحد.",tip:"اختر مستشعراً: ضوء أو حركة.",n:["micro:bit","MakeCode"],b:["الشعار ← تسليح/إلغاء","إذا مسلّح وتغير الضوء ← إنذار"],c:["اختبر ليلاً بمصباح يدوي","اضبط العتبة <code>30</code>"]},
+36:{t:"إنذار الدُّرج",g:"تفعيل إنذار عند فتح درج.",tip:"اقرأ مدخلاً رقمياً (0/1).",n:["micro:bit","مفتاح / موصل","MakeCode"],b:["زر A ← تسليح","تكرار ← إذا مسلّح و P0 == 1 ← إنذار"],c:["ثبّت الموصل ليكشف الفتح","أضف تأخيراً 3 ثوانٍ قبل الإنذار"]},
+37:{t:"إكليل ألوان قوس قزح",g:"التحكم بأضواء RGB (NeoPixel) بتدرج.",tip:"ابدأ بـ 5 أضواء ثم زِد.",n:["micro:bit","شريط NeoPixel","MakeCode"],b:["تهيئة NeoPixel","تكرار ← تدرج قوس قزح ← عرض"],c:["زر A لتغيير السرعة","زر B لتغيير عدد الألوان"]},
+38:{t:"مستوى الصوت V2",g:"عرض رسم بياني للضوضاء المحيطة.",tip:"عيّن 0..255 إلى 0..5 أشرطة.",n:["micro:bit V2","MakeCode"],b:["تكرار ← S = مستوى الصوت ← رسم بياني"],c:["تحدٍّ: همس مقابل تصفيق","أضف تنبيه عتبة بصوت"]},
+39:{t:"روبوت: مربع",g:"برمجة روبوت لرسم مربع.",tip:"مربع = تقدم + دوران 4 مرات.",n:["روبوت (micro:bit)","MakeCode"],b:["إنشاء FORWARD(t) و TURN90()","تكرار 4 مرات"],c:["اضبط الأوقات حسب روبوتك","اصنع مثلثاً، سداسياً…"]},
+40:{t:"روبوت: عائق (فوق صوتي)",g:"تفادي عائق بالموجات فوق الصوتية.",tip:"إذا قريب ← توقف ودُر.",n:["روبوت","مستشعر فوق صوتي","MakeCode"],b:["تكرار ← D = المسافة","إذا D < 15 ← رجوع + دوران","وإلا ← تقدم"],c:["اختبر بصندوق كعائق","أضف صوتاً عند كشف العائق"]},
+41:{t:"روبوت: عائق (مفاتيح)",g:"كشف تصادم عبر مفاتيح دقيقة.",tip:"تصادم = موصل مغلق = P0 أو P1 = 1.",n:["روبوت","مفاتيح دقيقة","MakeCode"],b:["تكرار ← إذا P0==1 أو P1==1: رجوع + دوران","وإلا: تقدم"],c:["ضع المفتاح في مقدمة الروبوت","أضف عدّاد تصادمات"]},
+42:{t:"روبوت: متاهة",g:"اتباع قواعد لعبور متاهة.",tip:"ابدأ بـ 'تقدم + دُر إذا عائق'.",n:["روبوت","مستشعرات","MakeCode"],b:["تكرار ← إذا عائق: دُر يميناً","وإلا: تقدم"],c:["ارسم متاهة بالشريط اللاصق على الأرض","أضف استراتيجية 'اتبع الجدار'"]},
+43:{t:"روبوت مستقل",g:"استكشاف بدون تحكم عن بعد مع تفادي العوائق.",tip:"نوّع الاتجاهات لتجنب العلق.",n:["روبوت","مستشعرات","MakeCode"],b:["تكرار ← إذا عائق: عشوائي يمين/يسار","وإلا: تقدم"],c:["أضف صوتاً عند تغيير الاتجاه","اجعله يرسم مساراً على شبكة"]},
+44:{t:"تحكم بالروبوت (راديو)",g:"التحكم بروبوت ببطاقة مايكروبت أخرى.",tip:"مرسل واحد، مستقبل واحد.",n:["2× micro:bit","روبوت","MakeCode"],b:["المرسل: A=أمام، B=توقف، ميل=دوران","المستقبل: تنفيذ الأوامر"],c:["أضف LED لرؤية ما ترسله","أضف أمر 'رجوع'"]},
+45:{t:"حاجز موقف (PlanetX)",g:"حاجز يفتح عند وصول مركبة.",tip:"كشف ← سيرفو يفتح ← تأخير ← يغلق.",n:["micro:bit","وحدة PlanetX + سيرفو","MakeCode"],b:["تكرار ← إذا المستشعر يكشف: سيرفو 90° ← توقف ← سيرفو 0°"],c:["اختبر بيدك كـ 'سيارة'","أضف صفيراً عند فتح الحاجز"]},
+46:{t:"قفل مشفّر",g:"إدخال رمز (A/B/الشعار) لفتح القفل.",tip:"خزّن التسلسل في نص.",n:["micro:bit","MakeCode"],b:["A ← CODE+='A'","B ← CODE+='B'","الشعار ← تحقق"],c:["زِد الرمز: <code>\"ABBA\"</code> ← <code>\"AABBA\"</code>","أضف 3 محاولات كحد أقصى قبل الحظر"]},
+47:{t:"إشارات مرور",g:"محاكاة إشارة حمراء/برتقالية/خضراء بأضواء LED.",tip:"الترتيب: أخضر ← برتقالي ← أحمر.",n:["micro:bit","3 أضواء LED + مقاومات","MakeCode"],b:["تكرار ← أخضر 5 ثوانٍ ← برتقالي 2 ثانية ← أحمر 5 ثوانٍ"],c:["زر A لوضع 'مشاة' (أحمر أطول)","اعرض عدّاً تنازلياً على الـ LED"]},
+48:{t:"مصباح ذكي",g:"إضاءة مصباح عندما يكون الجو مظلماً.",tip:"عتبة الضوء = المحفّز.",n:["micro:bit","LED / مُرَحِّل","MakeCode"],b:["تكرار ← L = الضوء","إذا L < عتبة ← تشغيل P0","وإلا ← إيقاف"],c:["غطِّ الشاشة: المصباح يضيء","اضبط العتبة <code>50</code>"]},
+49:{t:"Vittascience",g:"إعادة نشاط بسيط في Vittascience.",tip:"ابدأ بـ 'نرد' أو 'حرارة'.",n:["micro:bit","حساب Vittascience"],b:["اختر مشروع Vittascience","أعد: زر A ← حرارة","رفع للبطاقة"],c:["قارن قوائم Vittascience و MakeCode","أعد النشاط 10 (نرد) في Vittascience"]},
+50:{t:"كاميرا ذكاء: تتبع جسم",g:"كاميرا ذكاء اصطناعي: تتبع جسم/لون لتوجيه مركبة.",tip:"اقرأ موقع X للجسم المكتشف.",n:["روبوت","كاميرا ذكاء (HuskyLens)","MakeCode"],b:["تكرار ← قراءة الكاميرا ← يسار/وسط/يمين","إذا لا شيء ← توقف"],c:["ابدأ بسرعة منخفضة ثم زِد","درّب الكاميرا على جسم ملوّن"]},
+51:{t:"كاميرا ذكاء: التعرف على الوجوه",g:"كاميرا ذكاء: تسجيل وجه ثم التعرف عليه.",tip:"درّب 1-2 وجه للاختبار.",n:["كاميرا ذكاء","micro:bit","MakeCode"],b:["زر A ← وضع التعلم","تكرار ← إذا تعرّف على الوجه ← 😀"],c:["اختبر بمسافات وإضاءات مختلفة","أضف إجراءً مختلفاً لكل وجه"]},
+52:{t:"كاميرا ذكاء: قراءة QR",g:"كاميرا ذكاء: قراءة رمز بسيط وتنفيذ إجراء.",tip:"حضّر 2-3 رموز مختلفة.",n:["كاميرا ذكاء","micro:bit","MakeCode"],b:["تكرار ← قراءة الرمز ← إجراء A/B/C"],c:["اصنع لعبة: 'امسح الرمز الصحيح لتفوز'","اربط كل رمز بصوت/إجراء مختلف"]},
+53:{t:"Micro:bit Create AI V2",g:"إنشاء نموذج تعلم آلي صغير واستخدامه.",tip:"اصنع فئتين: 'هادئ' مقابل 'يتحرك'.",n:["micro:bit V2","موقع Create AI","MakeCode"],b:["إنشاء فئتين","جمع أمثلة","تدريب ← تصدير","تكرار ← إذا فئة 1 ← 😀"],c:["أضف صوتاً مختلفاً لكل فئة","أنشئ 3 فئات بدل 2"]},
+54:{t:"Make: AI Robots V2",g:"مشروع روبوت ذكاء اصطناعي موجّه بمنصة إلكترونية.",tip:"ابدأ بدرس 'اكتشف / تفاعل'.",n:["micro:bit V2","منصة Make: AI Robots","روبوت (اختياري)"],b:["اتبع درساً تعليمياً","ضبط المدخلات/المخرجات","اختبر ← اضبط"],c:["احتفظ بدفتر: ماذا تغيّر وماذا يحدث","ادمج مستشعرين لقرار أذكى"]}
+}};
+
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
+const STORAGE_KEY = "wdiy_microbit54_v3";
+const defaultP = () => ({done:{},fav:{}});
+function loadP(){try{const r=localStorage.getItem(STORAGE_KEY);if(!r)return defaultP();const o=JSON.parse(r);return{done:o.done||{},fav:o.fav||{}};}catch{return defaultP();}}
+function saveP(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
+let progress = loadP();
+let currentList = [];
+let currentIndex = -1;
+let codeLang = "js";
+let lang = "fr";
+
+const $ = id => document.getElementById(id);
+const grid = $("grid");
+const overlay = $("overlay");
+
+// ═══════════════════════════════════════════════════════════════════
+// i18n HELPERS
+// ═══════════════════════════════════════════════════════════════════
+function t(key){ return UI[lang][key] || UI.fr[key] || key; }
+
+// Get translated activity field, fallback to FR
+function ta(a, field){
+  if(lang === "fr") return a[field];
+  const tr = TR[lang] && TR[lang][a.id];
+  if(!tr) return a[field];
+  const map = {title:"t",goal:"g",tip:"tip",needs:"n",blocks:"b"};
+  const k = map[field];
+  return k && tr[k] !== undefined ? tr[k] : a[field];
+}
+
+// Get translated challenges
+function taChal(a){
+  if(lang === "fr") return a.challenges;
+  const tr = TR[lang] && TR[lang][a.id];
+  if(!tr || !tr.c) return a.challenges;
+  return a.challenges.map((ch, i) => ({t: tr.c[i] || ch.t, d: ch.d}));
+}
+
+function applyLang(){
+  const isRTL = lang === "ar";
+  document.documentElement.lang = lang;
+  document.documentElement.dir = isRTL ? "rtl" : "ltr";
+
+  $("mainTitle").textContent = t("title");
+  $("mainSub").textContent = t("sub");
+  $("lSearch").textContent = t("search");
+  $("searchInput").placeholder = t("ph");
+  $("lPart").textContent = t("part");
+  $("lDiff").textContent = t("diff");
+  $("lStatus").textContent = t("status");
+  $("optAllParts").textContent = t("allParts");
+  $("optSimple").textContent = t("simple");
+  $("optAdv").textContent = t("advanced");
+  $("optAllDiff").textContent = t("allDiff");
+  $("optD1").textContent = t("d1");
+  $("optD2").textContent = t("d2");
+  $("optD3").textContent = t("d3");
+  $("optAllStat").textContent = t("allStat");
+  $("optTodo").textContent = t("todo");
+  $("optDone").textContent = t("done");
+  $("optFav").textContent = t("fav");
+  $("lV2").textContent = t("v2only");
+  $("lIA").textContent = t("iaonly");
+  $("lReset").textContent = t("reset");
+  $("lRandom").textContent = t("random");
+  $("tabInfo").textContent = t("tabInfo");
+  $("tabBlocks").textContent = t("tabBlocks");
+  $("tabCode").textContent = t("tabCode");
+  $("tabChal").textContent = t("tabChal");
+  $("mNeedsLabel").textContent = t("needsLabel");
+  $("codeTip").innerHTML = t("codeTip");
+  $("saveHint").textContent = t("saveHint");
+  $("prevBtn").textContent = t("prev");
+  $("nextBtn").textContent = t("next");
+
+  document.title = t("title") + " — Workshop DIY";
+  render();
+  // Re-render modal if open
+  if(overlay.classList.contains("open") && currentList[currentIndex]) openModal();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function getStatus(a){if(progress.fav[a.id])return"fav";if(progress.done[a.id])return"done";return"todo";}
+
+function tagHTML(a){
+  let h = "";
+  const sl = a.part==="simple" ? t("simpleTag") : t("advTag");
+  h += `<span class="tag ${a.part==='simple'?'simple':'adv'}">${sl}</span>`;
+  h += `<span class="tag d${a.difficulty}">${'⭐'.repeat(a.difficulty)}</span>`;
+  h += `<span class="tag">⏱ ${esc(a.time)}</span>`;
+  if(a.v2) h += `<span class="tag v2">V2</span>`;
+  if(a.ia) h += `<span class="tag ia">${lang==="ar"?"ذ.إ.":"IA"}</span>`;
+  return h;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════════
+function render(){
+  const q = $("searchInput").value.trim().toLowerCase();
+  const part = $("partSelect").value;
+  const diff = $("diffSelect").value;
+  const status = $("statusSelect").value;
+  const v2 = $("onlyV2").checked;
+  const ia = $("onlyIA").checked;
+
+  let list = A.slice();
+  if(q) list = list.filter(a => {
+    const title = ta(a,"title");
+    const goal = ta(a,"goal");
+    const tip = ta(a,"tip");
+    return [title,goal,tip,a.title,a.goal,...a.blocks,...a.challenges.map(c=>c.t),a.v2?"v2":"",a.ia?"ia":""].join(" ").toLowerCase().includes(q);
+  });
+  if(part!=="all") list = list.filter(a => a.part===part);
+  if(diff!=="all") list = list.filter(a => a.difficulty===Number(diff));
+  if(v2) list = list.filter(a => a.v2);
+  if(ia) list = list.filter(a => a.ia);
+  if(status!=="all") list = list.filter(a => getStatus(a)===status);
+
+  currentList = list;
+
+  const doneC = Object.keys(progress.done).length;
+  const favC = Object.keys(progress.fav).length;
+  $("statsRow").innerHTML = `<span>${t("results")} : <strong>${list.length}</strong> ${t("of")}</span><span>${t("doneL")} : <strong>${doneC}</strong></span><span>${t("favL")} : <strong>${favC}</strong></span>`;
+  $("statsText").textContent = `${doneC} / 54`;
+
+  if(list.length === 0){
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">${t("noResults")}</div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(a => {
+    const st = getStatus(a);
+    const chip = st==="done"?`<span class="chip done">${t("chipDone")}</span>`:st==="fav"?`<span class="chip fav">${t("chipFav")}</span>`:`<span class="chip todo">${t("chipTodo")}</span>`;
+    const goalText = ta(a,"goal");
+    const preview = goalText.length>80 ? goalText.slice(0,80)+"…" : goalText;
+    return `<article class="act-card" data-id="${a.id}" data-diff="${a.difficulty}">
+      <div class="card-top"><div class="tags">${tagHTML(a)}</div><span class="card-id">#${a.id}</span></div>
+      <h3>${esc(ta(a,"title"))}</h3>
+      <p class="preview">${esc(preview)}</p>
+      <div class="card-bottom">${chip}<button class="primary btn-sm" data-go="${a.id}">${t("go")}</button></div>
+    </article>`;
+  }).join("");
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════════════════════════
+grid.addEventListener("click", e => {
+  const goBtn = e.target.closest("[data-go]");
+  const card = e.target.closest(".act-card");
+  if(goBtn){openById(Number(goBtn.dataset.go));e.stopPropagation();}
+  else if(card){openById(Number(card.dataset.id));}
+});
+
+function openById(id){
+  const idx = currentList.findIndex(a => a.id===id);
+  if(idx===-1){currentList=A.slice();currentIndex=A.findIndex(a=>a.id===id);}
+  else currentIndex=idx;
+  openModal();
+}
+
+function openModal(){
+  const a = currentList[currentIndex];
+  if(!a) return;
+
+  $("mTitle").textContent = `#${a.id} — ${ta(a,"title")}`;
+  $("mTags").innerHTML = tagHTML(a);
+  $("mGoal").textContent = ta(a,"goal");
+  $("mTip").textContent = "💡 " + ta(a,"tip");
+  const needs = ta(a,"needs");
+  $("mNeeds").innerHTML = (Array.isArray(needs)?needs:a.needs).map(n => `<li>${esc(n)}</li>`).join("");
+
+  const blocks = ta(a,"blocks");
+  $("mBlocks").innerHTML = (Array.isArray(blocks)?blocks:a.blocks).map((b,i) => `<div class="block-step"><span class="step-num">${i+1}</span>${esc(b)}</div>`).join("");
+
+  updateCode(a);
+
+  const challenges = taChal(a);
+  $("mChallenges").innerHTML = challenges.map(c => `<div class="challenge"><span class="challenge-icon">${c.d===1?'🟢':c.d===2?'🟡':'🔴'}</span><div><div class="challenge-text">${c.t}</div><div class="diff-star">${'⭐'.repeat(c.d)}</div></div></div>`).join("");
+
+  const done = !!progress.done[a.id];
+  const fav = !!progress.fav[a.id];
+  $("markDoneBtn").textContent = done ? t("unmarkDone") : t("markDone");
+  $("markFavBtn").textContent = fav ? t("unmarkFav") : t("markFav");
+  $("prevBtn").disabled = currentIndex<=0;
+  $("nextBtn").disabled = currentIndex>=currentList.length-1;
+  switchTab("info");
+  overlay.classList.add("open");
+}
+
+function updateCode(a){
+  $("codeBlock").textContent = codeLang==="js" ? a.codeJS : a.codePY;
+  document.querySelectorAll("#codeToggle button").forEach(b => b.classList.toggle("active", b.dataset.lang===codeLang));
+}
+
+function closeModal(){overlay.classList.remove("open");}
+function switchTab(name){
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab===name));
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.toggle("active", p.id==="tab-"+name));
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg){
+  $("toastMsg").textContent = msg;
+  $("toast").style.display = "block";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $("toast").style.display = "none", 1500);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════════════════════════════════
+["searchInput","partSelect","diffSelect","statusSelect","onlyV2","onlyIA"].forEach(id => {
+  $(id).addEventListener("input", render);
+  $(id).addEventListener("change", render);
+});
+
+$("resetBtn").addEventListener("click", () => {
+  if(confirm(t("resetConfirm"))){progress=defaultP();saveP(progress);render();showToast(t("resetDone"));}
+});
+$("randomBtn").addEventListener("click", () => {
+  if(currentList.length>0){currentIndex=Math.floor(Math.random()*currentList.length);openModal();}
+});
+
+$("closeBtn").addEventListener("click", closeModal);
+overlay.addEventListener("click", e => {if(e.target===overlay) closeModal();});
+document.addEventListener("keydown", e => {
+  if(!overlay.classList.contains("open")) return;
+  if(e.key==="Escape") closeModal();
+  if(e.key==="ArrowLeft" && currentIndex>0){currentIndex--;openModal();}
+  if(e.key==="ArrowRight" && currentIndex<currentList.length-1){currentIndex++;openModal();}
+});
+
+$("markDoneBtn").addEventListener("click", () => {
+  const a=currentList[currentIndex];if(!a)return;
+  if(progress.done[a.id])delete progress.done[a.id];else progress.done[a.id]=true;
+  saveP(progress);render();openModal();
+});
+$("markFavBtn").addEventListener("click", () => {
+  const a=currentList[currentIndex];if(!a)return;
+  if(progress.fav[a.id])delete progress.fav[a.id];else progress.fav[a.id]=true;
+  saveP(progress);render();openModal();
+});
+$("prevBtn").addEventListener("click", () => {if(currentIndex>0){currentIndex--;openModal();}});
+$("nextBtn").addEventListener("click", () => {if(currentIndex<currentList.length-1){currentIndex++;openModal();}});
+$("tabBar").addEventListener("click", e => {const btn=e.target.closest(".tab-btn");if(btn) switchTab(btn.dataset.tab);});
+$("codeToggle").addEventListener("click", e => {
+  const btn=e.target.closest("button[data-lang]");
+  if(btn){codeLang=btn.dataset.lang;const a=currentList[currentIndex];if(a) updateCode(a);}
+});
+$("copyCodeBtn").addEventListener("click", async () => {
+  try{
+    await navigator.clipboard.writeText($("codeBlock").textContent);
+    $("copyCodeBtn").textContent = "✅";
+    showToast(t("copied"));
+    setTimeout(() => $("copyCodeBtn").textContent = t("copyBtn"), 2000);
+  }catch{showToast("Error");}
+});
+$("themeSelect").addEventListener("change", e => {document.documentElement.dataset.theme=e.target.value;});
+$("langSelect").addEventListener("change", e => {lang=e.target.value;applyLang();});
+
+// ═══════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════
+$("logoWrap").innerHTML = LOGO_SVG;
+applyLang();
+</script>
+</body>
+</html>
