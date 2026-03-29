@@ -235,6 +235,11 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .vblock.cat-sonar{background:#00A4A6}       /* Sonar: Teal */
 .vblock.cat-functions{background:#3455DB}   /* Functions: RoyalBlue */
 
+/* ── LANGUAGE TAB BADGES ── */
+.tab-lang-badge{display:inline-block;font-size:.55rem;font-weight:800;padding:1px 5px;border-radius:3px;vertical-align:middle;margin-inline-end:3px;letter-spacing:.03em}
+.js-badge{background:#F7DF1E;color:#000}
+.py-badge{background:#306998;color:#FFD43B}
+
 /* ── PYTHON CODE UNDER BLOCKS ── */
 .blocks-python{margin-top:14px;border-top:1px solid rgba(255,255,255,.08);padding-top:12px}
 .blocks-python-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:6px;display:flex;align-items:center;gap:6px}
@@ -365,10 +370,11 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
     <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
       <div class="modal-head"><div><h2 id="mTitle"></h2><div class="tags" id="mTags"></div></div><button class="close-btn" id="closeBtn">✕</button></div>
       <div class="tab-bar" id="tabBar">
-        <button class="tab-btn active" data-tab="info" id="tabInfo">🎯 C'est quoi ?</button>
+        <button class="tab-btn active" data-tab="info" id="tabInfo">🎯 Info</button>
         <button class="tab-btn" data-tab="blocks" id="tabBlocks">🧩 Blocs</button>
-        <button class="tab-btn" data-tab="code" id="tabCode">💻 Code</button>
-        <button class="tab-btn" data-tab="challenges" id="tabChal">🚀 À toi !</button>
+        <button class="tab-btn" data-tab="js" id="tabJS"><span class="tab-lang-badge js-badge">JS</span> JavaScript</button>
+        <button class="tab-btn" data-tab="py" id="tabPY"><span class="tab-lang-badge py-badge">PY</span> Python</button>
+        <button class="tab-btn" data-tab="challenges" id="tabChal">🚀 Défis</button>
       </div>
       <div class="tab-panel active" id="tab-info">
         <div class="goal-text" id="mGoal"></div>
@@ -376,11 +382,14 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <ul class="needs-list" id="mNeeds"></ul>
         <div class="tip-box" id="mTip"></div>
       </div>
-      <div class="tab-panel" id="tab-blocks"><div id="mBlocks"></div><div class="blocks-python" id="blocksPython"></div></div>
-      <div class="tab-panel" id="tab-code">
-        <div class="code-toggle" id="codeToggle"><button class="active" data-lang="js">JavaScript</button><button data-lang="py">Python</button></div>
-        <div style="position:relative"><button class="copy-btn" id="copyCodeBtn">📋</button><pre class="code-block" id="codeBlock"></pre></div>
+      <div class="tab-panel" id="tab-blocks"><div id="mBlocks"></div></div>
+      <div class="tab-panel" id="tab-js">
+        <div style="position:relative"><button class="copy-btn" id="copyJSBtn">📋</button><pre class="code-block" id="codeBlockJS"></pre></div>
         <div class="tip-box" style="margin-top:10px;border-color:rgba(122,167,255,.3);color:rgba(122,167,255,.9);background:rgba(122,167,255,.05)" id="codeTip"></div>
+      </div>
+      <div class="tab-panel" id="tab-py">
+        <div style="position:relative"><button class="copy-btn" id="copyPYBtn">📋</button><pre class="code-block" id="codeBlockPY"></pre></div>
+        <div class="tip-box" style="margin-top:10px;border-color:rgba(48,105,152,.4);color:rgba(255,212,59,.9);background:rgba(48,105,152,.08)" id="codeTipPY"></div>
       </div>
       <div class="tab-panel" id="tab-challenges"><div id="mChallenges"></div></div>
       <div class="modal-actions">
@@ -3320,10 +3329,12 @@ function applyLang(){
   $("lRandom").textContent = t("random");
   $("tabInfo").textContent = t("tabInfo");
   $("tabBlocks").textContent = t("tabBlocks");
-  $("tabCode").textContent = t("tabCode");
+  $("tabJS").innerHTML = '<span class="tab-lang-badge js-badge">JS</span> JavaScript';
+  $("tabPY").innerHTML = '<span class="tab-lang-badge py-badge">PY</span> Python';
   $("tabChal").textContent = t("tabChal");
   $("mNeedsLabel").textContent = t("needsLabel");
   $("codeTip").innerHTML = t("codeTip");
+  $("codeTipPY").innerHTML = t("codeTipPY") || t("codeTip");
   $("saveHint").textContent = t("saveHint");
   $("prevBtn").textContent = t("prev");
   $("nextBtn").textContent = t("next");
@@ -3505,10 +3516,6 @@ function openModal(){
     $("mBlocks").innerHTML = (Array.isArray(blocks)?blocks:a.blocks).map((b,i) => `<div class="block-step"><span class="step-num">${i+1}</span>${esc(b)}</div>`).join("");
   }
 
-  // Python code under blocks
-  const pyLabel = lang==="ar"?"كود بايثون المكافئ":lang==="en"?"Equivalent Python code":"Code Python équivalent";
-  $("blocksPython").innerHTML = `<div class="blocks-python-label"><span class="py-icon">PY</span> ${pyLabel}</div><pre>${highlightPython(a.codePY)}</pre>`;
-
   updateCode(a);
 
   const challenges = taChal(a);
@@ -3526,8 +3533,10 @@ function openModal(){
 }
 
 function updateCode(a){
-  $("codeBlock").textContent = codeLang==="js" ? a.codeJS : a.codePY;
-  document.querySelectorAll("#codeToggle button").forEach(b => b.classList.toggle("active", b.dataset.lang===codeLang));
+  $("codeBlockJS").textContent = a.codeJS;
+  $("codeBlockPY").innerHTML = highlightPython(a.codePY);
+  const pyTipText = lang==="ar"?"💡 افتح <strong>MakeCode</strong> ← انتقل إلى <strong>Python</strong> ← الصق الكود":lang==="en"?"💡 Open <strong>MakeCode</strong> → switch to <strong>Python</strong> → paste the code":"💡 Ouvre <strong>MakeCode</strong> → passe en <strong>Python</strong> → colle le code";
+  $("codeTipPY").innerHTML = pyTipText;
 }
 
 function closeModal(){
@@ -3597,16 +3606,20 @@ $("markFavBtn").addEventListener("click", () => {
 $("prevBtn").addEventListener("click", () => {if(currentIndex>0){currentIndex--;openModal();}});
 $("nextBtn").addEventListener("click", () => {if(currentIndex<currentList.length-1){currentIndex++;openModal();}});
 $("tabBar").addEventListener("click", e => {const btn=e.target.closest(".tab-btn");if(btn) switchTab(btn.dataset.tab);});
-$("codeToggle").addEventListener("click", e => {
-  const btn=e.target.closest("button[data-lang]");
-  if(btn){codeLang=btn.dataset.lang;const a=currentList[currentIndex];if(a) updateCode(a);}
-});
-$("copyCodeBtn").addEventListener("click", async () => {
+$("copyJSBtn").addEventListener("click", async () => {
   try{
-    await navigator.clipboard.writeText($("codeBlock").textContent);
-    $("copyCodeBtn").textContent = "✅";
+    await navigator.clipboard.writeText($("codeBlockJS").textContent);
+    $("copyJSBtn").textContent = "✅";
     showToast(t("copied"));
-    setTimeout(() => $("copyCodeBtn").textContent = t("copyBtn"), 2000);
+    setTimeout(() => $("copyJSBtn").textContent = "📋", 2000);
+  }catch{showToast("Error");}
+});
+$("copyPYBtn").addEventListener("click", async () => {
+  try{
+    await navigator.clipboard.writeText($("codeBlockPY").textContent);
+    $("copyPYBtn").textContent = "✅";
+    showToast(t("copied"));
+    setTimeout(() => $("copyPYBtn").textContent = "📋", 2000);
   }catch{showToast("Error");}
 });
 $("themeSelect").addEventListener("change", e => {document.documentElement.dataset.theme=e.target.value;});
