@@ -114,7 +114,7 @@ button.primary:hover:not(:disabled){box-shadow:0 8px 28px var(--glow),0 0 0 2px 
 .act-card[data-diff="2"]{border-inline-start:3px solid transparent;border-image:linear-gradient(180deg,rgba(251,191,36,.7),rgba(251,191,36,.15)) 1}
 .act-card[data-diff="3"]{border-inline-start:3px solid transparent;border-image:linear-gradient(180deg,rgba(255,107,138,.7),rgba(255,107,138,.15)) 1}
 
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:100;padding:16px;overflow-y:auto;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);animation:fadeIn .25s ease}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;z-index:100;padding:16px;overflow-y:auto;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);animation:fadeIn .25s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .modal-overlay.open{display:flex;align-items:flex-start;justify-content:center}
 .modal{max-width:720px;width:100%;margin:20px auto;background:radial-gradient(ellipse at top left,var(--glow),transparent 50%),radial-gradient(ellipse at bottom right,var(--glow2),transparent 50%),rgba(14,21,41,.92);border:1px solid var(--border);border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden;animation:modalSlide .35s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
@@ -191,43 +191,50 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .block-step .step-num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:.62rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--band2));color:var(--bg);margin-inline-end:8px;flex-shrink:0;box-shadow:0 2px 8px var(--glow)}
 
 /* ── VISUAL BLOCKS (MakeCode style) ── */
-.block-canvas{display:flex;flex-direction:column;gap:14px;padding:8px 0}
-.vblock{position:relative;border-radius:5px;padding:7px 12px;font-size:.78rem;font-weight:600;color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:5px;line-height:1.5;box-shadow:0 3px 0 rgba(0,0,0,.3),inset 0 -1px 0 rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.12);margin-bottom:1px;transition:transform .15s,box-shadow .15s;cursor:default}
-.vblock:hover{transform:translateX(2px);box-shadow:0 3px 0 rgba(0,0,0,.3),inset 0 -1px 0 rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.12),0 0 12px rgba(255,255,255,.08)}
-[dir="rtl"] .vblock:hover{transform:translateX(-2px)}
-/* Connector notch (top) */
-.vblock::before{content:"";position:absolute;top:-2px;inset-inline-start:14px;width:16px;height:4px;border-radius:0 0 3px 3px;background:inherit;filter:brightness(.85);pointer-events:none}
+.block-canvas{display:flex;flex-direction:column;gap:12px;padding:8px 4px}
+.vblock{position:relative;border-radius:4px;padding:8px 12px;font-size:.82rem;font-weight:700;color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:6px;line-height:1.6;box-shadow:0 2px 0 rgba(0,0,0,.35);margin-bottom:0;cursor:default;font-family:system-ui,-apple-system,sans-serif}
+/* Puzzle-piece connector notch (top) */
+.vblock::before{content:"";position:absolute;top:-3px;inset-inline-start:16px;width:18px;height:5px;background:inherit;border-radius:0 0 4px 4px;filter:brightness(.78);pointer-events:none;z-index:1}
+/* Puzzle-piece bump (bottom) */
+.vblock::after{content:"";position:absolute;bottom:-3px;inset-inline-start:16px;width:18px;height:5px;background:inherit;border-radius:4px 4px 0 0;filter:brightness(.78);pointer-events:none;z-index:1}
 .vblock.hat::before{display:none}
-/* Hat block: rounded top like an event */
-.vblock.hat{border-radius:20px 20px 5px 5px;padding:8px 14px 7px;box-shadow:0 3px 0 rgba(0,0,0,.3),inset 0 -1px 0 rgba(0,0,0,.15),inset 0 2px 0 rgba(255,255,255,.15)}
-.vblock.hat::after{content:"⚡";position:absolute;top:6px;inset-inline-end:10px;font-size:.65rem;opacity:.5;pointer-events:none}
-/* C-block: wraps children */
-.vblock.cblock{padding:7px 12px 0;flex-direction:column;align-items:stretch;border-radius:5px 5px 5px 5px}
-.vblock .cblock-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
-.vblock .cblock-body{margin:5px 0 5px 0;padding:6px 4px 6px 14px;border-inline-start:4px solid rgba(255,255,255,.18);background:rgba(0,0,0,.12);border-radius:0 4px 4px 0;min-height:32px;display:flex;flex-direction:column;gap:2px}
-[dir="rtl"] .vblock .cblock-body{padding:6px 14px 6px 4px;border-inline-start:none;border-inline-end:4px solid rgba(255,255,255,.18);border-radius:4px 0 0 4px}
+/* Hat block: rounded top = event trigger */
+.vblock.hat{border-radius:18px 18px 4px 4px;padding:9px 16px 8px}
+.vblock.hat::before{display:none}
+/* C-block: wraps children (if/else, loops) */
+.vblock.cblock{padding:8px 12px 0;flex-direction:column;align-items:stretch}
+.vblock.cblock::after{display:none}
+.vblock .cblock-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-weight:700}
+.vblock .cblock-body{margin:4px -12px 4px 0;padding:8px 6px 8px 20px;background:rgba(0,0,0,.18);border-inline-start:5px solid rgba(255,255,255,.15);min-height:36px;display:flex;flex-direction:column;gap:1px}
+[dir="rtl"] .vblock .cblock-body{padding:8px 20px 8px 6px;margin:4px 0 4px -12px;border-inline-start:none;border-inline-end:5px solid rgba(255,255,255,.15)}
 /* C-block bottom cap */
-.vblock.cblock>.cblock-cap{height:6px;border-radius:0 0 5px 5px;background:inherit;filter:brightness(.9);margin:0 -12px;margin-bottom:0}
-.vblock .cblock-else{font-size:.72rem;padding:4px 6px;color:rgba(255,255,255,.85);font-weight:700;background:rgba(0,0,0,.1);border-radius:3px;margin:2px 0;display:inline-block}
-/* Argument pills */
-.vblock .varg{display:inline-flex;padding:2px 8px;border-radius:12px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.1);font-size:.73rem;font-weight:500;white-space:nowrap;color:rgba(255,255,255,.95)}
-.vblock .varg.round{border-radius:999px;background:rgba(0,0,0,.25)}
-.vblock .varg.str{background:rgba(0,0,0,.2)}.vblock .varg.str::before{content:"❝ ";font-size:.6rem;opacity:.5}.vblock .varg.str::after{content:" ❞";font-size:.6rem;opacity:.5}
+.vblock.cblock>.cblock-cap{height:8px;border-radius:0 0 4px 4px;background:inherit;margin:0 -12px;position:relative}
+.vblock.cblock>.cblock-cap::after{content:"";position:absolute;bottom:-3px;inset-inline-start:28px;width:18px;height:5px;background:inherit;border-radius:4px 4px 0 0;filter:brightness(.78)}
+.vblock .cblock-else{font-size:.78rem;padding:5px 10px;color:#fff;font-weight:700;background:inherit;filter:brightness(.9);border-radius:0;margin:0 -12px;display:block}
+/* Argument pills — white rounded for values, red for strings */
+.vblock .varg{display:inline-flex;align-items:center;padding:2px 10px;border-radius:12px;background:rgba(255,255,255,.92);color:#333;font-size:.76rem;font-weight:600;white-space:nowrap;box-shadow:inset 0 1px 2px rgba(0,0,0,.15)}
+.vblock .varg.round{border-radius:999px;background:rgba(255,255,255,.92);color:#333}
+.vblock .varg.str{background:#c0392b;color:#fff;border-radius:14px;box-shadow:inset 0 1px 2px rgba(0,0,0,.2)}
+.vblock .varg.str::before{content:"\" ";opacity:.7;font-weight:400}.vblock .varg.str::after{content:" \"";opacity:.7;font-weight:400}
 /* Nested value block inside arg */
-.vblock .varg .vblock{padding:2px 8px;margin:-2px 0;font-size:.7rem;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1);border-radius:999px}
-.vblock .varg .vblock::before{display:none}
-/* MakeCode category colors */
+.vblock .varg .vblock{padding:2px 10px;margin:-2px -4px;font-size:.74rem;font-weight:600;box-shadow:0 1px 0 rgba(0,0,0,.25);border-radius:999px}
+.vblock .varg .vblock::before,.vblock .varg .vblock::after{display:none}
+/* MakeCode category colors (official palette) */
 .vblock.cat-basic{background:#1E90FF}.vblock.cat-input{background:#D6336C}.vblock.cat-loops{background:#40BF4A}
-.vblock.cat-logic{background:#7B48A0}.vblock.cat-music{background:#E03030}.vblock.cat-radio{background:#3AA9A4}
-.vblock.cat-variables{background:#DC5B5B}.vblock.cat-pins{background:#00838F}.vblock.cat-math{background:#8A6E2F}
+.vblock.cat-logic{background:#6B3FA0}.vblock.cat-music{background:#E63022}.vblock.cat-radio{background:#3AA9A4}
+.vblock.cat-variables{background:#DC3545}.vblock.cat-pins{background:#00796B}.vblock.cat-math{background:#8B6914}
 .vblock.cat-game{background:#5C2D91}.vblock.cat-bluetooth{background:#0072D9}.vblock.cat-neopixel{background:#7B2D8E}
-.vblock.cat-sonar{background:#00897B}.vblock.cat-functions{background:#E65100}
-/* Category icons (before label) */
-.vblock.cat-basic::after{content:""}
-.vblock.cat-input.hat::after{content:"👆"}.vblock.cat-loops.cblock>.cblock-row::before{content:"🔁 ";font-size:.7rem}
-.vblock.cat-logic.cblock>.cblock-row::before{content:"❓ ";font-size:.7rem}
-.vblock.cat-radio.hat::after{content:"📡"}.vblock.cat-bluetooth.hat::after{content:"🔵"}
-.vblock.cat-functions.hat::after{content:"⚙️"}
+.vblock.cat-sonar{background:#00897B}.vblock.cat-functions{background:#757575}
+
+/* ── PYTHON CODE UNDER BLOCKS ── */
+.blocks-python{margin-top:14px;border-top:1px solid rgba(255,255,255,.08);padding-top:12px}
+.blocks-python-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.blocks-python-label .py-icon{background:#306998;color:#FFD43B;font-size:.6rem;font-weight:800;padding:2px 6px;border-radius:4px}
+.blocks-python pre{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.45);padding:12px 14px;overflow-x:auto;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.74rem;line-height:1.5;color:var(--text);white-space:pre;max-height:220px;overflow-y:auto;direction:ltr;text-align:left;box-shadow:inset 0 2px 6px rgba(0,0,0,.25)}
+.blocks-python .py-comment{color:#6A9955;font-style:italic}
+.blocks-python .py-keyword{color:#569CD6}
+.blocks-python .py-string{color:#CE9178}
+.blocks-python .py-number{color:#B5CEA8}
 
 /* ── SIDEBAR LAYOUT ── */
 .app-body{display:flex;position:relative;z-index:1;min-height:0;flex:1}
@@ -345,7 +352,8 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
   </div>
 
   <!-- MODAL -->
-  <div class="modal-overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="modal-overlay" id="overlay">
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
       <div class="modal-head"><div><h2 id="mTitle"></h2><div class="tags" id="mTags"></div></div><button class="close-btn" id="closeBtn">✕</button></div>
       <div class="tab-bar" id="tabBar">
         <button class="tab-btn active" data-tab="info" id="tabInfo">🎯 C'est quoi ?</button>
@@ -359,7 +367,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <ul class="needs-list" id="mNeeds"></ul>
         <div class="tip-box" id="mTip"></div>
       </div>
-      <div class="tab-panel" id="tab-blocks"><div id="mBlocks"></div></div>
+      <div class="tab-panel" id="tab-blocks"><div id="mBlocks"></div><div class="blocks-python" id="blocksPython"></div></div>
       <div class="tab-panel" id="tab-code">
         <div class="code-toggle" id="codeToggle"><button class="active" data-lang="js">JavaScript</button><button data-lang="py">Python</button></div>
         <div style="position:relative"><button class="copy-btn" id="copyCodeBtn">📋</button><pre class="code-block" id="codeBlock"></pre></div>
@@ -3371,6 +3379,13 @@ function renderOneBlock(b){
   h += `</div>`;
   return h;
 }
+function highlightPython(code){
+  return esc(code)
+    .replace(/(#.*)/g,'<span class="py-comment">$1</span>')
+    .replace(/\b(def|if|elif|else|while|for|in|return|import|from|global|not|and|or|True|False|range|len|min|max|abs)\b/g,'<span class="py-keyword">$1</span>')
+    .replace(/(&quot;[^&]*?&quot;|'[^']*?')/g,'<span class="py-string">$1</span>')
+    .replace(/\b(\d+)\b/g,'<span class="py-number">$1</span>');
+}
 function renderBlocks(tree){
   if(!tree || !Array.isArray(tree)) return "";
   let h = `<div class="block-canvas">`;
@@ -3480,6 +3495,10 @@ function openModal(){
     const blocks = ta(a,"blocks");
     $("mBlocks").innerHTML = (Array.isArray(blocks)?blocks:a.blocks).map((b,i) => `<div class="block-step"><span class="step-num">${i+1}</span>${esc(b)}</div>`).join("");
   }
+
+  // Python code under blocks
+  const pyLabel = lang==="ar"?"كود بايثون المكافئ":lang==="en"?"Equivalent Python code":"Code Python équivalent";
+  $("blocksPython").innerHTML = `<div class="blocks-python-label"><span class="py-icon">PY</span> ${pyLabel}</div><pre>${highlightPython(a.codePY)}</pre>`;
 
   updateCode(a);
 
