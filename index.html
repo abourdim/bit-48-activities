@@ -196,7 +196,8 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .vblock{position:relative;border-radius:4px;padding:6px 10px;font-size:.8rem;font-weight:600;color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:5px;line-height:1.5;border-bottom:3px solid rgba(0,0,0,.25);cursor:default;font-family:system-ui,-apple-system,sans-serif;letter-spacing:.01em}
 .vblock::before,.vblock::after{display:none}
 /* Hat block: rounded top = event trigger */
-.vblock.hat{border-radius:16px 16px 4px 4px;padding:7px 14px 6px}
+.vblock.hat{border-radius:16px 16px 4px 4px;padding:7px 14px 4px;flex-direction:column;align-items:stretch}
+.vblock .hat-body{display:flex;flex-direction:column;gap:2px;margin-top:4px}
 /* C-block: wraps children (if/else, loops) */
 .vblock.cblock{padding:6px 10px 0;flex-direction:column;align-items:stretch}
 .vblock .cblock-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
@@ -410,7 +411,7 @@ fr:{
   allStat:"Tous",todo:"À faire",done:"Fait ✅",fav:"Favoris ⭐",
   v2only:"V2 uniquement",iaonly:"IA uniquement",reset:"🔄 Réinit.",random:"🎲 Au hasard",
   results:"Résultats",of:"/ 58",doneL:"Fait",favL:"Favoris",
-  tabInfo:"🎯 C'est quoi ?",tabBlocks:"🧩 Blocs",tabCode:"💻 Code",tabChal:"🚀 À toi !",
+  tabInfo:"🎯 Info",tabBlocks:"🧩 Blocs",tabChal:"🚀 Défis",
   needsLabel:"Tu as besoin de :",codeTip:"💡 Ouvre <strong>MakeCode</strong> → passe en mode <strong>JavaScript</strong> ou <strong>Python</strong> → colle le code → reviens en <strong>Blocs</strong> si tu veux.",
   markDone:"Marquer Fait ✅",unmarkDone:"Annuler Fait ✅",markFav:"Favori ⭐",unmarkFav:"Retirer ⭐",
   saveHint:"Sauvegardé sur cet appareil",prev:"◀ Préc.",next:"Suiv. ▶",
@@ -426,7 +427,7 @@ en:{
   allStat:"All",todo:"To do",done:"Done ✅",fav:"Favorites ⭐",
   v2only:"V2 only",iaonly:"AI only",reset:"🔄 Reset",random:"🎲 Random",
   results:"Results",of:"/ 58",doneL:"Done",favL:"Favorites",
-  tabInfo:"🎯 What is it?",tabBlocks:"🧩 Blocks",tabCode:"💻 Code",tabChal:"🚀 Your turn!",
+  tabInfo:"🎯 Info",tabBlocks:"🧩 Blocks",tabChal:"🚀 Challenges",
   needsLabel:"You need:",codeTip:"💡 Open <strong>MakeCode</strong> → switch to <strong>JavaScript</strong> or <strong>Python</strong> → paste the code → switch back to <strong>Blocks</strong> if you like.",
   markDone:"Mark Done ✅",unmarkDone:"Undo Done ✅",markFav:"Favorite ⭐",unmarkFav:"Remove ⭐",
   saveHint:"Saved on this device",prev:"◀ Prev",next:"Next ▶",
@@ -442,7 +443,7 @@ ar:{
   allStat:"الكل",todo:"للعمل",done:"تم ✅",fav:"مفضل ⭐",
   v2only:"V2 فقط",iaonly:"ذ.إ. فقط",reset:"🔄 إعادة",random:"🎲 عشوائي",
   results:"النتائج",of:"/ 58",doneL:"تم",favL:"مفضل",
-  tabInfo:"🎯 ما هذا؟",tabBlocks:"🧩 المكعبات",tabCode:"💻 الكود",tabChal:"🚀 دورك!",
+  tabInfo:"🎯 معلومات",tabBlocks:"🧩 المكعبات",tabChal:"🚀 التحديات",
   needsLabel:"تحتاج إلى:",codeTip:"💡 افتح <strong>MakeCode</strong> ← انتقل إلى وضع <strong>JavaScript</strong> أو <strong>Python</strong> ← الصق الكود ← عُد إلى <strong>المكعبات</strong> إن أردت.",
   markDone:"تم الإنجاز ✅",unmarkDone:"إلغاء الإنجاز ✅",markFav:"مفضل ⭐",unmarkFav:"إزالة ⭐",
   saveHint:"محفوظ على هذا الجهاز",prev:"السابق ◀",next:"▶ التالي",
@@ -3390,15 +3391,40 @@ function renderOneBlock(b){
   let h = `<div class="vblock ${type} ${cat}">${esc(b.label)}`;
   if(b.arg!==undefined) h += " "+renderArg(b.arg);
   if(b.args) b.args.forEach(a => { h += " "+renderArg(a); });
+  // Hat/stack blocks can have children (nested blocks inside)
+  if(b.children && b.children.length > 0){
+    h += `<div class="hat-body">`;
+    b.children.forEach(c => { h += renderOneBlock(c); });
+    h += `</div>`;
+  }
   h += `</div>`;
   return h;
 }
 function highlightPython(code){
-  return esc(code)
-    .replace(/(#.*)/g,'<span class="py-comment">$1</span>')
-    .replace(/\b(def|if|elif|else|while|for|in|return|import|from|global|not|and|or|True|False|range|len|min|max|abs)\b/g,'<span class="py-keyword">$1</span>')
-    .replace(/(&quot;[^&]*?&quot;|'[^']*?')/g,'<span class="py-string">$1</span>')
-    .replace(/\b(\d+)\b/g,'<span class="py-number">$1</span>');
+  // Tokenize to avoid nested spans
+  const escaped = esc(code);
+  const tokens = [];
+  let remaining = escaped;
+  while(remaining.length > 0){
+    // Comments first (# to end of line)
+    let m = remaining.match(/^(#[^\n]*)/);
+    if(m){ tokens.push('<span class="py-comment">'+m[1]+'</span>'); remaining=remaining.slice(m[0].length); continue; }
+    // Strings (double-quoted via &quot;)
+    m = remaining.match(/^(&quot;[^&]*?&quot;)/);
+    if(m){ tokens.push('<span class="py-string">'+m[1]+'</span>'); remaining=remaining.slice(m[0].length); continue; }
+    // Strings (single-quoted)
+    m = remaining.match(/^('[^']*?')/);
+    if(m){ tokens.push('<span class="py-string">'+m[1]+'</span>'); remaining=remaining.slice(m[0].length); continue; }
+    // Keywords
+    m = remaining.match(/^(def|if|elif|else|while|for|in|return|import|from|global|not|and|or|True|False|range|len|min|max|abs)\b/);
+    if(m){ tokens.push('<span class="py-keyword">'+m[1]+'</span>'); remaining=remaining.slice(m[0].length); continue; }
+    // Numbers
+    m = remaining.match(/^(\d+)/);
+    if(m){ tokens.push('<span class="py-number">'+m[1]+'</span>'); remaining=remaining.slice(m[0].length); continue; }
+    // Everything else: one char at a time
+    tokens.push(remaining[0]); remaining=remaining.slice(1);
+  }
+  return tokens.join('');
 }
 function renderBlocks(tree){
   if(!tree || !Array.isArray(tree)) return "";
