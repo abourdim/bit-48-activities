@@ -333,12 +333,14 @@ body {
 }
 .tip-box .tip-icon { margin-right: 6px; }
 
-/* Code area */
+/* Code area — stacked vertically for full width */
 .code-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  display: flex; flex-direction: column; gap: 12px;
   margin-bottom: 20px;
 }
-.code-panel { border-radius: 10px; overflow: hidden; }
+.code-panel { border-radius: 10px; overflow: hidden; position: relative; }
+.copy-btn { position: absolute; top: 8px; right: 8px; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #aaa; cursor: pointer; z-index: 2; transition: all 0.2s; }
+.copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
 .code-panel-header {
   padding: 8px 14px; display: flex; align-items: center; gap: 8px;
   font-size: 12px; font-weight: 700;
@@ -614,13 +616,15 @@ body {
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Affiche le texte <span class="hl-str">&quot;Bonjour&quot;</span> sur les <span class="hl-num">25</span> LEDs, lettre par lettre</span>
 basic.showString(<span class="hl-str">&quot;Bonjour&quot;</span>)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Affiche le texte <span <span class="hl-kw">class</span>="hl-str">&quot;Bonjour&quot;</span> sur les <span class="hl-num">25</span> LEDs, lettre par lettre</span>
-basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;Bonjour&quot;</span>)</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Affiche le texte &quot;Bonjour&quot; sur les 25 LEDs, lettre par lettre</span>
+basic.show_string(<span class="hl-str">&quot;Bonjour&quot;</span>)</div>
 </div>
 </div>
 <div class="sec-label">Defis</div>
@@ -682,6 +686,7 @@ basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;Bonjour&
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// <span class="hl-str">&quot;forever&quot;</span> = boucle infinie, le code se répète sans fin</span>
 basic.forever(<span class="hl-kw">function</span> () {
     basic.showString(<span class="hl-str">&quot;HELLO&quot;</span>)   <span class="hl-cmt">// Défile le texte sur les LEDs</span>
@@ -690,10 +695,11 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># <span <span class="hl-kw">class</span>="hl-str">&quot;forever&quot;</span> = boucle infinie, le code se répète sans fin</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># &quot;forever&quot; = boucle infinie, le code se répète sans fin</span>
 <span class="hl-kw">def</span> on_forever():
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;HELLO&quot;</span>)  <span <span class="hl-kw">class</span>="hl-cmt"># Défile le texte sur les LEDs</span>
-    basic.pause(<span class="hl-num">200</span>)            <span <span class="hl-kw">class</span>="hl-cmt"># Petite pause (ms) avant de recommencer</span>
+    basic.show_string(<span class="hl-str">&quot;HELLO&quot;</span>)  <span class="hl-cmt"># Défile le texte sur les LEDs</span>
+    basic.pause(<span class="hl-num">200</span>)            <span class="hl-cmt"># Petite pause (ms) avant de recommencer</span>
 basic.forever(on_forever)</div>
 </div>
 </div>
@@ -755,14 +761,16 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// showIcon affiche une icône prédéfinie (ici un cœur)</span>
 <span class="hl-cmt">// Liste complète : Heart, Happy, Sad, Duck, House, Skull…</span>
 basic.showIcon(IconNames.Heart)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># show_icon affiche une icône prédéfinie (ici un cœur)</span>
-<span <span class="hl-kw">class</span>="hl-cmt"># En Python les noms sont en MAJUSCULES : HEART, HAPPY, SAD…</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># show_icon affiche une icône prédéfinie (ici un cœur)</span>
+<span class="hl-cmt"># En Python les noms sont en MAJUSCULES : HEART, HAPPY, SAD…</span>
 basic.show_icon(IconNames.HEART)</div>
 </div>
 </div>
@@ -832,6 +840,7 @@ basic.show_icon(IconNames.HEART)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Clignoter = afficher → pause → effacer → pause → recommencer</span>
 basic.forever(<span class="hl-kw">function</span> () {
     basic.showIcon(IconNames.Heart)  <span class="hl-cmt">// Affiche le cœur</span>
@@ -842,12 +851,13 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Clignoter = afficher → pause → effacer → pause → recommencer</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Clignoter = afficher → pause → effacer → pause → recommencer</span>
 <span class="hl-kw">def</span> on_forever():
-    basic.show_icon(IconNames.HEART)  <span <span class="hl-kw">class</span>="hl-cmt"># Affiche le cœur</span>
-    basic.pause(<span class="hl-num">300</span>)                  <span <span class="hl-kw">class</span>="hl-cmt"># Attend <span class="hl-num">300</span> ms (visible)</span>
-    basic.clear_screen()              <span <span class="hl-kw">class</span>="hl-cmt"># Éteint tout</span>
-    basic.pause(<span class="hl-num">300</span>)                  <span <span class="hl-kw">class</span>="hl-cmt"># Attend <span class="hl-num">300</span> ms (invisible)</span>
+    basic.show_icon(IconNames.HEART)  <span class="hl-cmt"># Affiche le cœur</span>
+    basic.pause(<span class="hl-num">300</span>)                  <span class="hl-cmt"># Attend 300 ms (visible)</span>
+    basic.clear_screen()              <span class="hl-cmt"># Éteint tout</span>
+    basic.pause(<span class="hl-num">300</span>)                  <span class="hl-cmt"># Attend 300 ms (invisible)</span>
 basic.forever(on_forever)</div>
 </div>
 </div>
@@ -917,6 +927,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// onButtonPressed = <span class="hl-str">&quot;quand le bouton est pressé, fais ceci&quot;</span></span>
 <span class="hl-cmt">// <span class="hl-num">3</span> boutons possibles : A (gauche), B (droite), A+B (les deux)</span>
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
@@ -931,18 +942,19 @@ input.onButtonPressed(Button.AB, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># on_button_pressed = <span <span class="hl-kw">class</span>="hl-str">&quot;quand le bouton est pressé, fais ceci&quot;</span></span>
-<span <span class="hl-kw">class</span>="hl-cmt"># <span class="hl-num">3</span> boutons : A (gauche), B (droite), AB (les deux ensemble)</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># on_button_pressed = &quot;quand le bouton est pressé, fais ceci&quot;</span>
+<span class="hl-cmt"># 3 boutons : A (gauche), B (droite), AB (les deux ensemble)</span>
 <span class="hl-kw">def</span> on_button_a():
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;A&quot;</span>)          <span <span class="hl-kw">class</span>="hl-cmt"># Bouton gauche → affiche <span <span class="hl-kw">class</span>="hl-str">&quot;A&quot;</span></span>
+    basic.show_string(<span class="hl-str">&quot;A&quot;</span>)          <span class="hl-cmt"># Bouton gauche → affiche &quot;A&quot;</span>
 input.on_button_pressed(Button.A, on_button_a)
 
 <span class="hl-kw">def</span> on_button_b():
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;B&quot;</span>)          <span <span class="hl-kw">class</span>="hl-cmt"># Bouton droit → affiche <span <span class="hl-kw">class</span>="hl-str">&quot;B&quot;</span></span>
+    basic.show_string(<span class="hl-str">&quot;B&quot;</span>)          <span class="hl-cmt"># Bouton droit → affiche &quot;B&quot;</span>
 input.on_button_pressed(Button.B, on_button_b)
 
 <span class="hl-kw">def</span> on_button_ab():
-    basic.show_icon(IconNames.HEART) <span <span class="hl-kw">class</span>="hl-cmt"># Les deux → cœur</span>
+    basic.show_icon(IconNames.HEART) <span class="hl-cmt"># Les deux → cœur</span>
 input.on_button_pressed(Button.AB, on_button_ab)</div>
 </div>
 </div>
@@ -1011,6 +1023,7 @@ input.on_button_pressed(Button.AB, on_button_ab)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
     basic.showIcon(IconNames.Flash)
     basic.pause(<span class="hl-num">500</span>)
@@ -1019,6 +1032,7 @@ input.on_button_pressed(Button.AB, on_button_ab)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_shake():
     basic.show_icon(IconNames.FLASH)
     basic.pause(<span class="hl-num">500</span>)
@@ -1081,12 +1095,14 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">input.onLogoEvent(TouchButtonEvent.Pressed, <span class="hl-kw">function</span> () {
     music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
 })</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_logo_pressed():
     music.start_melody(music.built_in_melody(Melodies.DADADADUM), MelodyOptions.ONCE)
 input.on_logo_event(TouchButtonEvent.PRESSED, on_logo_pressed)</div>
@@ -1160,6 +1176,7 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo_pressed)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">if</span> (input.soundLevel() &gt; <span class="hl-num">120</span>) {
         basic.showIcon(IconNames.Happy)
@@ -1170,6 +1187,7 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo_pressed)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_forever():
     <span class="hl-kw">if</span> input.sound_level() &gt; <span class="hl-num">120</span>:
         basic.show_icon(IconNames.HAPPY)
@@ -1237,6 +1255,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> roll = <span class="hl-num">0</span>  <span class="hl-cmt">// Variable qui stocke le résultat du dé</span>
 input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
     roll = randint(<span class="hl-num">1</span>, <span class="hl-num">6</span>)       <span class="hl-cmt">// Nombre au hasard entre <span class="hl-num">1</span> et <span class="hl-num">6</span></span>
@@ -1245,11 +1264,12 @@ input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code">roll = <span class="hl-num">0</span>  <span <span class="hl-kw">class</span>="hl-cmt"># Variable qui stocke le résultat du dé</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code">roll = <span class="hl-num">0</span>  <span class="hl-cmt"># Variable qui stocke le résultat du dé</span>
 <span class="hl-kw">def</span> on_shake():
-    <span class="hl-kw">global</span> roll                <span <span class="hl-kw">class</span>="hl-cmt"># <span <span class="hl-kw">class</span>="hl-str">&quot;<span class="hl-kw">global</span>&quot;</span> permet de modifier la variable</span>
-    roll = randint(<span class="hl-num">1</span>, <span class="hl-num">6</span>)       <span <span class="hl-kw">class</span>="hl-cmt"># Nombre au hasard entre <span class="hl-num">1</span> et <span class="hl-num">6</span></span>
-    basic.show_number(roll)    <span <span class="hl-kw">class</span>="hl-cmt"># Affiche le résultat sur les LEDs</span>
+    <span class="hl-kw">global</span> roll                <span class="hl-cmt"># &quot;global&quot; permet de modifier la variable</span>
+    roll = randint(<span class="hl-num">1</span>, <span class="hl-num">6</span>)       <span class="hl-cmt"># Nombre au hasard entre 1 et 6</span>
+    basic.show_number(roll)    <span class="hl-cmt"># Affiche le résultat sur les LEDs</span>
 input.on_gesture(Gesture.SHAKE, on_shake)</div>
 </div>
 </div>
@@ -1325,6 +1345,7 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Pierre-feuille-ciseaux : <span class="hl-num">0</span>=pierre, <span class="hl-num">1</span>=ciseaux, <span class="hl-num">2</span>=feuille</span>
 <span class="hl-kw">let</span> n = <span class="hl-num">0</span>
 input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
@@ -1340,17 +1361,18 @@ input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Pierre-feuille-ciseaux : <span class="hl-num">0</span>=pierre, <span class="hl-num">1</span>=ciseaux, <span class="hl-num">2</span>=feuille</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Pierre-feuille-ciseaux : 0=pierre, 1=ciseaux, 2=feuille</span>
 n = <span class="hl-num">0</span>
 <span class="hl-kw">def</span> on_shake():
     <span class="hl-kw">global</span> n
-    n = randint(<span class="hl-num">0</span>, <span class="hl-num">2</span>)              <span <span class="hl-kw">class</span>="hl-cmt"># <span class="hl-num">3</span> choix possibles : <span class="hl-num">0</span>, <span class="hl-num">1</span> ou <span class="hl-num">2</span></span>
+    n = randint(<span class="hl-num">0</span>, <span class="hl-num">2</span>)              <span class="hl-cmt"># 3 choix possibles : 0, 1 ou 2</span>
     <span class="hl-kw">if</span> n == <span class="hl-num">0</span>:
-        basic.show_icon(IconNames.SMALL_SQUARE)  <span <span class="hl-kw">class</span>="hl-cmt"># Pierre ✊</span>
+        basic.show_icon(IconNames.SMALL_SQUARE)  <span class="hl-cmt"># Pierre ✊</span>
     <span class="hl-kw">elif</span> n == <span class="hl-num">1</span>:
-        basic.show_icon(IconNames.SCISSORS)      <span <span class="hl-kw">class</span>="hl-cmt"># Ciseaux ✂</span>
+        basic.show_icon(IconNames.SCISSORS)      <span class="hl-cmt"># Ciseaux ✂</span>
     <span class="hl-kw">else</span>:
-        basic.show_icon(IconNames.SQUARE)        <span <span class="hl-kw">class</span>="hl-cmt"># Feuille 🖐</span>
+        basic.show_icon(IconNames.SQUARE)        <span class="hl-cmt"># Feuille 🖐</span>
 input.on_gesture(Gesture.SHAKE, on_shake)</div>
 </div>
 </div>
@@ -1411,6 +1433,7 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     basic.showNumber(input.temperature())
     basic.showString(<span class="hl-str">&quot;C&quot;</span>)
@@ -1418,9 +1441,10 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_button_a():
     basic.show_number(input.temperature())
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;C&quot;</span>)
+    basic.show_string(<span class="hl-str">&quot;C&quot;</span>)
 input.on_button_pressed(Button.A, on_button_a)</div>
 </div>
 </div>
@@ -1490,6 +1514,7 @@ input.on_button_pressed(Button.A, on_button_a)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">let</span> dir = input.compassHeading()
     <span class="hl-kw">if</span> (dir &lt; <span class="hl-num">45</span> || dir &gt;= <span class="hl-num">315</span>) {
@@ -1505,16 +1530,17 @@ input.on_button_pressed(Button.A, on_button_a)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_forever():
     dir = input.compass_heading()
     <span class="hl-kw">if</span> dir &lt; <span class="hl-num">45</span> <span class="hl-kw">or</span> dir &gt;= <span class="hl-num">315</span>:
-        basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;N&quot;</span>)
+        basic.show_string(<span class="hl-str">&quot;N&quot;</span>)
     <span class="hl-kw">elif</span> dir &lt; <span class="hl-num">135</span>:
-        basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;E&quot;</span>)
+        basic.show_string(<span class="hl-str">&quot;E&quot;</span>)
     <span class="hl-kw">elif</span> dir &lt; <span class="hl-num">225</span>:
-        basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;S&quot;</span>)
+        basic.show_string(<span class="hl-str">&quot;S&quot;</span>)
     <span class="hl-kw">else</span>:
-        basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;O&quot;</span>)
+        basic.show_string(<span class="hl-str">&quot;O&quot;</span>)
 basic.forever(on_forever)</div>
 </div>
 </div>
@@ -1589,6 +1615,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">let</span> v = pins.analogReadPin(AnalogPin.P0)
     <span class="hl-kw">if</span> (v &gt; <span class="hl-num">500</span>) {
@@ -1600,8 +1627,9 @@ basic.forever(on_forever)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_forever():
-    v = pins.analog_read_pin(AnalogPin.P0)
+    v = pins.analog_read_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>)
     <span class="hl-kw">if</span> v &gt; <span class="hl-num">500</span>:
         basic.show_icon(IconNames.HAPPY)
     <span class="hl-kw">else</span>:
@@ -1679,6 +1707,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> steps = <span class="hl-num">0</span>
 input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
     steps += <span class="hl-num">1</span>
@@ -1693,6 +1722,7 @@ input.onButtonPressed(Button.B, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code">steps = <span class="hl-num">0</span>
 <span class="hl-kw">def</span> on_shake():
     <span class="hl-kw">global</span> steps
@@ -1771,6 +1801,7 @@ input.on_button_pressed(Button.B, on_button_b)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     basic.showNumber(input.lightLevel())
 })
@@ -1780,6 +1811,7 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_button_a():
     basic.show_number(input.light_level())
 input.on_button_pressed(Button.A, on_button_a)
@@ -1862,6 +1894,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// RADIO : les <span class="hl-num">2</span> cartes doivent avoir le MÊME groupe (ici <span class="hl-num">7</span>)</span>
 radio.setGroup(<span class="hl-num">7</span>)
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
@@ -1883,25 +1916,26 @@ radio.onReceivedNumber(<span class="hl-kw">function</span> (receivedNumber) {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># RADIO : les <span class="hl-num">2</span> cartes doivent avoir le MÊME groupe (ici <span class="hl-num">7</span>)</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># RADIO : les 2 cartes doivent avoir le MÊME groupe (ici 7)</span>
 radio.set_group(<span class="hl-num">7</span>)
 
 <span class="hl-kw">def</span> on_button_a():
-    radio.send_number(<span class="hl-num">1</span>)              <span <span class="hl-kw">class</span>="hl-cmt"># Envoie le nombre <span class="hl-num">1</span> par radio</span>
-    basic.show_icon(IconNames.HAPPY)  <span <span class="hl-kw">class</span>="hl-cmt"># Confirme l<span <span class="hl-kw">class</span>="hl-str">&#x27;envoi</span>
+    radio.send_number(<span class="hl-num">1</span>)              <span class="hl-cmt"># Envoie le nombre 1 par radio</span>
+    basic.show_icon(IconNames.HAPPY)  <span class="hl-cmt"># Confirme l&#x27;envoi</span>
 input.on_button_pressed(Button.A, on_button_a)
 
 <span class="hl-kw">def</span> on_button_b():
-    radio.send_number(<span class="hl-num">2</span>)              <span <span class="hl-kw">class</span>="hl-cmt"># Envoie le nombre <span class="hl-num">2</span></span>
+    radio.send_number(<span class="hl-num">2</span>)              <span class="hl-cmt"># Envoie le nombre 2</span>
     basic.show_icon(IconNames.SAD)
 input.on_button_pressed(Button.B, on_button_b)
 
-<span <span class="hl-kw">class</span>="hl-cmt"># Quand l&#x27;</span>autre carte envoie un nombre, on le reçoit ici</span>
+<span class="hl-cmt"># Quand l&#x27;autre carte envoie un nombre, on le reçoit ici</span>
 <span class="hl-kw">def</span> on_received(n):
     <span class="hl-kw">if</span> n == <span class="hl-num">1</span>:
-        basic.show_icon(IconNames.HAPPY)  <span <span class="hl-kw">class</span>="hl-cmt"># L<span <span class="hl-kw">class</span>="hl-str">&#x27;autre a appuyé A</span>
+        basic.show_icon(IconNames.HAPPY)  <span class="hl-cmt"># L&#x27;autre a appuyé A</span>
     <span class="hl-kw">else</span>:
-        basic.show_icon(IconNames.SAD)    <span <span class="hl-kw">class</span>="hl-cmt"># L&#x27;</span>autre a appuyé B</span>
+        basic.show_icon(IconNames.SAD)    <span class="hl-cmt"># L&#x27;autre a appuyé B</span>
 radio.on_received_number(on_received)</div>
 </div>
 </div>
@@ -1973,6 +2007,7 @@ radio.on_received_number(on_received)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> t = <span class="hl-num">0</span>
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     t += <span class="hl-num">1</span>
@@ -1990,6 +2025,7 @@ input.onButtonPressed(Button.B, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code">t = <span class="hl-num">0</span>
 <span class="hl-kw">def</span> on_button_a():
     <span class="hl-kw">global</span> t
@@ -2003,7 +2039,7 @@ input.on_button_pressed(Button.A, on_button_a)
         basic.show_number(t)
         basic.pause(<span class="hl-num">1000</span>)
         t -= <span class="hl-num">1</span>
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;OK&quot;</span>)
+    basic.show_string(<span class="hl-str">&quot;OK&quot;</span>)
     music.play_tone(<span class="hl-num">988</span>, <span class="hl-num">500</span>)
 input.on_button_pressed(Button.B, on_button_b)</div>
 </div>
@@ -2064,12 +2100,14 @@ input.on_button_pressed(Button.B, on_button_b)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
 })</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_button_a():
     music.start_melody(music.built_in_melody(Melodies.DADADADUM), MelodyOptions.ONCE)
 input.on_button_pressed(Button.A, on_button_a)</div>
@@ -2147,6 +2185,7 @@ input.on_button_pressed(Button.A, on_button_a)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> n = <span class="hl-num">0</span>
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     n = randint(<span class="hl-num">0</span>, <span class="hl-num">9</span>)
@@ -2162,6 +2201,7 @@ input.onButtonPressed(Button.B, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code">n = <span class="hl-num">0</span>
 <span class="hl-kw">def</span> on_button_a():
     <span class="hl-kw">global</span> n
@@ -2249,6 +2289,7 @@ input.on_button_pressed(Button.B, on_button_b)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> player = game.createSprite(<span class="hl-num">2</span>, <span class="hl-num">4</span>)
 <span class="hl-kw">let</span> score = <span class="hl-num">0</span>
 <span class="hl-kw">let</span> obstacle = game.createSprite(randint(<span class="hl-num">0</span>, <span class="hl-num">4</span>), <span class="hl-num">0</span>)
@@ -2275,6 +2316,7 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code">player = game.create_sprite(<span class="hl-num">2</span>, <span class="hl-num">4</span>)
 score = <span class="hl-num">0</span>
 obstacle = game.create_sprite(randint(<span class="hl-num">0</span>, <span class="hl-num">4</span>), <span class="hl-num">0</span>)
@@ -2377,6 +2419,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> code = <span class="hl-str">&quot;&quot;</span>
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     code += <span class="hl-str">&quot;A&quot;</span>
@@ -2399,28 +2442,29 @@ input.onLogoEvent(TouchButtonEvent.Pressed, <span class="hl-kw">function</span> 
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code">code = <span <span class="hl-kw">class</span>="hl-str">&quot;&quot;</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code">code = <span class="hl-str">&quot;&quot;</span>
 <span class="hl-kw">def</span> on_button_a():
     <span class="hl-kw">global</span> code
-    code += <span <span class="hl-kw">class</span>="hl-str">&quot;A&quot;</span>
+    code += <span class="hl-str">&quot;A&quot;</span>
     music.play_tone(<span class="hl-num">262</span>, <span class="hl-num">100</span>)
 input.on_button_pressed(Button.A, on_button_a)
 
 <span class="hl-kw">def</span> on_button_b():
     <span class="hl-kw">global</span> code
-    code += <span <span class="hl-kw">class</span>="hl-str">&quot;B&quot;</span>
+    code += <span class="hl-str">&quot;B&quot;</span>
     music.play_tone(<span class="hl-num">330</span>, <span class="hl-num">100</span>)
 input.on_button_pressed(Button.B, on_button_b)
 
 <span class="hl-kw">def</span> on_logo():
     <span class="hl-kw">global</span> code
-    <span class="hl-kw">if</span> code == <span <span class="hl-kw">class</span>="hl-str">&quot;ABA&quot;</span>:
+    <span class="hl-kw">if</span> code == <span class="hl-str">&quot;ABA&quot;</span>:
         basic.show_icon(IconNames.HAPPY)
         music.start_melody(music.built_in_melody(Melodies.POWER_UP), MelodyOptions.ONCE)
     <span class="hl-kw">else</span>:
         basic.show_icon(IconNames.SAD)
         music.start_melody(music.built_in_melody(Melodies.WAWAWAWAA), MelodyOptions.ONCE)
-    code = <span <span class="hl-kw">class</span>="hl-str">&quot;&quot;</span>
+    code = <span class="hl-str">&quot;&quot;</span>
 input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
 </div>
 </div>
@@ -2499,6 +2543,7 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> progress = <span class="hl-num">0</span>
 basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">let</span> force = input.acceleration(Dimension.Strength)
@@ -2516,12 +2561,13 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code">progress = <span class="hl-num">0</span>
 <span class="hl-kw">def</span> on_forever():
     <span class="hl-kw">global</span> progress
     force = input.acceleration(Dimension.STRENGTH)
-    <span class="hl-kw">if</span> abs(force - <span class="hl-num">1024</span>) &lt; <span class="hl-num">100</span>:
-        progress = min(progress + <span class="hl-num">1</span>, <span class="hl-num">25</span>)
+    <span class="hl-kw">if</span> <span class="hl-kw">abs</span>(force - <span class="hl-num">1024</span>) &lt; <span class="hl-num">100</span>:
+        progress = <span class="hl-kw">min</span>(progress + <span class="hl-num">1</span>, <span class="hl-num">25</span>)
         led.plot(progress % <span class="hl-num">5</span>, progress // <span class="hl-num">5</span>)
     <span class="hl-kw">else</span>:
         basic.show_icon(IconNames.NO)
@@ -2596,6 +2642,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">function</span> rain() {
     <span class="hl-kw">let</span> x = randint(<span class="hl-num">0</span>, <span class="hl-num">4</span>)
     <span class="hl-kw">for</span> (<span class="hl-kw">let</span> y = <span class="hl-num">0</span>; y &lt;= <span class="hl-num">4</span>; y++) {
@@ -2610,15 +2657,16 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span class="hl-kw">def</span> rain():
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-kw">def</span> ra<span class="hl-kw">in</span>():
     x = randint(<span class="hl-num">0</span>, <span class="hl-num">4</span>)
-    <span class="hl-kw">for</span> y <span class="hl-kw">in</span> range(<span class="hl-num">5</span>):
+    <span class="hl-kw">for</span> y <span class="hl-kw">in</span> <span class="hl-kw">range</span>(<span class="hl-num">5</span>):
         led.plot(x, y)
         basic.pause(<span class="hl-num">80</span>)
         led.unplot(x, y)
 
 <span class="hl-kw">def</span> on_forever():
-    rain()
+    ra<span class="hl-kw">in</span>()
 basic.forever(on_forever)</div>
 </div>
 </div>
@@ -2682,6 +2730,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     pins.servoWritePin(AnalogPin.P0, <span class="hl-num">0</span>)
 })
@@ -2694,16 +2743,17 @@ input.onLogoEvent(TouchButtonEvent.Pressed, <span class="hl-kw">function</span> 
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_button_a():
-    pins.servo_write_pin(AnalogPin.P0, <span class="hl-num">0</span>)
+    pins.servo_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
 input.on_button_pressed(Button.A, on_button_a)
 
 <span class="hl-kw">def</span> on_button_b():
-    pins.servo_write_pin(AnalogPin.P0, <span class="hl-num">180</span>)
+    pins.servo_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">180</span>)
 input.on_button_pressed(Button.B, on_button_b)
 
 <span class="hl-kw">def</span> on_logo():
-    pins.servo_write_pin(AnalogPin.P0, <span class="hl-num">90</span>)
+    pins.servo_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">90</span>)
 input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
 </div>
 </div>
@@ -2783,6 +2833,7 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">let</span> v = pins.analogReadPin(AnalogPin.P0)
     <span class="hl-kw">if</span> (v &gt; <span class="hl-num">500</span>) {
@@ -2796,8 +2847,9 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_forever():
-    v = pins.analog_read_pin(AnalogPin.P0)
+    v = pins.analog_read_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>)
     <span class="hl-kw">if</span> v &gt; <span class="hl-num">500</span>:
         basic.show_icon(IconNames.HAPPY)
         music.play_tone(<span class="hl-num">880</span>, <span class="hl-num">200</span>)
@@ -2883,6 +2935,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     basic.showNumber(pins.analogReadPin(AnalogPin.P0))
 })
@@ -2900,12 +2953,13 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_button_a():
-    basic.show_number(pins.analog_read_pin(AnalogPin.P0))
+    basic.show_number(pins.analog_read_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>))
 input.on_button_pressed(Button.A, on_button_a)
 
 <span class="hl-kw">def</span> on_forever():
-    v = pins.analog_read_pin(AnalogPin.P0)
+    v = pins.analog_read_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>)
     <span class="hl-kw">if</span> v &lt; <span class="hl-num">300</span>:
         basic.show_icon(IconNames.SAD)
     <span class="hl-kw">elif</span> v &lt; <span class="hl-num">600</span>:
@@ -2981,6 +3035,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">let</span> t = pins.analogReadPin(AnalogPin.P0)
     <span class="hl-kw">let</span> temp = Math.round(t * <span class="hl-num">0</span>.<span class="hl-num">1</span>)
@@ -2991,11 +3046,12 @@ basic.forever(on_forever)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_forever():
-    t = pins.analog_read_pin(AnalogPin.P0)
+    t = pins.analog_read_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>)
     temp = round(t * <span class="hl-num">0</span>.<span class="hl-num">1</span>)
     basic.show_number(temp)
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;C&quot;</span>)
+    basic.show_string(<span class="hl-str">&quot;C&quot;</span>)
     basic.pause(<span class="hl-num">10000</span>)
 basic.forever(on_forever)</div>
 </div>
@@ -3059,6 +3115,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">music.setTempo(<span class="hl-num">120</span>)
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     music.playTone(<span class="hl-num">262</span>, music.beat(BeatFraction.Whole))
@@ -3071,6 +3128,7 @@ input.onButtonPressed(Button.B, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code">music.set_tempo(<span class="hl-num">120</span>)
 
 <span class="hl-kw">def</span> on_button_a():
@@ -3158,6 +3216,7 @@ input.on_button_pressed(Button.B, on_button_b)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">bluetooth.onBluetoothConnected(<span class="hl-kw">function</span> () {
     basic.showIcon(IconNames.Happy)
 })
@@ -3183,6 +3242,7 @@ input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_connected():
     basic.show_icon(IconNames.HAPPY)
 bluetooth.on_bluetooth_connected(on_connected)
@@ -3195,18 +3255,18 @@ bluetooth.start_uart_service()
 
 <span class="hl-kw">def</span> on_uart():
     msg = bluetooth.uart_read_until(serial.delimiters(Delimiters.NEW_LINE))
-    <span class="hl-kw">if</span> msg == <span <span class="hl-kw">class</span>="hl-str">&quot;<span class="hl-num">1</span>&quot;</span>:
+    <span class="hl-kw">if</span> msg == <span class="hl-str">&quot;1&quot;</span>:
         basic.show_icon(IconNames.YES)
-        pins.digital_write_pin(DigitalPin.P0, <span class="hl-num">1</span>)
-    <span class="hl-kw">elif</span> msg == <span <span class="hl-kw">class</span>="hl-str">&quot;<span class="hl-num">0</span>&quot;</span>:
+        pins.digital_write_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">1</span>)
+    <span class="hl-kw">elif</span> msg == <span class="hl-str">&quot;0&quot;</span>:
         basic.show_icon(IconNames.NO)
-        pins.digital_write_pin(DigitalPin.P0, <span class="hl-num">0</span>)
+        pins.digital_write_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
     <span class="hl-kw">else</span>:
         basic.show_string(msg)
 bluetooth.on_uart_data_received(serial.delimiters(Delimiters.NEW_LINE), on_uart)
 
 <span class="hl-kw">def</span> on_button_a():
-    bluetooth.uart_write_string(<span <span class="hl-kw">class</span>="hl-str">&quot;Salut!&quot;</span> + <span <span class="hl-kw">class</span>="hl-str">&quot;\\n&quot;</span>)
+    bluetooth.uart_write_string(<span class="hl-str">&quot;Salut!&quot;</span> + <span class="hl-str">&quot;\\n&quot;</span>)
 input.on_button_pressed(Button.A, on_button_a)</div>
 </div>
 </div>
@@ -3276,6 +3336,7 @@ input.on_button_pressed(Button.A, on_button_a)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     basic.showNumber(pins.analogReadPin(AnalogPin.P0))
 })
@@ -3286,12 +3347,13 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_button_a():
-    basic.show_number(pins.analog_read_pin(AnalogPin.P0))
+    basic.show_number(pins.analog_read_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>))
 input.on_button_pressed(Button.A, on_button_a)
 
 <span class="hl-kw">def</span> on_forever():
-    led.plot_bar_graph(pins.analog_read_pin(AnalogPin.P0), <span class="hl-num">1023</span>)
+    led.plot_bar_graph(pins.analog_read_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>), <span class="hl-num">1023</span>)
     basic.pause(<span class="hl-num">200</span>)
 basic.forever(on_forever)</div>
 </div>
@@ -3357,6 +3419,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Nécessite extension TM1637</span>
 <span class="hl-kw">let</span> tm = TM1637.create(DigitalPin.P1, DigitalPin.P2, <span class="hl-num">7</span>, <span class="hl-num">4</span>)
 basic.forever(<span class="hl-kw">function</span> () {
@@ -3366,8 +3429,9 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Nécessite extension TM1637</span>
-tm = TM1637.create(DigitalPin.P1, DigitalPin.P2, <span class="hl-num">7</span>, <span class="hl-num">4</span>)
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Nécessite extension TM1637</span>
+tm = TM<span class="hl-num">1637</span>.create(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">2</span>, <span class="hl-num">7</span>, <span class="hl-num">4</span>)
 
 <span class="hl-kw">def</span> on_forever():
     tm.show_number(input.temperature())
@@ -3438,6 +3502,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">let</span> freq = <span class="hl-num">200</span> + input.lightLevel() * <span class="hl-num">3</span>
     music.playTone(freq, <span class="hl-num">100</span>)
@@ -3446,6 +3511,7 @@ basic.forever(on_forever)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_forever():
     freq = <span class="hl-num">200</span> + input.light_level() * <span class="hl-num">3</span>
     music.play_tone(freq, <span class="hl-num">100</span>)
@@ -3521,6 +3587,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Nécessite extension sonar</span>
 basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">let</span> d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)
@@ -3533,9 +3600,10 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Nécessite extension sonar</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Nécessite extension sonar</span>
 <span class="hl-kw">def</span> on_forever():
-    d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.CENTIMETERS)
+    d = sonar.ping(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">2</span>, PingUnit.CENTIMETERS)
     basic.show_number(d)
     <span class="hl-kw">if</span> d &lt; <span class="hl-num">10</span>:
         music.play_tone(<span class="hl-num">880</span>, <span class="hl-num">200</span>)
@@ -3619,6 +3687,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> armed = <span class="hl-kw">false</span>
 <span class="hl-kw">let</span> baseline = <span class="hl-num">0</span>
 input.onLogoEvent(TouchButtonEvent.Pressed, <span class="hl-kw">function</span> () {
@@ -3640,6 +3709,7 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code">armed = <span class="hl-kw">False</span>
 baseline = <span class="hl-num">0</span>
 
@@ -3654,7 +3724,7 @@ baseline = <span class="hl-num">0</span>
 input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)
 
 <span class="hl-kw">def</span> on_forever():
-    <span class="hl-kw">if</span> armed <span class="hl-kw">and</span> abs(input.light_level() - baseline) &gt; <span class="hl-num">30</span>:
+    <span class="hl-kw">if</span> armed <span class="hl-kw">and</span> <span class="hl-kw">abs</span>(input.light_level() - baseline) &gt; <span class="hl-num">30</span>:
         music.play_tone(<span class="hl-num">880</span>, <span class="hl-num">500</span>)
         basic.show_icon(IconNames.SKULL)
         basic.pause(<span class="hl-num">500</span>)
@@ -3736,6 +3806,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> armed = <span class="hl-kw">false</span>
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     armed = !armed
@@ -3751,6 +3822,7 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code">armed = <span class="hl-kw">False</span>
 
 <span class="hl-kw">def</span> on_button_a():
@@ -3763,7 +3835,7 @@ basic.forever(<span class="hl-kw">function</span> () {
 input.on_button_pressed(Button.A, on_button_a)
 
 <span class="hl-kw">def</span> on_forever():
-    <span class="hl-kw">if</span> armed <span class="hl-kw">and</span> pins.digital_read_pin(DigitalPin.P0) == <span class="hl-num">1</span>:
+    <span class="hl-kw">if</span> armed <span class="hl-kw">and</span> pins.digital_read_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>) == <span class="hl-num">1</span>:
         music.play_tone(<span class="hl-num">988</span>, <span class="hl-num">300</span>)
         basic.show_icon(IconNames.SKULL)
         basic.pause(<span class="hl-num">300</span>)
@@ -3831,6 +3903,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Nécessite extension neopixel</span>
 <span class="hl-kw">let</span> strip = neopixel.create(DigitalPin.P0, <span class="hl-num">8</span>, NeoPixelMode.RGB)
 strip.showRainbow(<span class="hl-num">1</span>, <span class="hl-num">360</span>)
@@ -3842,8 +3915,9 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Nécessite extension neopixel</span>
-strip = neopixel.create(DigitalPin.P0, <span class="hl-num">8</span>, NeoPixelMode.RGB)
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Nécessite extension neopixel</span>
+strip = neopixel.create(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">8</span>, NeoPixelMode.RGB)
 strip.show_rainbow(<span class="hl-num">1</span>, <span class="hl-num">360</span>)
 
 <span class="hl-kw">def</span> on_forever():
@@ -3913,6 +3987,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">basic.forever(<span class="hl-kw">function</span> () {
     led.plotBarGraph(input.soundLevel(), <span class="hl-num">255</span>)
     basic.pause(<span class="hl-num">100</span>)
@@ -3920,6 +3995,7 @@ basic.forever(on_forever)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_forever():
     led.plot_bar_graph(input.sound_level(), <span class="hl-num">255</span>)
     basic.pause(<span class="hl-num">100</span>)
@@ -3987,6 +4063,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Adapter les pins/vitesses à ton robot</span>
 <span class="hl-kw">function</span> forward(ms: number) {
     pins.analogWritePin(AnalogPin.P0, <span class="hl-num">512</span>)
@@ -4010,22 +4087,23 @@ input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Adapter les pins/vitesses à ton robot</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Adapter les pins/vitesses à ton robot</span>
 <span class="hl-kw">def</span> forward(ms):
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">512</span>)
     basic.pause(ms)
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">0</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
 
 <span class="hl-kw">def</span> turn_right():
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
     basic.pause(<span class="hl-num">500</span>)
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
 
 <span class="hl-kw">def</span> on_button_a():
-    <span class="hl-kw">for</span> i <span class="hl-kw">in</span> range(<span class="hl-num">4</span>):
+    <span class="hl-kw">for</span> i <span class="hl-kw">in</span> <span class="hl-kw">range</span>(<span class="hl-num">4</span>):
         forward(<span class="hl-num">1000</span>)
         turn_right()
 input.on_button_pressed(Button.A, on_button_a)</div>
@@ -4107,6 +4185,7 @@ input.on_button_pressed(Button.A, on_button_a)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Extension sonar — adapter les pins/vitesses à ton robot</span>
 <span class="hl-kw">function</span> forward() {
     pins.analogWritePin(AnalogPin.P0, <span class="hl-num">512</span>)
@@ -4146,29 +4225,30 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Extension sonar — adapter les pins/vitesses à ton robot</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Extension sonar — adapter les pins/vitesses à ton robot</span>
 <span class="hl-kw">def</span> forward():
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">512</span>)
 
 <span class="hl-kw">def</span> stop():
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">0</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
 
 <span class="hl-kw">def</span> backward(ms):
-    pins.analog_write_pin(AnalogPin.P0, -<span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, -<span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, -<span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, -<span class="hl-num">512</span>)
     basic.pause(ms)
     stop()
 
 <span class="hl-kw">def</span> turn_right(ms):
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
     basic.pause(ms)
     stop()
 
 <span class="hl-kw">def</span> on_forever():
-    d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.CENTIMETERS)
+    d = sonar.ping(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">2</span>, PingUnit.CENTIMETERS)
     <span class="hl-kw">if</span> d &gt; <span class="hl-num">0</span> <span class="hl-kw">and</span> d &lt; <span class="hl-num">15</span>:
         stop()
         basic.show_icon(IconNames.NO)
@@ -4254,6 +4334,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Adapter les pins/vitesses à ton robot</span>
 <span class="hl-kw">function</span> forward() {
     pins.analogWritePin(AnalogPin.P13, <span class="hl-num">512</span>)
@@ -4290,29 +4371,30 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Adapter les pins/vitesses à ton robot</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Adapter les pins/vitesses à ton robot</span>
 <span class="hl-kw">def</span> forward():
-    pins.analog_write_pin(AnalogPin.P13, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P14, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">13</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">14</span>, <span class="hl-num">512</span>)
 
 <span class="hl-kw">def</span> stop():
-    pins.analog_write_pin(AnalogPin.P13, <span class="hl-num">0</span>)
-    pins.analog_write_pin(AnalogPin.P14, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">13</span>, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">14</span>, <span class="hl-num">0</span>)
 
 <span class="hl-kw">def</span> backward(ms):
-    pins.analog_write_pin(AnalogPin.P13, -<span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P14, -<span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">13</span>, -<span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">14</span>, -<span class="hl-num">512</span>)
     basic.pause(ms)
     stop()
 
 <span class="hl-kw">def</span> turn_right(ms):
-    pins.analog_write_pin(AnalogPin.P13, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P14, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">13</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">14</span>, <span class="hl-num">0</span>)
     basic.pause(ms)
     stop()
 
 <span class="hl-kw">def</span> on_forever():
-    <span class="hl-kw">if</span> pins.digital_read_pin(DigitalPin.P0) == <span class="hl-num">1</span> <span class="hl-kw">or</span> pins.digital_read_pin(DigitalPin.P1) == <span class="hl-num">1</span>:
+    <span class="hl-kw">if</span> pins.digital_read_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>) == <span class="hl-num">1</span> <span class="hl-kw">or</span> pins.digital_read_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>) == <span class="hl-num">1</span>:
         stop()
         basic.show_icon(IconNames.NO)
         backward(<span class="hl-num">400</span>)
@@ -4401,6 +4483,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Extension sonar — adapter les pins/vitesses à ton robot</span>
 <span class="hl-kw">function</span> forward() {
     pins.analogWritePin(AnalogPin.P0, <span class="hl-num">512</span>)
@@ -4432,27 +4515,28 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Extension sonar — adapter les pins/vitesses à ton robot</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Extension sonar — adapter les pins/vitesses à ton robot</span>
 <span class="hl-kw">def</span> forward():
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">512</span>)
 
 <span class="hl-kw">def</span> stop():
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">0</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
 
 <span class="hl-kw">def</span> turn_right(ms):
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
     basic.pause(ms)
     stop()
 
-<span <span class="hl-kw">class</span>="hl-cmt"># Stratégie : longer le mur à droite</span>
+<span class="hl-cmt"># Stratégie : longer le mur à droite</span>
 <span class="hl-kw">def</span> on_forever():
-    d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.CENTIMETERS)
+    d = sonar.ping(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">2</span>, PingUnit.CENTIMETERS)
     <span class="hl-kw">if</span> d &gt; <span class="hl-num">0</span> <span class="hl-kw">and</span> d &lt; <span class="hl-num">12</span>:
         stop()
-        basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;D&quot;</span>)
+        basic.show_string(<span class="hl-str">&quot;D&quot;</span>)
         turn_right(<span class="hl-num">500</span>)
     <span class="hl-kw">else</span>:
         forward()
@@ -4539,6 +4623,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Extension sonar — adapter les pins/vitesses à ton robot</span>
 <span class="hl-kw">function</span> forward() {
     pins.analogWritePin(AnalogPin.P0, <span class="hl-num">512</span>)
@@ -4587,43 +4672,44 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Extension sonar — adapter les pins/vitesses à ton robot</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Extension sonar — adapter les pins/vitesses à ton robot</span>
 <span class="hl-kw">def</span> forward():
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">512</span>)
 
 <span class="hl-kw">def</span> stop():
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">0</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
 
 <span class="hl-kw">def</span> turn_left(ms):
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">0</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">512</span>)
     basic.pause(ms)
     stop()
 
 <span class="hl-kw">def</span> turn_right(ms):
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
     basic.pause(ms)
     stop()
 
 <span class="hl-kw">def</span> backward(ms):
-    pins.analog_write_pin(AnalogPin.P0, -<span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, -<span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, -<span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, -<span class="hl-num">512</span>)
     basic.pause(ms)
     stop()
 
 <span class="hl-kw">def</span> on_forever():
-    d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.CENTIMETERS)
+    d = sonar.ping(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">2</span>, PingUnit.CENTIMETERS)
     <span class="hl-kw">if</span> d &gt; <span class="hl-num">0</span> <span class="hl-kw">and</span> d &lt; <span class="hl-num">15</span>:
         stop()
         backward(<span class="hl-num">300</span>)
         <span class="hl-kw">if</span> randint(<span class="hl-num">0</span>, <span class="hl-num">1</span>) == <span class="hl-num">0</span>:
-            basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;G&quot;</span>)
+            basic.show_string(<span class="hl-str">&quot;G&quot;</span>)
             turn_left(<span class="hl-num">500</span>)
         <span class="hl-kw">else</span>:
-            basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;D&quot;</span>)
+            basic.show_string(<span class="hl-str">&quot;D&quot;</span>)
             turn_right(<span class="hl-num">500</span>)
     <span class="hl-kw">else</span>:
         forward()
@@ -4692,6 +4778,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// ÉMETTEUR</span>
 radio.setGroup(<span class="hl-num">7</span>)
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
@@ -4709,7 +4796,8 @@ input.onGesture(Gesture.TiltLeft, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># ÉMETTEUR</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># ÉMETTEUR</span>
 radio.set_group(<span class="hl-num">7</span>)
 
 <span class="hl-kw">def</span> on_a():
@@ -4798,6 +4886,7 @@ input.on_gesture(Gesture.TILT_LEFT, on_tilt_left)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">if</span> (pins.digitalReadPin(DigitalPin.P0) == <span class="hl-num">1</span>) {
         pins.servoWritePin(AnalogPin.P1, <span class="hl-num">90</span>)
@@ -4811,12 +4900,13 @@ input.on_gesture(Gesture.TILT_LEFT, on_tilt_left)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_forever():
-    <span class="hl-kw">if</span> pins.digital_read_pin(DigitalPin.P0) == <span class="hl-num">1</span>:
-        pins.servo_write_pin(AnalogPin.P1, <span class="hl-num">90</span>)
+    <span class="hl-kw">if</span> pins.digital_read_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>) == <span class="hl-num">1</span>:
+        pins.servo_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">90</span>)
         basic.show_icon(IconNames.YES)
         basic.pause(<span class="hl-num">3000</span>)
-        pins.servo_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+        pins.servo_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
         basic.show_icon(IconNames.NO)
     basic.pause(<span class="hl-num">200</span>)
 basic.forever(on_forever)</div>
@@ -4896,6 +4986,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> code = <span class="hl-str">&quot;&quot;</span>
 <span class="hl-kw">let</span> secret = <span class="hl-str">&quot;ABBA&quot;</span>
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
@@ -4917,19 +5008,20 @@ input.onLogoEvent(TouchButtonEvent.Pressed, <span class="hl-kw">function</span> 
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code">code = <span <span class="hl-kw">class</span>="hl-str">&quot;&quot;</span>
-secret = <span <span class="hl-kw">class</span>="hl-str">&quot;ABBA&quot;</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code">code = <span class="hl-str">&quot;&quot;</span>
+secret = <span class="hl-str">&quot;ABBA&quot;</span>
 
 <span class="hl-kw">def</span> on_a():
     <span class="hl-kw">global</span> code
-    code += <span <span class="hl-kw">class</span>="hl-str">&quot;A&quot;</span>
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;A&quot;</span>)
+    code += <span class="hl-str">&quot;A&quot;</span>
+    basic.show_string(<span class="hl-str">&quot;A&quot;</span>)
 input.on_button_pressed(Button.A, on_a)
 
 <span class="hl-kw">def</span> on_b():
     <span class="hl-kw">global</span> code
-    code += <span <span class="hl-kw">class</span>="hl-str">&quot;B&quot;</span>
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;B&quot;</span>)
+    code += <span class="hl-str">&quot;B&quot;</span>
+    basic.show_string(<span class="hl-str">&quot;B&quot;</span>)
 input.on_button_pressed(Button.B, on_b)
 
 <span class="hl-kw">def</span> on_logo():
@@ -4938,7 +5030,7 @@ input.on_button_pressed(Button.B, on_b)
         basic.show_icon(IconNames.HAPPY)
     <span class="hl-kw">else</span>:
         basic.show_icon(IconNames.SAD)
-    code = <span <span class="hl-kw">class</span>="hl-str">&quot;&quot;</span>
+    code = <span class="hl-str">&quot;&quot;</span>
 input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
 </div>
 </div>
@@ -4999,6 +5091,7 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">basic.forever(<span class="hl-kw">function</span> () {
     pins.digitalWritePin(DigitalPin.P0, <span class="hl-num">1</span>) <span class="hl-cmt">// Vert</span>
     basic.pause(<span class="hl-num">5000</span>)
@@ -5013,16 +5106,17 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_forever():
-    pins.digital_write_pin(DigitalPin.P0, <span class="hl-num">1</span>)
+    pins.digital_write_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">1</span>)
     basic.pause(<span class="hl-num">5000</span>)
-    pins.digital_write_pin(DigitalPin.P0, <span class="hl-num">0</span>)
-    pins.digital_write_pin(DigitalPin.P1, <span class="hl-num">1</span>)
+    pins.digital_write_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
+    pins.digital_write_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">1</span>)
     basic.pause(<span class="hl-num">2000</span>)
-    pins.digital_write_pin(DigitalPin.P1, <span class="hl-num">0</span>)
-    pins.digital_write_pin(DigitalPin.P2, <span class="hl-num">1</span>)
+    pins.digital_write_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
+    pins.digital_write_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">2</span>, <span class="hl-num">1</span>)
     basic.pause(<span class="hl-num">5000</span>)
-    pins.digital_write_pin(DigitalPin.P2, <span class="hl-num">0</span>)
+    pins.digital_write_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">2</span>, <span class="hl-num">0</span>)
 basic.forever(on_forever)</div>
 </div>
 </div>
@@ -5100,6 +5194,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code">basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">if</span> (input.lightLevel() &lt; <span class="hl-num">50</span>) {
         pins.digitalWritePin(DigitalPin.P0, <span class="hl-num">1</span>)
@@ -5113,12 +5208,13 @@ basic.forever(on_forever)</div>
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code"><span class="hl-kw">def</span> on_forever():
     <span class="hl-kw">if</span> input.light_level() &lt; <span class="hl-num">50</span>:
-        pins.digital_write_pin(DigitalPin.P0, <span class="hl-num">1</span>)
+        pins.digital_write_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">1</span>)
         basic.show_icon(IconNames.HEART)
     <span class="hl-kw">else</span>:
-        pins.digital_write_pin(DigitalPin.P0, <span class="hl-num">0</span>)
+        pins.digital_write_p<span class="hl-kw">in</span>(DigitalP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
         basic.clear_screen()
     basic.pause(<span class="hl-num">500</span>)
 basic.forever(on_forever)</div>
@@ -5189,6 +5285,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Vittascience génère du Python, pas du JS MakeCode</span>
 <span class="hl-cmt">// Exemple en mode blocs → Python :</span>
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
@@ -5202,20 +5299,21 @@ input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Vittascience utilise du MicroPython natif</span>
-<span <span class="hl-kw">class</span>="hl-cmt"># Activité <span class="hl-num">12</span> (température) :</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Vittascience utilise du MicroPython natif</span>
+<span class="hl-cmt"># Activité 12 (température) :</span>
 <span class="hl-kw">from</span> microbit <span class="hl-kw">import</span> *
 <span class="hl-kw">while</span> <span class="hl-kw">True</span>:
     <span class="hl-kw">if</span> button_a.was_pressed():
         display.scroll(temperature())
-        display.scroll(<span <span class="hl-kw">class</span>="hl-str">&quot;C&quot;</span>)
+        display.scroll(<span class="hl-str">&quot;C&quot;</span>)
 
-<span <span class="hl-kw">class</span>="hl-cmt"># Activité <span class="hl-num">10</span> (dés) :</span>
-<span <span class="hl-kw">class</span>="hl-cmt"># <span class="hl-kw">from</span> microbit <span class="hl-kw">import</span> *</span>
-<span <span class="hl-kw">class</span>="hl-cmt"># <span class="hl-kw">import</span> random</span>
-<span <span class="hl-kw">class</span>="hl-cmt"># <span class="hl-kw">while</span> <span class="hl-kw">True</span>:</span>
-<span <span class="hl-kw">class</span>="hl-cmt">#     <span class="hl-kw">if</span> accelerometer.was_gesture(<span <span class="hl-kw">class</span>="hl-str">&quot;shake&quot;</span>):</span>
-<span <span class="hl-kw">class</span>="hl-cmt">#         display.show(random.randint(<span class="hl-num">1</span>, <span class="hl-num">6</span>))</span></div>
+<span class="hl-cmt"># Activité 10 (dés) :</span>
+<span class="hl-cmt"># from microbit import *</span>
+<span class="hl-cmt"># import random</span>
+<span class="hl-cmt"># while True:</span>
+<span class="hl-cmt">#     if accelerometer.was_gesture(&quot;shake&quot;):</span>
+<span class="hl-cmt">#         display.show(random.randint(1, 6))</span></div>
 </div>
 </div>
 <div class="sec-label">Defis</div>
@@ -5300,6 +5398,7 @@ input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Nécessite extension HuskyLens</span>
 basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">if</span> (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
@@ -5319,14 +5418,15 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Nécessite extension HuskyLens</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Nécessite extension HuskyLens</span>
 <span class="hl-kw">def</span> on_forever():
     <span class="hl-kw">if</span> huskylens.is_appear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock):
-        x = huskylens.read_box_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.xCenter)
+        x = huskylens.read_box_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content<span class="hl-num">1</span>.xCenter)
         <span class="hl-kw">if</span> x &lt; <span class="hl-num">100</span>:
-            basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;G&quot;</span>)
+            basic.show_string(<span class="hl-str">&quot;G&quot;</span>)
         <span class="hl-kw">elif</span> x &gt; <span class="hl-num">220</span>:
-            basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;D&quot;</span>)
+            basic.show_string(<span class="hl-str">&quot;D&quot;</span>)
         <span class="hl-kw">else</span>:
             basic.show_icon(IconNames.ARROW_NORTH)
     <span class="hl-kw">else</span>:
@@ -5410,6 +5510,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Nécessite extension HuskyLens</span>
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     huskylens.initI2c()
@@ -5426,10 +5527,11 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Nécessite extension HuskyLens</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Nécessite extension HuskyLens</span>
 <span class="hl-kw">def</span> on_button_a():
-    huskylens.init_i2c()
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;GO&quot;</span>)
+    huskylens.init_i<span class="hl-num">2</span>c()
+    basic.show_string(<span class="hl-str">&quot;GO&quot;</span>)
 input.on_button_pressed(Button.A, on_button_a)
 
 <span class="hl-kw">def</span> on_forever():
@@ -5511,6 +5613,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Nécessite extension HuskyLens en mode Tag</span>
 basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-kw">if</span> (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
@@ -5522,10 +5625,11 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Nécessite extension HuskyLens en mode Tag</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Nécessite extension HuskyLens en mode Tag</span>
 <span class="hl-kw">def</span> on_forever():
     <span class="hl-kw">if</span> huskylens.is_appear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock):
-        id = huskylens.read_box_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.ID)
+        id = huskylens.read_box_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content<span class="hl-num">1</span>.ID)
         basic.show_number(id)
     basic.pause(<span class="hl-num">500</span>)
 basic.forever(on_forever)</div>
@@ -5602,6 +5706,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Code généré par Create AI — adapter</span>
 basic.forever(<span class="hl-kw">function</span> () {
     <span class="hl-cmt">// Le modèle ML est intégré au fichier .hex</span>
@@ -5614,9 +5719,10 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Code généré par Create AI — adapter</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Code généré par Create AI — adapter</span>
 <span class="hl-kw">def</span> on_forever():
-    <span <span class="hl-kw">class</span>="hl-cmt"># Le modèle ML est intégré au fichier .hex</span>
+    <span class="hl-cmt"># Le modèle ML est intégré au fichier .hex</span>
     basic.show_icon(IconNames.HAPPY)
     basic.pause(<span class="hl-num">500</span>)
 basic.forever(on_forever)</div>
@@ -5699,6 +5805,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Code dépend du tutoriel choisi</span>
 <span class="hl-cmt">// Exemple: réagir à un son</span>
 basic.forever(<span class="hl-kw">function</span> () {
@@ -5713,7 +5820,8 @@ basic.forever(<span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Code dépend du tutoriel choisi</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Code dépend du tutoriel choisi</span>
 <span class="hl-kw">def</span> on_forever():
     <span class="hl-kw">if</span> input.sound_level() &gt; <span class="hl-num">100</span>:
         basic.show_icon(IconNames.HAPPY)
@@ -5796,6 +5904,7 @@ basic.forever(on_forever)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> mesures: number[] = []
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     mesures.push(input.temperature())
@@ -5824,11 +5933,12 @@ input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code">mesures = []
 
 <span class="hl-kw">def</span> on_button_a():
     mesures.append(input.temperature())
-    basic.show_number(len(mesures))
+    basic.show_number(<span class="hl-kw">len</span>(mesures))
 input.on_button_pressed(Button.A, on_button_a)
 
 <span class="hl-kw">def</span> on_button_b():
@@ -5838,7 +5948,7 @@ input.on_button_pressed(Button.A, on_button_a)
 input.on_button_pressed(Button.B, on_button_b)
 
 <span class="hl-kw">def</span> on_shake():
-    <span class="hl-kw">if</span> len(mesures) &gt; <span class="hl-num">0</span>:
+    <span class="hl-kw">if</span> <span class="hl-kw">len</span>(mesures) &gt; <span class="hl-num">0</span>:
         mn = mesures[<span class="hl-num">0</span>]
         mx = mesures[<span class="hl-num">0</span>]
         <span class="hl-kw">for</span> v <span class="hl-kw">in</span> mesures:
@@ -5846,9 +5956,9 @@ input.on_button_pressed(Button.B, on_button_b)
                 mn = v
             <span class="hl-kw">if</span> v &gt; mx:
                 mx = v
-        basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;min&quot;</span>)
+        basic.show_string(<span class="hl-str">&quot;min&quot;</span>)
         basic.show_number(mn)
-        basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;max&quot;</span>)
+        basic.show_string(<span class="hl-str">&quot;max&quot;</span>)
         basic.show_number(mx)
 input.on_gesture(Gesture.SHAKE, on_shake)</div>
 </div>
@@ -5929,6 +6039,7 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> mot = <span class="hl-str">&quot;&quot;</span>
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
     mot += <span class="hl-str">&quot;O&quot;</span>
@@ -5951,29 +6062,30 @@ input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code">mot = <span <span class="hl-kw">class</span>="hl-str">&quot;&quot;</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code">mot = <span class="hl-str">&quot;&quot;</span>
 
 <span class="hl-kw">def</span> on_button_a():
     <span class="hl-kw">global</span> mot
-    mot += <span <span class="hl-kw">class</span>="hl-str">&quot;O&quot;</span>
+    mot += <span class="hl-str">&quot;O&quot;</span>
     basic.show_string(mot)
 input.on_button_pressed(Button.A, on_button_a)
 
 <span class="hl-kw">def</span> on_button_b():
     <span class="hl-kw">global</span> mot
-    mot += <span <span class="hl-kw">class</span>="hl-str">&quot;UI&quot;</span>
+    mot += <span class="hl-str">&quot;UI&quot;</span>
     basic.show_string(mot)
 input.on_button_pressed(Button.B, on_button_b)
 
 <span class="hl-kw">def</span> on_shake():
     <span class="hl-kw">global</span> mot
-    basic.show_number(len(mot))
+    basic.show_number(<span class="hl-kw">len</span>(mot))
     basic.pause(<span class="hl-num">500</span>)
-    <span class="hl-kw">if</span> mot == <span <span class="hl-kw">class</span>="hl-str">&quot;OUI&quot;</span>:
+    <span class="hl-kw">if</span> mot == <span class="hl-str">&quot;OUI&quot;</span>:
         basic.show_icon(IconNames.HAPPY)
     <span class="hl-kw">else</span>:
         basic.show_icon(IconNames.SAD)
-    mot = <span <span class="hl-kw">class</span>="hl-str">&quot;&quot;</span>
+    mot = <span class="hl-str">&quot;&quot;</span>
 input.on_gesture(Gesture.SHAKE, on_shake)</div>
 </div>
 </div>
@@ -6050,6 +6162,7 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-cmt">// Adapter les pins à ton robot</span>
 <span class="hl-kw">function</span> forward(ms: number) {
     pins.analogWritePin(AnalogPin.P0, <span class="hl-num">512</span>)
@@ -6094,26 +6207,27 @@ input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
-  <div class="code-block py-code"><span <span class="hl-kw">class</span>="hl-cmt"># Adapter les pins à ton robot</span>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code"><span class="hl-cmt"># Adapter les pins à ton robot</span>
 <span class="hl-kw">def</span> forward(ms):
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">512</span>)
     basic.pause(ms)
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">0</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
 
 <span class="hl-kw">def</span> backward(ms):
-    pins.analog_write_pin(AnalogPin.P0, -<span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, -<span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, -<span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, -<span class="hl-num">512</span>)
     basic.pause(ms)
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">0</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
 
 <span class="hl-kw">def</span> turn_right(ms):
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">512</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">512</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
     basic.pause(ms)
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
 
 <span class="hl-kw">def</span> on_button_a():
     basic.show_icon(IconNames.ARROW_NORTH)
@@ -6128,14 +6242,14 @@ input.on_button_pressed(Button.A, on_button_a)
 input.on_button_pressed(Button.B, on_button_b)
 
 <span class="hl-kw">def</span> on_button_ab():
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;D&quot;</span>)
+    basic.show_string(<span class="hl-str">&quot;D&quot;</span>)
     turn_right(<span class="hl-num">500</span>)
     basic.clear_screen()
 input.on_button_pressed(Button.AB, on_button_ab)
 
 <span class="hl-kw">def</span> on_shake():
-    pins.analog_write_pin(AnalogPin.P0, <span class="hl-num">0</span>)
-    pins.analog_write_pin(AnalogPin.P1, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">0</span>, <span class="hl-num">0</span>)
+    pins.analog_write_p<span class="hl-kw">in</span>(AnalogP<span class="hl-kw">in</span>.P<span class="hl-num">1</span>, <span class="hl-num">0</span>)
     basic.show_icon(IconNames.NO)
 input.on_gesture(Gesture.SHAKE, on_shake)</div>
 </div>
@@ -6211,6 +6325,7 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
 <div class="code-grid">
 <div class="code-panel">
   <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block js-code"><span class="hl-kw">let</span> countA = <span class="hl-num">0</span>
 <span class="hl-kw">let</span> countB = <span class="hl-num">0</span>
 input.onButtonPressed(Button.A, <span class="hl-kw">function</span> () {
@@ -6235,30 +6350,31 @@ input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
 </div>
 <div class="code-panel">
   <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
   <div class="code-block py-code">count_a = <span class="hl-num">0</span>
 count_b = <span class="hl-num">0</span>
 
 <span class="hl-kw">def</span> on_button_a():
     <span class="hl-kw">global</span> count_a
     count_a += <span class="hl-num">1</span>
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;A&quot;</span>)
+    basic.show_string(<span class="hl-str">&quot;A&quot;</span>)
 input.on_button_pressed(Button.A, on_button_a)
 
 <span class="hl-kw">def</span> on_button_b():
     <span class="hl-kw">global</span> count_b
     count_b += <span class="hl-num">1</span>
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;B&quot;</span>)
+    basic.show_string(<span class="hl-str">&quot;B&quot;</span>)
 input.on_button_pressed(Button.B, on_button_b)
 
 <span class="hl-kw">def</span> on_shake():
-    basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;?&quot;</span>)
+    basic.show_string(<span class="hl-str">&quot;?&quot;</span>)
     basic.pause(<span class="hl-num">500</span>)
     <span class="hl-kw">if</span> count_a &gt;= count_b:
-        basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;A!&quot;</span>)
+        basic.show_string(<span class="hl-str">&quot;A!&quot;</span>)
     <span class="hl-kw">else</span>:
-        basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;B!&quot;</span>)
+        basic.show_string(<span class="hl-str">&quot;B!&quot;</span>)
     basic.pause(<span class="hl-num">1000</span>)
-    basic.show_string(str(count_a) + <span <span class="hl-kw">class</span>="hl-str">&quot;/&quot;</span> + str(count_b))
+    basic.show_string(str(count_a) + <span class="hl-str">&quot;/&quot;</span> + str(count_b))
 input.on_gesture(Gesture.SHAKE, on_shake)</div>
 </div>
 </div>

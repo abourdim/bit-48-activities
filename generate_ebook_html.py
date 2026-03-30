@@ -294,12 +294,22 @@ def hl_js(code):
     return code
 
 def hl_py(code):
-    code = esc(code)
-    code = re.sub(r'(#[^\n]*)', r'<span class="hl-cmt">\1</span>', code)
-    code = re.sub(r'(&quot;[^&]*?&quot;|&#x27;[^&]*?&#x27;)', r'<span class="hl-str">\1</span>', code)
-    code = re.sub(r'\b(def|if|elif|else|while|for|in|return|import|from|global|not|and|or|True|False|None|class|pass|break|continue)\b', r'<span class="hl-kw">\1</span>', code)
-    code = re.sub(r'(?<!\w)(\d+)(?!\w)', r'<span class="hl-num">\1</span>', code)
-    return code
+    e = esc(code)
+    tokens = []
+    r = e
+    while r:
+        m = re.match(r'(#[^\n]*)', r)
+        if m: tokens.append(f'<span class="hl-cmt">{m.group(1)}</span>'); r=r[len(m.group(0)):]; continue
+        m = re.match(r'(&quot;[^&]*?&quot;)', r)
+        if m: tokens.append(f'<span class="hl-str">{m.group(1)}</span>'); r=r[len(m.group(0)):]; continue
+        m = re.match(r"(&#x27;[^&]*?&#x27;)", r)
+        if m: tokens.append(f'<span class="hl-str">{m.group(1)}</span>'); r=r[len(m.group(0)):]; continue
+        m = re.match(r'\b(def|if|elif|else|while|for|in|return|import|from|global|not|and|or|True|False|None|range|len|min|max|abs)\b', r)
+        if m: tokens.append(f'<span class="hl-kw">{m.group(1)}</span>'); r=r[len(m.group(0)):]; continue
+        m = re.match(r'(\d+)', r)
+        if m: tokens.append(f'<span class="hl-num">{m.group(1)}</span>'); r=r[len(m.group(0)):]; continue
+        tokens.append(r[0]); r=r[1:]
+    return ''.join(tokens)
 
 
 # ── Build sidebar nav items ──
@@ -652,12 +662,14 @@ body {
 }
 .tip-box .tip-icon { margin-right: 6px; }
 
-/* Code area */
+/* Code area — stacked vertically for full width */
 .code-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  display: flex; flex-direction: column; gap: 12px;
   margin-bottom: 20px;
 }
-.code-panel { border-radius: 10px; overflow: hidden; }
+.code-panel { border-radius: 10px; overflow: hidden; position: relative; }
+.copy-btn { position: absolute; top: 8px; right: 8px; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #aaa; cursor: pointer; z-index: 2; transition: all 0.2s; }
+.copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
 .code-panel-header {
   padding: 8px 14px; display: flex; align-items: center; gap: 8px;
   font-size: 12px; font-weight: 700;
@@ -933,7 +945,7 @@ for a in activities:
     # Tip
     out.append(f'<div class="tip-box"><span class="tip-icon">&#128161;</span> {esc(a["tip"])}</div>')
 
-    # Code side by side
+    # Code — stacked vertically, full width, with copy buttons
     out.append('<div class="sec-label">Code</div>')
     js_code = a["codeJS"]
     py_code = a["codePY"]
@@ -942,11 +954,13 @@ for a in activities:
     # JS panel
     out.append('<div class="code-panel">')
     out.append('  <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>')
+    out.append(f'  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>')
     out.append(f'  <div class="code-block js-code">{hl_js(js_code)}</div>')
     out.append('</div>')
     # PY panel
     out.append('<div class="code-panel">')
     out.append('  <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>')
+    out.append(f'  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>')
     out.append(f'  <div class="code-block py-code">{hl_py(py_code)}</div>')
     out.append('</div>')
     out.append('</div>')
