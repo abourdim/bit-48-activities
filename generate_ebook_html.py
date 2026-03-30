@@ -912,17 +912,8 @@ for a in activities:
     out.append('  </div>')
     out.append('</div></div>')
 
-    # Block chips
-    blocks = detect_blocks(a["codeJS"])
-    if blocks:
-        out.append('<div class="sec-label">Concepts utilises</div>')
-        out.append('<div class="blocks-wrap">')
-        for label, color in blocks:
-            out.append(f'  <span class="block-chip" style="background:{color}">{esc(label)}</span>')
-        out.append('</div>')
-
-    # MakeCode rendered blocks (via iframe)
-    out.append('<div class="sec-label">Blocs MakeCode</div>')
+    # MakeCode rendered blocks (real blocks via iframe)
+    out.append('<div class="sec-label">Blocs</div>')
     out.append(f'<div class="mc-blocks" id="mc-{aid}"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>')
     out.append(f'<script>mcQueue.push({{id:"mc-{aid}",code:{json.dumps(a["codeJS"])}}});</script>')
 
