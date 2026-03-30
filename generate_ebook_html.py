@@ -86,54 +86,50 @@ def led_svg(pattern):
 </svg>'''
 
 # ── Block detection ──
+# pattern, label, color, MakeCode JS snippet (renders one block), description
 BLOCK_MAP = [
-    (r'basic\.showString',"afficher texte","#1E90FF"),
-    (r'basic\.showIcon',"montrer icone","#1E90FF"),
-    (r'basic\.showNumber',"afficher nombre","#1E90FF"),
-    (r'basic\.showLeds',"montrer LEDs","#1E90FF"),
-    (r'basic\.clearScreen',"effacer ecran","#1E90FF"),
-    (r'basic\.pause',"pause","#1E90FF"),
-    (r'basic\.forever',"repeter","#00AA00"),
-    (r'input\.onButtonPressed',"bouton","#D400D4"),
-    (r'input\.onGesture',"geste","#D400D4"),
-    (r'input\.onLogoEvent',"logo","#D400D4"),
-    (r'input\.temperature',"temperature","#D400D4"),
-    (r'input\.lightLevel',"lumiere","#D400D4"),
-    (r'input\.soundLevel',"son V2","#D400D4"),
-    (r'input\.compassHeading',"boussole","#D400D4"),
-    (r'input\.acceleration',"acceleration","#D400D4"),
-    (r'randint',"hasard","#9400D3"),
-    (r'music\.playTone',"tonalite","#E63022"),
-    (r'music\.startMelody',"melodie","#E63022"),
-    (r'radio\.setGroup',"radio groupe","#E3008C"),
-    (r'radio\.sendNumber',"radio envoyer","#E3008C"),
-    (r'radio\.onReceived',"radio recu","#E3008C"),
-    (r'pins\.analogReadPin',"lire analog.","#3BDDD4"),
-    (r'pins\.digitalReadPin',"lire numer.","#3BDDD4"),
-    (r'pins\.digitalWritePin',"ecrire numer.","#3BDDD4"),
-    (r'pins\.analogWritePin',"ecrire analog.","#3BDDD4"),
-    (r'pins\.servoWritePin',"servo","#3BDDD4"),
-    (r'led\.plot',"allumer LED","#7600A8"),
-    (r'led\.plotBarGraph',"graphique","#7600A8"),
-    (r'game\.createSprite',"sprite","#7600A8"),
-    (r'neopixel',"NeoPixel","#7B2D8E"),
-    (r'bluetooth',"Bluetooth","#0082FB"),
-    (r'sonar\.ping',"sonar","#00A4A6"),
-    (r'huskylens',"HuskyLens IA","#D400D4"),
-    (r'function\s+\w',"fonction","#3455DB"),
-    (r'if\s*\(',"si/sinon","#00A4A6"),
-    (r'for\s*\(',"boucle for","#00AA00"),
-    (r'while\s*\(',"tant que","#00AA00"),
-    (r'let\s+\w',"variable","#DC143C"),
+    (r'basic\.showString',"afficher texte","#1E90FF",'basic.showString("Hello")',"Fait defiler un texte sur les 25 LEDs, lettre par lettre."),
+    (r'basic\.showIcon',"montrer icone","#1E90FF",'basic.showIcon(IconNames.Heart)',"Affiche une icone predefinie (coeur, sourire, eclair...)."),
+    (r'basic\.showNumber',"afficher nombre","#1E90FF",'basic.showNumber(42)',"Affiche un nombre sur les LEDs."),
+    (r'basic\.showLeds',"montrer LEDs","#1E90FF",'basic.showLeds(`# . # . #\\n. # . # .\\n# . # . #\\n. # . # .\\n# . # . #`)',"Allume des LEDs specifiques avec un motif 5x5 personnalise."),
+    (r'basic\.clearScreen',"effacer ecran","#1E90FF",'basic.clearScreen()',"Eteint toutes les 25 LEDs."),
+    (r'basic\.pause',"pause","#1E90FF",'basic.pause(1000)',"Attend un nombre de millisecondes (1000 = 1 seconde)."),
+    (r'basic\.forever',"repeter indefiniment","#00AA00",'basic.forever(function(){})',"Boucle infinie : le code se repete sans fin."),
+    (r'input\.onButtonPressed',"quand bouton presse","#D400D4",'input.onButtonPressed(Button.A, function(){})',"Declenche du code quand on appuie sur A, B ou A+B."),
+    (r'input\.onGesture',"quand secouer","#D400D4",'input.onGesture(Gesture.Shake, function(){})',"Declenche du code quand on secoue la carte."),
+    (r'input\.onLogoEvent',"quand logo touche","#D400D4",'input.onLogoEvent(TouchButtonEvent.Pressed, function(){})',"Declenche du code quand on touche le logo dore (V2)."),
+    (r'input\.temperature',"temperature","#D400D4",'basic.showNumber(input.temperature())',"Retourne la temperature mesuree par le processeur."),
+    (r'input\.lightLevel',"niveau de lumiere","#D400D4",'basic.showNumber(input.lightLevel())',"Retourne le niveau de lumiere (0-255)."),
+    (r'input\.soundLevel',"niveau sonore V2","#D400D4",'basic.showNumber(input.soundLevel())',"Retourne le niveau sonore ambiant (0-255, V2)."),
+    (r'input\.compassHeading',"direction boussole","#D400D4",'basic.showNumber(input.compassHeading())',"Retourne l'angle de la boussole (0-359)."),
+    (r'input\.acceleration',"acceleration","#D400D4",'basic.showNumber(input.acceleration(Dimension.Strength))',"Retourne la force d'acceleration (mouvement)."),
+    (r'randint',"au hasard","#9400D3",'basic.showNumber(randint(1, 6))',"Genere un nombre aleatoire entre min et max."),
+    (r'music\.playTone',"jouer tonalite","#E63022",'music.playTone(262, 500)',"Joue une note a une frequence et duree donnees."),
+    (r'music\.startMelody',"jouer melodie","#E63022",'music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)',"Joue une melodie predefinie."),
+    (r'radio\.setGroup',"radio groupe","#E3008C",'radio.setGroup(7)',"Definit le groupe radio (meme numero = communication)."),
+    (r'radio\.sendNumber',"radio envoyer","#E3008C",'radio.sendNumber(1)',"Envoie un nombre par radio."),
+    (r'radio\.onReceived',"radio recu","#E3008C",'radio.onReceivedNumber(function(n){})',"Declenche du code quand un nombre est recu."),
+    (r'pins\.analogReadPin',"lire analogique","#3BDDD4",'basic.showNumber(pins.analogReadPin(AnalogPin.P0))',"Lit une valeur analogique (0-1023) sur une broche."),
+    (r'pins\.digitalReadPin',"lire numerique","#3BDDD4",'basic.showNumber(pins.digitalReadPin(DigitalPin.P0))',"Lit 0 ou 1 sur une broche."),
+    (r'pins\.digitalWritePin',"ecriture numerique","#3BDDD4",'pins.digitalWritePin(DigitalPin.P0, 1)',"Ecrit 0 ou 1 sur une broche."),
+    (r'pins\.analogWritePin',"ecriture analogique","#3BDDD4",'pins.analogWritePin(AnalogPin.P0, 512)',"Ecrit une valeur (0-1023) sur une broche."),
+    (r'pins\.servoWritePin',"servo","#3BDDD4",'pins.servoWritePin(AnalogPin.P0, 90)',"Positionne un servomoteur (0-180 degres)."),
+    (r'led\.plot',"allumer LED","#7600A8",'led.plot(2, 2)',"Allume une LED a la position (x, y)."),
+    (r'led\.plotBarGraph',"graphique barres","#7600A8",'led.plotBarGraph(128, 255)',"Affiche une valeur en barres sur les LEDs."),
+    (r'game\.createSprite',"creer sprite","#7600A8",'let s = game.createSprite(2, 2)',"Cree un point lumineux deplacable."),
+    (r'neopixel',"NeoPixel","#7B2D8E",'let strip = neopixel.create(DigitalPin.P0, 8, NeoPixelMode.RGB)',"Controle des LEDs RGB (NeoPixel)."),
+    (r'bluetooth',"Bluetooth","#0082FB",'bluetooth.startUartService()',"Services de communication Bluetooth."),
+    (r'sonar\.ping',"sonar distance","#00A4A6",'basic.showNumber(sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters))',"Mesure la distance avec un capteur ultrason."),
 ]
 
 def detect_blocks(code):
+    """Returns list of (label, color, snippet, description) for blocks found in code"""
     seen = set()
     result = []
-    for pat, label, color in BLOCK_MAP:
+    for pat, label, color, snippet, desc in BLOCK_MAP:
         if re.search(pat, code) and label not in seen:
             seen.add(label)
-            result.append((label, color))
+            result.append((label, color, snippet, desc))
     return result
 
 def esc(t):
@@ -618,6 +614,15 @@ body {
 .vb.cat-functions { background: #3455DB; } .vb.cat-bluetooth { background: #0082FB; }
 .vb.cat-sonar { background: #00A4A6; } .vb.cat-neopixel { background: #7B2D8E; }
 
+/* Block reference cards */
+.blocks-ref-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.block-ref-item { display: flex; gap: 12px; align-items: center; padding: 10px 14px; border-radius: 10px; background: rgba(0,0,0,0.12); border: 1px solid rgba(255,255,255,0.05); }
+.block-ref-render { flex-shrink: 0; min-width: 120px; max-width: 200px; }
+.block-ref-render img { max-width: 200px; max-height: 60px; width: auto; height: auto; object-fit: contain; }
+.block-ref-info { flex: 1; }
+.block-ref-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.block-ref-desc { font-size: 11px; color: #8899aa; line-height: 1.4; }
+
 /* Flowchart */
 .flowchart { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 14px; background: rgba(0,0,0,0.1); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; }
 .fc-node { padding: 5px 16px; font-size: 11px; font-weight: 600; color: #fff; text-align: center; max-width: 240px; }
@@ -912,10 +917,27 @@ for a in activities:
     out.append('  </div>')
     out.append('</div></div>')
 
-    # MakeCode rendered blocks (real blocks via iframe)
-    out.append('<div class="sec-label">Blocs</div>')
-    out.append(f'<div class="mc-blocks" id="mc-{aid}"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>')
+    # MakeCode rendered program blocks
+    out.append('<div class="sec-label">Programme (Blocs)</div>')
+    out.append(f'<div class="mc-blocks" id="mc-{aid}"><div class="mc-loading">Chargement des blocs...</div></div>')
     out.append(f'<script>mcQueue.push({{id:"mc-{aid}",code:{json.dumps(a["codeJS"])}}});</script>')
+
+    # Individual blocks used — each rendered via MakeCode with description
+    blocks_used = detect_blocks(a["codeJS"])
+    if blocks_used:
+        out.append('<div class="sec-label">Blocs utilises</div>')
+        out.append('<div class="blocks-ref-list">')
+        for idx, (label, color, snippet, desc) in enumerate(blocks_used):
+            block_id = f"bk-{aid}-{idx}"
+            out.append(f'<div class="block-ref-item">')
+            out.append(f'  <div class="block-ref-render" id="{block_id}"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>')
+            out.append(f'  <script>mcQueue.push({{id:"{block_id}",code:{json.dumps(snippet)}}});</script>')
+            out.append(f'  <div class="block-ref-info">')
+            out.append(f'    <div class="block-ref-name" style="color:{color}">{esc(label)}</div>')
+            out.append(f'    <div class="block-ref-desc">{esc(desc)}</div>')
+            out.append(f'  </div>')
+            out.append(f'</div>')
+        out.append('</div>')
 
     # Flowchart
     out.append('<div class="sec-label">Algorithme</div>')

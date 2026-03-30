@@ -289,6 +289,15 @@ body {
 .vb.cat-functions { background: #3455DB; } .vb.cat-bluetooth { background: #0082FB; }
 .vb.cat-sonar { background: #00A4A6; } .vb.cat-neopixel { background: #7B2D8E; }
 
+/* Block reference cards */
+.blocks-ref-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.block-ref-item { display: flex; gap: 12px; align-items: center; padding: 10px 14px; border-radius: 10px; background: rgba(0,0,0,0.12); border: 1px solid rgba(255,255,255,0.05); }
+.block-ref-render { flex-shrink: 0; min-width: 120px; max-width: 200px; }
+.block-ref-render img { max-width: 200px; max-height: 60px; width: auto; height: auto; object-fit: contain; }
+.block-ref-info { flex: 1; }
+.block-ref-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.block-ref-desc { font-size: 11px; color: #8899aa; line-height: 1.4; }
+
 /* Flowchart */
 .flowchart { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 14px; background: rgba(0,0,0,0.1); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; }
 .fc-node { padding: 5px 16px; font-size: 11px; font-weight: 600; color: #fff; text-align: center; max-width: 240px; }
@@ -593,9 +602,20 @@ body {
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-1"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-1"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-1",code:"// Affiche le texte \"Bonjour\" sur les 25 LEDs, lettre par lettre\nbasic.showString(\"Bonjour\")"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-1-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-1-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -653,9 +673,36 @@ basic.show_string(<span class="hl-str">&quot;Bonjour&quot;</span>)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-2"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-2"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-2",code:"// \"forever\" = boucle infinie, le code se r\u00e9p\u00e8te sans fin\nbasic.forever(function () {\n    basic.showString(\"HELLO\")   // D\u00e9file le texte sur les LEDs\n    basic.pause(200)            // Petite pause avant de recommencer\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-2-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-2-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-2-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-2-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-2-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-2-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -728,9 +775,20 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-3"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-3"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-3",code:"// showIcon affiche une ic\u00f4ne pr\u00e9d\u00e9finie (ici un c\u0153ur)\n// Liste compl\u00e8te : Heart, Happy, Sad, Duck, House, Skull\u2026\nbasic.showIcon(IconNames.Heart)"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-3-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-3-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -794,9 +852,44 @@ basic.show_icon(IconNames.HEART)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-5"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-5"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-5",code:"// Clignoter = afficher \u2192 pause \u2192 effacer \u2192 pause \u2192 recommencer\nbasic.forever(function () {\n    basic.showIcon(IconNames.Heart)  // Affiche le c\u0153ur\n    basic.pause(300)                 // Attend 300 ms (visible)\n    basic.clearScreen()              // \u00c9teint tout\n    basic.pause(300)                 // Attend 300 ms (invisible)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-5-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-5-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-5-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-5-1",code:"basic.clearScreen()"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">effacer ecran</div>
+    <div class="block-ref-desc">Eteint toutes les 25 LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-5-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-5-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-5-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-5-3",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -875,9 +968,36 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-6"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-6"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-6",code:"// onButtonPressed = \"quand le bouton est press\u00e9, fais ceci\"\n// 3 boutons possibles : A (gauche), B (droite), A+B (les deux)\ninput.onButtonPressed(Button.A, function () {\n    basic.showString(\"A\")           // Bouton gauche \u2192 affiche \"A\"\n})\ninput.onButtonPressed(Button.B, function () {\n    basic.showString(\"B\")           // Bouton droit \u2192 affiche \"B\"\n})\ninput.onButtonPressed(Button.AB, function () {\n    basic.showIcon(IconNames.Heart) // Les deux \u2192 c\u0153ur\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-6-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-6-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-6-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-6-1",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-6-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-6-2",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -966,9 +1086,44 @@ input.on_button_pressed(Button.AB, on_button_ab)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-7"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-7"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-7",code:"input.onGesture(Gesture.Shake, function () {\n    basic.showIcon(IconNames.Flash)\n    basic.pause(500)\n    basic.clearScreen()\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-7-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-7-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-7-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-7-1",code:"basic.clearScreen()"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">effacer ecran</div>
+    <div class="block-ref-desc">Eteint toutes les 25 LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-7-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-7-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-7-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-7-3",code:"input.onGesture(Gesture.Shake, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand secouer</div>
+    <div class="block-ref-desc">Declenche du code quand on secoue la carte.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1037,9 +1192,28 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-8"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-8"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-8",code:"input.onLogoEvent(TouchButtonEvent.Pressed, function () {\n    music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-8-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-8-0",code:"input.onLogoEvent(TouchButtonEvent.Pressed, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand logo touche</div>
+    <div class="block-ref-desc">Declenche du code quand on touche le logo dore (V2).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-8-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-8-1",code:"music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer melodie</div>
+    <div class="block-ref-desc">Joue une melodie predefinie.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1105,9 +1279,36 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo_pressed)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-9"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-9"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-9",code:"basic.forever(function () {\n    if (input.soundLevel() > 120) {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Asleep)\n    }\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-9-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-9-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-9-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-9-1",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-9-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-9-2",code:"basic.showNumber(input.soundLevel())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">niveau sonore V2</div>
+    <div class="block-ref-desc">Retourne le niveau sonore ambiant (0-255, V2).</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI input.soundLevel( ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1180,9 +1381,36 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-10"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-10"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-10",code:"let roll = 0  // Variable qui stocke le r\u00e9sultat du d\u00e9\ninput.onGesture(Gesture.Shake, function () {\n    roll = randint(1, 6)       // Nombre au hasard entre 1 et 6\n    basic.showNumber(roll)     // Affiche le r\u00e9sultat sur les LEDs\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-10-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-10-0",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-10-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-10-1",code:"input.onGesture(Gesture.Shake, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand secouer</div>
+    <div class="block-ref-desc">Declenche du code quand on secoue la carte.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-10-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-10-2",code:"basic.showNumber(randint(1, 6))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#9400D3">au hasard</div>
+    <div class="block-ref-desc">Genere un nombre aleatoire entre min et max.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1256,9 +1484,36 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-11"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-11"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-11",code:"// Pierre-feuille-ciseaux : 0=pierre, 1=ciseaux, 2=feuille\nlet n = 0\ninput.onGesture(Gesture.Shake, function () {\n    n = randint(0, 2)              // 3 choix possibles : 0, 1 ou 2\n    if (n == 0) {\n        basic.showIcon(IconNames.SmallSquare)  // Pierre \u270a\n    } else if (n == 1) {\n        basic.showIcon(IconNames.Scissors)     // Ciseaux \u2702\n    } else {\n        basic.showIcon(IconNames.Square)       // Feuille \ud83d\udd90\n    }\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-11-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-11-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-11-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-11-1",code:"input.onGesture(Gesture.Shake, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand secouer</div>
+    <div class="block-ref-desc">Declenche du code quand on secoue la carte.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-11-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-11-2",code:"basic.showNumber(randint(1, 6))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#9400D3">au hasard</div>
+    <div class="block-ref-desc">Genere un nombre aleatoire entre min et max.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI n == 0 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1345,9 +1600,44 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-12"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-12"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-12",code:"input.onButtonPressed(Button.A, function () {\n    basic.showNumber(input.temperature())\n    basic.showString(\"C\")\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-12-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-12-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-12-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-12-1",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-12-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-12-2",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-12-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-12-3",code:"basic.showNumber(input.temperature())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">temperature</div>
+    <div class="block-ref-desc">Retourne la temperature mesuree par le processeur.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1410,9 +1700,36 @@ input.on_button_pressed(Button.A, on_button_a)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-13"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-13"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-13",code:"basic.forever(function () {\n    let dir = input.compassHeading()\n    if (dir < 45 || dir >= 315) {\n        basic.showString(\"N\")\n    } else if (dir < 135) {\n        basic.showString(\"E\")\n    } else if (dir < 225) {\n        basic.showString(\"S\")\n    } else {\n        basic.showString(\"O\")\n    }\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-13-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-13-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-13-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-13-1",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-13-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-13-2",code:"basic.showNumber(input.compassHeading())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">direction boussole</div>
+    <div class="block-ref-desc">Retourne l&#x27;angle de la boussole (0-359).</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI dir &lt; 45 || dir &gt;= 315 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1504,9 +1821,36 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-14"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-14"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-14",code:"basic.forever(function () {\n    let v = pins.analogReadPin(AnalogPin.P0)\n    if (v > 500) {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Meh)\n    }\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-14-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-14-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-14-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-14-1",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-14-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-14-2",code:"basic.showNumber(pins.analogReadPin(AnalogPin.P0))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">lire analogique</div>
+    <div class="block-ref-desc">Lit une valeur analogique (0-1023) sur une broche.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI v &gt; 500 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1588,9 +1932,44 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-15"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-15"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-15",code:"let steps = 0\ninput.onGesture(Gesture.Shake, function () {\n    steps += 1\n})\ninput.onButtonPressed(Button.A, function () {\n    basic.showNumber(steps)\n})\ninput.onButtonPressed(Button.B, function () {\n    steps = 0\n    basic.showIcon(IconNames.Yes)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-15-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-15-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-15-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-15-1",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-15-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-15-2",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-15-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-15-3",code:"input.onGesture(Gesture.Shake, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand secouer</div>
+    <div class="block-ref-desc">Declenche du code quand on secoue la carte.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1678,9 +2057,60 @@ input.on_button_pressed(Button.B, on_button_b)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-16"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-16"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-16",code:"input.onButtonPressed(Button.A, function () {\n    basic.showNumber(input.lightLevel())\n})\nbasic.forever(function () {\n    led.plotBarGraph(input.lightLevel(), 255)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-16-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-16-0",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-16-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-16-1",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-16-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-16-2",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-16-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-16-3",code:"basic.showNumber(input.lightLevel())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">niveau de lumiere</div>
+    <div class="block-ref-desc">Retourne le niveau de lumiere (0-255).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-16-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-16-4",code:"led.plot(2, 2)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#7600A8">allumer LED</div>
+    <div class="block-ref-desc">Allume une LED a la position (x, y).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-16-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-16-5",code:"led.plotBarGraph(128, 255)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#7600A8">graphique barres</div>
+    <div class="block-ref-desc">Affiche une valeur en barres sur les LEDs.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1755,9 +2185,52 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-17"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-17"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-17",code:"// RADIO : les 2 cartes doivent avoir le M\u00caME groupe (ici 7)\nradio.setGroup(7)\ninput.onButtonPressed(Button.A, function () {\n    radio.sendNumber(1)              // Envoie le nombre 1 par radio\n    basic.showIcon(IconNames.Happy)  // Confirme l'envoi\n})\ninput.onButtonPressed(Button.B, function () {\n    radio.sendNumber(2)              // Envoie le nombre 2\n    basic.showIcon(IconNames.Sad)\n})\n// Quand l'autre carte envoie un nombre, on le re\u00e7oit ici\nradio.onReceivedNumber(function (receivedNumber) {\n    if (receivedNumber == 1) {\n        basic.showIcon(IconNames.Happy)  // L'autre a appuy\u00e9 A\n    } else {\n        basic.showIcon(IconNames.Sad)    // L'autre a appuy\u00e9 B\n    }\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-17-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-17-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-17-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-17-1",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-17-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-17-2",code:"radio.setGroup(7)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E3008C">radio groupe</div>
+    <div class="block-ref-desc">Definit le groupe radio (meme numero = communication).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-17-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-17-3",code:"radio.sendNumber(1)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E3008C">radio envoyer</div>
+    <div class="block-ref-desc">Envoie un nombre par radio.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-17-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-17-4",code:"radio.onReceivedNumber(function(n){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E3008C">radio recu</div>
+    <div class="block-ref-desc">Declenche du code quand un nombre est recu.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI receivedNumber == 1 ?</div><div class="fc-arrow"></div><div class="fc-node process">Envoyer radio</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1859,9 +2332,52 @@ radio.on_received_number(on_received)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-18"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-18"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-18",code:"let t = 0\ninput.onButtonPressed(Button.A, function () {\n    t += 1\n    basic.showNumber(t)\n})\ninput.onButtonPressed(Button.B, function () {\n    while (t > 0) {\n        basic.showNumber(t)\n        basic.pause(1000)\n        t -= 1\n    }\n    basic.showString(\"OK\")\n    music.playTone(988, 500)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-18-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-18-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-18-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-18-1",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-18-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-18-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-18-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-18-3",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-18-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-18-4",code:"music.playTone(262, 500)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer tonalite</div>
+    <div class="block-ref-desc">Joue une note a une frequence et duree donnees.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1955,9 +2471,28 @@ input.on_button_pressed(Button.B, on_button_b)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-19"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-19"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-19",code:"input.onButtonPressed(Button.A, function () {\n    music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-19-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-19-0",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-19-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-19-1",code:"music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer melodie</div>
+    <div class="block-ref-desc">Joue une melodie predefinie.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2023,9 +2558,44 @@ input.on_button_pressed(Button.A, on_button_a)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-20"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-20"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-20",code:"let n = 0\ninput.onButtonPressed(Button.A, function () {\n    n = randint(0, 9)\n    basic.showNumber(n)\n})\ninput.onButtonPressed(Button.B, function () {\n    if (n == 5) {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Sad)\n    }\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-20-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-20-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-20-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-20-1",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-20-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-20-2",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-20-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-20-3",code:"basic.showNumber(randint(1, 6))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#9400D3">au hasard</div>
+    <div class="block-ref-desc">Genere un nombre aleatoire entre min et max.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI n == 5 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2113,9 +2683,52 @@ input.on_button_pressed(Button.B, on_button_b)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-21"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-21"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-21",code:"let player = game.createSprite(2, 4)\nlet score = 0\nlet obstacle = game.createSprite(randint(0, 4), 0)\n\ninput.onButtonPressed(Button.A, function () {\n    player.change(LedSpriteProperty.X, -1)\n})\ninput.onButtonPressed(Button.B, function () {\n    player.change(LedSpriteProperty.X, 1)\n})\nbasic.forever(function () {\n    obstacle.change(LedSpriteProperty.Y, 1)\n    basic.pause(400)\n    if (obstacle.get(LedSpriteProperty.Y) == 4) {\n        if (obstacle.isTouching(player)) {\n            game.gameOver()\n        } else {\n            score += 1\n            obstacle.set(LedSpriteProperty.Y, 0)\n            obstacle.set(LedSpriteProperty.X, randint(0, 4))\n        }\n    }\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-21-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-21-0",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-21-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-21-1",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-21-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-21-2",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-21-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-21-3",code:"basic.showNumber(randint(1, 6))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#9400D3">au hasard</div>
+    <div class="block-ref-desc">Genere un nombre aleatoire entre min et max.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-21-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-21-4",code:"let s = game.createSprite(2, 2)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#7600A8">creer sprite</div>
+    <div class="block-ref-desc">Cree un point lumineux deplacable.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node decision">SI obstacle.get(LedSpriteProperty.Y ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2235,9 +2848,52 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-22"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-22"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-22",code:"let code = \"\"\ninput.onButtonPressed(Button.A, function () {\n    code += \"A\"\n    music.playTone(262, 100)\n})\ninput.onButtonPressed(Button.B, function () {\n    code += \"B\"\n    music.playTone(330, 100)\n})\ninput.onLogoEvent(TouchButtonEvent.Pressed, function () {\n    if (code == \"ABA\") {\n        basic.showIcon(IconNames.Happy)\n        music.startMelody(music.builtInMelody(Melodies.PowerUp), MelodyOptions.Once)\n    } else {\n        basic.showIcon(IconNames.Sad)\n        music.startMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.Once)\n    }\n    code = \"\"\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-22-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-22-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-22-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-22-1",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-22-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-22-2",code:"input.onLogoEvent(TouchButtonEvent.Pressed, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand logo touche</div>
+    <div class="block-ref-desc">Declenche du code quand on touche le logo dore (V2).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-22-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-22-3",code:"music.playTone(262, 500)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer tonalite</div>
+    <div class="block-ref-desc">Joue une note a une frequence et duree donnees.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-22-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-22-4",code:"music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer melodie</div>
+    <div class="block-ref-desc">Joue une melodie predefinie.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI code == &quot;ABA&quot; ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2348,9 +3004,60 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-23"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-23"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-23",code:"let progress = 0\nbasic.forever(function () {\n    let force = input.acceleration(Dimension.Strength)\n    if (Math.abs(force - 1024) < 100) {\n        progress = Math.min(progress + 1, 25)\n        led.plot(progress % 5, Math.floor(progress / 5))\n    } else {\n        basic.showIcon(IconNames.No)\n        basic.pause(500)\n        basic.clearScreen()\n        progress = 0\n    }\n    basic.pause(200)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-23-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-23-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-23-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-23-1",code:"basic.clearScreen()"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">effacer ecran</div>
+    <div class="block-ref-desc">Eteint toutes les 25 LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-23-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-23-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-23-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-23-3",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-23-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-23-4",code:"basic.showNumber(input.acceleration(Dimension.Strength))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">acceleration</div>
+    <div class="block-ref-desc">Retourne la force d&#x27;acceleration (mouvement).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-23-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-23-5",code:"led.plot(2, 2)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#7600A8">allumer LED</div>
+    <div class="block-ref-desc">Allume une LED a la position (x, y).</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI Math.abs(force - 1024 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2443,9 +3150,44 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-24"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-24"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-24",code:"function rain() {\n    let x = randint(0, 4)\n    for (let y = 0; y <= 4; y++) {\n        led.plot(x, y)\n        basic.pause(80)\n        led.unplot(x, y)\n    }\n}\nbasic.forever(function () {\n    rain()\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-24-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-24-0",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-24-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-24-1",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-24-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-24-2",code:"basic.showNumber(randint(1, 6))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#9400D3">au hasard</div>
+    <div class="block-ref-desc">Genere un nombre aleatoire entre min et max.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-24-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-24-3",code:"led.plot(2, 2)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#7600A8">allumer LED</div>
+    <div class="block-ref-desc">Allume une LED a la position (x, y).</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2527,9 +3269,36 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-25"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-25"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-25",code:"input.onButtonPressed(Button.A, function () {\n    pins.servoWritePin(AnalogPin.P0, 0)\n})\ninput.onButtonPressed(Button.B, function () {\n    pins.servoWritePin(AnalogPin.P0, 180)\n})\ninput.onLogoEvent(TouchButtonEvent.Pressed, function () {\n    pins.servoWritePin(AnalogPin.P0, 90)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-25-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-25-0",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-25-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-25-1",code:"input.onLogoEvent(TouchButtonEvent.Pressed, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand logo touche</div>
+    <div class="block-ref-desc">Declenche du code quand on touche le logo dore (V2).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-25-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-25-2",code:"pins.servoWritePin(AnalogPin.P0, 90)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">servo</div>
+    <div class="block-ref-desc">Positionne un servomoteur (0-180 degres).</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2612,9 +3381,52 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-26"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-26"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-26",code:"basic.forever(function () {\n    let v = pins.analogReadPin(AnalogPin.P0)\n    if (v > 500) {\n        basic.showIcon(IconNames.Happy)\n        music.playTone(880, 200)\n    } else {\n        basic.showIcon(IconNames.Sad)\n    }\n    basic.pause(300)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-26-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-26-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-26-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-26-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-26-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-26-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-26-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-26-3",code:"music.playTone(262, 500)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer tonalite</div>
+    <div class="block-ref-desc">Joue une note a une frequence et duree donnees.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-26-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-26-4",code:"basic.showNumber(pins.analogReadPin(AnalogPin.P0))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">lire analogique</div>
+    <div class="block-ref-desc">Lit une valeur analogique (0-1023) sur une broche.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI v &gt; 500 ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2704,9 +3516,60 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-27"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-27"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-27",code:"input.onButtonPressed(Button.A, function () {\n    basic.showNumber(pins.analogReadPin(AnalogPin.P0))\n})\nbasic.forever(function () {\n    let v = pins.analogReadPin(AnalogPin.P0)\n    if (v < 300) {\n        basic.showIcon(IconNames.Sad)\n    } else if (v < 600) {\n        basic.showIcon(IconNames.Meh)\n    } else {\n        basic.showIcon(IconNames.Happy)\n    }\n    basic.pause(2000)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-27-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-27-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-27-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-27-1",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-27-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-27-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-27-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-27-3",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-27-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-27-4",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-27-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-27-5",code:"basic.showNumber(pins.analogReadPin(AnalogPin.P0))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">lire analogique</div>
+    <div class="block-ref-desc">Lit une valeur analogique (0-1023) sur une broche.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI v &lt; 300 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2799,9 +3662,52 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-28"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-28"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-28",code:"basic.forever(function () {\n    let t = pins.analogReadPin(AnalogPin.P0)\n    let temp = Math.round(t * 0.1)\n    basic.showNumber(temp)\n    basic.showString(\"C\")\n    basic.pause(10000)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-28-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-28-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-28-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-28-1",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-28-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-28-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-28-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-28-3",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-28-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-28-4",code:"basic.showNumber(pins.analogReadPin(AnalogPin.P0))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">lire analogique</div>
+    <div class="block-ref-desc">Lit une valeur analogique (0-1023) sur une broche.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2876,9 +3782,36 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-29"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-29"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-29",code:"music.setTempo(120)\ninput.onButtonPressed(Button.A, function () {\n    music.playTone(262, music.beat(BeatFraction.Whole))\n    music.playTone(330, music.beat(BeatFraction.Whole))\n    music.playTone(392, music.beat(BeatFraction.Whole))\n})\ninput.onButtonPressed(Button.B, function () {\n    music.startMelody(music.builtInMelody(Melodies.Birthday), MelodyOptions.Once)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-29-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-29-0",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-29-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-29-1",code:"music.playTone(262, 500)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer tonalite</div>
+    <div class="block-ref-desc">Joue une note a une frequence et duree donnees.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-29-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-29-2",code:"music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer melodie</div>
+    <div class="block-ref-desc">Joue une melodie predefinie.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2961,9 +3894,52 @@ input.on_button_pressed(Button.B, on_button_b)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-30"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-30"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-30",code:"bluetooth.onBluetoothConnected(function () {\n    basic.showIcon(IconNames.Happy)\n})\nbluetooth.onBluetoothDisconnected(function () {\n    basic.showIcon(IconNames.Sad)\n})\nbluetooth.startUartService()\nbluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), function () {\n    let msg = bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine))\n    if (msg == \"1\") {\n        basic.showIcon(IconNames.Yes)\n        pins.digitalWritePin(DigitalPin.P0, 1)\n    } else if (msg == \"0\") {\n        basic.showIcon(IconNames.No)\n        pins.digitalWritePin(DigitalPin.P0, 0)\n    } else {\n        basic.showString(msg)\n    }\n})\ninput.onButtonPressed(Button.A, function () {\n    bluetooth.uartWriteString(\"Salut!\" + \"\\\\n\")\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-30-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-30-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-30-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-30-1",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-30-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-30-2",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-30-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-30-3",code:"pins.digitalWritePin(DigitalPin.P0, 1)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">ecriture numerique</div>
+    <div class="block-ref-desc">Ecrit 0 ou 1 sur une broche.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-30-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-30-4",code:"bluetooth.startUartService()"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#0082FB">Bluetooth</div>
+    <div class="block-ref-desc">Services de communication Bluetooth.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI msg == &quot;1&quot; ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3076,9 +4052,68 @@ input.on_button_pressed(Button.A, on_button_a)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-31"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-31"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-31",code:"input.onButtonPressed(Button.A, function () {\n    basic.showNumber(pins.analogReadPin(AnalogPin.P0))\n})\nbasic.forever(function () {\n    led.plotBarGraph(pins.analogReadPin(AnalogPin.P0), 1023)\n    basic.pause(200)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-31-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-31-0",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-31-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-31-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-31-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-31-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-31-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-31-3",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-31-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-31-4",code:"basic.showNumber(pins.analogReadPin(AnalogPin.P0))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">lire analogique</div>
+    <div class="block-ref-desc">Lit une valeur analogique (0-1023) sur une broche.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-31-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-31-5",code:"led.plot(2, 2)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#7600A8">allumer LED</div>
+    <div class="block-ref-desc">Allume une LED a la position (x, y).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-31-6"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-31-6",code:"led.plotBarGraph(128, 255)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#7600A8">graphique barres</div>
+    <div class="block-ref-desc">Affiche une valeur en barres sur les LEDs.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3152,9 +4187,36 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-32"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-32"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-32",code:"// N\u00e9cessite extension TM1637\nlet tm = TM1637.create(DigitalPin.P1, DigitalPin.P2, 7, 4)\nbasic.forever(function () {\n    tm.showNumber(input.temperature())\n    basic.pause(5000)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-32-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-32-0",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-32-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-32-1",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-32-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-32-2",code:"basic.showNumber(input.temperature())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">temperature</div>
+    <div class="block-ref-desc">Retourne la temperature mesuree par le processeur.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3226,9 +4288,44 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-33"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-33"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-33",code:"basic.forever(function () {\n    let freq = 200 + input.lightLevel() * 3\n    music.playTone(freq, 100)\n    basic.pause(50)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-33-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-33-0",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-33-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-33-1",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-33-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-33-2",code:"basic.showNumber(input.lightLevel())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">niveau de lumiere</div>
+    <div class="block-ref-desc">Retourne le niveau de lumiere (0-255).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-33-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-33-3",code:"music.playTone(262, 500)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer tonalite</div>
+    <div class="block-ref-desc">Joue une note a une frequence et duree donnees.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3298,9 +4395,52 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-34"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-34"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-34",code:"// N\u00e9cessite extension sonar\nbasic.forever(function () {\n    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)\n    basic.showNumber(d)\n    if (d < 10) {\n        music.playTone(880, 200)\n    }\n    basic.pause(500)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-34-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-34-0",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-34-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-34-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-34-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-34-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-34-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-34-3",code:"music.playTone(262, 500)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer tonalite</div>
+    <div class="block-ref-desc">Joue une note a une frequence et duree donnees.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-34-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-34-4",code:"basic.showNumber(sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00A4A6">sonar distance</div>
+    <div class="block-ref-desc">Mesure la distance avec un capteur ultrason.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &lt; 10 ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3384,9 +4524,60 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-35"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-35"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-35",code:"let armed = false\nlet baseline = 0\ninput.onLogoEvent(TouchButtonEvent.Pressed, function () {\n    armed = !armed\n    if (armed) {\n        baseline = input.lightLevel()\n        basic.showIcon(IconNames.Target)\n    } else {\n        basic.showIcon(IconNames.Asleep)\n    }\n})\nbasic.forever(function () {\n    if (armed && Math.abs(input.lightLevel() - baseline) > 30) {\n        music.playTone(880, 500)\n        basic.showIcon(IconNames.Skull)\n        basic.pause(500)\n    }\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-35-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-35-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-35-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-35-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-35-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-35-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-35-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-35-3",code:"input.onLogoEvent(TouchButtonEvent.Pressed, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand logo touche</div>
+    <div class="block-ref-desc">Declenche du code quand on touche le logo dore (V2).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-35-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-35-4",code:"basic.showNumber(input.lightLevel())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">niveau de lumiere</div>
+    <div class="block-ref-desc">Retourne le niveau de lumiere (0-255).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-35-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-35-5",code:"music.playTone(262, 500)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer tonalite</div>
+    <div class="block-ref-desc">Joue une note a une frequence et duree donnees.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI armed ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3494,9 +4685,60 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-36"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-36"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-36",code:"let armed = false\ninput.onButtonPressed(Button.A, function () {\n    armed = !armed\n    basic.showIcon(armed ? IconNames.Target : IconNames.Asleep)\n})\nbasic.forever(function () {\n    if (armed && pins.digitalReadPin(DigitalPin.P0) == 1) {\n        music.playTone(988, 300)\n        basic.showIcon(IconNames.Skull)\n        basic.pause(300)\n    }\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-36-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-36-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-36-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-36-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-36-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-36-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-36-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-36-3",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-36-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-36-4",code:"music.playTone(262, 500)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E63022">jouer tonalite</div>
+    <div class="block-ref-desc">Joue une note a une frequence et duree donnees.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-36-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-36-5",code:"basic.showNumber(pins.digitalReadPin(DigitalPin.P0))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">lire numerique</div>
+    <div class="block-ref-desc">Lit 0 ou 1 sur une broche.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI condition ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3589,9 +4831,36 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-37"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-37"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-37",code:"// N\u00e9cessite extension neopixel\nlet strip = neopixel.create(DigitalPin.P0, 8, NeoPixelMode.RGB)\nstrip.showRainbow(1, 360)\nbasic.forever(function () {\n    strip.rotate(1)\n    strip.show()\n    basic.pause(100)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-37-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-37-0",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-37-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-37-1",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-37-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-37-2",code:"let strip = neopixel.create(DigitalPin.P0, 8, NeoPixelMode.RGB)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#7B2D8E">NeoPixel</div>
+    <div class="block-ref-desc">Controle des LEDs RGB (NeoPixel).</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3667,9 +4936,52 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-38"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-38"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-38",code:"basic.forever(function () {\n    led.plotBarGraph(input.soundLevel(), 255)\n    basic.pause(100)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-38-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-38-0",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-38-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-38-1",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-38-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-38-2",code:"basic.showNumber(input.soundLevel())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">niveau sonore V2</div>
+    <div class="block-ref-desc">Retourne le niveau sonore ambiant (0-255, V2).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-38-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-38-3",code:"led.plot(2, 2)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#7600A8">allumer LED</div>
+    <div class="block-ref-desc">Allume une LED a la position (x, y).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-38-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-38-4",code:"led.plotBarGraph(128, 255)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#7600A8">graphique barres</div>
+    <div class="block-ref-desc">Affiche une valeur en barres sur les LEDs.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3733,9 +5045,36 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-39"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-39"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-39",code:"// Adapter les pins/vitesses \u00e0 ton robot\nfunction forward(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 512)\n    basic.pause(ms)\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction turnRight() {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.pause(500)\n    pins.analogWritePin(AnalogPin.P0, 0)\n}\ninput.onButtonPressed(Button.A, function () {\n    for (let i = 0; i < 4; i++) {\n        forward(1000)\n        turnRight()\n    }\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-39-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-39-0",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-39-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-39-1",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-39-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-39-2",code:"pins.analogWritePin(AnalogPin.P0, 512)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">ecriture analogique</div>
+    <div class="block-ref-desc">Ecrit une valeur (0-1023) sur une broche.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3837,9 +5176,52 @@ input.on_button_pressed(Button.A, on_button_a)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-40"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-40"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-40",code:"// Extension sonar \u2014 adapter les pins/vitesses \u00e0 ton robot\nfunction forward() {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 512)\n}\nfunction stop() {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction backward(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    pins.analogWritePin(AnalogPin.P0, -512)\n    pins.analogWritePin(AnalogPin.P1, -512)\n    basic.pause(ms)\n    stop()\n}\nfunction turnRight(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.pause(ms)\n    stop()\n}\nbasic.forever(function () {\n    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)\n    if (d > 0 && d < 15) {\n        stop()\n        basic.showIcon(IconNames.No)\n        backward(400)\n        turnRight(400)\n    } else {\n        forward()\n        basic.showIcon(IconNames.ArrowNorth)\n    }\n    basic.pause(200)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-40-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-40-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-40-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-40-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-40-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-40-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-40-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-40-3",code:"pins.analogWritePin(AnalogPin.P0, 512)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">ecriture analogique</div>
+    <div class="block-ref-desc">Ecrit une valeur (0-1023) sur une broche.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-40-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-40-4",code:"basic.showNumber(sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00A4A6">sonar distance</div>
+    <div class="block-ref-desc">Mesure la distance avec un capteur ultrason.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &gt; 0 &amp;&amp; d &lt; 15 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3978,9 +5360,52 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-41"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-41"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-41",code:"// Adapter les pins/vitesses \u00e0 ton robot\nfunction forward() {\n    pins.analogWritePin(AnalogPin.P13, 512)\n    pins.analogWritePin(AnalogPin.P14, 512)\n}\nfunction stop() {\n    pins.analogWritePin(AnalogPin.P13, 0)\n    pins.analogWritePin(AnalogPin.P14, 0)\n}\nfunction backward(ms: number) {\n    pins.analogWritePin(AnalogPin.P13, -512)\n    pins.analogWritePin(AnalogPin.P14, -512)\n    basic.pause(ms)\n    stop()\n}\nfunction turnRight(ms: number) {\n    pins.analogWritePin(AnalogPin.P13, 512)\n    pins.analogWritePin(AnalogPin.P14, 0)\n    basic.pause(ms)\n    stop()\n}\nbasic.forever(function () {\n    if (pins.digitalReadPin(DigitalPin.P0) == 1 || pins.digitalReadPin(DigitalPin.P1) == 1) {\n        stop()\n        basic.showIcon(IconNames.No)\n        backward(400)\n        turnRight(500)\n    } else {\n        forward()\n        basic.showIcon(IconNames.ArrowNorth)\n    }\n    basic.pause(100)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-41-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-41-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-41-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-41-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-41-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-41-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-41-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-41-3",code:"basic.showNumber(pins.digitalReadPin(DigitalPin.P0))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">lire numerique</div>
+    <div class="block-ref-desc">Lit 0 ou 1 sur une broche.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-41-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-41-4",code:"pins.analogWritePin(AnalogPin.P0, 512)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">ecriture analogique</div>
+    <div class="block-ref-desc">Ecrit une valeur (0-1023) sur une broche.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI pins.digitalReadPin(DigitalPin.P0 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4113,9 +5538,60 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-42"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-42"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-42",code:"// Extension sonar \u2014 adapter les pins/vitesses \u00e0 ton robot\nfunction forward() {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 512)\n}\nfunction stop() {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction turnRight(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.pause(ms)\n    stop()\n}\n// Strat\u00e9gie : longer le mur \u00e0 droite\nbasic.forever(function () {\n    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)\n    if (d > 0 && d < 12) {\n        stop()\n        basic.showString(\"D\")\n        turnRight(500)\n    } else {\n        forward()\n        basic.showIcon(IconNames.ArrowNorth)\n    }\n    basic.pause(200)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-42-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-42-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-42-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-42-1",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-42-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-42-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-42-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-42-3",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-42-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-42-4",code:"pins.analogWritePin(AnalogPin.P0, 512)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">ecriture analogique</div>
+    <div class="block-ref-desc">Ecrit une valeur (0-1023) sur une broche.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-42-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-42-5",code:"basic.showNumber(sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00A4A6">sonar distance</div>
+    <div class="block-ref-desc">Mesure la distance avec un capteur ultrason.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &gt; 0 &amp;&amp; d &lt; 12 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4240,9 +5716,68 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-43"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-43"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-43",code:"// Extension sonar \u2014 adapter les pins/vitesses \u00e0 ton robot\nfunction forward() {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 512)\n}\nfunction stop() {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction turnLeft(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 512)\n    basic.pause(ms)\n    stop()\n}\nfunction turnRight(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.pause(ms)\n    stop()\n}\nfunction backward(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, -512)\n    pins.analogWritePin(AnalogPin.P1, -512)\n    basic.pause(ms)\n    stop()\n}\nbasic.forever(function () {\n    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)\n    if (d > 0 && d < 15) {\n        stop()\n        backward(300)\n        if (randint(0, 1) == 0) {\n            basic.showString(\"G\")\n            turnLeft(500)\n        } else {\n            basic.showString(\"D\")\n            turnRight(500)\n        }\n    } else {\n        forward()\n        basic.showIcon(IconNames.ArrowNorth)\n    }\n    basic.pause(200)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-43-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-43-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-43-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-43-1",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-43-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-43-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-43-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-43-3",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-43-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-43-4",code:"basic.showNumber(randint(1, 6))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#9400D3">au hasard</div>
+    <div class="block-ref-desc">Genere un nombre aleatoire entre min et max.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-43-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-43-5",code:"pins.analogWritePin(AnalogPin.P0, 512)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">ecriture analogique</div>
+    <div class="block-ref-desc">Ecrit une valeur (0-1023) sur une broche.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-43-6"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-43-6",code:"basic.showNumber(sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00A4A6">sonar distance</div>
+    <div class="block-ref-desc">Mesure la distance avec un capteur ultrason.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &gt; 0 &amp;&amp; d &lt; 15 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4395,9 +5930,44 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-44"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-44"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-44",code:"// \u00c9METTEUR\nradio.setGroup(7)\ninput.onButtonPressed(Button.A, function () {\n    radio.sendNumber(1) // avant\n})\ninput.onButtonPressed(Button.B, function () {\n    radio.sendNumber(2) // stop\n})\ninput.onGesture(Gesture.TiltRight, function () {\n    radio.sendNumber(3)\n})\ninput.onGesture(Gesture.TiltLeft, function () {\n    radio.sendNumber(4)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-44-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-44-0",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-44-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-44-1",code:"input.onGesture(Gesture.Shake, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand secouer</div>
+    <div class="block-ref-desc">Declenche du code quand on secoue la carte.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-44-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-44-2",code:"radio.setGroup(7)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E3008C">radio groupe</div>
+    <div class="block-ref-desc">Definit le groupe radio (meme numero = communication).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-44-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-44-3",code:"radio.sendNumber(1)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#E3008C">radio envoyer</div>
+    <div class="block-ref-desc">Envoie un nombre par radio.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Envoyer radio</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4492,9 +6062,52 @@ input.on_gesture(Gesture.TILT_LEFT, on_tilt_left)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-45"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-45"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-45",code:"basic.forever(function () {\n    if (pins.digitalReadPin(DigitalPin.P0) == 1) {\n        pins.servoWritePin(AnalogPin.P1, 90)\n        basic.showIcon(IconNames.Yes)\n        basic.pause(3000)\n        pins.servoWritePin(AnalogPin.P1, 0)\n        basic.showIcon(IconNames.No)\n    }\n    basic.pause(200)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-45-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-45-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-45-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-45-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-45-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-45-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-45-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-45-3",code:"basic.showNumber(pins.digitalReadPin(DigitalPin.P0))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">lire numerique</div>
+    <div class="block-ref-desc">Lit 0 ou 1 sur une broche.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-45-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-45-4",code:"pins.servoWritePin(AnalogPin.P0, 90)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">servo</div>
+    <div class="block-ref-desc">Positionne un servomoteur (0-180 degres).</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI pins.digitalReadPin(DigitalPin.P0 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4577,9 +6190,44 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-46"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-46"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-46",code:"let code = \"\"\nlet secret = \"ABBA\"\ninput.onButtonPressed(Button.A, function () {\n    code += \"A\"\n    basic.showString(\"A\")\n})\ninput.onButtonPressed(Button.B, function () {\n    code += \"B\"\n    basic.showString(\"B\")\n})\ninput.onLogoEvent(TouchButtonEvent.Pressed, function () {\n    if (code == secret) {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Sad)\n    }\n    code = \"\"\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-46-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-46-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-46-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-46-1",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-46-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-46-2",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-46-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-46-3",code:"input.onLogoEvent(TouchButtonEvent.Pressed, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand logo touche</div>
+    <div class="block-ref-desc">Declenche du code quand on touche le logo dore (V2).</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI code == secret ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4685,9 +6333,36 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-47"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-47"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-47",code:"basic.forever(function () {\n    pins.digitalWritePin(DigitalPin.P0, 1) // Vert\n    basic.pause(5000)\n    pins.digitalWritePin(DigitalPin.P0, 0)\n    pins.digitalWritePin(DigitalPin.P1, 1) // Orange\n    basic.pause(2000)\n    pins.digitalWritePin(DigitalPin.P1, 0)\n    pins.digitalWritePin(DigitalPin.P2, 1) // Rouge\n    basic.pause(5000)\n    pins.digitalWritePin(DigitalPin.P2, 0)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-47-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-47-0",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-47-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-47-1",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-47-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-47-2",code:"pins.digitalWritePin(DigitalPin.P0, 1)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">ecriture numerique</div>
+    <div class="block-ref-desc">Ecrit 0 ou 1 sur une broche.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4771,9 +6446,60 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-48"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-48"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-48",code:"basic.forever(function () {\n    if (input.lightLevel() < 50) {\n        pins.digitalWritePin(DigitalPin.P0, 1)\n        basic.showIcon(IconNames.Heart)\n    } else {\n        pins.digitalWritePin(DigitalPin.P0, 0)\n        basic.clearScreen()\n    }\n    basic.pause(500)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-48-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-48-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-48-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-48-1",code:"basic.clearScreen()"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">effacer ecran</div>
+    <div class="block-ref-desc">Eteint toutes les 25 LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-48-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-48-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-48-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-48-3",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-48-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-48-4",code:"basic.showNumber(input.lightLevel())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">niveau de lumiere</div>
+    <div class="block-ref-desc">Retourne le niveau de lumiere (0-255).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-48-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-48-5",code:"pins.digitalWritePin(DigitalPin.P0, 1)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">ecriture numerique</div>
+    <div class="block-ref-desc">Ecrit 0 ou 1 sur une broche.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI input.lightLevel( ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4856,9 +6582,60 @@ basic.forever(on_forever)</div>
     <span class="need-pill">Compte Vittascience (vittascience.com)</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-49"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-49"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-49",code:"// Vittascience g\u00e9n\u00e8re du Python, pas du JS MakeCode\n// Exemple en mode blocs \u2192 Python :\ninput.onButtonPressed(Button.A, function () {\n    basic.showNumber(input.temperature())\n    basic.showString(\"C\")\n})\n// Puis recr\u00e9er l'activit\u00e9 10 (d\u00e9s) :\ninput.onGesture(Gesture.Shake, function () {\n    basic.showNumber(randint(1, 6))\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-49-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-49-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-49-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-49-1",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-49-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-49-2",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-49-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-49-3",code:"input.onGesture(Gesture.Shake, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand secouer</div>
+    <div class="block-ref-desc">Declenche du code quand on secoue la carte.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-49-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-49-4",code:"basic.showNumber(input.temperature())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">temperature</div>
+    <div class="block-ref-desc">Retourne la temperature mesuree par le processeur.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-49-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-49-5",code:"basic.showNumber(randint(1, 6))"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#9400D3">au hasard</div>
+    <div class="block-ref-desc">Genere un nombre aleatoire entre min et max.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4951,9 +6728,44 @@ input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-50"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-50"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-50",code:"// N\u00e9cessite extension HuskyLens\nbasic.forever(function () {\n    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {\n        let x = huskylens.readBox_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.xCenter)\n        if (x < 100) {\n            basic.showString(\"G\")\n        } else if (x > 220) {\n            basic.showString(\"D\")\n        } else {\n            basic.showIcon(IconNames.ArrowNorth)\n        }\n    } else {\n        basic.showIcon(IconNames.No)\n    }\n    basic.pause(200)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-50-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-50-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-50-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-50-1",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-50-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-50-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-50-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-50-3",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI x &lt; 100 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5059,9 +6871,52 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-51"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-51"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-51",code:"// N\u00e9cessite extension HuskyLens\ninput.onButtonPressed(Button.A, function () {\n    huskylens.initI2c()\n    basic.showString(\"GO\")\n})\nbasic.forever(function () {\n    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Meh)\n    }\n    basic.pause(500)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-51-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-51-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-51-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-51-1",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-51-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-51-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-51-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-51-3",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-51-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-51-4",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI condition ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5153,9 +7008,36 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-52"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-52"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-52",code:"// N\u00e9cessite extension HuskyLens en mode Tag\nbasic.forever(function () {\n    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {\n        let id = huskylens.readBox_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.ID)\n        basic.showNumber(id)\n    }\n    basic.pause(500)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-52-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-52-0",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-52-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-52-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-52-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-52-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node decision">SI condition ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5240,9 +7122,36 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-53"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-53"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-53",code:"// Code g\u00e9n\u00e9r\u00e9 par Create AI \u2014 adapter\nbasic.forever(function () {\n    // Le mod\u00e8le ML est int\u00e9gr\u00e9 au fichier .hex\n    // Si pr\u00e9diction = classe 1\n    basic.showIcon(IconNames.Happy)\n    // Si pr\u00e9diction = classe 2\n    // basic.showIcon(IconNames.Sad)\n    basic.pause(500)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-53-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-53-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-53-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-53-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-53-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-53-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5327,9 +7236,44 @@ basic.forever(on_forever)</div>
     <span class="need-pill">Robot compatible (option)</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-54"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-54"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-54",code:"// Code d\u00e9pend du tutoriel choisi\n// Exemple: r\u00e9agir \u00e0 un son\nbasic.forever(function () {\n    if (input.soundLevel() > 100) {\n        basic.showIcon(IconNames.Happy)\n        // action robot\n    } else {\n        basic.showIcon(IconNames.Asleep)\n    }\n    basic.pause(200)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-54-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-54-0",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-54-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-54-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-54-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-54-2",code:"basic.forever(function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#00AA00">repeter indefiniment</div>
+    <div class="block-ref-desc">Boucle infinie : le code se repete sans fin.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-54-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-54-3",code:"basic.showNumber(input.soundLevel())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">niveau sonore V2</div>
+    <div class="block-ref-desc">Retourne le niveau sonore ambiant (0-255, V2).</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI input.soundLevel( ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5414,9 +7358,60 @@ basic.forever(on_forever)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-55"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-55"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-55",code:"let mesures: number[] = []\ninput.onButtonPressed(Button.A, function () {\n    mesures.push(input.temperature())\n    basic.showNumber(mesures.length)\n})\ninput.onButtonPressed(Button.B, function () {\n    for (let v of mesures) {\n        basic.showNumber(v)\n        basic.pause(500)\n    }\n})\ninput.onGesture(Gesture.Shake, function () {\n    if (mesures.length > 0) {\n        let min = mesures[0]\n        let max = mesures[0]\n        for (let v of mesures) {\n            if (v < min) min = v\n            if (v > max) max = v\n        }\n        basic.showString(\"min\")\n        basic.showNumber(min)\n        basic.showString(\"max\")\n        basic.showNumber(max)\n    }\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-55-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-55-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-55-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-55-1",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-55-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-55-2",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-55-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-55-3",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-55-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-55-4",code:"input.onGesture(Gesture.Shake, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand secouer</div>
+    <div class="block-ref-desc">Declenche du code quand on secoue la carte.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-55-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-55-5",code:"basic.showNumber(input.temperature())"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">temperature</div>
+    <div class="block-ref-desc">Retourne la temperature mesuree par le processeur.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI mesures.length &gt; 0 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5539,9 +7534,60 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-56"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-56"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-56",code:"let mot = \"\"\ninput.onButtonPressed(Button.A, function () {\n    mot += \"O\"\n    basic.showString(mot)\n})\ninput.onButtonPressed(Button.B, function () {\n    mot += \"UI\"\n    basic.showString(mot)\n})\ninput.onGesture(Gesture.Shake, function () {\n    basic.showNumber(mot.length)\n    basic.pause(500)\n    if (mot == \"OUI\") {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Sad)\n    }\n    mot = \"\"\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-56-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-56-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-56-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-56-1",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-56-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-56-2",code:"basic.showNumber(42)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher nombre</div>
+    <div class="block-ref-desc">Affiche un nombre sur les LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-56-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-56-3",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-56-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-56-4",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-56-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-56-5",code:"input.onGesture(Gesture.Shake, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand secouer</div>
+    <div class="block-ref-desc">Declenche du code quand on secoue la carte.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI mot == &quot;OUI&quot; ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5654,9 +7700,68 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-57"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-57"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-57",code:"// Adapter les pins \u00e0 ton robot\nfunction forward(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 512)\n    basic.pause(ms)\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction backward(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, -512)\n    pins.analogWritePin(AnalogPin.P1, -512)\n    basic.pause(ms)\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction turnRight(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.pause(ms)\n    pins.analogWritePin(AnalogPin.P0, 0)\n}\ninput.onButtonPressed(Button.A, function () {\n    basic.showIcon(IconNames.ArrowNorth)\n    forward(1000)\n    basic.clearScreen()\n})\ninput.onButtonPressed(Button.B, function () {\n    basic.showIcon(IconNames.ArrowSouth)\n    backward(1000)\n    basic.clearScreen()\n})\ninput.onButtonPressed(Button.AB, function () {\n    basic.showString(\"D\")\n    turnRight(500)\n    basic.clearScreen()\n})\ninput.onGesture(Gesture.Shake, function () {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.showIcon(IconNames.No)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-57-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-57-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-57-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-57-1",code:"basic.showIcon(IconNames.Heart)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">montrer icone</div>
+    <div class="block-ref-desc">Affiche une icone predefinie (coeur, sourire, eclair...).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-57-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-57-2",code:"basic.clearScreen()"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">effacer ecran</div>
+    <div class="block-ref-desc">Eteint toutes les 25 LEDs.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-57-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-57-3",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-57-4"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-57-4",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-57-5"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-57-5",code:"input.onGesture(Gesture.Shake, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand secouer</div>
+    <div class="block-ref-desc">Declenche du code quand on secoue la carte.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-57-6"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-57-6",code:"pins.analogWritePin(AnalogPin.P0, 512)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#3BDDD4">ecriture analogique</div>
+    <div class="block-ref-desc">Ecrit une valeur (0-1023) sur une broche.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5803,9 +7908,44 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
     <span class="need-pill">MakeCode</span>
   </div>
 </div></div>
-<div class="sec-label">Blocs</div>
-<div class="mc-blocks" id="mc-58"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-58"><div class="mc-loading">Chargement des blocs...</div></div>
 <script>mcQueue.push({id:"mc-58",code:"let countA = 0\nlet countB = 0\ninput.onButtonPressed(Button.A, function () {\n    countA += 1\n    basic.showString(\"A\")\n})\ninput.onButtonPressed(Button.B, function () {\n    countB += 1\n    basic.showString(\"B\")\n})\ninput.onGesture(Gesture.Shake, function () {\n    basic.showString(\"?\")\n    basic.pause(500)\n    if (countA >= countB) {\n        basic.showString(\"A!\")\n    } else {\n        basic.showString(\"B!\")\n    }\n    basic.pause(1000)\n    basic.showString(countA + \"/\" + countB)\n})"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-58-0"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-58-0",code:"basic.showString(\"Hello\")"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">afficher texte</div>
+    <div class="block-ref-desc">Fait defiler un texte sur les 25 LEDs, lettre par lettre.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-58-1"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-58-1",code:"basic.pause(1000)"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#1E90FF">pause</div>
+    <div class="block-ref-desc">Attend un nombre de millisecondes (1000 = 1 seconde).</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-58-2"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-58-2",code:"input.onButtonPressed(Button.A, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand bouton presse</div>
+    <div class="block-ref-desc">Declenche du code quand on appuie sur A, B ou A+B.</div>
+  </div>
+</div>
+<div class="block-ref-item">
+  <div class="block-ref-render" id="bk-58-3"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>
+  <script>mcQueue.push({id:"bk-58-3",code:"input.onGesture(Gesture.Shake, function(){})"});</script>
+  <div class="block-ref-info">
+    <div class="block-ref-name" style="color:#D400D4">quand secouer</div>
+    <div class="block-ref-desc">Declenche du code quand on secoue la carte.</div>
+  </div>
+</div>
+</div>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI countA &gt;= countB ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
