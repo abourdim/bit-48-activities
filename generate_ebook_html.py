@@ -309,8 +309,9 @@ def hl_py(code):
 
 
 # ── Build sidebar nav items ──
+activities = [a for a in activities if a["id"] <= 48]
 simple_acts = [a for a in activities if a["part"] == "simple"]
-advanced_acts = [a for a in activities if a["part"] == "avance"]
+advanced_acts = [a for a in activities if a["part"] != "simple"]
 
 def sidebar_links(act_list):
     links = []
@@ -1037,51 +1038,52 @@ out.append('''
     });
   });
 
-  // Scroll-spy
+  // Single-activity view: show one at a time
   var sections = document.querySelectorAll('.act-section');
+  var cover = document.getElementById('cover');
   var navLinks = document.querySelectorAll('.nav-link');
+  var coverLink = document.querySelector('.nav-cover-link');
   var linkMap = {};
   navLinks.forEach(function(l) { linkMap[l.dataset.id] = l; });
 
-  var currentActive = null;
+  // Hide all sections initially
+  sections.forEach(function(s) { s.style.display = 'none'; });
 
-  function updateScrollSpy() {
-    var scrollY = window.scrollY + 120;
-    var found = null;
-    for (var i = sections.length - 1; i >= 0; i--) {
-      if (sections[i].offsetTop <= scrollY) {
-        found = sections[i].id.replace('act-', '');
-        break;
-      }
-    }
-    if (found !== currentActive) {
-      if (currentActive && linkMap[currentActive]) {
-        linkMap[currentActive].classList.remove('active');
-      }
-      if (found && linkMap[found]) {
-        linkMap[found].classList.add('active');
-        // Scroll sidebar to keep active link visible
-        var activeLink = linkMap[found];
-        var nav = document.querySelector('.sidebar-nav');
-        var linkTop = activeLink.offsetTop - nav.offsetTop;
-        var navScroll = nav.scrollTop;
-        var navH = nav.clientHeight;
-        if (linkTop < navScroll + 40 || linkTop > navScroll + navH - 40) {
-          nav.scrollTo({ top: linkTop - navH / 3, behavior: 'smooth' });
-        }
-      }
-      currentActive = found;
-    }
+  function showActivity(id) {
+    sections.forEach(function(s) { s.style.display = 'none'; });
+    if (cover) cover.style.display = 'none';
+    var target = document.getElementById('act-' + id);
+    if (target) { target.style.display = 'block'; window.scrollTo(0,0); }
+    navLinks.forEach(function(l) { l.classList.remove('active'); });
+    if (linkMap[id]) linkMap[id].classList.add('active');
   }
 
-  var ticking = false;
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      requestAnimationFrame(function() { updateScrollSpy(); ticking = false; });
-      ticking = true;
-    }
+  function showCover() {
+    sections.forEach(function(s) { s.style.display = 'none'; });
+    if (cover) cover.style.display = '';
+    navLinks.forEach(function(l) { l.classList.remove('active'); });
+    window.scrollTo(0,0);
+  }
+
+  navLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      showActivity(this.dataset.id);
+    });
   });
-  updateScrollSpy();
+
+  if (coverLink) {
+    coverLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      showCover();
+    });
+  }
+
+  if (window.location.hash) {
+    var m = window.location.hash.match(/act-(\\d+)/);
+    if (m) showActivity(m[1]);
+  }
+
 })();
 </script>
 ''')
