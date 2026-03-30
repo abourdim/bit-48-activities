@@ -3478,6 +3478,9 @@ window.addEventListener("message", function(ev){
       img.style.maxWidth = "100%";
       img.style.height = "auto";
       container.appendChild(img);
+      // Hide CSS fallback now that real blocks loaded
+      const fb = $("mBlocksFallback");
+      if(fb) fb.style.display = "none";
     }
   }
 });
