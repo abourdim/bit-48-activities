@@ -190,30 +190,46 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .block-step:hover{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.12);transform:translateX(2px)}
 .block-step .step-num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:.62rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--band2));color:var(--bg);margin-inline-end:8px;flex-shrink:0;box-shadow:0 2px 8px var(--glow)}
 
-/* ── VISUAL BLOCKS (MakeCode style) ── */
-.block-canvas{display:flex;flex-direction:column;gap:10px;padding:6px 0}
-/* Base block — flat colored rectangle with subtle 3D bottom edge */
-.vblock{position:relative;border-radius:4px;padding:6px 10px;font-size:.8rem;font-weight:600;color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:5px;line-height:1.5;border-bottom:3px solid rgba(0,0,0,.25);cursor:default;font-family:system-ui,-apple-system,sans-serif;letter-spacing:.01em}
+/* ── VISUAL BLOCKS (MakeCode Zelos renderer) ── */
+/* Based on Blockly Zelos constants: GRID_UNIT=4, CORNER_RADIUS=4, NOTCH_WIDTH=36, NOTCH_HEIGHT=8 */
+.block-canvas{display:flex;flex-direction:column;gap:4px;padding:8px 4px;background:rgba(255,255,255,.03);border-radius:8px}
+
+/* ── Base block ── */
+.vblock{position:relative;border-radius:4px;padding:0 8px;min-height:40px;font-size:12px;font-weight:500;color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:4px;line-height:40px;cursor:default;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif}
 .vblock::before,.vblock::after{display:none}
-/* Hat block: rounded top = event trigger */
-.vblock.hat{border-radius:16px 16px 4px 4px;padding:7px 14px 4px;flex-direction:column;align-items:stretch}
-.vblock .hat-body{display:flex;flex-direction:column;gap:2px;margin-top:4px}
-/* C-block: wraps children (if/else, loops) */
-.vblock.cblock{padding:6px 10px 0;flex-direction:column;align-items:stretch}
-.vblock .cblock-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
-.vblock .cblock-body{margin:4px 0 4px 0;padding:6px 4px 6px 12px;background:rgba(0,0,0,.12);border-inline-start:4px solid rgba(0,0,0,.2);min-height:30px;display:flex;flex-direction:column;gap:2px;border-radius:0 3px 3px 0}
-[dir="rtl"] .vblock .cblock-body{padding:6px 12px 6px 4px;border-inline-start:none;border-inline-end:4px solid rgba(0,0,0,.2);border-radius:3px 0 0 3px}
-/* C-block bottom cap */
-.vblock.cblock>.cblock-cap{height:6px;border-radius:0 0 4px 4px;background:inherit;filter:brightness(.92);margin:0 -10px}
-.vblock .cblock-else{font-size:.76rem;padding:4px 8px;color:rgba(255,255,255,.9);font-weight:700;background:rgba(0,0,0,.1);border-radius:0;margin:0 -10px}
-/* Argument pills — white rounded for values, red for strings */
-.vblock .varg{display:inline-flex;align-items:center;padding:1px 8px;border-radius:10px;background:#fff;color:#333;font-size:.74rem;font-weight:600;white-space:nowrap;border:1px solid rgba(0,0,0,.08)}
-.vblock .varg.round{border-radius:999px;background:#fff;color:#333}
-.vblock .varg.str{background:#a31515;color:#fff;border-radius:12px;border:none}
-.vblock .varg.str::before{content:"\" ";opacity:.6}.vblock .varg.str::after{content:" \"";opacity:.6}
-/* Nested value block inside arg */
-.vblock .varg .vblock{padding:1px 8px;margin:-1px -2px;font-size:.72rem;font-weight:600;border-bottom:2px solid rgba(0,0,0,.2);border-radius:999px}
+/* Dark bottom edge — Zelos style 3D */
+.vblock{box-shadow:0 2px 0 0 rgba(0,0,0,.2)}
+
+/* ── Notch connector (top of non-hat blocks) ── */
+.vblock:not(.hat):not(.cblock)::before{content:"";display:block;position:absolute;top:-4px;left:12px;width:36px;height:4px;background:inherit;border-radius:2px 2px 0 0;filter:brightness(.85)}
+[dir="rtl"] .vblock:not(.hat):not(.cblock)::before{left:auto;right:12px}
+
+/* ── Hat block (event trigger) ── */
+.vblock.hat{border-radius:22px 22px 4px 4px;min-height:44px;padding:0 12px;line-height:44px;flex-direction:column;align-items:stretch;box-shadow:0 2px 0 0 rgba(0,0,0,.2)}
+.vblock.hat>.hat-label{display:flex;align-items:center;gap:4px;min-height:44px}
+.vblock .hat-body{display:flex;flex-direction:column;gap:1px;padding-bottom:4px}
+
+/* ── C-block (if, forever, while, repeat) ── */
+.vblock.cblock{padding:0;flex-direction:column;align-items:stretch;line-height:normal;box-shadow:none}
+.vblock .cblock-row{display:flex;flex-wrap:wrap;align-items:center;gap:4px;min-height:40px;padding:0 8px;line-height:40px;border-radius:4px 4px 0 0;box-shadow:0 0 0 0}
+.vblock .cblock-body{margin:0;padding:4px 4px 4px 16px;background:rgba(0,0,0,.15);min-height:40px;display:flex;flex-direction:column;gap:1px}
+[dir="rtl"] .vblock .cblock-body{padding:4px 16px 4px 4px}
+/* C-block bottom cap — same color, with notch */
+.vblock.cblock>.cblock-cap{min-height:12px;border-radius:0 0 4px 4px;background:inherit;box-shadow:0 2px 0 0 rgba(0,0,0,.2)}
+/* Else separator */
+.vblock .cblock-else{padding:0 8px;min-height:32px;line-height:32px;color:rgba(255,255,255,.9);font-weight:500;background:inherit;filter:brightness(.95)}
+
+/* ── Argument fields (Zelos: FIELD_BORDER_RECT_HEIGHT=32, RADIUS=4) ── */
+.vblock .varg{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:12px;background:rgba(255,255,255,.95);color:#333;font-size:11px;font-weight:600;white-space:nowrap;line-height:24px;vertical-align:middle}
+/* Round reporter (number/variable) — pill shape */
+.vblock .varg.round{border-radius:999px;background:rgba(255,255,255,.95);color:#333}
+/* String field — darker colored pill */
+.vblock .varg.str{background:rgba(0,0,0,.18);color:#fff;border-radius:12px}
+.vblock .varg.str::before{content:"\" ";opacity:.5;font-size:10px}.vblock .varg.str::after{content:" \"";opacity:.5;font-size:10px}
+/* Nested value block (reporter inside field) */
+.vblock .varg .vblock{display:inline-flex;height:22px;padding:0 8px;margin:0 -4px;font-size:11px;font-weight:500;border-radius:999px;line-height:22px;min-height:auto;box-shadow:0 1px 0 rgba(0,0,0,.15);gap:3px}
 .vblock .varg .vblock::before,.vblock .varg .vblock::after{display:none}
+.vblock .varg .vblock .varg{height:18px;padding:0 6px;font-size:10px;line-height:18px}
 /* MakeCode official category colors (from pxt-microbit GitHub source) */
 .vblock.cat-basic{background:#1E90FF}       /* Basic: DodgerBlue */
 .vblock.cat-input{background:#D400D4}       /* Input: Magenta */
@@ -3398,15 +3414,20 @@ function renderOneBlock(b){
     h += `<div class="cblock-cap"></div></div>`;
     return h;
   }
+  if(type==="hat" && b.children && b.children.length > 0){
+    // Hat block with children: label row + body
+    let h = `<div class="vblock hat ${cat}"><div class="hat-label">${esc(b.label)}`;
+    if(b.arg!==undefined) h += " "+renderArg(b.arg);
+    if(b.args) b.args.forEach(a => { h += " "+renderArg(a); });
+    h += `</div><div class="hat-body">`;
+    b.children.forEach(c => { h += renderOneBlock(c); });
+    h += `</div></div>`;
+    return h;
+  }
+  // Simple stack/hat block (no children)
   let h = `<div class="vblock ${type} ${cat}">${esc(b.label)}`;
   if(b.arg!==undefined) h += " "+renderArg(b.arg);
   if(b.args) b.args.forEach(a => { h += " "+renderArg(a); });
-  // Hat/stack blocks can have children (nested blocks inside)
-  if(b.children && b.children.length > 0){
-    h += `<div class="hat-body">`;
-    b.children.forEach(c => { h += renderOneBlock(c); });
-    h += `</div>`;
-  }
   h += `</div>`;
   return h;
 }
