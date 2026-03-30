@@ -144,6 +144,20 @@ button.primary:hover:not(:disabled){box-shadow:0 8px 28px var(--glow),0 0 0 2px 
 .info-learn ul{margin:4px 0 0 16px;padding:0}
 .info-learn li{margin-bottom:3px}
 .goal-text{font-size:.85rem;line-height:1.5;margin-bottom:0}
+/* Concept explanation box */
+.info-concept{font-size:.8rem;line-height:1.6;color:var(--text);padding:10px 14px;border-radius:10px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-inline-start:3px solid var(--accent)}
+.info-concept strong{color:var(--accent)}
+.info-concept code{padding:1px 5px;border-radius:4px;font-size:.72rem;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.08);color:var(--accent);font-family:"SF Mono",monospace}
+/* Step-by-step guide */
+.info-steps{display:flex;flex-direction:column;gap:6px}
+.info-step{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:8px;background:rgba(0,0,0,.08);border:1px solid rgba(255,255,255,.04);font-size:.78rem;line-height:1.4;transition:background .2s}
+.info-step:hover{background:rgba(0,0,0,.14)}
+.info-step .step-n{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;background:var(--accent);color:var(--bg);flex-shrink:0}
+.info-step .step-text{color:var(--text-muted)}
+.info-step .step-text strong{color:var(--text)}
+.info-step .step-text code{padding:1px 5px;border-radius:4px;font-size:.7rem;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.08);color:var(--accent);font-family:"SF Mono",monospace}
+/* ASCII diagram */
+.info-diagram{font-family:"SF Mono",monospace;font-size:.7rem;line-height:1.4;color:var(--accent);padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.06);white-space:pre;overflow-x:auto;direction:ltr;text-align:left}
 /* Block chips (mini MakeCode blocks in Info tab) */
 .info-blocks-used{display:flex;flex-wrap:wrap;gap:6px}
 .block-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:.72rem;font-weight:600;color:#fff;border-bottom:2px solid rgba(0,0,0,.2);font-family:system-ui,-apple-system,sans-serif}
@@ -438,10 +452,12 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
       <div class="tab-panel active" id="tab-info">
         <div class="info-meta" id="infoMeta"></div>
         <div class="info-section"><div class="info-section-title" id="infoGoalTitle">🎯 Objectif</div><div class="goal-text" id="mGoal"></div></div>
-        <div class="info-section"><div class="info-section-title" id="infoLearnTitle">📚 Tu vas apprendre</div><div class="info-learn" id="mLearn"></div></div>
+        <div class="info-section"><div class="info-section-title" id="infoConceptTitle">💡 Concept</div><div class="info-concept" id="mConcept"></div></div>
+        <div class="info-section"><div class="info-section-title" id="infoStepsTitle">📋 Étapes</div><div class="info-steps" id="mSteps"></div></div>
+        <div class="info-section"><div class="info-section-title" id="infoDiagramTitle">📐 Schéma</div><div class="info-diagram" id="mDiagram"></div></div>
         <div class="info-section"><div class="info-section-title" id="infoBlocksTitle">🧩 Blocs utilisés</div><div class="info-blocks-used" id="mBlocksUsed"></div></div>
-        <div class="info-section"><div class="info-section-title" id="infoCodeTitle">💻 Instructions clés</div><div class="info-code-keys" id="mCodeKeys"></div></div>
-        <div class="info-section"><div class="info-section-title" id="mNeedsLabel">🧰 Tu as besoin de</div><ul class="needs-list" id="mNeeds"></ul></div>
+        <div class="info-section"><div class="info-section-title" id="infoCodeTitle">💻 Instructions</div><div class="info-code-keys" id="mCodeKeys"></div></div>
+        <div class="info-section"><div class="info-section-title" id="mNeedsLabel">🧰 Matériel</div><ul class="needs-list" id="mNeeds"></ul></div>
         <div class="tip-box" id="mTip"></div>
       </div>
       <div class="tab-panel" id="tab-blocks">
@@ -3586,6 +3602,132 @@ function renderMakeCodeBlocks(a){
   }, 5000);
 }
 
+// ═══════════════════════════════════════════════════════════════════
+// LESSON GENERATOR — auto-generates concept, steps, diagram
+// ═══════════════════════════════════════════════════════════════════
+function generateLesson(a){
+  const L = lang;
+  const js = a.codeJS;
+  const blocks = ta(a,"blocks");
+
+  // ── CONCEPT: explain the key programming concept ──
+  const concepts = [];
+  if(js.includes("forever")) concepts.push({
+    fr:"La <strong>boucle infinie</strong> (<code>forever</code>) répète le code sans fin. C'est le cœur de la plupart des programmes micro:bit : lire un capteur → réagir → recommencer.",
+    en:"The <strong>infinite loop</strong> (<code>forever</code>) repeats code endlessly. It's the core of most micro:bit programs: read sensor → react → repeat.",
+    ar:"<strong>الحلقة اللانهائية</strong> (<code>forever</code>) تكرر الكود بلا توقف. هي أساس معظم برامج المايكروبت: قراءة مستشعر ← تفاعل ← تكرار."
+  });
+  if(js.includes("onButtonPressed")) concepts.push({
+    fr:"Un <strong>événement bouton</strong> déclenche du code quand tu appuies sur A, B ou A+B. C'est de la <strong>programmation événementielle</strong> : le programme attend une action.",
+    en:"A <strong>button event</strong> triggers code when you press A, B, or A+B. This is <strong>event-driven programming</strong>: the program waits for an action.",
+    ar:"<strong>حدث الزر</strong> يشغّل الكود عند الضغط على A أو B أو A+B. هذه <strong>برمجة بالأحداث</strong>: البرنامج ينتظر إجراءً."
+  });
+  if(js.includes("onGesture")||js.includes("Shake")) concepts.push({
+    fr:"Le <strong>geste</strong> (secouer, incliner…) est détecté par l'<strong>accéléromètre</strong>, un capteur de mouvement intégré à la carte.",
+    en:"A <strong>gesture</strong> (shake, tilt…) is detected by the <strong>accelerometer</strong>, a motion sensor built into the board.",
+    ar:"<strong>الإيماءة</strong> (هزّ، ميل…) يكتشفها <strong>مقياس التسارع</strong>، وهو مستشعر حركة مدمج في البطاقة."
+  });
+  if(js.includes("if")) concepts.push({
+    fr:"La <strong>condition</strong> (<code>if/else</code>) permet au programme de <strong>prendre des décisions</strong> : si une condition est vraie → faire A, sinon → faire B.",
+    en:"A <strong>condition</strong> (<code>if/else</code>) lets the program <strong>make decisions</strong>: if something is true → do A, otherwise → do B.",
+    ar:"<strong>الشرط</strong> (<code>if/else</code>) يسمح للبرنامج بـ<strong>اتخاذ قرارات</strong>: إذا تحقق الشرط ← نفّذ أ، وإلا ← نفّذ ب."
+  });
+  if(js.includes("randint")) concepts.push({
+    fr:"<code>randint(min, max)</code> génère un <strong>nombre aléatoire</strong>. L'ordinateur choisit au hasard — comme lancer un dé !",
+    en:"<code>randint(min, max)</code> generates a <strong>random number</strong>. The computer picks randomly — like rolling a dice!",
+    ar:"<code>randint(min, max)</code> يولّد <strong>رقماً عشوائياً</strong>. الحاسوب يختار عشوائياً — مثل رمي النرد!"
+  });
+  if(js.includes("radio.")) concepts.push({
+    fr:"Le <strong>radio</strong> permet à 2 micro:bits de communiquer sans fil. Les cartes sur le <strong>même groupe</strong> s'envoient des données.",
+    en:"<strong>Radio</strong> lets 2 micro:bits communicate wirelessly. Boards on the <strong>same group</strong> send data to each other.",
+    ar:"<strong>الراديو</strong> يتيح لبطاقتي مايكروبت التواصل لاسلكياً. البطاقات على <strong>نفس المجموعة</strong> ترسل بيانات لبعضها."
+  });
+  if(js.includes("pins.")) concepts.push({
+    fr:"Les <strong>broches</strong> (P0, P1, P2) connectent des composants externes. On peut <strong>lire</strong> (capteur) ou <strong>écrire</strong> (LED, moteur) des valeurs.",
+    en:"<strong>Pins</strong> (P0, P1, P2) connect external components. You can <strong>read</strong> (sensor) or <strong>write</strong> (LED, motor) values.",
+    ar:"<strong>المنافذ</strong> (P0، P1، P2) تربط مكونات خارجية. يمكنك <strong>قراءة</strong> (مستشعر) أو <strong>كتابة</strong> (LED، محرك) القيم."
+  });
+  if(js.includes("let ")||js.includes("var ")) concepts.push({
+    fr:"Une <strong>variable</strong> est une boîte mémoire avec un nom. On y stocke une valeur (nombre, texte) qu'on peut lire et modifier.",
+    en:"A <strong>variable</strong> is a named memory box. You store a value (number, text) that you can read and change.",
+    ar:"<strong>المتغير</strong> هو صندوق ذاكرة باسم. تخزّن فيه قيمة (رقم، نص) يمكنك قراءتها وتعديلها."
+  });
+  if(js.includes("music.")) concepts.push({
+    fr:"Le micro:bit peut <strong>jouer des sons</strong>. Une note = une fréquence (Hz) + une durée (ms). Exemple: Do = 262 Hz.",
+    en:"The micro:bit can <strong>play sounds</strong>. A note = a frequency (Hz) + duration (ms). Example: middle C = 262 Hz.",
+    ar:"المايكروبت يمكنه <strong>تشغيل أصوات</strong>. النوتة = تردد (Hz) + مدة (ms). مثال: دو الوسطى = 262 Hz."
+  });
+  if(js.includes("function ")) concepts.push({
+    fr:"Une <strong>fonction</strong> est un bloc de code réutilisable. Tu lui donnes un nom, et tu peux l'<strong>appeler</strong> plusieurs fois sans réécrire le code.",
+    en:"A <strong>function</strong> is a reusable code block. You give it a name and <strong>call</strong> it multiple times without rewriting the code.",
+    ar:"<strong>الدالة</strong> هي كتلة كود قابلة لإعادة الاستخدام. تسمّيها وتستدعيها عدة مرات دون إعادة كتابة الكود."
+  });
+  if(concepts.length===0) concepts.push({
+    fr:"Cette activité utilise les <strong>blocs de base</strong> de MakeCode. Chaque bloc correspond à une action que la micro:bit exécute.",
+    en:"This activity uses <strong>basic MakeCode blocks</strong>. Each block corresponds to an action the micro:bit executes.",
+    ar:"هذا النشاط يستخدم <strong>المكعبات الأساسية</strong> لـ MakeCode. كل مكعب يقابل إجراءً ينفذه المايكروبت."
+  });
+  $("mConcept").innerHTML = concepts.map(c => c[L]||c.fr).join("<br><br>");
+
+  // ── STEPS: guided walkthrough ──
+  const stepsData = [];
+  stepsData.push({fr:"Ouvre <strong>MakeCode</strong> (makecode.microbit.org) et crée un <strong>nouveau projet</strong>.",en:"Open <strong>MakeCode</strong> (makecode.microbit.org) and create a <strong>new project</strong>.",ar:"افتح <strong>MakeCode</strong> (makecode.microbit.org) وأنشئ <strong>مشروعاً جديداً</strong>."});
+
+  const bArr = Array.isArray(blocks)?blocks:a.blocks;
+  bArr.forEach(b => {
+    stepsData.push({fr:"Ajoute le bloc : <strong>"+esc(b)+"</strong>",en:"Add the block: <strong>"+esc(b)+"</strong>",ar:"أضف المكعب: <strong>"+esc(b)+"</strong>"});
+  });
+
+  stepsData.push({fr:"Clique sur <strong>▶ Simuler</strong> pour tester dans le simulateur.",en:"Click <strong>▶ Simulate</strong> to test in the simulator.",ar:"اضغط <strong>▶ محاكاة</strong> للاختبار في المحاكي."});
+  stepsData.push({fr:"<strong>Télécharge</strong> le fichier .hex sur ta micro:bit pour tester en vrai !",en:"<strong>Download</strong> the .hex file to your micro:bit to test for real!",ar:"<strong>حمّل</strong> ملف .hex على المايكروبت للاختبار الحقيقي!"});
+
+  $("mSteps").innerHTML = stepsData.map((s,i) =>
+    `<div class="info-step"><span class="step-n">${i+1}</span><span class="step-text">${s[L]||s.fr}</span></div>`
+  ).join("");
+
+  // ── DIAGRAM: ASCII art of micro:bit or connections ──
+  let diagram = "";
+  if(js.includes("pins.") && (js.includes("P0")||js.includes("P1")||js.includes("P2"))){
+    diagram = `    ┌─────────────────┐
+    │   micro:bit      │
+    │  ┌─┐  ┌─┐       │
+    │  │A│  │B│  [USB] │
+    │  └─┘  └─┘       │
+    │   ╔═══════╗     │
+    │   ║ 5×5   ║     │
+    │   ║ LEDs   ║     │
+    │   ╚═══════╝     │
+    └──┬──┬──┬──┬──┬──┘
+       0  1  2  3V GND
+       │        │   │
+       └── composant ──┘`;
+  } else if(js.includes("radio.")){
+    diagram = `  micro:bit A          micro:bit B
+  ┌─────────┐          ┌─────────┐
+  │  [A][B] │  ~~~~>   │  [A][B] │
+  │  ╔═══╗  │  radio   │  ╔═══╗  │
+  │  ║LED║  │  <~~~~   │  ║LED║  │
+  │  ╚═══╝  │  grp: 7  │  ╚═══╝  │
+  └─────────┘          └─────────┘`;
+  } else {
+    diagram = `       ┌──────────────────┐
+       │    micro:bit      │
+       │   ┌──┐    ┌──┐   │
+       │   │A │    │ B│   │
+       │   └──┘    └──┘   │
+       │    ╔══════════╗   │
+       │    ║ ● ● ● ● ●║   │
+       │    ║ ● ● ● ● ●║   │
+       │    ║ ● ● ● ● ●║   │
+       │    ║ ● ● ● ● ●║   │
+       │    ║ ● ● ● ● ●║   │
+       │    ╚══════════╝   │
+       └──────────────────┘
+          5×5 LED screen`;
+  }
+  $("mDiagram").textContent = diagram;
+}
+
 function highlightPython(code){
   // Tokenize to avoid nested spans
   const escaped = esc(code);
@@ -3721,34 +3863,20 @@ function openModal(){
 
   // Section titles
   $("infoGoalTitle").textContent = lang==="ar"?"🎯 الهدف":lang==="en"?"🎯 Goal":"🎯 Objectif";
-  $("infoLearnTitle").textContent = lang==="ar"?"📚 ستتعلّم":lang==="en"?"📚 You'll learn":"📚 Tu vas apprendre";
-  $("mNeedsLabel").textContent = lang==="ar"?"🧰 تحتاج إلى":lang==="en"?"🧰 You need":"🧰 Tu as besoin de";
+  $("mNeedsLabel").textContent = lang==="ar"?"🧰 المواد":lang==="en"?"🧰 Materials":"🧰 Matériel";
 
   // Goal
   $("mGoal").textContent = ta(a,"goal");
 
-  // "You'll learn" — auto-generated from activity metadata
-  const learnItems = [];
-  if(a.difficulty===1) learnItems.push(lang==="ar"?"المفاهيم الأساسية للبرمجة":lang==="en"?"Basic programming concepts":"Les bases de la programmation");
-  if(a.part==="advanced") learnItems.push(lang==="ar"?"مهارات متقدمة":lang==="en"?"Advanced skills":"Des compétences avancées");
-  if(a.v2) learnItems.push(lang==="ar"?"ميزات micro:bit V2":lang==="en"?"micro:bit V2 features":"Les fonctionnalités micro:bit V2");
-  if(a.ia) learnItems.push(lang==="ar"?"مبادئ الذكاء الاصطناعي":lang==="en"?"AI / Machine Learning principles":"Les principes de l'IA");
-  // Detect concepts from code
-  if(a.codeJS.includes("onButtonPressed")) learnItems.push(lang==="ar"?"التعامل مع الأزرار":lang==="en"?"Button events":"Les événements boutons");
-  if(a.codeJS.includes("onGesture")||a.codeJS.includes("Shake")) learnItems.push(lang==="ar"?"مستشعر الحركة":lang==="en"?"Motion sensor":"Le capteur de mouvement");
-  if(a.codeJS.includes("forever")) learnItems.push(lang==="ar"?"الحلقات اللانهائية":lang==="en"?"Infinite loops":"Les boucles infinies");
-  if(a.codeJS.includes("if")) learnItems.push(lang==="ar"?"الشروط (إذا/وإلا)":lang==="en"?"Conditions (if/else)":"Les conditions (si/sinon)");
-  if(a.codeJS.includes("randint")) learnItems.push(lang==="ar"?"الأرقام العشوائية":lang==="en"?"Random numbers":"Les nombres aléatoires");
-  if(a.codeJS.includes("radio")) learnItems.push(lang==="ar"?"الاتصال اللاسلكي":lang==="en"?"Wireless communication":"La communication radio");
-  if(a.codeJS.includes("pins.")) learnItems.push(lang==="ar"?"التحكم بالمنافذ":lang==="en"?"Pin I/O control":"Le contrôle des broches");
-  if(a.codeJS.includes("music.")) learnItems.push(lang==="ar"?"إنتاج الأصوات":lang==="en"?"Sound generation":"La génération de sons");
-  if(a.codeJS.includes("let ")||a.codeJS.includes("let\n")) learnItems.push(lang==="ar"?"المتغيرات":lang==="en"?"Variables":"Les variables");
-  const uniqueLearn = [...new Set(learnItems)];
-  $("mLearn").innerHTML = uniqueLearn.length>0 ? "<ul>"+uniqueLearn.map(l=>`<li>${esc(l)}</li>`).join("")+"</ul>" : "";
-
-  // Section titles (blocks/code)
+  // Section titles + lesson content (concept, steps, diagram)
+  $("infoConceptTitle").textContent = lang==="ar"?"💡 المفهوم":lang==="en"?"💡 Concept":"💡 Concept";
+  $("infoStepsTitle").textContent = lang==="ar"?"📋 الخطوات":lang==="en"?"📋 Steps":"📋 Étapes";
+  $("infoDiagramTitle").textContent = lang==="ar"?"📐 المخطط":lang==="en"?"📐 Diagram":"📐 Schéma";
   $("infoBlocksTitle").textContent = lang==="ar"?"🧩 المكعبات المستخدمة":lang==="en"?"🧩 Blocks used":"🧩 Blocs utilisés";
-  $("infoCodeTitle").textContent = lang==="ar"?"💻 التعليمات الرئيسية":lang==="en"?"💻 Key instructions":"💻 Instructions clés";
+  $("infoCodeTitle").textContent = lang==="ar"?"💻 التعليمات":lang==="en"?"💻 Instructions":"💻 Instructions";
+
+  // Auto-generate lesson content
+  generateLesson(a);
 
   // Auto-detect blocks & instructions from JS code
   const blockMap = [
