@@ -416,7 +416,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <div class="tip-box" id="mTip"></div>
       </div>
       <div class="tab-panel" id="tab-blocks">
-        <div class="blocks-sync-bar" id="blocksSyncBar"><span class="sync-status synced" id="syncStatus">✅ Synced</span><button class="sync-btn" id="syncBlocksBtn">🔄 Actualiser</button></div>
+        <div class="blocks-sync-bar" id="blocksSyncBar"><span class="sync-status synced" id="syncStatus">✅ Synced</span><button class="sync-btn" id="syncBlocksBtn">🔄 Actualiser</button><button class="open-makecode-btn" id="openMCBlocks">🧩 Modifier dans MakeCode</button></div>
         <div id="mBlocksMC" class="makecode-blocks"></div>
         <div id="mBlocksFallback" style="display:none"></div>
       </div>
@@ -3865,6 +3865,13 @@ $("codeBlockJS").addEventListener("input", () => {
 $("syncBlocksBtn").addEventListener("click", () => {
   clearTimeout(syncTimer);
   resyncBlocks();
+});
+
+// Edit blocks in MakeCode — copies JS code + opens editor
+$("openMCBlocks").addEventListener("click", async () => {
+  try{ await navigator.clipboard.writeText($("codeBlockJS").value); }catch{}
+  showToast(lang==="ar"?"تم النسخ! الصق في MakeCode ← JavaScript ← ثم عدّل المكعبات":lang==="en"?"Copied! Paste in MakeCode → JavaScript → then edit blocks":"Copié ! Colle dans MakeCode → JavaScript → puis modifie les blocs");
+  window.open("https://makecode.microbit.org/#editor","_blank");
 });
 
 // ═══════════════════════════════════════════════════════════════════
