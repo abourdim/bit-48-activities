@@ -4597,6 +4597,7 @@ function handleSimMsg(msg){
 function loadSimCode(code){
   const frame = $("simFrame");
   if(!frame || !frame.contentWindow) return;
+  if(!code){ console.log("[SIM] No code to import"); return; }
   console.log("[SIM] Importing code:", code.substring(0, 60) + "...");
   const project = {
     header: {
@@ -4655,11 +4656,12 @@ function startSim(){
     simPending = a.codeJS;
     // Fallback: try sending code after 8s even if no ready message
     setTimeout(() => {
-      if(simPending && !simReady){
+      if(!simReady && simPending){
         console.log("[SIM] Fallback: forcing code import after 8s");
         simReady = true;
-        loadSimCode(simPending);
+        const code = simPending;
         simPending = null;
+        loadSimCode(code);
       }
     }, 8000);
   } else if(simReady){
