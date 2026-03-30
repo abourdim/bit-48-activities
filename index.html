@@ -335,7 +335,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .sim-actions{display:flex;gap:8px}
 .sim-run-btn{background:linear-gradient(135deg,#40BF4A,#2d8f34)!important;color:#fff!important;font-weight:700;border:none!important;padding:6px 16px;font-size:.78rem}
 .sim-stop-btn{background:linear-gradient(135deg,#DC143C,#a31020)!important;color:#fff!important;font-weight:700;border:none!important;padding:6px 16px;font-size:.78rem}
-.sim-iframe{width:100%;max-width:400px;height:400px;border:1px solid var(--border);border-radius:12px;background:#fff}
+.sim-iframe{width:100%;max-width:100%;height:500px;border:1px solid var(--border);border-radius:12px;background:#fff}
 .sim-iframe.hidden{display:none}
 .sim-hint{font-size:.76rem;color:var(--text-muted);text-align:center;padding:12px}
 
@@ -543,7 +543,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
       <div class="tab-panel" id="tab-sim">
         <div class="sim-container">
           <div class="sim-actions"><button class="sim-run-btn" id="simRunBtn">▶ Lancer</button><button class="sim-stop-btn" id="simStopBtn">⏹ Arrêter</button></div>
-          <iframe id="simFrame" class="sim-iframe" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+          <iframe id="simFrame" class="sim-iframe hidden" allow="usb; autoplay; camera; microphone" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
           <div class="sim-hint" id="simHint">Clique sur ▶ pour lancer le simulateur micro:bit</div>
         </div>
       </div>
@@ -4527,8 +4527,6 @@ applyLang();
 
 // ═══════════════════════════════════════════════════════════════════
 // MAKECODE SIMULATOR (controller=1 API)
-// Uses: importproject, startsimulator, stopsimulator messages
-// Ref: microsoft/pxt editorcontroller.ts
 // ═══════════════════════════════════════════════════════════════════
 let simReady = false;
 let simPending = null;
@@ -4537,17 +4535,15 @@ const SIM_URL = "https://makecode.microbit.org/?controller=1&norun=1&nocookieban
 window.addEventListener("message", function(ev){
   if(!ev.data || typeof ev.data !== "object") return;
   const msg = ev.data;
-  // MakeCode controller sends "editorcontentloaded" when ready
   if(msg.type === "pxteditor" && msg.action === "editorcontentloaded"){
     simReady = true;
-    if(simPending) { loadSimCode(simPending); simPending = null; }
+    if(simPending){ loadSimCode(simPending); simPending = null; }
   }
 });
 
 function loadSimCode(code){
   const frame = $("simFrame");
   if(!frame || !frame.contentWindow) return;
-  // Create a minimal MakeCode project
   const project = {
     text: {
       "main.ts": code,
@@ -4564,7 +4560,6 @@ function loadSimCode(code){
     action: "importproject",
     project: project
   }, "*");
-  // Start simulator after import
   setTimeout(() => {
     frame.contentWindow.postMessage({type:"pxteditor",action:"startsimulator"}, "*");
   }, 1000);
@@ -4577,7 +4572,6 @@ function startSim(){
   const hint = $("simHint");
   frame.classList.remove("hidden");
   hint.style.display = "none";
-
   if(!frame.src || frame.src === "about:blank"){
     frame.src = SIM_URL;
     simReady = false;
@@ -4599,7 +4593,6 @@ function stopSim(){
 $("simRunBtn").addEventListener("click", startSim);
 $("simStopBtn").addEventListener("click", stopSim);
 
-// Update sim button labels on lang change
 function updateSimLabels(){
   $("simRunBtn").textContent = lang==="ar"?"▶ تشغيل":lang==="en"?"▶ Run":"▶ Lancer";
   $("simStopBtn").textContent = lang==="ar"?"⏹ إيقاف":lang==="en"?"⏹ Stop":"⏹ Arrêter";
