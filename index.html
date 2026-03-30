@@ -330,6 +330,15 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .makecode-blocks .mc-loading::after{content:"";display:inline-block;width:14px;height:14px;border:2px solid var(--accent);border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;margin-inline-start:8px;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ── SIMULATOR ── */
+.sim-container{display:flex;flex-direction:column;align-items:center;gap:8px}
+.sim-actions{display:flex;gap:8px}
+.sim-run-btn{background:linear-gradient(135deg,#40BF4A,#2d8f34)!important;color:#fff!important;font-weight:700;border:none!important;padding:6px 16px;font-size:.78rem}
+.sim-stop-btn{background:linear-gradient(135deg,#DC143C,#a31020)!important;color:#fff!important;font-weight:700;border:none!important;padding:6px 16px;font-size:.78rem}
+.sim-iframe{width:100%;max-width:400px;height:400px;border:1px solid var(--border);border-radius:12px;background:#fff}
+.sim-iframe.hidden{display:none}
+.sim-hint{font-size:.76rem;color:var(--text-muted);text-align:center;padding:12px}
+
 /* ── LEARNING ROADMAP ── */
 .roadmap-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;z-index:200;padding:20px;overflow-y:auto;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 .roadmap-overlay.open{display:flex;align-items:flex-start;justify-content:center}
@@ -511,6 +520,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
       <div class="modal-head"><div><h2 id="mTitle"></h2><div class="tags" id="mTags"></div></div><button class="close-btn" id="closeBtn">✕</button></div>
       <div class="tab-bar" id="tabBar">
         <button class="tab-btn active" data-tab="info" id="tabInfo">🎯 Info</button>
+        <button class="tab-btn" data-tab="sim" id="tabSim">▶ Simulateur</button>
         <button class="tab-btn" data-tab="blocks" id="tabBlocks">🧩 Blocs</button>
         <button class="tab-btn" data-tab="js" id="tabJS"><span class="tab-lang-badge js-badge">JS</span> JavaScript</button>
         <button class="tab-btn" data-tab="py" id="tabPY"><span class="tab-lang-badge py-badge">PY</span> Python</button>
@@ -529,6 +539,13 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <div class="info-section"><div class="info-section-title" id="mNeedsLabel">🧰 Matériel</div><ul class="needs-list" id="mNeeds"></ul></div>
         <div class="tip-box" id="mTip"></div>
         <div class="qr-section" id="qrSection"></div>
+      </div>
+      <div class="tab-panel" id="tab-sim">
+        <div class="sim-container">
+          <div class="sim-actions"><button class="sim-run-btn" id="simRunBtn">▶ Lancer</button><button class="sim-stop-btn" id="simStopBtn">⏹ Arrêter</button></div>
+          <iframe id="simFrame" class="sim-iframe" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+          <div class="sim-hint" id="simHint">Clique sur ▶ pour lancer le simulateur micro:bit</div>
+        </div>
       </div>
       <div class="tab-panel" id="tab-blocks">
         <div class="blocks-sync-bar" id="blocksSyncBar"><span class="sync-status synced" id="syncStatus">✅ Synced</span><button class="sync-btn" id="syncBlocksBtn">🔄 Actualiser</button><button class="open-makecode-btn" id="openMCBlocks">🧩 Modifier dans MakeCode</button></div>
@@ -3557,6 +3574,7 @@ function applyLang(){
   $("tabJS").innerHTML = '<span class="tab-lang-badge js-badge">JS</span> JavaScript';
   $("tabPY").innerHTML = '<span class="tab-lang-badge py-badge">PY</span> Python';
   $("tabChal").textContent = t("tabChal");
+  if(typeof updateSimLabels==="function") updateSimLabels();
   $("mNeedsLabel").textContent = t("needsLabel");
   $("codeTip").innerHTML = t("codeTip");
   $("codeTipPY").innerHTML = t("codeTipPY") || t("codeTip");
@@ -4506,6 +4524,88 @@ $("logoWrap").innerHTML = LOGO_SVG;
 updateSidebarCounts();
 renderBadgeShelf();
 applyLang();
+
+// ═══════════════════════════════════════════════════════════════════
+// MAKECODE SIMULATOR (controller=1 API)
+// Uses: importproject, startsimulator, stopsimulator messages
+// Ref: microsoft/pxt editorcontroller.ts
+// ═══════════════════════════════════════════════════════════════════
+let simReady = false;
+let simPending = null;
+const SIM_URL = "https://makecode.microbit.org/?controller=1&norun=1&nocookiebanner=1";
+
+window.addEventListener("message", function(ev){
+  if(!ev.data || typeof ev.data !== "object") return;
+  const msg = ev.data;
+  // MakeCode controller sends "editorcontentloaded" when ready
+  if(msg.type === "pxteditor" && msg.action === "editorcontentloaded"){
+    simReady = true;
+    if(simPending) { loadSimCode(simPending); simPending = null; }
+  }
+});
+
+function loadSimCode(code){
+  const frame = $("simFrame");
+  if(!frame || !frame.contentWindow) return;
+  // Create a minimal MakeCode project
+  const project = {
+    text: {
+      "main.ts": code,
+      "main.blocks": "",
+      "pxt.json": JSON.stringify({
+        name: "sim-project",
+        dependencies: {"core":"*","radio":"*","microphone":"*"},
+        files: ["main.ts","main.blocks"]
+      })
+    }
+  };
+  frame.contentWindow.postMessage({
+    type: "pxteditor",
+    action: "importproject",
+    project: project
+  }, "*");
+  // Start simulator after import
+  setTimeout(() => {
+    frame.contentWindow.postMessage({type:"pxteditor",action:"startsimulator"}, "*");
+  }, 1000);
+}
+
+function startSim(){
+  const a = currentList[currentIndex];
+  if(!a) return;
+  const frame = $("simFrame");
+  const hint = $("simHint");
+  frame.classList.remove("hidden");
+  hint.style.display = "none";
+
+  if(!frame.src || frame.src === "about:blank"){
+    frame.src = SIM_URL;
+    simReady = false;
+    simPending = a.codeJS;
+  } else if(simReady){
+    loadSimCode(a.codeJS);
+  } else {
+    simPending = a.codeJS;
+  }
+}
+
+function stopSim(){
+  const frame = $("simFrame");
+  if(frame && frame.contentWindow){
+    frame.contentWindow.postMessage({type:"pxteditor",action:"stopsimulator"}, "*");
+  }
+}
+
+$("simRunBtn").addEventListener("click", startSim);
+$("simStopBtn").addEventListener("click", stopSim);
+
+// Update sim button labels on lang change
+function updateSimLabels(){
+  $("simRunBtn").textContent = lang==="ar"?"▶ تشغيل":lang==="en"?"▶ Run":"▶ Lancer";
+  $("simStopBtn").textContent = lang==="ar"?"⏹ إيقاف":lang==="en"?"⏹ Stop":"⏹ Arrêter";
+  $("simHint").textContent = lang==="ar"?"اضغط ▶ لتشغيل محاكي المايكروبت":lang==="en"?"Click ▶ to run the micro:bit simulator":"Clique sur ▶ pour lancer le simulateur micro:bit";
+  $("tabSim").textContent = "▶ "+(lang==="ar"?"المحاكي":lang==="en"?"Simulator":"Simulateur");
+}
 
 // ═══════════════════════════════════════════════════════════════════
 // LEARNING ROADMAP
