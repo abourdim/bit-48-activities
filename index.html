@@ -4543,17 +4543,37 @@ window.addEventListener("message", function(ev){
 });
 
 function handleSimMsg(msg){
-  // MakeCode signals ready via multiple possible messages
-  if(msg.type === "pxteditor" && (msg.action === "editorcontentloaded" || msg.action === "workspacesync")){
+  const frame = $("simFrame");
+  if(!frame || !frame.contentWindow) return;
+
+  // MakeCode asks for workspace — respond with empty workspace
+  if(msg.type === "pxthost" && msg.action === "workspacesync"){
+    console.log("[SIM] Responding to workspacesync");
+    frame.contentWindow.postMessage({
+      type: "pxthost",
+      action: "workspacesync",
+      success: true,
+      editor: "tsprj",
+      controllerId: "bit54activities",
+      response: true,
+      projects: []
+    }, "*");
+    // Now ready to import
     simReady = true;
-    console.log("[SIM] MakeCode ready:", msg.action);
+    if(simPending){ setTimeout(()=>loadSimCode(simPending), 1000); simPending = null; }
+    return;
+  }
+
+  // MakeCode signals editor loaded
+  if(msg.type === "pxteditor" && msg.action === "editorcontentloaded"){
+    console.log("[SIM] Editor content loaded");
+    simReady = true;
     if(simPending){ setTimeout(()=>loadSimCode(simPending), 500); simPending = null; }
   }
-  // Also try catching "ready" from pxthost
-  if(msg.type === "pxthost" || msg.action === "workspacesync"){
-    simReady = true;
-    console.log("[SIM] Host ready:", msg.type, msg.action);
-    if(simPending){ setTimeout(()=>loadSimCode(simPending), 500); simPending = null; }
+
+  // Log other messages for debugging
+  if(msg.type === "pxteditor" || msg.type === "pxthost"){
+    console.log("[SIM] msg:", msg.type, msg.action);
   }
 }
 
