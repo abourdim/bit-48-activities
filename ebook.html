@@ -261,6 +261,45 @@ body {
   letter-spacing: 0.2px;
 }
 
+/* Visual MakeCode Blocks */
+.vblock-canvas { display: flex; flex-direction: column; gap: 3px; padding: 12px; background: rgba(0,0,0,0.15); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; }
+.vb { position: relative; border-radius: 4px; padding: 6px 10px; font-size: 12px; font-weight: 600; color: #fff; display: flex; flex-wrap: wrap; align-items: center; gap: 5px; line-height: 1.5; border-bottom: 2px solid rgba(0,0,0,0.25); font-family: system-ui, sans-serif; }
+.vb.hat { border-radius: 14px 14px 4px 4px; padding: 7px 12px 4px; flex-direction: column; align-items: stretch; }
+.vb .hat-label { display: flex; align-items: center; gap: 5px; min-height: 28px; }
+.vb .hat-body { display: flex; flex-direction: column; gap: 2px; padding-bottom: 3px; }
+.vb.cblock { padding: 6px 10px 0; flex-direction: column; align-items: stretch; border-bottom: none; }
+.vb .cb-row { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.vb .cb-body { margin: 3px 0; padding: 5px 4px 5px 14px; background: rgba(0,0,0,0.15); border-left: 3px solid rgba(255,255,255,0.15); min-height: 28px; display: flex; flex-direction: column; gap: 2px; border-radius: 0 3px 3px 0; }
+.vb .cb-cap { height: 6px; border-radius: 0 0 4px 4px; background: inherit; filter: brightness(0.9); margin: 0 -10px; }
+.vb .cb-else { padding: 3px 8px; color: rgba(255,255,255,0.85); font-weight: 700; background: rgba(0,0,0,0.08); font-size: 11px; }
+.vb .varg { display: inline-flex; padding: 1px 8px; border-radius: 10px; background: rgba(255,255,255,0.92); color: #333; font-size: 11px; font-weight: 600; }
+.vb .varg.str { background: #a31515; color: #fff; border-radius: 10px; }
+.vb.cat-basic { background: #1E90FF; } .vb.cat-input { background: #D400D4; }
+.vb.cat-loops { background: #00AA00; } .vb.cat-logic { background: #00A4A6; }
+.vb.cat-music { background: #E63022; } .vb.cat-radio { background: #E3008C; }
+.vb.cat-variables { background: #DC143C; } .vb.cat-pins { background: #3BDDD4; color: #111; }
+.vb.cat-math { background: #9400D3; } .vb.cat-game { background: #7600A8; }
+.vb.cat-functions { background: #3455DB; } .vb.cat-bluetooth { background: #0082FB; }
+.vb.cat-sonar { background: #00A4A6; } .vb.cat-neopixel { background: #7B2D8E; }
+
+/* Flowchart */
+.flowchart { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 14px; background: rgba(0,0,0,0.1); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; }
+.fc-node { padding: 5px 16px; font-size: 11px; font-weight: 600; color: #fff; text-align: center; max-width: 240px; }
+.fc-node.start { background: #40BF4A; border-radius: 20px; }
+.fc-node.end { background: #DC143C; border-radius: 20px; }
+.fc-node.process { background: #1E90FF; border-radius: 5px; }
+.fc-node.decision { background: #9400D3; border-radius: 4px; border: 1.5px solid rgba(255,255,255,0.2); padding: 4px 12px; }
+.fc-node.io { background: #D400D4; border-radius: 5px 16px 5px 16px; }
+.fc-node.loop { background: #00AA00; border-radius: 5px; border-left: 3px solid rgba(255,255,255,0.3); }
+.fc-arrow { width: 2px; height: 12px; background: #3b82f6; position: relative; }
+.fc-arrow::after { content: "\25BC"; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); font-size: 7px; color: #3b82f6; }
+
+/* Pseudocode */
+.pseudo-box { font-family: 'SF Mono', 'Fira Code', Consolas, monospace; font-size: 11px; line-height: 1.6; padding: 12px 14px; background: rgba(0,0,0,0.15); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); white-space: pre; overflow-x: auto; margin-bottom: 16px; color: #d0ddf0; }
+.pk { color: #569CD6; font-weight: 700; }
+.pv { color: #CE9178; }
+.pc { color: #6A9955; font-style: italic; }
+
 /* Steps */
 .steps-list { list-style: none; margin-bottom: 20px; }
 .step-item {
@@ -548,6 +587,15 @@ body {
 <div class="blocks-wrap">
   <span class="block-chip" style="background:#1E90FF">afficher texte</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">Bonjour</span></div></div><div class="vb cat-basic">afficher texte</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">AFFICHER</span> <span class="pv">Bonjour</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Au démarrage → Afficher texte \</span></li>
@@ -602,6 +650,18 @@ basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;Bonjour&
   <span class="block-chip" style="background:#1E90FF">pause</span>
   <span class="block-chip" style="background:#00AA00">repeter</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">HELLO</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">afficher texte</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">AFFICHER</span> <span class="pv">HELLO</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter indéfiniment → Afficher texte \</span></li>
@@ -666,6 +726,15 @@ basic.forever(on_forever)</div>
 <div class="blocks-wrap">
   <span class="block-chip" style="background:#1E90FF">montrer icone</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">❤️ Cœur</span></div></div><div class="vb cat-basic">montrer l&#x27;icône</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">MONTRER</span> icone <span class="pv">Heart</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Au démarrage → Montrer l&#x27;icône (Cœur)</span></li>
@@ -727,6 +796,18 @@ basic.show_icon(IconNames.HEART)</div>
   <span class="block-chip" style="background:#1E90FF">pause</span>
   <span class="block-chip" style="background:#00AA00">repeter</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">❤️ Cœur</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">montrer l&#x27;icône</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">effacer l&#x27;écran</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">Heart</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter indéfiniment → Montrer icône (Cœur)</span></li>
@@ -799,6 +880,18 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#1E90FF">montrer icone</span>
   <span class="block-chip" style="background:#D400D4">bouton</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg">A</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg">B</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A+B pressé <span class="varg str">❤️ Cœur</span></div></div><div class="vb cat-basic">afficher texte</div><div class="vb cat-basic">montrer l&#x27;icône</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+  <span class="pk">AFFICHER</span> <span class="pv">A</span>
+  <span class="pk">MONTRER</span> icone <span class="pv">Heart</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Quand bouton A pressé → Afficher texte \</span></li>
@@ -882,6 +975,17 @@ input.on_button_pressed(Button.AB, on_button_ab)</div>
   <span class="block-chip" style="background:#1E90FF">pause</span>
   <span class="block-chip" style="background:#D400D4">geste</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque secouer <span class="varg str">⚡ Éclair</span></div></div><div class="vb cat-basic">montrer l&#x27;icône</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">effacer l&#x27;écran</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+<span class="pk">QUAND</span> secouer :
+  <span class="pk">MONTRER</span> icone <span class="pv">Flash</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Lorsque secouer → Montrer icône Éclair</span></li>
@@ -944,6 +1048,15 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#D400D4">logo</span>
   <span class="block-chip" style="background:#E63022">melodie</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque logo pressé <span class="varg str">♪ Dadadadum</span></div></div><div class="vb cat-music">jouer mélodie</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">JOUER</span> son
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Quand logo pressé → Jouer mélodie</span></li>
@@ -1007,6 +1120,21 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo_pressed)</div>
   <span class="block-chip" style="background:#D400D4">son V2</span>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">niveau sonore &gt; 120</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😴 Asleep</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI input.soundLevel( ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">SI</span> <span class="pv">input.soundLevel(</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter indéfiniment → Si niveau sonore &gt; SEUIL → 😀 sinon 😴</span></li>
@@ -1071,6 +1199,17 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#9400D3">hasard</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque secouer <span class="varg str">au hasard 1 – 6</span></div></div><div class="vb cat-variables">définir roll</div><div class="vb cat-basic">afficher nombre <span class="varg str">roll</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> roll ← <span class="pv">0  // Variable qui stocke le résultat du dé</span>
+<span class="pk">QUAND</span> secouer :
+  <span class="pk">AFFICHER</span> <span class="pv">roll</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Lorsque secouer → ROLL = hasard 1 à 6</span></li>
@@ -1141,6 +1280,21 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque secouer <span class="varg str">au hasard 0 – 2</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">n = 1</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir n</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">▪ Feuille</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI n == 0 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> n ← <span class="pv">0</span>
+<span class="pk">QUAND</span> secouer :
+  <span class="pk">MONTRER</span> icone <span class="pv">SmallSquare</span>
+  <span class="pk">SI</span> <span class="pv">n == 0</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Lorsque secouer → N = hasard 0..2</span></li>
@@ -1219,6 +1373,16 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#D400D4">bouton</span>
   <span class="block-chip" style="background:#D400D4">temperature</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">température (°C)</span></div></div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">afficher texte <span class="varg">C</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+<span class="pk">QUAND</span> bouton A :
+  <span class="pk">AFFICHER</span> <span class="pv">C</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → Afficher nombre Température (°C)</span></li>
@@ -1279,6 +1443,22 @@ input.on_button_pressed(Button.A, on_button_a)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">direction boussole (°)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">dir &lt; 225</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir dir</div><div class="vb cat-basic">afficher texte <span class="varg">O</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI dir &lt; 45 || dir &gt;= 315 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> dir ← <span class="pv">input.compassHeading()</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">AFFICHER</span> <span class="pv">N</span>
+  <span class="pk">SI</span> <span class="pv">dir < 45 || dir >= 315</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → Calibrer</span></li>
@@ -1362,6 +1542,22 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">lire analogique P0</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">v &gt; 500</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir v</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😐 Meh</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI v &gt; 500 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> v ← <span class="pv">pins.analogReadPin(AnalogPin.P0)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">SI</span> <span class="pv">v > 500</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → V = lire analogique P0</span></li>
@@ -1435,6 +1631,20 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#D400D4">geste</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque secouer</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">steps</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb cat-variables">définir steps</div><div class="vb cat-variables">modifier steps de</div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✓ Yes</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> steps ← <span class="pv">0</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+<span class="pk">QUAND</span> secouer :
+  <span class="pk">MONTRER</span> icone <span class="pv">Yes</span>
+  <span class="pk">AFFICHER</span> <span class="pv">steps</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Au démarrage → STEPS = 0</span></li>
@@ -1517,6 +1727,17 @@ input.on_button_pressed(Button.B, on_button_b)</div>
   <span class="block-chip" style="background:#7600A8">allumer LED</span>
   <span class="block-chip" style="background:#7600A8">graphique</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">niveau de lumière</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">tracer graphique barres</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+<span class="pk">QUAND</span> bouton A :
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → Afficher nombre Niveau de lumière</span></li>
@@ -1589,6 +1810,22 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#E3008C">radio recu</span>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb hat cat-radio"><div class="hat-label">quand reçu receivedNumber <span class="varg str">receivedNumber = 1</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-radio">radio définir groupe</div><div class="vb cat-radio">radio envoyer nombre</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI receivedNumber == 1 ?</div><div class="fc-arrow"></div><div class="fc-node process">Envoyer radio</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">SI</span> <span class="pv">receivedNumber == 1</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ENVOYER</span> radio
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Au démarrage → Radio groupe 7</span></li>
@@ -1684,6 +1921,21 @@ radio.on_received_number(on_received)</div>
   <span class="block-chip" style="background:#00AA00">tant que</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">t &gt; 0</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">tant que</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir t</div><div class="vb cat-variables">modifier t de</div><div class="vb cat-basic">afficher nombre <span class="varg">t</span></div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">afficher texte <span class="varg">OK</span></div><div class="vb cat-music">jouer tonalité</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> t ← <span class="pv">0</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+  <span class="pk">AFFICHER</span> <span class="pv">OK</span>
+  <span class="pk">AFFICHER</span> <span class="pv">t</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+  <span class="pk">JOUER</span> son
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Au démarrage → T = 0</span></li>
@@ -1767,6 +2019,16 @@ input.on_button_pressed(Button.B, on_button_b)</div>
   <span class="block-chip" style="background:#D400D4">bouton</span>
   <span class="block-chip" style="background:#E63022">melodie</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">♪ Dadadadum</span></div></div><div class="vb cat-music">jouer mélodie</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+<span class="pk">QUAND</span> bouton A :
+  <span class="pk">JOUER</span> son
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → Jouer mélodie</span></li>
@@ -1831,6 +2093,23 @@ input.on_button_pressed(Button.A, on_button_a)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">au hasard 0 – 9</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">n = 5</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir n</div><div class="vb cat-basic">afficher nombre <span class="varg">n</span></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI n == 5 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> n ← <span class="pv">0</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">AFFICHER</span> <span class="pv">n</span>
+  <span class="pk">SI</span> <span class="pv">n == 5</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → N = hasard 0..9 → Afficher</span></li>
@@ -1911,6 +2190,26 @@ input.on_button_pressed(Button.B, on_button_b)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">obstacle touche player</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-game">créer sprite</div><div class="vb cat-variables">définir score</div><div class="vb cat-game">player changer X de</div><div class="vb cat-game">obstacle changer Y de</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-game">game over</div><div class="vb cat-variables">modifier score de</div><div class="vb cat-game">obstacle Y ← 0</div><div class="vb cat-game">obstacle X ← hasard 0–4</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node decision">SI obstacle.get(LedSpriteProperty.Y ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> player ← <span class="pv">game.createSprite(2, 4)</span>
+  <span class="pk">DEFINIR</span> score ← <span class="pv">0</span>
+  <span class="pk">DEFINIR</span> obstacle ← <span class="pv">game.createSprite(randint(0, 4), 0)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+  <span class="pk">SI</span> <span class="pv">obstacle.get(LedSpriteProperty.Y</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Au démarrage → Joueur X=2, Y=4, SCORE=0</span></li>
@@ -2020,6 +2319,23 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque logo pressé <span class="varg str">code = \</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir code</div><div class="vb cat-variables">code ← code + \</div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div><div class="vb cat-music">jouer mélodie <span class="varg str">♪ Wawawawaa</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI code == &quot;ABA&quot; ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> code ← <span class="pv">""</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">SI</span> <span class="pv">code == "ABA"</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">JOUER</span> son
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">A → ajouter \</span></li>
@@ -2124,6 +2440,24 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">accélération (force)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">|force − 1024| &lt; 100</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir progress <span class="varg str">min(progress + 1, 25)</span></div><div class="vb cat-variables">définir force</div><div class="vb cat-basic">allumer LED</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✕ No</span></div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">effacer l&#x27;écran</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI Math.abs(force - 1024 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> progress ← <span class="pv">0</span>
+  <span class="pk">DEFINIR</span> force ← <span class="pv">input.acceleration(Dimension.Strength)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">No</span>
+  <span class="pk">SI</span> <span class="pv">Math.abs(force - 1024</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Au démarrage → PROGRESS=0</span></li>
@@ -2208,6 +2542,19 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00AA00">boucle for</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonction pluie() <span class="varg str">au hasard 0 – 4</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">pour y de 0 à 4</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir x</div><div class="vb cat-basic">allumer LED</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">éteindre LED</div><div class="vb cat-functions">appeler pluie()</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> x ← <span class="pv">randint(0, 4)</span>
+  <span class="pk">DEFINIR</span> y ← <span class="pv">0</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Créer fonction PLUIE()</span></li>
@@ -2282,6 +2629,16 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#D400D4">logo</span>
   <span class="block-chip" style="background:#3BDDD4">servo</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg">0°</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque logo pressé <span class="varg str">90°</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">180°</span></div></div><div class="vb cat-pins">servo écrire P0</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → servo 0°</span></li>
@@ -2364,6 +2721,24 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">lire analogique P0</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">v &gt; 500</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir v</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI v &gt; 500 ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> v ← <span class="pv">pins.analogReadPin(AnalogPin.P0)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">SI</span> <span class="pv">v > 500</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+  <span class="pk">JOUER</span> son
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → V = lire P0</span></li>
@@ -2446,6 +2821,24 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">lire analogique P0</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">lire analogique P0</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">v &lt; 600</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-variables">définir v</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😀 Happy</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI v &lt; 300 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> v ← <span class="pv">pins.analogReadPin(AnalogPin.P0)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+<span class="pk">QUAND</span> bouton A :
+  <span class="pk">MONTRER</span> icone <span class="pv">Sad</span>
+  <span class="pk">SI</span> <span class="pv">v < 300</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → Afficher valeur brute</span></li>
@@ -2529,6 +2922,21 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#3BDDD4">lire analog.</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">arrondi(P0 × 0.1)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir temp</div><div class="vb cat-basic">afficher nombre <span class="varg str">temp</span></div><div class="vb cat-basic">afficher texte <span class="varg">C</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> t ← <span class="pv">pins.analogReadPin(AnalogPin.P0)</span>
+  <span class="pk">DEFINIR</span> temp ← <span class="pv">Math.round(t * 0.1)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">AFFICHER</span> <span class="pv">C</span>
+  <span class="pk">AFFICHER</span> <span class="pv">temp</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → T = lire capteur → Afficher T → Pause 10s</span></li>
@@ -2594,6 +3002,17 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#E63022">tonalite</span>
   <span class="block-chip" style="background:#E63022">melodie</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">♪ Birthday</span></div></div><div class="vb cat-music">régler tempo</div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-music">jouer mélodie</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+  <span class="pk">JOUER</span> son
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → régler tempo</span></li>
@@ -2675,6 +3094,21 @@ input.on_button_pressed(Button.B, on_button_b)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-bluetooth"><div class="hat-label">lors connexion Bluetooth <span class="varg str">😀 Happy</span></div></div><div class="vb hat cat-bluetooth"><div class="hat-label">lors déconnexion Bluetooth <span class="varg str">😢 Sad</span></div></div><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-bluetooth"><div class="hat-label">quand données UART reçues <span class="varg str">lire UART</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">msg = \</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✕ No</span></div><div class="vb cat-bluetooth">démarrer service UART</div><div class="vb cat-variables">définir msg</div><div class="vb cat-pins">écriture numérique P0</div><div class="vb cat-basic">afficher texte <span class="varg str">msg</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI msg == &quot;1&quot; ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> msg ← <span class="pv">bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine))</span>
+<span class="pk">QUAND</span> bouton A :
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">SI</span> <span class="pv">msg == "1"</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Démarrer service UART Bluetooth</span></li>
@@ -2782,6 +3216,18 @@ input.on_button_pressed(Button.A, on_button_a)</div>
   <span class="block-chip" style="background:#7600A8">allumer LED</span>
   <span class="block-chip" style="background:#7600A8">graphique</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">lire analogique P0</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">tracer graphique barres</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+<span class="pk">QUAND</span> bouton A :
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → lire capteur → afficher</span></li>
@@ -2850,6 +3296,18 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#D400D4">temperature</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">TM1637.create(P1, P2)</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">température</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir tm</div><div class="vb cat-variables">tm afficher nombre</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> tm ← <span class="pv">TM1637.create(DigitalPin.P1, DigitalPin.P2, 7, 4)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Initialiser TM1637</span></li>
@@ -2917,6 +3375,19 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#E63022">tonalite</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">200 + lumière × 3</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir freq</div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> freq ← <span class="pv">200 + input.lightLevel() * 3</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+  <span class="pk">JOUER</span> son
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → F = 200 + (lumière × 3)</span></li>
@@ -2983,6 +3454,22 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">sonar.ping (cm)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">d &lt; 10</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir d</div><div class="vb cat-basic">afficher nombre <span class="varg">d</span></div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &lt; 10 ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> d ← <span class="pv">sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">AFFICHER</span> <span class="pv">d</span>
+  <span class="pk">SI</span> <span class="pv">d < 10</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+  <span class="pk">JOUER</span> son
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → D = distance en cm</span></li>
@@ -3061,6 +3548,25 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">faux</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque logo pressé</div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">armed = vrai</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">armed ET |lumière − baseline| &gt; 30</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir armed</div><div class="vb cat-variables">définir baseline</div><div class="vb cat-variables">armed ← non armed</div><div class="vb cat-variables">baseline ← lumière</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">💀 Skull</span></div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI armed ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> armed ← <span class="pv">false</span>
+  <span class="pk">DEFINIR</span> baseline ← <span class="pv">0</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">Target</span>
+  <span class="pk">SI</span> <span class="pv">armed</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+  <span class="pk">JOUER</span> son
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Logo → armer/désarmer</span></li>
@@ -3160,6 +3666,23 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">faux</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">armed</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">armed ET P0 = 1</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir armed</div><div class="vb cat-variables">armed ← non armed</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">💀 Skull</span></div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI condition ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> armed ← <span class="pv">false</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+<span class="pk">QUAND</span> bouton A :
+  <span class="pk">MONTRER</span> icone <span class="pv">Skull</span>
+  <span class="pk">SI</span> <span class="pv">armed && pins.digitalReadPin(DigitalPin.P0</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+  <span class="pk">JOUER</span> son
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → armer</span></li>
@@ -3242,6 +3765,18 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#7B2D8E">NeoPixel</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-neopixel">créer strip NeoPixel</div><div class="vb cat-neopixel">strip afficher arc-en-ciel</div><div class="vb cat-neopixel">strip rotation 1</div><div class="vb cat-neopixel">strip afficher</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> strip ← <span class="pv">neopixel.create(DigitalPin.P0, 8, NeoPixelMode.RGB)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Initialiser NeoPixel</span></li>
@@ -3313,6 +3848,17 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#7600A8">allumer LED</span>
   <span class="block-chip" style="background:#7600A8">graphique</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">tracer graphique barres</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → S = niveau sonore → Tracer graphique barres</span></li>
@@ -3374,6 +3920,17 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00AA00">boucle for</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonction avancer(ms)</div></div><div class="vb hat cat-functions"><div class="hat-label">fonction tournerDroite()</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter 4 fois</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">écriture analogique P0</div><div class="vb cat-pins">écriture analogique P1</div><div class="vb cat-basic">pause (ms) <span class="varg">ms</span></div><div class="vb cat-functions">appeler avancer(1000)</div><div class="vb cat-functions">appeler tournerDroite()</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> i ← <span class="pv">0</span>
+<span class="pk">QUAND</span> bouton A :
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Créer AVANCER(t) et TOURNER90()</span></li>
@@ -3475,6 +4032,23 @@ input.on_button_pressed(Button.A, on_button_a)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonctions avancer / stop / reculer / tourner</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">sonar.ping (cm)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">d &gt; 0 ET d &lt; 15</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">(contrôle moteurs via P0, P1)</div><div class="vb cat-variables">définir d</div><div class="vb cat-functions">appeler stop()</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">↑ Nord</span></div><div class="vb cat-functions">appeler reculer(400)</div><div class="vb cat-functions">appeler tourner(400)</div><div class="vb cat-functions">appeler avancer()</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &gt; 0 &amp;&amp; d &lt; 15 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> d ← <span class="pv">sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">No</span>
+  <span class="pk">SI</span> <span class="pv">d > 0 && d < 15</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → D = distance</span></li>
@@ -3606,6 +4180,22 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#3455DB">fonction</span>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonctions avancer / stop / reculer / tourner</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">P0 = 1 OU P1 = 1</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">(contrôle moteurs via P13, P14)</div><div class="vb cat-functions">appeler stop()</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">↑ Nord</span></div><div class="vb cat-functions">appeler reculer(400)</div><div class="vb cat-functions">appeler tourner(500)</div><div class="vb cat-functions">appeler avancer()</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI pins.digitalReadPin(DigitalPin.P0 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">No</span>
+  <span class="pk">SI</span> <span class="pv">pins.digitalReadPin(DigitalPin.P0</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → si P0==1 ou P1==1 : reculer + tourner</span></li>
@@ -3734,6 +4324,24 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonctions avancer / stop / tournerDroite</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">sonar.ping (cm)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">d &gt; 0 ET d &lt; 12</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">(contrôle moteurs via P0, P1)</div><div class="vb cat-variables">définir d</div><div class="vb cat-functions">appeler stop()</div><div class="vb cat-basic">afficher texte <span class="varg">D</span></div><div class="vb cat-functions">appeler tournerDroite(500)</div><div class="vb cat-functions">appeler avancer()</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">↑ Nord</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &gt; 0 &amp;&amp; d &lt; 12 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> d ← <span class="pv">sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">AFFICHER</span> <span class="pv">D</span>
+  <span class="pk">MONTRER</span> icone <span class="pv">ArrowNorth</span>
+  <span class="pk">SI</span> <span class="pv">d > 0 && d < 12</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → si obstacle : tourner droite</span></li>
@@ -3853,6 +4461,24 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonctions avancer / stop / reculer / tournerG / tournerD</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">sonar.ping (cm)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">hasard 0–1 = 0</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">(contrôle moteurs via P0, P1)</div><div class="vb cat-variables">définir d</div><div class="vb cat-functions">appeler stop()</div><div class="vb cat-functions">appeler reculer(300)</div><div class="vb cat-basic">afficher texte <span class="varg">D</span></div><div class="vb cat-functions">appeler tournerG(500)</div><div class="vb cat-functions">appeler tournerD(500)</div><div class="vb cat-functions">appeler avancer()</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">↑ Nord</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &gt; 0 &amp;&amp; d &lt; 15 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> d ← <span class="pv">sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">AFFICHER</span> <span class="pv">G</span>
+  <span class="pk">MONTRER</span> icone <span class="pv">ArrowNorth</span>
+  <span class="pk">SI</span> <span class="pv">d > 0 && d < 15</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → si obstacle : hasard gauche/droite</span></li>
@@ -3994,6 +4620,17 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#E3008C">radio groupe</span>
   <span class="block-chip" style="background:#E3008C">radio envoyer</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">1 (avant)</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">2 (stop)</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque incliner droite <span class="varg str">3 (droite)</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque incliner gauche <span class="varg str">4 (gauche)</span></div></div><div class="vb cat-radio">radio définir groupe</div><div class="vb cat-radio">radio envoyer nombre</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Envoyer radio</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+  <span class="pk">ENVOYER</span> radio
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Émetteur : A=avant, B=stop, incliner=tourner</span></li>
@@ -4086,6 +4723,20 @@ input.on_gesture(Gesture.TILT_LEFT, on_tilt_left)</div>
   <span class="block-chip" style="background:#3BDDD4">servo</span>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">lire numérique P0 = 1</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">servo écrire P1 <span class="varg">0°</span></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✕ No</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI pins.digitalReadPin(DigitalPin.P0 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">Yes</span>
+  <span class="pk">SI</span> <span class="pv">pins.digitalReadPin(DigitalPin.P0</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → si capteur détecte : servo 90° → pause → servo 0°</span></li>
@@ -4163,6 +4814,24 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque logo pressé <span class="varg str">code = secret</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir code</div><div class="vb cat-variables">définir secret <span class="varg str">ABBA</span></div><div class="vb cat-variables">code ← code + \</div><div class="vb cat-basic">afficher texte <span class="varg">B</span></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI code == secret ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> code ← <span class="pv">""</span>
+  <span class="pk">DEFINIR</span> secret ← <span class="pv">"ABBA"</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+  <span class="pk">AFFICHER</span> <span class="pv">A</span>
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">SI</span> <span class="pv">code == secret</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">A → CODE+=&#x27;A&#x27;</span></li>
@@ -4256,6 +4925,17 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
   <span class="block-chip" style="background:#00AA00">repeter</span>
   <span class="block-chip" style="background:#3BDDD4">ecrire numer.</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">1 (Vert)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">écriture numérique P0</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-pins">écriture numérique P1 <span class="varg str">1 (Orange)</span></div><div class="vb cat-pins">écriture numérique P2 <span class="varg str">1 (Rouge)</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → Vert 5s → Orange 2s → Rouge 5s</span></li>
@@ -4338,6 +5018,22 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#3BDDD4">ecrire numer.</span>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">lumière &lt; 50</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">écriture numérique P0</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">❤️ Heart</span></div><div class="vb cat-basic">effacer l&#x27;écran</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI input.lightLevel( ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">Heart</span>
+  <span class="pk">SI</span> <span class="pv">input.lightLevel(</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Répéter → L = lumière</span></li>
@@ -4413,6 +5109,17 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#D400D4">temperature</span>
   <span class="block-chip" style="background:#9400D3">hasard</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage (Vittascience)</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">température</span></div></div><div class="vb cat-basic">(ouvrir vittascience.com)</div><div class="vb cat-basic">(créer projet → mode blocs)</div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">afficher texte <span class="varg">C</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> secouer :
+  <span class="pk">AFFICHER</span> <span class="pv">C</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Aller sur vittascience.com → Micro:bit</span></li>
@@ -4504,6 +5211,24 @@ input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">HuskyLens détecte bloc</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">x &gt; 220</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">initialiser HuskyLens I2C</div><div class="vb cat-variables">définir x <span class="varg str">position X du bloc</span></div><div class="vb cat-basic">afficher texte <span class="varg">D</span></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✕ No</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI x &lt; 100 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> x ← <span class="pv">huskylens.readBox_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.xCenter)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">AFFICHER</span> <span class="pv">G</span>
+  <span class="pk">MONTRER</span> icone <span class="pv">ArrowNorth</span>
+  <span class="pk">SI</span> <span class="pv">x < 100</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Initialiser HuskyLens en mode I2C</span></li>
@@ -4601,6 +5326,20 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#D400D4">HuskyLens IA</span>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">HuskyLens détecte visage</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">initialiser HuskyLens I2C</div><div class="vb cat-basic">afficher texte <span class="varg">GO</span></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😐 Meh</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI condition ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+<span class="pk">QUAND</span> bouton A :
+  <span class="pk">AFFICHER</span> <span class="pv">GO</span>
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Initialiser HuskyLens en I2C</span></li>
@@ -4687,6 +5426,19 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">HuskyLens détecte tag</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir id <span class="varg str">ID du tag</span></div><div class="vb cat-basic">afficher nombre <span class="varg">id</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node decision">SI condition ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> id ← <span class="pv">huskylens.readBox_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.ID)</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">AFFICHER</span> <span class="pv">id</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Initialiser HuskyLens en mode Tag</span></li>
@@ -4764,6 +5516,18 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#1E90FF">pause</span>
   <span class="block-chip" style="background:#00AA00">repeter</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage (Create AI)</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">prédiction = classe 1</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">(aller sur createai.microbit.org)</div><div class="vb cat-basic">(créer 2 classes : calme / bouge)</div><div class="vb cat-basic">(collecter 20+ exemples par classe)</div><div class="vb cat-basic">(entraîner → exporter .hex)</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Aller sur createai.microbit.org</span></li>
@@ -4844,6 +5608,22 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#D400D4">son V2</span>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage (Make: AI Robots)</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">son &gt; 100</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">(aller sur makeairobots.com)</div><div class="vb cat-basic">(choisir tutoriel → connecter)</div><div class="vb cat-basic">(collecter données → entraîner)</div><div class="vb cat-basic">(télécharger .hex → flasher)</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😴 Asleep</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI input.soundLevel( ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">REPETER INDEFINIMENT</span> :
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">SI</span> <span class="pv">input.soundLevel(</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Aller sur makeairobots.com et choisir un tutoriel</span></li>
@@ -4924,6 +5704,24 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00AA00">boucle for</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">[ ] (vide)</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">température</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg">v</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque secouer</div></div><div class="vb cblock cat-loops"><div class="cb-row">pour chaque v dans mesures</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir mesures</div><div class="vb cat-variables">ajouter à mesures</div><div class="vb cat-basic">afficher nombre <span class="varg str">max</span></div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-variables">trouver min et max dans mesures</div><div class="vb cat-basic">afficher texte <span class="varg str">max</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI mesures.length &gt; 0 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> min ← <span class="pv">mesures[0]</span>
+  <span class="pk">DEFINIR</span> max ← <span class="pv">mesures[0]</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+<span class="pk">QUAND</span> secouer :
+  <span class="pk">AFFICHER</span> <span class="pv">min</span>
+  <span class="pk">AFFICHER</span> <span class="pv">v</span>
+  <span class="pk">SI</span> <span class="pv">mesures.length > 0</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Au démarrage → créer tableau vide</span></li>
@@ -5039,6 +5837,24 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque secouer <span class="varg str">longueur de mot</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">mot = \</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir mot</div><div class="vb cat-variables">mot ← mot + \</div><div class="vb cat-basic">afficher texte <span class="varg str">mot</span></div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI mot == &quot;OUI&quot; ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> mot ← <span class="pv">""</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+<span class="pk">QUAND</span> secouer :
+  <span class="pk">MONTRER</span> icone <span class="pv">Happy</span>
+  <span class="pk">SI</span> <span class="pv">mot == "OUI"</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → construire un message lettre par lettre</span></li>
@@ -5144,6 +5960,20 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#3BDDD4">ecrire analog.</span>
   <span class="block-chip" style="background:#3455DB">fonction</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonctions avancer / reculer / tourner</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">↑ Nord</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">↓ Sud</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A+B pressé <span class="varg">D</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque secouer</div></div><div class="vb cat-pins">(contrôle moteurs via P0, P1)</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✕ No</span></div><div class="vb cat-functions">appeler avancer(1000)</div><div class="vb cat-basic">effacer l&#x27;écran</div><div class="vb cat-functions">appeler reculer(1000)</div><div class="vb cat-basic">afficher texte</div><div class="vb cat-functions">appeler tourner(500)</div><div class="vb cat-pins">écriture analogique P0</div><div class="vb cat-pins">écriture analogique P1</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+<span class="pk">QUAND</span> secouer :
+  <span class="pk">AFFICHER</span> <span class="pv">D</span>
+  <span class="pk">MONTRER</span> icone <span class="pv">ArrowNorth</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Bouton A → avancer 1 seconde</span></li>
@@ -5285,6 +6115,25 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
+<div class="sec-label">Blocs MakeCode</div>
+<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque secouer <span class="varg">?</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">countA ≥ countB</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir countA</div><div class="vb cat-variables">définir countB</div><div class="vb cat-variables">modifier countA de</div><div class="vb cat-basic">afficher texte <span class="varg str">countA + \</span></div><div class="vb cat-variables">modifier countB de</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI countA &gt;= countB ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+  <span class="pk">DEFINIR</span> countA ← <span class="pv">0</span>
+  <span class="pk">DEFINIR</span> countB ← <span class="pv">0</span>
+<span class="pk">QUAND</span> bouton A :
+<span class="pk">QUAND</span> bouton B :
+<span class="pk">QUAND</span> secouer :
+  <span class="pk">AFFICHER</span> <span class="pv">A</span>
+  <span class="pk">SI</span> <span class="pv">countA >= countB</span> <span class="pk">ALORS</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">SINON</span>
+    <span class="pc">// actions...</span>
+  <span class="pk">ATTENDRE</span> <span class="pv">ms</span>
+
+<span class="pk">FIN</span></div>
 <div class="sec-label">Etapes</div>
 <ol class="steps-list">
   <li class="step-item"><span class="step-num">1</span><span class="step-text">Au démarrage → compteur A=0, compteur B=0</span></li>

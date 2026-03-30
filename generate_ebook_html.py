@@ -139,6 +139,142 @@ def detect_blocks(code):
 def esc(t):
     return html_mod.escape(t)
 
+# ── Extract BT (block trees) from index.html ──
+bt_match = re.search(r'const BT = \{(.+?)\};\s*\n', js, re.DOTALL)
+bt_raw = bt_match.group(1) if bt_match else ""
+
+# Simple BT parser — extract structure for each activity
+import json
+
+def parse_bt_for_activity(aid):
+    """Extract block tree for an activity from BT raw JS"""
+    # Find the entry: N:[{...}]
+    pattern = rf'(?:^|\n){aid}:\[(.*?)(?=\n\d+:\[|\Z)'
+    m = re.search(pattern, bt_raw, re.DOTALL)
+    if not m: return None
+    return m.group(1)
+
+def render_block_html(bt_text):
+    """Convert BT JS notation to visual HTML blocks (simplified)"""
+    if not bt_text: return ""
+    # Extract top-level blocks by finding hat/cblock/stack patterns
+    blocks = []
+
+    # Find hat blocks: {cat:"X",type:"hat",label:"Y",children:[...]}
+    for m in re.finditer(r'\{cat:"(\w+)",type:"hat",label:"([^"]+)"', bt_text):
+        cat, label = m.group(1), m.group(2)
+        blocks.append(("hat", cat, label))
+
+    # Find cblock: {cat:"X",type:"cblock",label:"Y"
+    for m in re.finditer(r'\{cat:"(\w+)",type:"cblock",label:"([^"]+)"', bt_text):
+        cat, label = m.group(1), m.group(2)
+        blocks.append(("cblock", cat, label))
+
+    # Find stack blocks: {cat:"X",type:"stack",label:"Y"
+    for m in re.finditer(r'\{cat:"(\w+)",type:"stack",label:"([^"]+)"', bt_text):
+        cat, label = m.group(1), m.group(2)
+        blocks.append(("stack", cat, label))
+
+    # Find args: ,arg:"Y" or ,arg:{...label:"Y"
+    args = {}
+    for m in re.finditer(r'label:"([^"]+)"[^}]*?,arg:"([^"]+)"', bt_text):
+        args[m.group(1)] = m.group(2)
+    for m in re.finditer(r'label:"([^"]+)"[^}]*?,arg:\{[^}]*?label:"([^"]+)"', bt_text):
+        args[m.group(1)] = m.group(2)
+
+    if not blocks: return ""
+
+    html = '<div class="vblock-canvas">'
+    seen = set()
+    for btype, cat, label in blocks:
+        key = f"{btype}-{label}"
+        if key in seen: continue
+        seen.add(key)
+        arg_html = ""
+        if label in args:
+            is_str = not args[label].replace(" ","").replace("–","").replace(".","").isdigit()
+            arg_cls = "varg str" if is_str and len(args[label]) > 2 else "varg"
+            arg_html = f' <span class="{arg_cls}">{esc(args[label])}</span>'
+
+        if btype == "hat":
+            html += f'<div class="vb hat cat-{cat}"><div class="hat-label">{esc(label)}{arg_html}</div></div>'
+        elif btype == "cblock":
+            html += f'<div class="vb cblock cat-{cat}"><div class="cb-row">{esc(label)}{arg_html}</div><div class="cb-body"></div><div class="cb-cap"></div></div>'
+        else:
+            html += f'<div class="vb cat-{cat}">{esc(label)}{arg_html}</div>'
+    html += '</div>'
+    return html
+
+def generate_flowchart(code):
+    """Generate HTML flowchart from JS code"""
+    nodes = []
+    arrow = '<div class="fc-arrow"></div>'
+    node = lambda cls, txt: f'<div class="fc-node {cls}">{esc(txt)}</div>'
+
+    nodes.append(node("start", "DEBUT"))
+    nodes.append(arrow)
+
+    if "onButtonPressed(Button.A" in code: nodes += [node("io", "Bouton A presse"), arrow]
+    if "onButtonPressed(Button.B" in code: nodes += [node("io", "Bouton B presse"), arrow]
+    if "onGesture(Gesture.Shake" in code: nodes += [node("io", "Secouer"), arrow]
+    if "onLogoEvent" in code: nodes += [node("io", "Logo touche"), arrow]
+    if "forever" in code: nodes += [node("loop", "Repeter indefiniment"), arrow]
+
+    if "showString" in code: nodes += [node("process", "Afficher texte"), arrow]
+    elif "showIcon" in code: nodes += [node("process", "Montrer icone"), arrow]
+    elif "showNumber" in code: nodes += [node("process", "Afficher nombre"), arrow]
+
+    if "if" in code:
+        cond = re.search(r'if\s*\(([^)]{1,35})\)', code)
+        cond_text = cond.group(1) if cond else "condition"
+        nodes += [node("decision", f"SI {cond_text} ?"), arrow]
+
+    if "music." in code: nodes += [node("process", "Jouer son"), arrow]
+    if "radio.send" in code: nodes += [node("process", "Envoyer radio"), arrow]
+    if "pause(" in code: nodes += [node("process", "Pause"), arrow]
+
+    nodes.append(node("end", "FIN"))
+    return '<div class="flowchart">' + ''.join(nodes) + '</div>'
+
+def generate_pseudocode(code):
+    """Generate colored pseudocode from JS code"""
+    pk = lambda t: f'<span class="pk">{t}</span>'
+    pv = lambda t: f'<span class="pv">{t}</span>'
+    pc = lambda t: f'<span class="pc">{t}</span>'
+
+    lines = [pk("DEBUT")]
+
+    # Variables
+    for m in re.finditer(r'let\s+(\w+)\s*=\s*([^;\n]+)', code):
+        lines.append(f"  {pk('DEFINIR')} {m.group(1)} ← {pv(m.group(2).strip())}")
+
+    if "forever" in code: lines.append(f"\n{pk('REPETER INDEFINIMENT')} :")
+    if "onButtonPressed(Button.A" in code: lines.append(f"{pk('QUAND')} bouton A :")
+    if "onButtonPressed(Button.B" in code: lines.append(f"{pk('QUAND')} bouton B :")
+    if "onGesture(Gesture.Shake" in code: lines.append(f"{pk('QUAND')} secouer :")
+
+    m = re.search(r'showString\("([^"]+)"\)', code)
+    if m: lines.append(f"  {pk('AFFICHER')} {pv(m.group(1))}")
+    m = re.search(r'showIcon\(IconNames\.(\w+)\)', code)
+    if m: lines.append(f"  {pk('MONTRER')} icone {pv(m.group(1))}")
+    m = re.search(r'showNumber\((\w+)\)', code)
+    if m: lines.append(f"  {pk('AFFICHER')} {pv(m.group(1))}")
+
+    m = re.search(r'if\s*\(([^)]{1,50})\)', code)
+    if m:
+        lines.append(f"  {pk('SI')} {pv(m.group(1).strip())} {pk('ALORS')}")
+        lines.append(f"    {pc('// actions...')}")
+        if "} else" in code:
+            lines.append(f"  {pk('SINON')}")
+            lines.append(f"    {pc('// actions...')}")
+
+    if "pause(" in code: lines.append(f"  {pk('ATTENDRE')} {pv('ms')}")
+    if "music." in code: lines.append(f"  {pk('JOUER')} son")
+    if "radio.send" in code: lines.append(f"  {pk('ENVOYER')} radio")
+
+    lines.append(f"\n{pk('FIN')}")
+    return '<div class="pseudo-box">' + '\n'.join(lines) + '</div>'
+
 def diff_label(d):
     return {1:"Debutant",2:"Intermediaire",3:"Avance"}.get(d,"")
 
@@ -444,6 +580,45 @@ body {
   letter-spacing: 0.2px;
 }
 
+/* Visual MakeCode Blocks */
+.vblock-canvas { display: flex; flex-direction: column; gap: 3px; padding: 12px; background: rgba(0,0,0,0.15); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; }
+.vb { position: relative; border-radius: 4px; padding: 6px 10px; font-size: 12px; font-weight: 600; color: #fff; display: flex; flex-wrap: wrap; align-items: center; gap: 5px; line-height: 1.5; border-bottom: 2px solid rgba(0,0,0,0.25); font-family: system-ui, sans-serif; }
+.vb.hat { border-radius: 14px 14px 4px 4px; padding: 7px 12px 4px; flex-direction: column; align-items: stretch; }
+.vb .hat-label { display: flex; align-items: center; gap: 5px; min-height: 28px; }
+.vb .hat-body { display: flex; flex-direction: column; gap: 2px; padding-bottom: 3px; }
+.vb.cblock { padding: 6px 10px 0; flex-direction: column; align-items: stretch; border-bottom: none; }
+.vb .cb-row { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.vb .cb-body { margin: 3px 0; padding: 5px 4px 5px 14px; background: rgba(0,0,0,0.15); border-left: 3px solid rgba(255,255,255,0.15); min-height: 28px; display: flex; flex-direction: column; gap: 2px; border-radius: 0 3px 3px 0; }
+.vb .cb-cap { height: 6px; border-radius: 0 0 4px 4px; background: inherit; filter: brightness(0.9); margin: 0 -10px; }
+.vb .cb-else { padding: 3px 8px; color: rgba(255,255,255,0.85); font-weight: 700; background: rgba(0,0,0,0.08); font-size: 11px; }
+.vb .varg { display: inline-flex; padding: 1px 8px; border-radius: 10px; background: rgba(255,255,255,0.92); color: #333; font-size: 11px; font-weight: 600; }
+.vb .varg.str { background: #a31515; color: #fff; border-radius: 10px; }
+.vb.cat-basic { background: #1E90FF; } .vb.cat-input { background: #D400D4; }
+.vb.cat-loops { background: #00AA00; } .vb.cat-logic { background: #00A4A6; }
+.vb.cat-music { background: #E63022; } .vb.cat-radio { background: #E3008C; }
+.vb.cat-variables { background: #DC143C; } .vb.cat-pins { background: #3BDDD4; color: #111; }
+.vb.cat-math { background: #9400D3; } .vb.cat-game { background: #7600A8; }
+.vb.cat-functions { background: #3455DB; } .vb.cat-bluetooth { background: #0082FB; }
+.vb.cat-sonar { background: #00A4A6; } .vb.cat-neopixel { background: #7B2D8E; }
+
+/* Flowchart */
+.flowchart { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 14px; background: rgba(0,0,0,0.1); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; }
+.fc-node { padding: 5px 16px; font-size: 11px; font-weight: 600; color: #fff; text-align: center; max-width: 240px; }
+.fc-node.start { background: #40BF4A; border-radius: 20px; }
+.fc-node.end { background: #DC143C; border-radius: 20px; }
+.fc-node.process { background: #1E90FF; border-radius: 5px; }
+.fc-node.decision { background: #9400D3; border-radius: 4px; border: 1.5px solid rgba(255,255,255,0.2); padding: 4px 12px; }
+.fc-node.io { background: #D400D4; border-radius: 5px 16px 5px 16px; }
+.fc-node.loop { background: #00AA00; border-radius: 5px; border-left: 3px solid rgba(255,255,255,0.3); }
+.fc-arrow { width: 2px; height: 12px; background: #3b82f6; position: relative; }
+.fc-arrow::after { content: "\\25BC"; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); font-size: 7px; color: #3b82f6; }
+
+/* Pseudocode */
+.pseudo-box { font-family: 'SF Mono', 'Fira Code', Consolas, monospace; font-size: 11px; line-height: 1.6; padding: 12px 14px; background: rgba(0,0,0,0.15); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); white-space: pre; overflow-x: auto; margin-bottom: 16px; color: #d0ddf0; }
+.pk { color: #569CD6; font-weight: 700; }
+.pv { color: #CE9178; }
+.pc { color: #6A9955; font-style: italic; }
+
 /* Steps */
 .steps-list { list-style: none; margin-bottom: 20px; }
 .step-item {
@@ -725,6 +900,21 @@ for a in activities:
         for label, color in blocks:
             out.append(f'  <span class="block-chip" style="background:{color}">{esc(label)}</span>')
         out.append('</div>')
+
+    # Visual MakeCode blocks
+    bt_text = parse_bt_for_activity(aid)
+    block_html = render_block_html(bt_text)
+    if block_html:
+        out.append('<div class="sec-label">Blocs MakeCode</div>')
+        out.append(block_html)
+
+    # Flowchart
+    out.append('<div class="sec-label">Algorithme</div>')
+    out.append(generate_flowchart(a["codeJS"]))
+
+    # Pseudocode
+    out.append('<div class="sec-label">Pseudo-code</div>')
+    out.append(generate_pseudocode(a["codeJS"]))
 
     # Steps
     if a["blocks"]:
