@@ -4529,6 +4529,7 @@ applyLang();
 // ═══════════════════════════════════════════════════════════════════
 let simReady = false;
 let simPending = null;
+let simImported = false;
 const SIM_URL = "https://makecode.microbit.org?controller=1";
 
 window.addEventListener("message", function(ev){
@@ -4586,14 +4587,14 @@ function handleSimMsg(msg){
     return;
   }
 
-  // pxteditor editorcontentloaded = editor fully ready, import now
+  // pxteditor editorcontentloaded = editor fully ready, import once
   if(msg.type === "pxteditor" && msg.action === "editorcontentloaded"){
-    console.log("[SIM] Editor ready (pxteditor) — auto-importing");
     simReady = true;
-    // Always import the current activity code when editor is ready
-    const a = currentList[currentIndex];
-    if(a){
-      setTimeout(()=>loadSimCode(a.codeJS), 500);
+    if(!simImported){
+      simImported = true;
+      console.log("[SIM] Editor ready — importing code (once)");
+      const a = currentList[currentIndex];
+      if(a) setTimeout(()=>loadSimCode(a.codeJS), 500);
     }
     simPending = null;
   }
@@ -4655,6 +4656,7 @@ function startSim(){
   const hint = $("simHint");
   frame.classList.remove("hidden");
   hint.style.display = "none";
+  simImported = false;
   if(!frame.src || frame.src === "about:blank"){
     frame.src = SIM_URL;
     simReady = false;
