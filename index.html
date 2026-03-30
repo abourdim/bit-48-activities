@@ -253,6 +253,13 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .makecode-blocks .mc-loading::after{content:"";display:inline-block;width:14px;height:14px;border:2px solid var(--accent);border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;margin-inline-start:8px;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ── BLOCKS SYNC BAR ── */
+.blocks-sync-bar{display:flex;align-items:center;gap:8px;padding:4px 0 8px;font-size:.72rem}
+.sync-status{padding:2px 10px;border-radius:999px;font-weight:600}
+.sync-status.synced{background:rgba(74,222,128,.12);color:rgba(74,222,128,.9);border:1px solid rgba(74,222,128,.25)}
+.sync-status.modified{background:rgba(251,191,36,.12);color:rgba(251,191,36,.9);border:1px solid rgba(251,191,36,.25)}
+.sync-btn{background:linear-gradient(135deg,var(--accent),var(--band2))!important;color:var(--bg)!important;font-weight:700;font-size:.7rem;padding:4px 12px;border-radius:999px;border:none!important;cursor:pointer}
+
 /* ── CODE EDITOR (editable textarea) ── */
 .code-editor{width:100%;min-height:160px;max-height:300px;resize:vertical;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.5);padding:12px 14px;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.76rem;line-height:1.5;color:var(--text);white-space:pre;overflow:auto;direction:ltr;text-align:left;box-shadow:inset 0 2px 6px rgba(0,0,0,.25);outline:none;tab-size:4}
 .code-editor:focus{border-color:var(--accent);box-shadow:inset 0 2px 6px rgba(0,0,0,.25),0 0 0 2px var(--glow)}
@@ -409,6 +416,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <div class="tip-box" id="mTip"></div>
       </div>
       <div class="tab-panel" id="tab-blocks">
+        <div class="blocks-sync-bar" id="blocksSyncBar"><span class="sync-status synced" id="syncStatus">✅ Synced</span><button class="sync-btn" id="syncBlocksBtn" style="display:none">🔄 Re-render blocks</button></div>
         <div id="mBlocksMC" class="makecode-blocks"></div>
         <div id="mBlocksFallback" style="display:none"></div>
       </div>
@@ -3500,6 +3508,8 @@ function renderMakeCodeBlocks(a){
   const fallback = $("mBlocksFallback");
   const mcId = "act-" + a.id;
   mcContainer.dataset.mcId = mcId;
+  lastSyncedCode = a.codeJS;
+  markCodeSynced();
 
   // Show CSS fallback immediately
   if(a.blockTree){
@@ -3800,6 +3810,64 @@ $("openMCPY").addEventListener("click", async () => {
 });
 $("themeSelect").addEventListener("change", e => {document.documentElement.dataset.theme=e.target.value;});
 $("langSelect").addEventListener("change", e => {lang=e.target.value;applyLang();});
+
+// ═══════════════════════════════════════════════════════════════════
+// CODE ↔ BLOCKS SYNC
+// ═══════════════════════════════════════════════════════════════════
+let syncTimer = null;
+let lastSyncedCode = "";
+
+function markCodeModified(){
+  const ss = $("syncStatus");
+  const sb = $("syncBlocksBtn");
+  const modLabel = lang==="ar"?"⚠ تم التعديل":lang==="en"?"⚠ Modified":"⚠ Modifié";
+  const reLabel = lang==="ar"?"🔄 تحديث المكعبات":lang==="en"?"🔄 Re-render blocks":"🔄 Actualiser les blocs";
+  ss.textContent = modLabel;
+  ss.className = "sync-status modified";
+  sb.textContent = reLabel;
+  sb.style.display = "";
+}
+
+function markCodeSynced(){
+  const ss = $("syncStatus");
+  const sb = $("syncBlocksBtn");
+  const syncLabel = lang==="ar"?"✅ متزامن":lang==="en"?"✅ Synced":"✅ Synchronisé";
+  ss.textContent = syncLabel;
+  ss.className = "sync-status synced";
+  sb.style.display = "none";
+}
+
+function resyncBlocks(){
+  const code = $("codeBlockJS").value;
+  lastSyncedCode = code;
+  const mcId = "edit-" + Date.now();
+  const mcContainer = $("mBlocksMC");
+  mcContainer.dataset.mcId = mcId;
+  mcContainer.innerHTML = '<div class="mc-loading">' + (lang==="ar"?"جاري التحديث…":lang==="en"?"Updating blocks…":"Actualisation des blocs…") + '</div>';
+  if(mcRenderReady){
+    sendMCRender(mcId, code);
+  } else {
+    mcRenderQueue.push({id: mcId, code: code});
+  }
+  markCodeSynced();
+}
+
+// Listen for JS code edits
+$("codeBlockJS").addEventListener("input", () => {
+  const code = $("codeBlockJS").value;
+  if(code !== lastSyncedCode){
+    markCodeModified();
+    // Auto-sync after 2s debounce
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(resyncBlocks, 2000);
+  }
+});
+
+// Manual sync button
+$("syncBlocksBtn").addEventListener("click", () => {
+  clearTimeout(syncTimer);
+  resyncBlocks();
+});
 
 // ═══════════════════════════════════════════════════════════════════
 // SIDEBAR
