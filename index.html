@@ -4532,17 +4532,35 @@ let simPending = null;
 const SIM_URL = "https://makecode.microbit.org?controller=1";
 
 window.addEventListener("message", function(ev){
-  if(!ev.data || typeof ev.data !== "object") return;
   const msg = ev.data;
-  if(msg.type === "pxteditor" && msg.action === "editorcontentloaded"){
-    simReady = true;
-    if(simPending){ loadSimCode(simPending); simPending = null; }
+  if(!msg) return;
+  // MakeCode sends various message formats
+  if(typeof msg === "string"){
+    try{ const parsed = JSON.parse(msg); if(parsed.type === "pxteditor") handleSimMsg(parsed); }catch(e){/* not JSON */}
+    return;
   }
+  if(typeof msg === "object") handleSimMsg(msg);
 });
+
+function handleSimMsg(msg){
+  // MakeCode signals ready via multiple possible messages
+  if(msg.type === "pxteditor" && (msg.action === "editorcontentloaded" || msg.action === "workspacesync")){
+    simReady = true;
+    console.log("[SIM] MakeCode ready:", msg.action);
+    if(simPending){ setTimeout(()=>loadSimCode(simPending), 500); simPending = null; }
+  }
+  // Also try catching "ready" from pxthost
+  if(msg.type === "pxthost" || msg.action === "workspacesync"){
+    simReady = true;
+    console.log("[SIM] Host ready:", msg.type, msg.action);
+    if(simPending){ setTimeout(()=>loadSimCode(simPending), 500); simPending = null; }
+  }
+}
 
 function loadSimCode(code){
   const frame = $("simFrame");
   if(!frame || !frame.contentWindow) return;
+  console.log("[SIM] Importing code...");
   const project = {
     text: {
       "main.ts": code,
@@ -4560,8 +4578,9 @@ function loadSimCode(code){
     project: project
   }, "*");
   setTimeout(() => {
+    console.log("[SIM] Starting simulator...");
     frame.contentWindow.postMessage({type:"pxteditor",action:"startsimulator"}, "*");
-  }, 1000);
+  }, 2000);
 }
 
 function startSim(){
@@ -4575,6 +4594,15 @@ function startSim(){
     frame.src = SIM_URL;
     simReady = false;
     simPending = a.codeJS;
+    // Fallback: try sending code after 8s even if no ready message
+    setTimeout(() => {
+      if(simPending && !simReady){
+        console.log("[SIM] Fallback: forcing code import after 8s");
+        simReady = true;
+        loadSimCode(simPending);
+        simPending = null;
+      }
+    }, 8000);
   } else if(simReady){
     loadSimCode(a.codeJS);
   } else {
