@@ -382,6 +382,12 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .open-makecode-btn{background:linear-gradient(135deg,#6C3FC5,#9B59B6)!important;color:#fff!important;border:1px solid rgba(108,63,197,.5)!important;font-weight:700}
 .open-makecode-btn:hover{box-shadow:0 0 16px rgba(108,63,197,.4);transform:translateY(-1px)}
 
+/* ── SYNTAX HIGHLIGHTING ── */
+.hl-keyword{color:#569CD6;font-weight:700}
+.hl-string{color:#CE9178}
+.hl-comment{color:#6A9955;font-style:italic}
+.hl-number{color:#B5CEA8}
+
 /* ── LANGUAGE TAB BADGES ── */
 .tab-lang-badge{display:inline-block;font-size:.55rem;font-weight:800;padding:1px 5px;border-radius:3px;vertical-align:middle;margin-inline-end:3px;letter-spacing:.03em}
 .js-badge{background:#F7DF1E;color:#000}
@@ -554,12 +560,12 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
       </div>
       <div class="tab-panel" id="tab-js">
         <div class="code-actions"><button class="copy-btn" id="copyJSBtn">📋 Copier</button><button class="open-makecode-btn" id="openMCJS">🚀 Ouvrir MakeCode</button></div>
-        <textarea class="code-editor" id="codeBlockJS" spellcheck="false"></textarea>
+        <pre class="code-editor" id="codeBlockJS" contenteditable="true" spellcheck="false"></pre>
         <div class="tip-box" style="margin-top:10px;border-color:rgba(122,167,255,.3);color:rgba(122,167,255,.9);background:rgba(122,167,255,.05)" id="codeTip"></div>
       </div>
       <div class="tab-panel" id="tab-py">
         <div class="code-actions"><button class="copy-btn" id="copyPYBtn">📋 Copier</button><button class="open-makecode-btn" id="openMCPY">🐍 Ouvrir MakeCode</button></div>
-        <textarea class="code-editor" id="codeBlockPY" spellcheck="false"></textarea>
+        <pre class="code-editor" id="codeBlockPY" contenteditable="true" spellcheck="false"></pre>
         <div class="tip-box" style="margin-top:10px;border-color:rgba(48,105,152,.4);color:rgba(255,212,59,.9);background:rgba(48,105,152,.08)" id="codeTipPY"></div>
       </div>
       <div class="tab-panel" id="tab-challenges"><div id="mChallenges"></div></div>
@@ -4054,6 +4060,33 @@ function generateFlowAndPseudo(a){
 
   $("mPseudo").innerHTML = lines.join("\n");
 }
+// ═══════════════════════════════════════════════════════════════════
+// SYNTAX HIGHLIGHTING (JS + Python)
+// ═══════════════════════════════════════════════════════════════════
+function highlightJS(code){
+  return esc(code)
+    .replace(/(\/\/[^\n]*)/g,'<span class="hl-comment">$1</span>')
+    .replace(/\b(function|let|var|const|if|else|while|for|return|true|false|new|this)\b/g,'<span class="hl-keyword">$1</span>')
+    .replace(/\b(\d+)\b/g,'<span class="hl-number">$1</span>')
+    .replace(/(&quot;[^&]*?&quot;)/g,'<span class="hl-string">$1</span>');
+}
+
+function highlightPY(code){
+  const e = esc(code);
+  const tokens = [];
+  let r = e;
+  while(r.length > 0){
+    let m;
+    if((m=r.match(/^(#[^\n]*)/))){tokens.push('<span class="hl-comment">'+m[1]+'</span>');r=r.slice(m[0].length);continue;}
+    if((m=r.match(/^(&quot;[^&]*?&quot;)/))){tokens.push('<span class="hl-string">'+m[1]+'</span>');r=r.slice(m[0].length);continue;}
+    if((m=r.match(/^('[^']*?')/))){tokens.push('<span class="hl-string">'+m[1]+'</span>');r=r.slice(m[0].length);continue;}
+    if((m=r.match(/^(def|if|elif|else|while|for|in|return|import|from|global|not|and|or|True|False|range|len|min|max|abs)\b/))){tokens.push('<span class="hl-keyword">'+m[1]+'</span>');r=r.slice(m[0].length);continue;}
+    if((m=r.match(/^(\d+)/))){tokens.push('<span class="hl-number">'+m[1]+'</span>');r=r.slice(m[0].length);continue;}
+    tokens.push(r[0]);r=r.slice(1);
+  }
+  return tokens.join('');
+}
+
 function renderBlocks(tree){
   if(!tree || !Array.isArray(tree)) return "";
   let h = `<div class="block-canvas">`;
@@ -4270,13 +4303,8 @@ function openModal(){
 }
 
 function updateCode(a){
-  $("codeBlockJS").value = a.codeJS;
-  $("codeBlockPY").value = a.codePY;
-  // Auto-resize textareas
-  [$("codeBlockJS"),$("codeBlockPY")].forEach(ta => {
-    ta.style.height = "auto";
-    ta.style.height = Math.min(ta.scrollHeight + 4, 300) + "px";
-  });
+  $("codeBlockJS").innerHTML = highlightJS(a.codeJS);
+  $("codeBlockPY").innerHTML = highlightPY(a.codePY);
 }
 
 function closeModal(){
@@ -4356,7 +4384,7 @@ $("nextBtn").addEventListener("click", () => {if(currentIndex<currentList.length
 $("tabBar").addEventListener("click", e => {const btn=e.target.closest(".tab-btn");if(btn) switchTab(btn.dataset.tab);});
 $("copyJSBtn").addEventListener("click", async () => {
   try{
-    await navigator.clipboard.writeText($("codeBlockJS").value);
+    await navigator.clipboard.writeText($("codeBlockJS").textContent);
     $("copyJSBtn").textContent = "✅ Copié";
     showToast(t("copied"));
     setTimeout(() => $("copyJSBtn").textContent = "📋 Copier", 2000);
@@ -4364,7 +4392,7 @@ $("copyJSBtn").addEventListener("click", async () => {
 });
 $("copyPYBtn").addEventListener("click", async () => {
   try{
-    await navigator.clipboard.writeText($("codeBlockPY").value);
+    await navigator.clipboard.writeText($("codeBlockPY").textContent);
     $("copyPYBtn").textContent = "✅ Copié";
     showToast(t("copied"));
     setTimeout(() => $("copyPYBtn").textContent = "📋 Copier", 2000);
@@ -4372,12 +4400,12 @@ $("copyPYBtn").addEventListener("click", async () => {
 });
 // Open in MakeCode — copy code to clipboard then open MakeCode
 $("openMCJS").addEventListener("click", async () => {
-  try{ await navigator.clipboard.writeText($("codeBlockJS").value); }catch(e){/* clipboard may fail silently */}
+  try{ await navigator.clipboard.writeText($("codeBlockJS").textContent); }catch(e){/* clipboard may fail silently */}
   showToast(lang==="ar"?"تم النسخ! الصق في MakeCode ← JavaScript":lang==="en"?"Copied! Paste in MakeCode → JavaScript":"Copié ! Colle dans MakeCode → JavaScript");
   window.open("https://makecode.microbit.org/#editor","_blank");
 });
 $("openMCPY").addEventListener("click", async () => {
-  try{ await navigator.clipboard.writeText($("codeBlockPY").value); }catch(e){/* clipboard may fail silently */}
+  try{ await navigator.clipboard.writeText($("codeBlockPY").textContent); }catch(e){/* clipboard may fail silently */}
   showToast(lang==="ar"?"تم النسخ! الصق في MakeCode ← Python":lang==="en"?"Copied! Paste in MakeCode → Python":"Copié ! Colle dans MakeCode → Python");
   window.open("https://makecode.microbit.org/#editor","_blank");
 });
@@ -4408,7 +4436,7 @@ function markCodeSynced(){
 }
 
 function resyncBlocks(){
-  const code = $("codeBlockJS").value;
+  const code = $("codeBlockJS").textContent;
   lastSyncedCode = code;
   const mcId = "edit-" + Date.now();
   const mcContainer = $("mBlocksMC");
@@ -4424,7 +4452,7 @@ function resyncBlocks(){
 
 // Listen for JS code edits
 $("codeBlockJS").addEventListener("input", () => {
-  const code = $("codeBlockJS").value;
+  const code = $("codeBlockJS").textContent;
   if(code !== lastSyncedCode){
     markCodeModified();
     // Auto-sync after 2s debounce
@@ -4446,7 +4474,7 @@ $("syncBlocksBtn").addEventListener("click", () => {
 
 // Edit blocks in MakeCode — copies JS code + opens editor
 $("openMCBlocks").addEventListener("click", async () => {
-  try{ await navigator.clipboard.writeText($("codeBlockJS").value); }catch(e){/* clipboard may fail silently */}
+  try{ await navigator.clipboard.writeText($("codeBlockJS").textContent); }catch(e){/* clipboard may fail silently */}
   showToast(lang==="ar"?"تم النسخ! الصق في MakeCode ← JavaScript ← ثم عدّل المكعبات":lang==="en"?"Copied! Paste in MakeCode → JavaScript → then edit blocks":"Copié ! Colle dans MakeCode → JavaScript → puis modifie les blocs");
   window.open("https://makecode.microbit.org/#editor","_blank");
 });
