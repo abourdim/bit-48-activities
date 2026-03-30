@@ -1,14 +1,14 @@
 """
-Generate a beautiful standalone HTML ebook from micro:bit 58 activities.
-Open in browser → Print to PDF (Ctrl+P) for perfect results.
+Generate a beautiful standalone interactive HTML web-book from micro:bit 58 activities.
+Dark elegant theme with sidebar navigation, glassmorphism cards, and scroll-spy.
 """
-import re
+import re, html as html_mod
 
 # ── Parse activities from index.html ──
 with open("index.html", "r", encoding="utf-8") as f:
-    html = f.read()
+    raw_html = f.read()
 
-js_match = re.search(r'<script>(.*?)</script>', html, re.DOTALL)
+js_match = re.search(r'<script>(.*?)</script>', raw_html, re.DOTALL)
 js = js_match.group(1) if js_match else ""
 
 activities = []
@@ -67,13 +67,23 @@ def detect_led(code):
         if len(p)==25: return p
     return None
 
-def led_html(pattern):
-    if not pattern: return ""
+def led_svg(pattern):
+    """Generate an inline SVG for a 5x5 LED grid."""
+    if not pattern:
+        return ""
     cells = ""
     for i in range(25):
-        on = "on" if pattern[i] else ""
-        cells += f'<div class="led {on}"></div>'
-    return f'<div class="led-grid">{cells}</div>'
+        x = 4 + (i % 5) * 18
+        y = 4 + (i // 5) * 18
+        if pattern[i]:
+            cells += f'<circle cx="{x+8}" cy="{y+8}" r="7" fill="#ff1a1a" filter="url(#ledglow)"/>'
+        else:
+            cells += f'<circle cx="{x+8}" cy="{y+8}" r="7" fill="#1a1a2e" opacity="0.4"/>'
+    return f'''<svg class="led-svg" width="96" height="96" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+  <defs><filter id="ledglow"><feGaussianBlur stdDeviation="2" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <rect width="96" height="96" rx="8" fill="#050510"/>
+  {cells}
+</svg>'''
 
 # ── Block detection ──
 BLOCK_MAP = [
@@ -127,7 +137,7 @@ def detect_blocks(code):
     return result
 
 def esc(t):
-    return t.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
+    return html_mod.escape(t)
 
 def diff_label(d):
     return {1:"Debutant",2:"Intermediaire",3:"Avance"}.get(d,"")
@@ -135,272 +145,729 @@ def diff_label(d):
 def diff_color(d):
     return {1:"#40BF4A",2:"#F7DF1E",3:"#DC143C"}.get(d,"#888")
 
-# ── Generate HTML ──
-out = []
-out.append("""<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Micro:bit - 58 Activites - Ebook</title>
-<style>
-@page { size: A4; margin: 1.5cm 1.8cm; }
-@media print {
-  .page-break { page-break-before: always; }
-  .no-print { display: none; }
-  body { font-size: 9pt; }
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1a1a2e; background: #fff; line-height: 1.5; font-size: 10pt; }
+def diff_stars(d):
+    return "&#9733;" * d + "&#9734;" * (3 - d)
 
-/* Cover */
-.cover { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90vh; text-align: center; padding: 2cm; }
-.cover h1 { font-size: 3em; color: #1E90FF; margin-bottom: 0.2em; }
-.cover h2 { font-size: 1.5em; color: #666; font-weight: 400; margin-bottom: 0.5em; }
-.cover .subtitle { font-size: 1.1em; color: #999; margin-bottom: 2em; }
-.cover .author { font-size: 1em; color: #aaa; margin-top: 2em; }
-
-/* micro:bit board SVG */
-.mb-board { width: 200px; height: 160px; margin: 1em auto; }
-
-/* TOC */
-.toc { padding: 1cm 0; }
-.toc h2 { font-size: 1.8em; color: #1E90FF; margin-bottom: 0.5em; }
-.toc h3 { font-size: 1.1em; color: #1E90FF; margin: 1em 0 0.3em; text-transform: uppercase; letter-spacing: 0.05em; }
-.toc-entry { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px dotted #ddd; font-size: 0.95em; }
-.toc-entry .toc-id { color: #1E90FF; font-weight: 700; min-width: 2.5em; }
-.toc-entry .toc-tags { color: #999; font-size: 0.8em; }
-
-/* Activity page */
-.activity { padding: 0.5cm 0; }
-.act-header { display: flex; align-items: baseline; gap: 0.5em; margin-bottom: 0.3em; }
-.act-num { font-size: 0.8em; color: #1E90FF; font-weight: 700; }
-.act-title { font-size: 1.5em; color: #1E90FF; font-weight: 700; }
-.act-meta { display: flex; gap: 0.5em; flex-wrap: wrap; margin-bottom: 0.8em; }
-.meta-chip { display: inline-flex; align-items: center; gap: 3px; padding: 2px 10px; border-radius: 99px; font-size: 0.75em; font-weight: 600; border: 1.5px solid; }
-.meta-chip.diff { border-color: var(--dc); color: var(--dc); }
-.meta-chip.time { border-color: #ccc; color: #666; }
-.meta-chip.v2 { border-color: #40BF4A; color: #40BF4A; }
-.meta-chip.ia { border-color: #F7DF1E; color: #b8860b; }
-
-/* Sections */
-.sec-title { font-size: 0.85em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #1E90FF; margin: 0.7em 0 0.3em; display: flex; align-items: center; gap: 0.3em; }
-.sec-title::after { content: ""; flex: 1; height: 1px; background: #e0e0e0; }
-
-/* Goal */
-.goal { font-size: 1em; line-height: 1.6; margin-bottom: 0.5em; }
-
-/* LED grid */
-.led-grid { display: inline-grid; grid-template-columns: repeat(5,1fr); gap: 3px; padding: 8px; background: #111; border-radius: 8px; vertical-align: middle; }
-.led { width: 16px; height: 16px; border-radius: 50%; background: #1a1a1a; }
-.led.on { background: #ff1a1a; box-shadow: 0 0 6px #ff1a1a; }
-
-/* Content row: LED + materials */
-.content-row { display: flex; gap: 1em; align-items: flex-start; margin: 0.5em 0; }
-.content-row .led-grid { flex-shrink: 0; }
-
-/* Block chips */
-.blocks-row { display: flex; flex-wrap: wrap; gap: 4px; margin: 0.3em 0; }
-.block-chip { display: inline-block; padding: 3px 10px; border-radius: 5px; color: #fff; font-size: 0.75em; font-weight: 600; border-bottom: 2px solid rgba(0,0,0,0.2); font-family: system-ui, sans-serif; }
-
-/* Steps */
-.steps { margin: 0.3em 0; }
-.step { display: flex; gap: 0.5em; margin-bottom: 0.2em; font-size: 0.9em; }
-.step-num { width: 20px; height: 20px; border-radius: 50%; background: #1E90FF; color: #fff; font-size: 0.7em; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-
-/* Tip */
-.tip-box { padding: 8px 12px; border-radius: 8px; border: 1px dashed #FFD700; background: #FFFDE7; font-size: 0.85em; color: #8B6914; margin: 0.5em 0; }
-
-/* Code */
-.code-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 0.5em 0; }
-.code-box { border-radius: 8px; padding: 8px 10px; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.72em; line-height: 1.5; overflow-x: auto; white-space: pre; }
-.code-box.js { background: #FFF8E1; border: 1px solid #F7DF1E; }
-.code-box.py { background: #E8F0FE; border: 1px solid #306998; }
-.code-label { font-size: 0.7em; font-weight: 700; margin-bottom: 3px; display: flex; align-items: center; gap: 4px; }
-.code-label .badge { display: inline-block; padding: 1px 5px; border-radius: 3px; font-size: 0.8em; color: #fff; }
-.badge.js-badge { background: #F7DF1E; color: #000; }
-.badge.py-badge { background: #306998; color: #FFD43B; }
-
-/* Syntax highlighting */
-.kw { color: #0000FF; font-weight: 700; }
-.str { color: #A31515; }
-.cmt { color: #008000; font-style: italic; }
-.num { color: #098658; }
-.fn { color: #795E26; }
-
-/* Challenges */
-.challenge { display: flex; gap: 0.5em; align-items: flex-start; margin-bottom: 0.2em; font-size: 0.85em; }
-.chal-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
-
-/* Materials */
-.needs { display: flex; flex-wrap: wrap; gap: 4px; }
-.need-chip { padding: 2px 8px; border-radius: 99px; font-size: 0.75em; border: 1px solid #ddd; color: #555; background: #f9f9f9; }
-
-/* QR link */
-.qr-link { font-size: 0.7em; color: #aaa; margin-top: 0.5em; }
-
-/* Footer */
-.page-footer { font-size: 0.7em; color: #bbb; text-align: center; margin-top: 1em; padding-top: 0.5em; border-top: 1px solid #eee; }
-
-/* Print button */
-.print-bar { position: fixed; top: 0; left: 0; right: 0; background: #1E90FF; color: white; padding: 10px 20px; text-align: center; z-index: 999; font-weight: 700; }
-.print-bar button { background: white; color: #1E90FF; border: none; padding: 8px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-left: 10px; font-size: 1em; }
-</style>
-</head>
-<body>
-
-<div class="print-bar no-print">
-  Micro:bit 58 Activites - Ebook
-  <button onclick="window.print()">Imprimer / PDF</button>
-</div>
-""")
-
-# ── Cover ──
-out.append("""
-<div class="cover">
-  <svg class="mb-board" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
-    <rect x="10" y="10" width="180" height="120" rx="14" fill="#333"/>
-    <rect x="60" y="35" width="80" height="60" rx="4" fill="#111"/>
-    <circle cx="35" cy="65" r="10" fill="#666"/><text x="35" y="69" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">A</text>
-    <circle cx="165" cy="65" r="10" fill="#666"/><text x="165" y="69" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">B</text>
-""")
-# LED grid on cover (heart)
-heart = [0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,1,0,0]
-for i in range(25):
-    x = 66 + (i%5)*14
-    y = 41 + (i//5)*11
-    color = "#ff1a1a" if heart[i] else "#220000"
-    out.append(f'    <circle cx="{x}" cy="{y}" r="4" fill="{color}"/>')
-
-out.append("""
-    <circle cx="30" cy="140" r="8" fill="#FFD700"/><text x="30" y="143" text-anchor="middle" fill="#333" font-size="7">0</text>
-    <circle cx="60" cy="140" r="8" fill="#FFD700"/><text x="60" y="143" text-anchor="middle" fill="#333" font-size="7">1</text>
-    <circle cx="90" cy="140" r="8" fill="#FFD700"/><text x="90" y="143" text-anchor="middle" fill="#333" font-size="7">2</text>
-    <circle cx="140" cy="140" r="8" fill="#FFD700"/><text x="140" y="143" text-anchor="middle" fill="#333" font-size="6">3V</text>
-    <circle cx="170" cy="140" r="8" fill="#FFD700"/><text x="170" y="143" text-anchor="middle" fill="#333" font-size="5">GND</text>
-  </svg>
-  <h1>Micro:bit</h1>
-  <h2>58 Activites Pratiques</h2>
-  <div class="subtitle">Blocs &middot; JavaScript &middot; Python</div>
-  <div class="subtitle">Du clignotement LED aux robots IA</div>
-  <div class="author">Workshop DIY &mdash; abourdim</div>
-</div>
-""")
-
-# ── TOC ──
-out.append('<div class="page-break"></div>')
-out.append('<div class="toc"><h2>Table des matieres</h2>')
-cur_part = ""
-for a in activities:
-    if a["part"] != cur_part:
-        cur_part = a["part"]
-        out.append(f'<h3>{"Simple (1-22)" if cur_part=="simple" else "Avance (23-58)"}</h3>')
-    tags = f'{"⭐"*a["difficulty"]} {a["time"]}'
-    if a["v2"]: tags += " V2"
-    if a["ia"]: tags += " IA"
-    out.append(f'<div class="toc-entry"><span><span class="toc-id">#{a["id"]}</span> {esc(a["title"])}</span><span class="toc-tags">{tags}</span></div>')
-out.append('</div>')
-
-# ── Syntax highlighting (simple) ──
+# ── Syntax highlighting ──
 def hl_js(code):
     code = esc(code)
-    code = re.sub(r'(\/\/[^\n]*)', r'<span class="cmt">\1</span>', code)
-    code = re.sub(r'\b(function|let|var|const|if|else|while|for|return|true|false|new)\b', r'<span class="kw">\1</span>', code)
-    code = re.sub(r'(\d+)', r'<span class="num">\1</span>', code)
+    code = re.sub(r'(\/\/[^\n]*)', r'<span class="hl-cmt">\1</span>', code)
+    code = re.sub(r'(&quot;[^&]*?&quot;|&#x27;[^&]*?&#x27;)', r'<span class="hl-str">\1</span>', code)
+    code = re.sub(r'\b(function|let|var|const|if|else|while|for|return|true|false|new|of|in)\b', r'<span class="hl-kw">\1</span>', code)
+    code = re.sub(r'(?<!\w)(\d+)(?!\w)', r'<span class="hl-num">\1</span>', code)
     return code
 
 def hl_py(code):
     code = esc(code)
-    code = re.sub(r'(#[^\n]*)', r'<span class="cmt">\1</span>', code)
-    code = re.sub(r'\b(def|if|elif|else|while|for|in|return|import|from|global|not|and|or|True|False)\b', r'<span class="kw">\1</span>', code)
-    code = re.sub(r'(\d+)', r'<span class="num">\1</span>', code)
+    code = re.sub(r'(#[^\n]*)', r'<span class="hl-cmt">\1</span>', code)
+    code = re.sub(r'(&quot;[^&]*?&quot;|&#x27;[^&]*?&#x27;)', r'<span class="hl-str">\1</span>', code)
+    code = re.sub(r'\b(def|if|elif|else|while|for|in|return|import|from|global|not|and|or|True|False|None|class|pass|break|continue)\b', r'<span class="hl-kw">\1</span>', code)
+    code = re.sub(r'(?<!\w)(\d+)(?!\w)', r'<span class="hl-num">\1</span>', code)
     return code
 
-# ── Activity Pages ──
+
+# ── Build sidebar nav items ──
+simple_acts = [a for a in activities if a["part"] == "simple"]
+advanced_acts = [a for a in activities if a["part"] == "avance"]
+
+def sidebar_links(act_list):
+    links = []
+    for a in act_list:
+        links.append(f'<a class="nav-link" href="#act-{a["id"]}" data-id="{a["id"]}">{a["id"]}. {esc(a["title"])}</a>')
+    return "\n".join(links)
+
+
+# ── Generate HTML ──
+out = []
+
+# --- HEAD ---
+out.append('''<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Micro:bit - 58 Activites - Web Book</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: #0a0f1e;
+  color: #d0ddf0;
+  line-height: 1.65;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0a0f1e; }
+::-webkit-scrollbar-thumb { background: #1e2a4a; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: 260px;
+  background: rgba(8, 12, 28, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-right: 1px solid rgba(59, 130, 246, 0.15);
+  z-index: 100;
+  display: flex; flex-direction: column;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+.sidebar-header {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  flex-shrink: 0;
+}
+.sidebar-header h1 {
+  font-size: 18px; font-weight: 700;
+  background: linear-gradient(135deg, #3b82f6, #60a5fa, #93c5fd);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.3px;
+}
+.sidebar-header .sub {
+  font-size: 11px; color: #5a6a8a; margin-top: 2px; letter-spacing: 0.5px; text-transform: uppercase;
+}
+.sidebar-nav {
+  flex: 1; overflow-y: auto; padding: 8px 0;
+  scrollbar-width: thin; scrollbar-color: #1e2a4a transparent;
+}
+.sidebar-nav::-webkit-scrollbar { width: 4px; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: #1e2a4a; border-radius: 2px; }
+.nav-section {
+  cursor: pointer; user-select: none;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 20px; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  color: #7a8aaa;
+  transition: color 0.2s;
+}
+.nav-section:hover { color: #d0ddf0; }
+.nav-section .arrow {
+  display: inline-block; transition: transform 0.25s; font-size: 10px;
+}
+.nav-section.open .arrow { transform: rotate(90deg); }
+.nav-group { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
+.nav-group.open { max-height: 3000px; }
+.nav-link {
+  display: block;
+  padding: 5px 20px 5px 28px;
+  font-size: 13px; color: #6a7a9a;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.nav-link:hover { color: #d0ddf0; background: rgba(59, 130, 246, 0.05); }
+.nav-link.active {
+  color: #3b82f6; border-left-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.08);
+  font-weight: 600;
+}
+.nav-cover-link {
+  display: block; padding: 8px 20px; font-size: 13px; color: #6a7a9a;
+  text-decoration: none; transition: color 0.2s;
+}
+.nav-cover-link:hover { color: #d0ddf0; }
+.sidebar-footer {
+  padding: 12px 20px;
+  border-top: 1px solid rgba(59, 130, 246, 0.1);
+  font-size: 11px; color: #3a4a6a; flex-shrink: 0;
+}
+
+/* Mobile toggle */
+.mobile-toggle {
+  display: none; position: fixed; top: 12px; left: 12px; z-index: 200;
+  width: 42px; height: 42px; border-radius: 10px; border: none;
+  background: rgba(59, 130, 246, 0.2); backdrop-filter: blur(8px);
+  color: #3b82f6; font-size: 20px; cursor: pointer;
+  align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.mobile-toggle:hover { background: rgba(59, 130, 246, 0.35); }
+.mobile-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 90; opacity: 0; transition: opacity 0.3s;
+}
+.mobile-overlay.show { display: block; opacity: 1; }
+
+/* ===== MAIN CONTENT ===== */
+.main {
+  margin-left: 260px;
+  min-height: 100vh;
+}
+
+/* ===== COVER ===== */
+.cover {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 100vh; text-align: center; padding: 60px 24px;
+  position: relative; overflow: hidden;
+}
+.cover::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 30% 40%, rgba(59,130,246,0.08), transparent),
+    radial-gradient(ellipse 500px 350px at 70% 60%, rgba(147,51,234,0.06), transparent);
+  pointer-events: none;
+}
+.cover-board { position: relative; z-index: 1; margin-bottom: 40px; }
+.cover h1 {
+  position: relative; z-index: 1;
+  font-size: 56px; font-weight: 800; letter-spacing: -1.5px;
+  background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 30%, #a78bfa 60%, #3b82f6 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease infinite;
+  margin-bottom: 8px;
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 200% center; }
+}
+.cover h2 {
+  position: relative; z-index: 1;
+  font-size: 22px; font-weight: 400; color: #7a8aaa;
+  margin-bottom: 8px;
+}
+.cover .cover-sub {
+  position: relative; z-index: 1;
+  font-size: 14px; color: #4a5a7a; margin-bottom: 8px;
+}
+.cover .cover-author {
+  position: relative; z-index: 1;
+  font-size: 13px; color: #3a4a6a; margin-top: 32px;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.cover .scroll-hint {
+  position: relative; z-index: 1;
+  margin-top: 48px; font-size: 12px; color: #3a4a6a;
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ===== ACTIVITY SECTION ===== */
+.act-section {
+  padding: 48px 40px 32px;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.06);
+  max-width: 960px; margin: 0 auto;
+}
+
+/* Header bar */
+.act-header-bar {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 20px; border-radius: 12px;
+  margin-bottom: 24px; position: relative; overflow: hidden;
+}
+.act-header-bar::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--hdr-color) 0%, transparent 100%);
+  opacity: 0.12;
+}
+.act-header-bar::after {
+  content: ""; position: absolute; inset: 0;
+  border: 1px solid var(--hdr-color); opacity: 0.2; border-radius: 12px;
+}
+.act-num-badge {
+  position: relative; z-index: 1;
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--hdr-color); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800; flex-shrink: 0;
+}
+.act-title-area { position: relative; z-index: 1; flex: 1; min-width: 0; }
+.act-title-text {
+  font-size: 20px; font-weight: 700; color: #e8edf5;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.act-header-tags {
+  display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap;
+}
+.tag-chip {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 8px; border-radius: 6px;
+  font-size: 11px; font-weight: 600;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.tag-chip.diff { color: var(--dc); border-color: rgba(255,255,255,0.08); }
+.tag-chip.time { color: #7a8aaa; }
+.tag-chip.v2 { color: #40BF4A; }
+.tag-chip.ia { color: #eab308; }
+.tag-stars { font-size: 12px; letter-spacing: 1px; }
+
+/* Glass card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px; padding: 16px 20px; margin-bottom: 20px;
+}
+
+/* Section label */
+.sec-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.2px; color: #3b82f6; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sec-label::after {
+  content: ""; flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(59,130,246,0.2), transparent);
+}
+
+/* Goal */
+.goal-text { font-size: 15px; line-height: 1.7; color: #b0c0e0; }
+
+/* LED SVG */
+.led-svg { display: block; }
+
+/* Content row */
+.content-row {
+  display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px;
+}
+.content-row .led-col { flex-shrink: 0; }
+.content-row .info-col { flex: 1; min-width: 0; }
+
+/* Block chips */
+.blocks-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.block-chip {
+  display: inline-block; padding: 4px 12px; border-radius: 6px;
+  color: #fff; font-size: 12px; font-weight: 600;
+  border-bottom: 2px solid rgba(0,0,0,0.25);
+  letter-spacing: 0.2px;
+}
+
+/* Steps */
+.steps-list { list-style: none; margin-bottom: 20px; }
+.step-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 6px 0;
+}
+.step-num {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(59, 130, 246, 0.15); color: #3b82f6;
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+.step-text { font-size: 14px; color: #a0b0d0; line-height: 1.6; }
+
+/* Tip */
+.tip-box {
+  padding: 14px 18px; border-radius: 10px;
+  background: rgba(234, 179, 8, 0.06);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  color: #eab308; font-size: 13px; line-height: 1.6;
+  margin-bottom: 20px;
+}
+.tip-box .tip-icon { margin-right: 6px; }
+
+/* Code area */
+.code-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-bottom: 20px;
+}
+.code-panel { border-radius: 10px; overflow: hidden; }
+.code-panel-header {
+  padding: 8px 14px; display: flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 700;
+}
+.code-panel-header.js-header { background: rgba(247, 223, 30, 0.12); color: #f7df1e; }
+.code-panel-header.py-header { background: rgba(48, 105, 152, 0.2); color: #60a5fa; }
+.code-lang-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+}
+.code-lang-dot.js-dot { background: #f7df1e; }
+.code-lang-dot.py-dot { background: #306998; }
+.code-block {
+  padding: 14px 16px;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 12.5px; line-height: 1.65;
+  overflow-x: auto; white-space: pre;
+}
+.code-block.js-code { background: rgba(247, 223, 30, 0.04); border: 1px solid rgba(247, 223, 30, 0.08); border-top: none; border-radius: 0 0 10px 10px; }
+.code-block.py-code { background: rgba(48, 105, 152, 0.06); border: 1px solid rgba(48, 105, 152, 0.12); border-top: none; border-radius: 0 0 10px 10px; }
+
+/* Syntax tokens */
+.hl-kw { color: #c084fc; font-weight: 600; }
+.hl-str { color: #34d399; }
+.hl-cmt { color: #4a6a5a; font-style: italic; }
+.hl-num { color: #f59e0b; }
+
+/* Challenges */
+.chal-list { margin-bottom: 20px; }
+.chal-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 5px 0; font-size: 13px; color: #a0b0d0;
+}
+.chal-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 5px;
+}
+
+/* Materials */
+.needs-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+.need-pill {
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 12px; font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #8a9aba;
+}
+
+/* Activity footer */
+.act-footer {
+  margin-top: 20px; padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 11px; color: #2a3a5a;
+  display: flex; justify-content: space-between;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 860px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .mobile-toggle { display: flex; }
+  .main { margin-left: 0; }
+  .act-section { padding: 32px 20px 24px; }
+  .code-grid { grid-template-columns: 1fr; }
+  .cover h1 { font-size: 36px; }
+  .content-row { flex-direction: column; }
+}
+
+/* ===== PRINT ===== */
+@media print {
+  @page { size: A4; margin: 1.5cm 1.8cm; }
+  body { background: #fff; color: #1a1a2e; font-size: 10pt; }
+  .sidebar, .mobile-toggle, .mobile-overlay, .scroll-hint { display: none !important; }
+  .main { margin-left: 0; }
+  .cover { min-height: auto; padding: 2cm 0; }
+  .cover::before { display: none; }
+  .cover h1 { -webkit-text-fill-color: #1E90FF; color: #1E90FF; font-size: 3em; background: none; animation: none; }
+  .cover h2 { color: #444; }
+  .cover .cover-sub, .cover .cover-author { color: #888; }
+  .act-section { padding: 0.5cm 0; page-break-inside: avoid; border-bottom: 1px solid #eee; max-width: 100%; }
+  .act-header-bar { background: none !important; }
+  .act-header-bar::before, .act-header-bar::after { display: none; }
+  .act-num-badge { background: #1E90FF !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .act-title-text { color: #1a1a2e; }
+  .glass-card { background: #f9f9f9; border: 1px solid #ddd; backdrop-filter: none; }
+  .goal-text { color: #333; }
+  .step-text { color: #333; }
+  .tip-box { background: #fffde7; border: 1px dashed #daa520; color: #8b6914; }
+  .code-block { border: 1px solid #ddd !important; }
+  .code-block.js-code { background: #fffde7 !important; }
+  .code-block.py-code { background: #e8f0fe !important; }
+  .hl-kw { color: #0000ff; }
+  .hl-str { color: #a31515; }
+  .hl-cmt { color: #008000; }
+  .hl-num { color: #098658; }
+  .tag-chip { border: 1px solid #ccc; }
+  .tag-chip.diff { color: var(--dc); }
+  .block-chip { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .chal-dot { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .need-pill { background: #f5f5f5; border: 1px solid #ddd; color: #555; }
+  .act-footer { color: #bbb; border-top-color: #eee; }
+  .nav-link, .blocks-wrap, .content-row .led-col svg { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .sec-label { color: #1E90FF; }
+  .sec-label::after { background: #eee; }
+  .step-num { background: #e8f0fe; color: #1E90FF; border-color: #c0d0f0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+''')
+
+# --- SIDEBAR ---
+out.append('''
+<button class="mobile-toggle" id="mobileToggle" aria-label="Toggle sidebar">&#9776;</button>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h1>Micro:bit</h1>
+    <div class="sub">58 Activites Pratiques</div>
+  </div>
+  <nav class="sidebar-nav">
+    <a class="nav-cover-link" href="#cover">Couverture</a>
+    <div class="nav-section open" data-target="simple-group">
+      Simple (1-22) <span class="arrow">&#9654;</span>
+    </div>
+    <div class="nav-group open" id="simple-group">
+''')
+out.append(sidebar_links(simple_acts))
+out.append('''
+    </div>
+    <div class="nav-section open" data-target="advanced-group">
+      Avance (23-58) <span class="arrow">&#9654;</span>
+    </div>
+    <div class="nav-group open" id="advanced-group">
+''')
+out.append(sidebar_links(advanced_acts))
+out.append('''
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    Workshop DIY &mdash; abourdim
+  </div>
+</aside>
+''')
+
+# --- MAIN ---
+out.append('<div class="main">')
+
+# --- COVER ---
+out.append('''
+<section class="cover" id="cover">
+  <div class="cover-board">
+    <svg width="220" height="176" viewBox="0 0 220 176" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="coverglow"><feGaussianBlur stdDeviation="3" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="boardgrd" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#2a2a3a"/>
+          <stop offset="100%" style="stop-color:#1a1a2a"/>
+        </linearGradient>
+      </defs>
+      <rect x="10" y="10" width="200" height="130" rx="16" fill="url(#boardgrd)" stroke="#3b82f6" stroke-opacity="0.2" stroke-width="1"/>
+      <rect x="65" y="32" width="90" height="68" rx="6" fill="#050510"/>
+''')
+heart = [0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,1,0,0]
+for i in range(25):
+    x = 72 + (i % 5) * 16
+    y = 39 + (i // 5) * 12
+    if heart[i]:
+        out.append(f'      <circle cx="{x}" cy="{y}" r="5" fill="#ff1a1a" filter="url(#coverglow)"/>')
+    else:
+        out.append(f'      <circle cx="{x}" cy="{y}" r="5" fill="#1a1a2e" opacity="0.3"/>')
+
+out.append('''
+      <circle cx="38" cy="70" r="12" fill="#222" stroke="#444" stroke-width="1"/>
+      <text x="38" y="74" text-anchor="middle" fill="#888" font-size="11" font-weight="bold" font-family="system-ui">A</text>
+      <circle cx="182" cy="70" r="12" fill="#222" stroke="#444" stroke-width="1"/>
+      <text x="182" y="74" text-anchor="middle" fill="#888" font-size="11" font-weight="bold" font-family="system-ui">B</text>
+      <circle cx="30" cy="155" r="9" fill="#333" stroke="#555" stroke-width="0.5"/>
+      <text x="30" y="158" text-anchor="middle" fill="#888" font-size="7" font-family="system-ui">0</text>
+      <circle cx="65" cy="155" r="9" fill="#333" stroke="#555" stroke-width="0.5"/>
+      <text x="65" y="158" text-anchor="middle" fill="#888" font-size="7" font-family="system-ui">1</text>
+      <circle cx="100" cy="155" r="9" fill="#333" stroke="#555" stroke-width="0.5"/>
+      <text x="100" y="158" text-anchor="middle" fill="#888" font-size="7" font-family="system-ui">2</text>
+      <circle cx="155" cy="155" r="9" fill="#333" stroke="#555" stroke-width="0.5"/>
+      <text x="155" y="158" text-anchor="middle" fill="#888" font-size="6" font-family="system-ui">3V</text>
+      <circle cx="190" cy="155" r="9" fill="#333" stroke="#555" stroke-width="0.5"/>
+      <text x="190" y="158" text-anchor="middle" fill="#888" font-size="5.5" font-family="system-ui">GND</text>
+    </svg>
+  </div>
+  <h1>Micro:bit</h1>
+  <h2>58 Activites Pratiques</h2>
+  <div class="cover-sub">Blocs &middot; JavaScript &middot; Python</div>
+  <div class="cover-sub">Du clignotement LED aux robots IA</div>
+  <div class="cover-author">Workshop DIY &mdash; abourdim</div>
+  <div class="scroll-hint">&#8595; Faites defiler pour commencer</div>
+</section>
+''')
+
+# --- ACTIVITY SECTIONS ---
 for a in activities:
-    out.append('<div class="page-break"></div>')
-    out.append('<div class="activity">')
-
-    # Header
     dc = diff_color(a["difficulty"])
-    out.append(f'<div class="act-header"><span class="act-num">#{a["id"]}</span><span class="act-title">{esc(a["title"])}</span></div>')
+    hdr_color = dc
+    aid = a["id"]
 
-    # Meta chips
-    out.append('<div class="act-meta">')
-    out.append(f'<span class="meta-chip diff" style="--dc:{dc}">{"⭐"*a["difficulty"]} {diff_label(a["difficulty"])}</span>')
-    out.append(f'<span class="meta-chip time">⏱ {a["time"]}</span>')
-    out.append(f'<span class="meta-chip">{a["part"].capitalize()}</span>')
-    if a["v2"]: out.append('<span class="meta-chip v2">V2</span>')
-    if a["ia"]: out.append('<span class="meta-chip ia">🧠 IA</span>')
-    out.append('</div>')
+    out.append(f'<section class="act-section" id="act-{aid}">')
+
+    # Header bar
+    out.append(f'<div class="act-header-bar" style="--hdr-color:{hdr_color}">')
+    out.append(f'  <div class="act-num-badge" style="background:{hdr_color}">{aid}</div>')
+    out.append(f'  <div class="act-title-area">')
+    out.append(f'    <div class="act-title-text">{esc(a["title"])}</div>')
+    out.append(f'    <div class="act-header-tags">')
+    out.append(f'      <span class="tag-chip diff" style="--dc:{dc}"><span class="tag-stars">{diff_stars(a["difficulty"])}</span> {diff_label(a["difficulty"])}</span>')
+    out.append(f'      <span class="tag-chip time">{esc(a["time"])}</span>')
+    if a["v2"]:
+        out.append('      <span class="tag-chip v2">V2</span>')
+    if a["ia"]:
+        out.append('      <span class="tag-chip ia">IA</span>')
+    out.append(f'    </div>')
+    out.append(f'  </div>')
+    out.append(f'</div>')
 
     # Goal
-    out.append('<div class="sec-title">🎯 Objectif</div>')
-    out.append(f'<div class="goal">{esc(a["goal"])}</div>')
+    out.append('<div class="glass-card">')
+    out.append('  <div class="sec-label">Objectif</div>')
+    out.append(f'  <div class="goal-text">{esc(a["goal"])}</div>')
+    out.append('</div>')
 
-    # LED + Materials
+    # LED + Materials row
     led = detect_led(a["codeJS"])
     out.append('<div class="content-row">')
     if led:
-        out.append(led_html(led))
-    out.append('<div>')
-    out.append('<div class="sec-title">🧰 Materiel</div>')
-    out.append('<div class="needs">')
+        out.append(f'<div class="led-col">{led_svg(led)}</div>')
+    out.append('<div class="info-col">')
+    out.append('  <div class="sec-label">Materiel</div>')
+    out.append('  <div class="needs-wrap">')
     for n in a["needs"]:
-        out.append(f'<span class="need-chip">{esc(n)}</span>')
-    out.append('</div></div></div>')
+        out.append(f'    <span class="need-pill">{esc(n)}</span>')
+    out.append('  </div>')
+    out.append('</div></div>')
 
-    # Blocks used
+    # Block chips
     blocks = detect_blocks(a["codeJS"])
     if blocks:
-        out.append('<div class="sec-title">🧩 Blocs utilises</div>')
-        out.append('<div class="blocks-row">')
+        out.append('<div class="sec-label">Blocs utilises</div>')
+        out.append('<div class="blocks-wrap">')
         for label, color in blocks:
-            out.append(f'<span class="block-chip" style="background:{color}">{esc(label)}</span>')
+            out.append(f'  <span class="block-chip" style="background:{color}">{esc(label)}</span>')
         out.append('</div>')
 
     # Steps
     if a["blocks"]:
-        out.append('<div class="sec-title">📋 Etapes</div>')
-        out.append('<div class="steps">')
+        out.append('<div class="sec-label">Etapes</div>')
+        out.append('<ol class="steps-list">')
         for i, b in enumerate(a["blocks"]):
-            out.append(f'<div class="step"><span class="step-num">{i+1}</span><span>{esc(b)}</span></div>')
-        out.append('</div>')
+            out.append(f'  <li class="step-item"><span class="step-num">{i+1}</span><span class="step-text">{esc(b)}</span></li>')
+        out.append('</ol>')
 
     # Tip
-    out.append(f'<div class="tip-box">💡 {esc(a["tip"])}</div>')
+    out.append(f'<div class="tip-box"><span class="tip-icon">&#128161;</span> {esc(a["tip"])}</div>')
 
     # Code side by side
-    out.append('<div class="sec-title">💻 Code</div>')
-    js_code = '\n'.join(a["codeJS"].split('\n')[:18])
-    py_code = '\n'.join(a["codePY"].split('\n')[:18])
-    if len(a["codeJS"].split('\n')) > 18: js_code += "\n// ..."
-    if len(a["codePY"].split('\n')) > 18: py_code += "\n# ..."
+    out.append('<div class="sec-label">Code</div>')
+    js_code = a["codeJS"]
+    py_code = a["codePY"]
 
-    out.append('<div class="code-row">')
-    out.append(f'<div><div class="code-label"><span class="badge js-badge">JS</span> JavaScript</div><div class="code-box js">{hl_js(js_code)}</div></div>')
-    out.append(f'<div><div class="code-label"><span class="badge py-badge">PY</span> Python</div><div class="code-box py">{hl_py(py_code)}</div></div>')
+    out.append('<div class="code-grid">')
+    # JS panel
+    out.append('<div class="code-panel">')
+    out.append('  <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>')
+    out.append(f'  <div class="code-block js-code">{hl_js(js_code)}</div>')
+    out.append('</div>')
+    # PY panel
+    out.append('<div class="code-panel">')
+    out.append('  <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>')
+    out.append(f'  <div class="code-block py-code">{hl_py(py_code)}</div>')
+    out.append('</div>')
     out.append('</div>')
 
     # Challenges
     if a["challenges"]:
-        out.append('<div class="sec-title">🚀 Defis</div>')
+        out.append('<div class="sec-label">Defis</div>')
+        out.append('<div class="chal-list">')
         for ch in a["challenges"]:
             color = {1:"#40BF4A",2:"#F7DF1E",3:"#DC143C"}.get(ch["d"],"#888")
             text = re.sub(r'<[^>]+>', '', ch["t"])
-            out.append(f'<div class="challenge"><span class="chal-dot" style="background:{color}"></span><span>{esc(text)}</span></div>')
+            out.append(f'  <div class="chal-item"><span class="chal-dot" style="background:{color}"></span><span>{esc(text)}</span></div>')
+        out.append('</div>')
 
-    # QR link
-    out.append(f'<div class="qr-link">📱 https://abourdim.github.io/bit-54-activities/?a={a["id"]}</div>')
+    # Footer
+    out.append(f'<div class="act-footer"><span>Activite #{aid}</span><span>micro:bit &middot; 58 Activites</span></div>')
 
-    out.append(f'<div class="page-footer">Micro:bit &middot; 58 Activites &middot; Activite #{a["id"]}</div>')
-    out.append('</div>')
+    out.append('</section>')
 
-out.append('</body></html>')
+# --- CLOSE MAIN ---
+out.append('</div>')
 
-# Write
+# --- JAVASCRIPT ---
+out.append('''
+<script>
+(function() {
+  // Sidebar toggle (mobile)
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('mobileToggle');
+  const overlay = document.getElementById('mobileOverlay');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+  toggle.addEventListener('click', function() {
+    if (sidebar.classList.contains('open')) closeSidebar();
+    else openSidebar();
+  });
+  overlay.addEventListener('click', closeSidebar);
+
+  // Nav section expand/collapse
+  document.querySelectorAll('.nav-section').forEach(function(sec) {
+    sec.addEventListener('click', function() {
+      var tgt = document.getElementById(this.dataset.target);
+      if (tgt) {
+        this.classList.toggle('open');
+        tgt.classList.toggle('open');
+      }
+    });
+  });
+
+  // Close sidebar on link click (mobile)
+  document.querySelectorAll('.nav-link, .nav-cover-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (window.innerWidth <= 860) closeSidebar();
+    });
+  });
+
+  // Scroll-spy
+  var sections = document.querySelectorAll('.act-section');
+  var navLinks = document.querySelectorAll('.nav-link');
+  var linkMap = {};
+  navLinks.forEach(function(l) { linkMap[l.dataset.id] = l; });
+
+  var currentActive = null;
+
+  function updateScrollSpy() {
+    var scrollY = window.scrollY + 120;
+    var found = null;
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].offsetTop <= scrollY) {
+        found = sections[i].id.replace('act-', '');
+        break;
+      }
+    }
+    if (found !== currentActive) {
+      if (currentActive && linkMap[currentActive]) {
+        linkMap[currentActive].classList.remove('active');
+      }
+      if (found && linkMap[found]) {
+        linkMap[found].classList.add('active');
+        // Scroll sidebar to keep active link visible
+        var activeLink = linkMap[found];
+        var nav = document.querySelector('.sidebar-nav');
+        var linkTop = activeLink.offsetTop - nav.offsetTop;
+        var navScroll = nav.scrollTop;
+        var navH = nav.clientHeight;
+        if (linkTop < navScroll + 40 || linkTop > navScroll + navH - 40) {
+          nav.scrollTo({ top: linkTop - navH / 3, behavior: 'smooth' });
+        }
+      }
+      currentActive = found;
+    }
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() { updateScrollSpy(); ticking = false; });
+      ticking = true;
+    }
+  });
+  updateScrollSpy();
+})();
+</script>
+''')
+
+out.append('</body>\n</html>')
+
+# ── Write ──
 with open("ebook.html", "w", encoding="utf-8") as f:
     f.write('\n'.join(out))
 
-print(f"HTML ebook generated: ebook.html ({len(activities)} activities)")
-print("Open in browser -> Ctrl+P -> Save as PDF")
+print(f"Web book generated: ebook.html ({len(activities)} activities)")
+print("Open ebook.html in a browser to view the interactive web book")
