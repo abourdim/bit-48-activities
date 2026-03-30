@@ -156,7 +156,20 @@ button.primary:hover:not(:disabled){box-shadow:0 8px 28px var(--glow),0 0 0 2px 
 .info-step .step-text{color:var(--text-muted)}
 .info-step .step-text strong{color:var(--text)}
 .info-step .step-text code{padding:1px 5px;border-radius:4px;font-size:.7rem;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.08);color:var(--accent);font-family:"SF Mono",monospace}
-/* ASCII diagram */
+/* QR Code section */
+.qr-section{display:flex;align-items:center;gap:12px;margin-top:12px;padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.1);border:1px solid rgba(255,255,255,.05)}
+.qr-section img{width:80px;height:80px;border-radius:6px;background:#fff;padding:4px}
+.qr-section .qr-text{font-size:.72rem;color:var(--text-muted);line-height:1.4}
+.qr-section .qr-text strong{color:var(--text)}
+
+/* LED Simulator */
+.led-sim{display:flex;flex-direction:column;align-items:center;gap:8px}
+.led-sim-label{font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.led-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:12px;background:#111;border-radius:12px;border:2px solid #333;width:fit-content}
+.led-cell{width:28px;height:28px;border-radius:50%;background:#1a1a1a;border:1px solid #222;transition:all .15s;cursor:pointer}
+.led-cell.on{background:#ff1a1a;box-shadow:0 0 8px #ff1a1a,0 0 16px rgba(255,26,26,.4);border-color:#ff4444}
+.led-cell:hover{border-color:#555}
+/* Wiring diagram (for pin activities) */
 .info-diagram{font-family:"SF Mono",monospace;font-size:.7rem;line-height:1.4;color:var(--accent);padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.06);white-space:pre;overflow-x:auto;direction:ltr;text-align:left}
 /* Block chips (mini MakeCode blocks in Info tab) */
 .info-blocks-used{display:flex;flex-wrap:wrap;gap:6px}
@@ -293,6 +306,34 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .makecode-blocks .mc-loading::after{content:"";display:inline-block;width:14px;height:14px;border:2px solid var(--accent);border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;margin-inline-start:8px;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ── LEARNING ROADMAP ── */
+.roadmap-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;z-index:200;padding:20px;overflow-y:auto;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.roadmap-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+.roadmap-panel{max-width:800px;width:100%;margin:20px auto;background:var(--panel);border:1px solid var(--border);border-radius:18px;box-shadow:0 30px 60px rgba(0,0,0,.5);overflow:hidden}
+.roadmap-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.roadmap-header h2{font-size:1rem;font-family:var(--font-h)}
+.roadmap-body{padding:16px;display:flex;flex-direction:column;gap:8px}
+.roadmap-node{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.1);cursor:pointer;transition:all .2s}
+.roadmap-node:hover{background:rgba(0,0,0,.2);border-color:var(--accent)}
+.roadmap-node .rn-icon{font-size:1.4rem;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(0,0,0,.2);flex-shrink:0}
+.roadmap-node .rn-info{flex:1}
+.roadmap-node .rn-name{font-size:.82rem;font-weight:600;color:var(--text)}
+.roadmap-node .rn-progress{font-size:.68rem;color:var(--text-muted);margin-top:2px}
+.roadmap-node .rn-bar{width:100%;height:6px;background:rgba(255,255,255,.08);border-radius:3px;margin-top:4px;overflow:hidden}
+.roadmap-node .rn-bar-fill{height:100%;border-radius:3px;background:var(--accent);transition:width .3s}
+.roadmap-node.completed{border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.06)}
+.roadmap-node.completed .rn-icon{background:rgba(74,222,128,.2)}
+.roadmap-connector{width:2px;height:16px;background:rgba(255,255,255,.1);margin-inline-start:28px}
+
+/* ── BADGE SHELF (sidebar bottom) ── */
+.badge-shelf{margin-top:auto;padding:8px;border-top:1px solid rgba(255,255,255,.06)}
+.badge-xp{font-size:.68rem;font-weight:700;color:var(--accent);text-align:center;margin-bottom:4px}
+.badge-row{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.badge-icon{font-size:1.1rem;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:all .2s;cursor:default}
+.badge-icon.earned{background:rgba(255,214,107,.15);border:1px solid rgba(255,214,107,.3);animation:badgePop .4s ease}
+.badge-icon.locked{opacity:.25;filter:grayscale(1)}
+@keyframes badgePop{0%{transform:scale(0)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+
 /* ── BLOCKS SYNC BAR ── */
 .blocks-sync-bar{display:flex;align-items:center;gap:8px;padding:4px 0 8px;font-size:.72rem}
 .sync-status{padding:2px 10px;border-radius:999px;font-weight:600}
@@ -415,6 +456,8 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <button class="sidebar-item" data-topic="elec"><span class="sidebar-icon">🔌</span><span class="sidebar-label" id="sbElec">Électronique</span><span class="sidebar-count" id="sbElecC">15</span></button>
         <button class="sidebar-item" data-topic="robot"><span class="sidebar-icon">🤖</span><span class="sidebar-label" id="sbRobot">Robotique</span><span class="sidebar-count" id="sbRobotC">7</span></button>
         <button class="sidebar-item" data-topic="ai"><span class="sidebar-icon">🧠</span><span class="sidebar-label" id="sbAi">IA</span><span class="sidebar-count" id="sbAiC">6</span></button>
+        <div class="badge-shelf" id="badgeShelf"></div>
+        <button class="sidebar-item roadmap-btn" id="roadmapBtn"><span class="sidebar-icon">🗺</span><span class="sidebar-label" id="sbRoadmap">Parcours</span></button>
       </nav>
       <div class="main-area">
       <div class="controls-bar">
@@ -459,6 +502,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <div class="info-section"><div class="info-section-title" id="infoCodeTitle">💻 Instructions</div><div class="info-code-keys" id="mCodeKeys"></div></div>
         <div class="info-section"><div class="info-section-title" id="mNeedsLabel">🧰 Matériel</div><ul class="needs-list" id="mNeeds"></ul></div>
         <div class="tip-box" id="mTip"></div>
+        <div class="qr-section" id="qrSection"></div>
       </div>
       <div class="tab-panel" id="tab-blocks">
         <div class="blocks-sync-bar" id="blocksSyncBar"><span class="sync-status synced" id="syncStatus">✅ Synced</span><button class="sync-btn" id="syncBlocksBtn">🔄 Actualiser</button><button class="open-makecode-btn" id="openMCBlocks">🧩 Modifier dans MakeCode</button></div>
@@ -480,6 +524,14 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <div class="left"><button id="markDoneBtn"></button><button id="markFavBtn"></button><span class="hint-text" id="saveHint"></span></div>
         <div class="right"><button id="prevBtn"></button><button id="nextBtn"></button></div>
       </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP OVERLAY -->
+  <div class="roadmap-overlay" id="roadmapOverlay">
+    <div class="roadmap-panel">
+      <div class="roadmap-header"><h2 id="roadmapTitle">🗺 Parcours d'apprentissage</h2><button class="close-btn" id="closeRoadmap">✕</button></div>
+      <div class="roadmap-body" id="roadmapBody"></div>
     </div>
   </div>
 
@@ -3347,6 +3399,66 @@ let codeLang = "js";
 let lang = "fr";
 let currentTopic = "all";
 
+// ═══════════════════════════════════════════════════════════════════
+// ACHIEVEMENT BADGES
+// ═══════════════════════════════════════════════════════════════════
+const BADGES = [
+  {id:"led",icon:"💡",fr:"Maître LED",en:"LED Wizard",ar:"خبير LED",topic:"led",need:5},
+  {id:"input",icon:"🎮",fr:"Expert Entrées",en:"Input Master",ar:"خبير المدخلات",topic:"input",need:4},
+  {id:"games",icon:"🎲",fr:"Game Designer",en:"Game Designer",ar:"مصمم ألعاب",topic:"games",need:5},
+  {id:"sensors",icon:"📡",fr:"Expert Capteurs",en:"Sensor Expert",ar:"خبير المستشعرات",topic:"sensors",need:6},
+  {id:"comm",icon:"📻",fr:"Communicateur",en:"Communicator",ar:"المتواصل",topic:"comm",need:2},
+  {id:"sound",icon:"🔊",fr:"Artiste Son",en:"Sound Artist",ar:"فنان الصوت",topic:"sound",need:4},
+  {id:"elec",icon:"🔌",fr:"Hardware Hacker",en:"Hardware Hacker",ar:"هاكر الأجهزة",topic:"elec",need:8},
+  {id:"robot",icon:"🤖",fr:"Robot Builder",en:"Robot Builder",ar:"بنّاء الروبوتات",topic:"robot",need:4},
+  {id:"ai",icon:"🧠",fr:"AI Pioneer",en:"AI Pioneer",ar:"رائد الذكاء",topic:"ai",need:3},
+  {id:"master",icon:"🏆",fr:"Grand Maître",en:"Grand Master",ar:"الأستاذ الكبير",topic:null,need:58}
+];
+
+function checkBadges(){
+  const earned = [];
+  BADGES.forEach(b => {
+    if(progress.badges && progress.badges[b.id]) return; // already earned
+    let count = 0;
+    if(b.topic === null){
+      count = Object.keys(progress.done).length;
+    } else if(TOPICS[b.topic]){
+      count = TOPICS[b.topic].ids.filter(id => progress.done[id]).length;
+    }
+    if(count >= b.need){
+      earned.push(b);
+      if(!progress.badges) progress.badges = {};
+      progress.badges[b.id] = Date.now();
+      saveP(progress);
+    }
+  });
+  return earned;
+}
+
+function getXP(){
+  let xp = 0;
+  Object.keys(progress.done).forEach(id => {
+    const a = A.find(x => x.id === Number(id));
+    if(a) xp += a.difficulty === 1 ? 10 : a.difficulty === 2 ? 20 : 30;
+  });
+  return xp;
+}
+
+function renderBadgeShelf(){
+  const shelf = $("badgeShelf");
+  if(!shelf) return;
+  const xp = getXP();
+  const xpLabel = lang==="ar"?"نقاط":lang==="en"?"XP":"XP";
+  let h = `<div class="badge-xp">⚡ ${xp} ${xpLabel}</div><div class="badge-row">`;
+  BADGES.forEach(b => {
+    const earned = progress.badges && progress.badges[b.id];
+    const name = b[lang] || b.fr;
+    h += `<span class="badge-icon ${earned?'earned':'locked'}" title="${name}">${b.icon}</span>`;
+  });
+  h += `</div>`;
+  shelf.innerHTML = h;
+}
+
 const TOPICS = {
   led:    { ids:[1,2,3,4,5] },
   input:  { ids:[6,7,8,9] },
@@ -3603,6 +3715,68 @@ function renderMakeCodeBlocks(a){
 }
 
 // ═══════════════════════════════════════════════════════════════════
+// LED ICON PATTERNS (5x5 boolean arrays)
+// ═══════════════════════════════════════════════════════════════════
+const LED_ICONS = {
+  Heart:      [0,1,0,1,0, 1,1,1,1,1, 1,1,1,1,1, 0,1,1,1,0, 0,0,1,0,0],
+  SmallHeart: [0,0,0,0,0, 0,1,0,1,0, 0,1,1,1,0, 0,0,1,0,0, 0,0,0,0,0],
+  Happy:      [0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 1,0,0,0,1, 0,1,1,1,0],
+  Sad:        [0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 0,1,1,1,0, 1,0,0,0,1],
+  Meh:        [0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 0,0,0,0,0, 1,1,1,1,1],
+  Yes:        [0,0,0,0,0, 0,0,0,0,1, 0,0,0,1,0, 1,0,1,0,0, 0,1,0,0,0],
+  No:         [1,0,0,0,1, 0,1,0,1,0, 0,0,1,0,0, 0,1,0,1,0, 1,0,0,0,1],
+  Flash:      [0,0,1,0,0, 0,1,1,0,0, 1,1,1,1,1, 0,0,1,1,0, 0,0,1,0,0],
+  ArrowNorth: [0,0,1,0,0, 0,1,1,1,0, 1,0,1,0,1, 0,0,1,0,0, 0,0,1,0,0],
+  ArrowSouth: [0,0,1,0,0, 0,0,1,0,0, 1,0,1,0,1, 0,1,1,1,0, 0,0,1,0,0],
+  Skull:      [0,1,1,1,0, 1,0,1,0,1, 1,1,1,1,1, 0,1,1,1,0, 0,1,1,1,0],
+  Asleep:     [0,0,0,0,0, 1,1,0,1,1, 0,0,0,0,0, 0,1,1,1,0, 0,0,0,0,0],
+  Target:     [0,0,1,0,0, 0,1,1,1,0, 1,1,0,1,1, 0,1,1,1,0, 0,0,1,0,0],
+  Square:     [1,1,1,1,1, 1,0,0,0,1, 1,0,0,0,1, 1,0,0,0,1, 1,1,1,1,1],
+  SmallSquare:[0,0,0,0,0, 0,1,1,1,0, 0,1,1,1,0, 0,1,1,1,0, 0,0,0,0,0],
+  Scissors:   [1,0,0,0,1, 0,1,0,1,0, 0,0,1,0,0, 0,1,0,1,0, 1,0,0,0,1],
+  House:      [0,0,1,0,0, 0,1,1,1,0, 1,1,1,1,1, 0,1,1,1,0, 0,1,0,1,0],
+  Duck:       [0,1,1,0,0, 1,1,1,0,0, 0,1,1,1,1, 0,1,1,1,0, 0,0,0,0,0]
+};
+// Digit patterns for showNumber
+const LED_DIGITS = {
+  0:[0,1,1,1,0, 1,0,0,1,1, 1,0,1,0,1, 1,1,0,0,1, 0,1,1,1,0],
+  1:[0,0,1,0,0, 0,1,1,0,0, 0,0,1,0,0, 0,0,1,0,0, 0,1,1,1,0],
+  2:[1,1,1,1,0, 0,0,0,0,1, 0,1,1,1,0, 1,0,0,0,0, 1,1,1,1,1],
+  3:[1,1,1,1,0, 0,0,0,0,1, 0,1,1,1,0, 0,0,0,0,1, 1,1,1,1,0],
+  4:[1,0,0,1,0, 1,0,0,1,0, 1,1,1,1,1, 0,0,0,1,0, 0,0,0,1,0],
+  5:[1,1,1,1,1, 1,0,0,0,0, 1,1,1,1,0, 0,0,0,0,1, 1,1,1,1,0],
+  6:[0,1,1,1,0, 1,0,0,0,0, 1,1,1,1,0, 1,0,0,0,1, 0,1,1,1,0],
+  7:[1,1,1,1,1, 0,0,0,1,0, 0,0,1,0,0, 0,1,0,0,0, 0,1,0,0,0],
+  8:[0,1,1,1,0, 1,0,0,0,1, 0,1,1,1,0, 1,0,0,0,1, 0,1,1,1,0],
+  9:[0,1,1,1,0, 1,0,0,0,1, 0,1,1,1,1, 0,0,0,0,1, 0,1,1,1,0]
+};
+
+function renderLedGrid(pattern){
+  let h = '<div class="led-sim"><div class="led-grid">';
+  for(let i=0;i<25;i++){
+    h += `<div class="led-cell${pattern&&pattern[i]?' on':''}"></div>`;
+  }
+  h += '</div></div>';
+  return h;
+}
+
+function detectLedPattern(code){
+  // showIcon(IconNames.XXX) → lookup pattern
+  const iconMatch = code.match(/showIcon\(IconNames\.(\w+)\)/);
+  if(iconMatch && LED_ICONS[iconMatch[1]]) return LED_ICONS[iconMatch[1]];
+  // showLeds with # and . pattern
+  const ledsMatch = code.match(/showLeds\s*\(\s*`([^`]+)`/);
+  if(ledsMatch){
+    const p = ledsMatch[1].replace(/[^#.]/g,'').split('').map(c=>c==='#'?1:0);
+    if(p.length===25) return p;
+  }
+  // showNumber
+  const numMatch = code.match(/showNumber\((\d)\)/);
+  if(numMatch && LED_DIGITS[numMatch[1]]) return LED_DIGITS[numMatch[1]];
+  return null;
+}
+
+// ═══════════════════════════════════════════════════════════════════
 // LESSON GENERATOR — auto-generates concept, steps, diagram
 // ═══════════════════════════════════════════════════════════════════
 function generateLesson(a){
@@ -3685,47 +3859,35 @@ function generateLesson(a){
     `<div class="info-step"><span class="step-n">${i+1}</span><span class="step-text">${s[L]||s.fr}</span></div>`
   ).join("");
 
-  // ── DIAGRAM: ASCII art of micro:bit or connections ──
-  let diagram = "";
-  if(js.includes("pins.") && (js.includes("P0")||js.includes("P1")||js.includes("P2"))){
-    diagram = `    ┌─────────────────┐
+  // ── DIAGRAM: LED simulator or wiring diagram ──
+  const ledPattern = detectLedPattern(js);
+  if(ledPattern){
+    $("infoDiagramTitle").textContent = lang==="ar"?"📐 معاينة LED":lang==="en"?"📐 LED Preview":"📐 Aperçu LED";
+    $("mDiagram").innerHTML = renderLedGrid(ledPattern);
+  } else if(js.includes("pins.") && (js.includes("P0")||js.includes("P1")||js.includes("P2"))){
+    $("mDiagram").innerHTML = `<pre style="margin:0;font-family:monospace;font-size:.7rem;color:var(--accent)">    ┌─────────────────┐
     │   micro:bit      │
-    │  ┌─┐  ┌─┐       │
-    │  │A│  │B│  [USB] │
-    │  └─┘  └─┘       │
-    │   ╔═══════╗     │
-    │   ║ 5×5   ║     │
-    │   ║ LEDs   ║     │
-    │   ╚═══════╝     │
+    │  [A]       [B]   │
+    │   ╔═══════════╗  │
+    │   ║  5×5 LEDs  ║  │
+    │   ╚═══════════╝  │
     └──┬──┬──┬──┬──┬──┘
-       0  1  2  3V GND
+       P0 P1 P2 3V GND
        │        │   │
-       └── composant ──┘`;
+       └─ composant ─┘</pre>`;
   } else if(js.includes("radio.")){
-    diagram = `  micro:bit A          micro:bit B
-  ┌─────────┐          ┌─────────┐
-  │  [A][B] │  ~~~~>   │  [A][B] │
-  │  ╔═══╗  │  radio   │  ╔═══╗  │
-  │  ║LED║  │  <~~~~   │  ║LED║  │
-  │  ╚═══╝  │  grp: 7  │  ╚═══╝  │
-  └─────────┘          └─────────┘`;
+    $("mDiagram").innerHTML = `<pre style="margin:0;font-family:monospace;font-size:.7rem;color:var(--accent)">  micro:bit A        micro:bit B
+  ┌────────┐  ~~~~>  ┌────────┐
+  │ [A][B] │  radio  │ [A][B] │
+  │ ╔════╗ │  <~~~~  │ ╔════╗ │
+  │ ║LED ║ │ grp: 7  │ ║LED ║ │
+  │ ╚════╝ │         │ ╚════╝ │
+  └────────┘         └────────┘</pre>`;
   } else {
-    diagram = `       ┌──────────────────┐
-       │    micro:bit      │
-       │   ┌──┐    ┌──┐   │
-       │   │A │    │ B│   │
-       │   └──┘    └──┘   │
-       │    ╔══════════╗   │
-       │    ║ ● ● ● ● ●║   │
-       │    ║ ● ● ● ● ●║   │
-       │    ║ ● ● ● ● ●║   │
-       │    ║ ● ● ● ● ●║   │
-       │    ║ ● ● ● ● ●║   │
-       │    ╚══════════╝   │
-       └──────────────────┘
-          5×5 LED screen`;
+    // Default: empty LED grid (interactive)
+    $("infoDiagramTitle").textContent = lang==="ar"?"📐 شاشة LED":lang==="en"?"📐 LED Screen":"📐 Écran LED";
+    $("mDiagram").innerHTML = renderLedGrid(null);
   }
-  $("mDiagram").textContent = diagram;
 }
 
 function highlightPython(code){
@@ -3931,6 +4093,14 @@ function openModal(){
   // Tip
   $("mTip").textContent = "💡 " + ta(a,"tip");
 
+  // QR Code — links to this activity on GitHub Pages
+  const appUrl = window.location.origin + window.location.pathname;
+  const qrUrl = `${appUrl}?a=${a.id}`;
+  const qrImg = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(qrUrl)}`;
+  const qrLabel = lang==="ar"?"امسح للفتح على الهاتف":lang==="en"?"Scan to open on phone":"Scanne pour ouvrir sur téléphone";
+  const qrEbook = lang==="ar"?"للكتاب الإلكتروني":lang==="en"?"For ebook":"Pour l'ebook";
+  $("qrSection").innerHTML = `<img src="${qrImg}" alt="QR #${a.id}" loading="lazy"><div class="qr-text"><strong>📱 ${qrLabel}</strong><br>${qrEbook}: Activity #${a.id}</div>`;
+
   // Needs
   const needs = ta(a,"needs");
   $("mNeeds").innerHTML = (Array.isArray(needs)?needs:a.needs).map(n => `<li>${esc(n)}</li>`).join("");
@@ -4021,7 +4191,15 @@ document.addEventListener("keydown", e => {
 $("markDoneBtn").addEventListener("click", () => {
   const a=currentList[currentIndex];if(!a)return;
   if(progress.done[a.id])delete progress.done[a.id];else progress.done[a.id]=true;
-  saveP(progress);render();openModal();
+  saveP(progress);
+  // Check for new badges
+  const newBadges = checkBadges();
+  newBadges.forEach(b => {
+    const name = b[lang]||b.fr;
+    showToast(`🏆 ${b.icon} ${name} !`);
+  });
+  renderBadgeShelf();
+  render();openModal();
 });
 $("markFavBtn").addEventListener("click", () => {
   const a=currentList[currentIndex];if(!a)return;
@@ -4112,6 +4290,11 @@ $("codeBlockJS").addEventListener("input", () => {
 });
 
 // Manual sync button
+// LED grid click-to-toggle
+document.addEventListener("click", e => {
+  if(e.target.classList.contains("led-cell")) e.target.classList.toggle("on");
+});
+
 $("syncBlocksBtn").addEventListener("click", () => {
   clearTimeout(syncTimer);
   resyncBlocks();
@@ -4166,7 +4349,58 @@ $("sidebarOverlay").addEventListener("click", () => {
 // ═══════════════════════════════════════════════════════════════════
 $("logoWrap").innerHTML = LOGO_SVG;
 updateSidebarCounts();
+renderBadgeShelf();
 applyLang();
+
+// ═══════════════════════════════════════════════════════════════════
+// LEARNING ROADMAP
+// ═══════════════════════════════════════════════════════════════════
+const ROADMAP_ORDER = ["led","input","games","sensors","sound","comm","prog","elec","robot","ai"];
+const ROADMAP_ICONS = {led:"💡",input:"🎮",games:"🎲",sensors:"📡",sound:"🔊",comm:"📻",prog:"⏱",elec:"🔌",robot:"🤖",ai:"🧠"};
+
+function renderRoadmap(){
+  $("roadmapTitle").textContent = lang==="ar"?"🗺 مسار التعلّم":lang==="en"?"🗺 Learning Path":"🗺 Parcours d'apprentissage";
+  $("sbRoadmap").textContent = lang==="ar"?"المسار":lang==="en"?"Roadmap":"Parcours";
+  let h = "";
+  ROADMAP_ORDER.forEach((key, i) => {
+    const t = TOPICS[key];
+    if(!t) return;
+    const total = t.ids.length;
+    const done = t.ids.filter(id => progress.done[id]).length;
+    const pct = Math.round(done/total*100);
+    const completed = done >= total;
+    const name = $("sb"+key.charAt(0).toUpperCase()+key.slice(1))?.textContent || key;
+    h += `<div class="roadmap-node ${completed?'completed':''}" data-topic="${key}">`;
+    h += `<div class="rn-icon">${ROADMAP_ICONS[key]}</div>`;
+    h += `<div class="rn-info"><div class="rn-name">${name}</div>`;
+    h += `<div class="rn-progress">${done} / ${total} ${completed?"✅":""}</div>`;
+    h += `<div class="rn-bar"><div class="rn-bar-fill" style="width:${pct}%"></div></div>`;
+    h += `</div></div>`;
+    if(i < ROADMAP_ORDER.length - 1) h += `<div class="roadmap-connector"></div>`;
+  });
+  $("roadmapBody").innerHTML = h;
+}
+
+$("roadmapBtn").addEventListener("click", () => {
+  renderRoadmap();
+  $("roadmapOverlay").classList.add("open");
+});
+$("closeRoadmap").addEventListener("click", () => {
+  $("roadmapOverlay").classList.remove("open");
+});
+$("roadmapBody").addEventListener("click", e => {
+  const node = e.target.closest(".roadmap-node");
+  if(!node) return;
+  currentTopic = node.dataset.topic;
+  document.querySelectorAll(".sidebar-item").forEach(el => el.classList.toggle("active", el.dataset.topic===currentTopic));
+  render();
+  $("roadmapOverlay").classList.remove("open");
+});
+
+// Auto-open activity from URL param ?a=ID (for QR codes)
+const urlParams = new URLSearchParams(window.location.search);
+const autoOpen = urlParams.get("a");
+if(autoOpen){ const id=Number(autoOpen); if(id>=1&&id<=58) setTimeout(()=>openById(id),300); }
 </script>
 </body>
 </html>
