@@ -2,7 +2,7 @@
 Generate a beautiful standalone interactive HTML web-book from micro:bit 58 activities.
 Dark elegant theme with sidebar navigation, glassmorphism cards, and scroll-spy.
 """
-import re, html as html_mod
+import re, html as html_mod, json, os
 
 # ── Parse activities from index.html ──
 with open("index.html", "r", encoding="utf-8") as f:
@@ -310,6 +310,15 @@ def hl_py(code):
 
 # ── Build sidebar nav items ──
 activities = [a for a in activities if a["id"] <= 48]
+
+# Load pre-rendered blocks if available
+prerendered_blocks = {}
+if os.path.exists("blocks.json"):
+    with open("blocks.json", "r", encoding="utf-8") as bf:
+        prerendered_blocks = json.load(bf)
+    print(f"Loaded {len(prerendered_blocks)} pre-rendered blocks from blocks.json")
+else:
+    print("No blocks.json found — will use MakeCode iframe (slow)")
 simple_acts = [a for a in activities if a["part"] == "simple"]
 advanced_acts = [a for a in activities if a["part"] != "simple"]
 
@@ -918,25 +927,26 @@ for a in activities:
     out.append('  </div>')
     out.append('</div></div>')
 
-    # MakeCode rendered program blocks
-    out.append('<div class="sec-label">Programme (Blocs)</div>')
-    out.append(f'<div class="mc-blocks" id="mc-{aid}"><div class="mc-loading">Chargement des blocs...</div></div>')
-    out.append(f'<script>mcQueue.push({{id:"mc-{aid}",code:{json.dumps(a["codeJS"])}}});</script>')
+    # Program blocks — use pre-rendered image if available, else iframe
+    block_key = f"act-{aid}"
+    if block_key in prerendered_blocks:
+        b = prerendered_blocks[block_key]
+        out.append('<div class="sec-label">Programme (Blocs)</div>')
+        out.append(f'<div class="mc-blocks"><img src="{b["uri"]}" width="{b.get("width","")}" height="{b.get("height","")}" alt="MakeCode blocks" style="width:40%;height:auto"></div>')
+    else:
+        out.append('<div class="sec-label">Programme (Blocs)</div>')
+        out.append(f'<div class="mc-blocks" id="mc-{aid}"><div class="mc-loading">Chargement des blocs...</div></div>')
+        out.append(f'<script>mcQueue.push({{id:"mc-{aid}",code:{json.dumps(a["codeJS"])}}});</script>')
 
-    # Individual blocks used — each rendered via MakeCode with description
+    # Blocks used — text-only (no MakeCode render, fast)
     blocks_used = detect_blocks(a["codeJS"])
     if blocks_used:
         out.append('<div class="sec-label">Blocs utilises</div>')
         out.append('<div class="blocks-ref-list">')
-        for idx, (label, color, snippet, desc) in enumerate(blocks_used):
-            block_id = f"bk-{aid}-{idx}"
+        for label, color, snippet, desc in blocks_used:
             out.append(f'<div class="block-ref-item">')
-            out.append(f'  <div class="block-ref-render" id="{block_id}"><div class="mc-loading" style="padding:8px;font-size:10px">...</div></div>')
-            out.append(f'  <script>mcQueue.push({{id:"{block_id}",code:{json.dumps(snippet)}}});</script>')
-            out.append(f'  <div class="block-ref-info">')
-            out.append(f'    <div class="block-ref-name" style="color:{color}">{esc(label)}</div>')
-            out.append(f'    <div class="block-ref-desc">{esc(desc)}</div>')
-            out.append(f'  </div>')
+            out.append(f'  <div class="block-ref-chip" style="background:{color}">{esc(label)}</div>')
+            out.append(f'  <div class="block-ref-desc">{esc(desc)}</div>')
             out.append(f'</div>')
         out.append('</div>')
 
