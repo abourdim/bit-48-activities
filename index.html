@@ -156,6 +156,30 @@ button.primary:hover:not(:disabled){box-shadow:0 8px 28px var(--glow),0 0 0 2px 
 .info-step .step-text{color:var(--text-muted)}
 .info-step .step-text strong{color:var(--text)}
 .info-step .step-text code{padding:1px 5px;border-radius:4px;font-size:.7rem;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.08);color:var(--accent);font-family:"SF Mono",monospace}
+/* ── FLOWCHART (draw.io style) ── */
+.info-flow{display:flex;flex-direction:column;align-items:center;gap:0;padding:12px 8px;background:rgba(0,0,0,.08);border-radius:10px;border:1px solid rgba(255,255,255,.05);overflow-x:auto}
+.flow-node{padding:6px 16px;border-radius:20px;font-size:.72rem;font-weight:600;text-align:center;max-width:260px;color:#fff;position:relative}
+.flow-node.start{background:#40BF4A;border-radius:20px}
+.flow-node.end{background:#DC143C;border-radius:20px}
+.flow-node.process{background:#1E90FF;border-radius:6px}
+.flow-node.decision{background:#9400D3;border-radius:4px;transform:none;padding:6px 14px;border:2px solid rgba(255,255,255,.2)}
+.flow-node.decision::before{content:"◇";position:absolute;inset-inline-start:-14px;top:50%;transform:translateY(-50%);font-size:.7rem;color:#9400D3}
+.flow-node.io{background:#E63022;border-radius:6px 20px 6px 20px}
+.flow-node.loop{background:#00AA00;border-radius:6px;border-inline-start:4px solid rgba(255,255,255,.3)}
+.flow-arrow{width:2px;height:14px;background:var(--accent);position:relative}
+.flow-arrow::after{content:"▼";position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);font-size:.5rem;color:var(--accent);line-height:1}
+.flow-branch{display:flex;gap:12px;align-items:flex-start;margin:4px 0}
+.flow-branch-label{font-size:.58rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;padding:2px 6px}
+.flow-branch-yes{color:rgba(74,222,128,.9)}
+.flow-branch-no{color:rgba(255,107,138,.9)}
+
+/* ── PSEUDOCODE ── */
+.info-pseudo{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:.72rem;line-height:1.6;color:var(--text);padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.06);white-space:pre;overflow-x:auto;direction:ltr;text-align:left;margin:0}
+.info-pseudo .pk{color:#569CD6;font-weight:700}
+.info-pseudo .pv{color:#CE9178}
+.info-pseudo .pc{color:#6A9955;font-style:italic}
+.info-pseudo .pf{color:#DCDCAA}
+
 /* QR Code section */
 .qr-section{display:flex;align-items:center;gap:12px;margin-top:12px;padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.1);border:1px solid rgba(255,255,255,.05)}
 .qr-section img{width:80px;height:80px;border-radius:6px;background:#fff;padding:4px}
@@ -498,6 +522,8 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <div class="info-section"><div class="info-section-title" id="infoConceptTitle">💡 Concept</div><div class="info-concept" id="mConcept"></div></div>
         <div class="info-section"><div class="info-section-title" id="infoStepsTitle">📋 Étapes</div><div class="info-steps" id="mSteps"></div></div>
         <div class="info-section"><div class="info-section-title" id="infoDiagramTitle">📐 Schéma</div><div class="info-diagram" id="mDiagram"></div></div>
+        <div class="info-section"><div class="info-section-title" id="infoFlowTitle">🔀 Algorithme</div><div class="info-flow" id="mFlow"></div></div>
+        <div class="info-section"><div class="info-section-title" id="infoPseudoTitle">📝 Pseudo-code</div><pre class="info-pseudo" id="mPseudo"></pre></div>
         <div class="info-section"><div class="info-section-title" id="infoBlocksTitle">🧩 Blocs utilisés</div><div class="info-blocks-used" id="mBlocksUsed"></div></div>
         <div class="info-section"><div class="info-section-title" id="infoCodeTitle">💻 Instructions</div><div class="info-code-keys" id="mCodeKeys"></div></div>
         <div class="info-section"><div class="info-section-title" id="mNeedsLabel">🧰 Matériel</div><ul class="needs-list" id="mNeeds"></ul></div>
@@ -3890,6 +3916,128 @@ function generateLesson(a){
   }
 }
 
+// ═══════════════════════════════════════════════════════════════════
+// FLOWCHART + PSEUDOCODE GENERATOR
+// ═══════════════════════════════════════════════════════════════════
+function generateFlowAndPseudo(a){
+  const js = a.codeJS;
+  const L = lang;
+  const kw = {
+    start:{fr:"DÉBUT",en:"START",ar:"بداية"},
+    end:{fr:"FIN",en:"END",ar:"نهاية"},
+    forever:{fr:"RÉPÉTER indéfiniment",en:"REPEAT forever",ar:"تكرار دائم"},
+    onBtn:{fr:"QUAND bouton pressé",en:"WHEN button pressed",ar:"عند ضغط الزر"},
+    onShake:{fr:"QUAND secouer",en:"WHEN shake",ar:"عند الهزّ"},
+    onLogo:{fr:"QUAND logo touché",en:"WHEN logo touched",ar:"عند لمس الشعار"},
+    if:{fr:"SI",en:"IF",ar:"إذا"},
+    then:{fr:"ALORS",en:"THEN",ar:"فعندها"},
+    else:{fr:"SINON",en:"ELSE",ar:"وإلا"},
+    show:{fr:"AFFICHER",en:"SHOW",ar:"اعرض"},
+    set:{fr:"DÉFINIR",en:"SET",ar:"عرّف"},
+    play:{fr:"JOUER",en:"PLAY",ar:"شغّل"},
+    wait:{fr:"ATTENDRE",en:"WAIT",ar:"انتظر"},
+    send:{fr:"ENVOYER",en:"SEND",ar:"أرسل"},
+    read:{fr:"LIRE",en:"READ",ar:"اقرأ"}
+  };
+  const K = key => kw[key][L]||kw[key].fr;
+
+  // ── FLOWCHART ──
+  const nodes = [];
+  const arrow = () => '<div class="flow-arrow"></div>';
+  const node = (cls, text) => `<div class="flow-node ${cls}">${esc(text)}</div>`;
+
+  nodes.push(node("start", K("start")));
+  nodes.push(arrow());
+
+  // Detect event handlers
+  const events = [];
+  if(js.includes("onButtonPressed(Button.A")) events.push({ev:K("onBtn")+" A"});
+  if(js.includes("onButtonPressed(Button.B")) events.push({ev:K("onBtn")+" B"});
+  if(js.includes("onButtonPressed(Button.AB")) events.push({ev:K("onBtn")+" A+B"});
+  if(js.includes("onGesture(Gesture.Shake")) events.push({ev:K("onShake")});
+  if(js.includes("onLogoEvent")) events.push({ev:K("onLogo")});
+  if(js.includes("forever")) events.push({ev:K("forever")});
+
+  if(events.length > 0){
+    events.forEach(e => {
+      nodes.push(node("io", "⚡ "+e.ev));
+      nodes.push(arrow());
+    });
+  }
+
+  // Detect key actions
+  if(js.includes("showString")) nodes.push(node("process", K("show")+" texte"));
+  else if(js.includes("showIcon")) nodes.push(node("process", K("show")+" icône"));
+  else if(js.includes("showNumber")) nodes.push(node("process", K("show")+" nombre"));
+  else if(js.includes("showLeds")) nodes.push(node("process", K("show")+" LEDs"));
+
+  if(js.includes("if")) {
+    nodes.push(arrow());
+    const condMatch = js.match(/if\s*\(([^)]{1,40})\)/);
+    const cond = condMatch ? condMatch[1].replace(/[{}]/g,'').trim() : "condition";
+    nodes.push(node("decision", K("if")+" "+cond+" ?"));
+    nodes.push(arrow());
+  }
+
+  if(js.includes("music.")) { nodes.push(node("process", K("play")+" 🎵")); nodes.push(arrow()); }
+  if(js.includes("radio.send")) { nodes.push(node("process", K("send")+" 📻")); nodes.push(arrow()); }
+  if(js.includes("pause(")) { nodes.push(node("process", K("wait")+" ⏱")); nodes.push(arrow()); }
+
+  nodes.push(node("end", K("end")));
+
+  $("mFlow").innerHTML = nodes.join("");
+
+  // ── PSEUDOCODE ──
+  const lines = [];
+  const pk = t => `<span class="pk">${t}</span>`;
+  const pv = t => `<span class="pv">${t}</span>`;
+  const pf = t => `<span class="pf">${t}</span>`;
+  const pc = t => `<span class="pc">${t}</span>`;
+
+  lines.push(pk(K("start")));
+
+  // Variables
+  const vars = js.match(/let\s+(\w+)\s*=\s*([^;\n]+)/g);
+  if(vars) vars.forEach(v => {
+    const m = v.match(/let\s+(\w+)\s*=\s*(.+)/);
+    if(m) lines.push("  "+pk(K("set"))+" "+pf(m[1])+" ← "+pv(m[2].trim()));
+  });
+
+  // Events
+  if(js.includes("forever")){
+    lines.push("");
+    lines.push(pk(K("forever"))+" :");
+  }
+  if(js.includes("onButtonPressed(Button.A")) lines.push(pk(K("onBtn"))+" A :");
+  if(js.includes("onButtonPressed(Button.B")) lines.push(pk(K("onBtn"))+" B :");
+  if(js.includes("onGesture(Gesture.Shake")) lines.push(pk(K("onShake"))+" :");
+
+  // Actions
+  const showStr = js.match(/showString\("([^"]+)"\)/);
+  if(showStr) lines.push("  "+pk(K("show"))+" "+pv('"'+showStr[1]+'"'));
+  const showIcon = js.match(/showIcon\(IconNames\.(\w+)\)/);
+  if(showIcon) lines.push("  "+pk(K("show"))+" icône "+pv(showIcon[1]));
+  const showNum = js.match(/showNumber\((\w+)\)/);
+  if(showNum) lines.push("  "+pk(K("show"))+" "+pv(showNum[1]));
+
+  // Conditions
+  const ifMatch = js.match(/if\s*\(([^)]{1,60})\)/);
+  if(ifMatch){
+    lines.push("  "+pk(K("if"))+" "+pv(ifMatch[1].trim())+" "+pk(K("then")));
+    lines.push("    "+pc("// ...actions..."));
+    if(js.includes("} else")) lines.push("  "+pk(K("else")));
+    if(js.includes("} else")) lines.push("    "+pc("// ...actions..."));
+  }
+
+  if(js.includes("pause(")) lines.push("  "+pk(K("wait"))+" "+pv("ms"));
+  if(js.includes("radio.send")) lines.push("  "+pk(K("send"))+" "+pv("radio"));
+
+  lines.push("");
+  lines.push(pk(K("end")));
+
+  $("mPseudo").innerHTML = lines.join("\n");
+}
+
 function highlightPython(code){
   // Tokenize to avoid nested spans
   const escaped = esc(code);
@@ -4037,8 +4185,15 @@ function openModal(){
   $("infoBlocksTitle").textContent = lang==="ar"?"🧩 المكعبات المستخدمة":lang==="en"?"🧩 Blocks used":"🧩 Blocs utilisés";
   $("infoCodeTitle").textContent = lang==="ar"?"💻 التعليمات":lang==="en"?"💻 Instructions":"💻 Instructions";
 
+  // Flow + pseudo titles
+  $("infoFlowTitle").textContent = lang==="ar"?"🔀 المخطط الانسيابي":lang==="en"?"🔀 Flowchart":"🔀 Algorithme";
+  $("infoPseudoTitle").textContent = lang==="ar"?"📝 الكود الزائف":lang==="en"?"📝 Pseudocode":"📝 Pseudo-code";
+
   // Auto-generate lesson content
   generateLesson(a);
+
+  // Auto-generate flowchart + pseudocode
+  generateFlowAndPseudo(a);
 
   // Auto-detect blocks & instructions from JS code
   const blockMap = [
