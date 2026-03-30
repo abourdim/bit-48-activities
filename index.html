@@ -416,7 +416,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <div class="tip-box" id="mTip"></div>
       </div>
       <div class="tab-panel" id="tab-blocks">
-        <div class="blocks-sync-bar" id="blocksSyncBar"><span class="sync-status synced" id="syncStatus">✅ Synced</span><button class="sync-btn" id="syncBlocksBtn" style="display:none">🔄 Re-render blocks</button></div>
+        <div class="blocks-sync-bar" id="blocksSyncBar"><span class="sync-status synced" id="syncStatus">✅ Synced</span><button class="sync-btn" id="syncBlocksBtn">🔄 Actualiser</button></div>
         <div id="mBlocksMC" class="makecode-blocks"></div>
         <div id="mBlocksFallback" style="display:none"></div>
       </div>
@@ -3825,7 +3825,6 @@ function markCodeModified(){
   ss.textContent = modLabel;
   ss.className = "sync-status modified";
   sb.textContent = reLabel;
-  sb.style.display = "";
 }
 
 function markCodeSynced(){
@@ -3834,7 +3833,6 @@ function markCodeSynced(){
   const syncLabel = lang==="ar"?"✅ متزامن":lang==="en"?"✅ Synced":"✅ Synchronisé";
   ss.textContent = syncLabel;
   ss.className = "sync-status synced";
-  sb.style.display = "none";
 }
 
 function resyncBlocks(){
