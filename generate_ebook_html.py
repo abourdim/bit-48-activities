@@ -309,6 +309,7 @@ def hl_py(code):
 
 
 # ── Build sidebar nav items ──
+activities = [a for a in activities if a["id"] <= 48]
 simple_acts = [a for a in activities if a["part"] == "simple"]
 advanced_acts = [a for a in activities if a["part"] != "simple"]
 
