@@ -4586,11 +4586,16 @@ function handleSimMsg(msg){
     return;
   }
 
-  // Also catch pxteditor version of editorcontentloaded
+  // pxteditor editorcontentloaded = editor fully ready, import now
   if(msg.type === "pxteditor" && msg.action === "editorcontentloaded"){
-    console.log("[SIM] Editor ready (pxteditor)");
+    console.log("[SIM] Editor ready (pxteditor) — auto-importing");
     simReady = true;
-    if(simPending){ setTimeout(()=>loadSimCode(simPending), 500); simPending = null; }
+    // Always import the current activity code when editor is ready
+    const a = currentList[currentIndex];
+    if(a){
+      setTimeout(()=>loadSimCode(a.codeJS), 500);
+    }
+    simPending = null;
   }
 }
 
