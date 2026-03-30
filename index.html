@@ -129,7 +129,21 @@ button.primary:hover:not(:disabled){box-shadow:0 8px 28px var(--glow),0 0 0 2px 
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);background:linear-gradient(180deg,transparent,rgba(255,255,255,.03))}
 .tab-btn.active::after{content:"";position:absolute;bottom:0;left:10%;right:10%;height:2px;background:var(--accent);border-radius:2px;box-shadow:0 0 8px var(--glow);animation:slideUnderline .3s ease}
 .tab-panel{display:none;padding:14px 16px}.tab-panel.active{display:block}
-.goal-text{font-size:.85rem;line-height:1.5;margin-bottom:10px}
+/* ── ENRICHED INFO TAB ── */
+.info-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.info-meta .meta-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:999px;font-size:.72rem;font-weight:600;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.2)}
+.info-meta .meta-chip.diff-1{border-color:rgba(74,222,128,.3);color:rgba(74,222,128,.9)}
+.info-meta .meta-chip.diff-2{border-color:rgba(251,191,36,.3);color:rgba(251,191,36,.9)}
+.info-meta .meta-chip.diff-3{border-color:rgba(255,107,138,.3);color:rgba(255,107,138,.9)}
+.info-meta .meta-chip.time-chip{color:var(--text-muted)}
+.info-meta .meta-chip.v2-chip{border-color:rgba(74,222,128,.4);color:rgba(74,222,128,.95)}
+.info-meta .meta-chip.ia-chip{border-color:rgba(255,214,107,.4);color:rgba(255,214,107,.95)}
+.info-section{margin-bottom:12px}
+.info-section-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.info-learn{font-size:.8rem;line-height:1.5;color:var(--text-muted);padding:8px 12px;border-radius:10px;background:rgba(0,0,0,.1);border:1px solid rgba(255,255,255,.05)}
+.info-learn ul{margin:4px 0 0 16px;padding:0}
+.info-learn li{margin-bottom:3px}
+.goal-text{font-size:.85rem;line-height:1.5;margin-bottom:0}
 .needs-list{list-style:none;padding:0;display:flex;gap:6px;flex-wrap:wrap}
 .needs-list li{padding:4px 10px;border-radius:999px;font-size:.72rem;border:1px solid var(--border);background:rgba(0,0,0,.25);color:var(--text-muted)}
 .tip-box{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px dashed rgba(255,214,107,.3);background:linear-gradient(135deg,rgba(255,214,107,.06),rgba(255,214,107,.02));font-size:.78rem;color:rgba(255,214,107,.9);line-height:1.4;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);box-shadow:inset 0 0 20px rgba(255,214,107,.03)}
@@ -410,9 +424,10 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <button class="tab-btn" data-tab="challenges" id="tabChal">🚀 Défis</button>
       </div>
       <div class="tab-panel active" id="tab-info">
-        <div class="goal-text" id="mGoal"></div>
-        <div style="font-size:.74rem;color:var(--text-muted);margin-bottom:6px;font-weight:600" id="mNeedsLabel"></div>
-        <ul class="needs-list" id="mNeeds"></ul>
+        <div class="info-meta" id="infoMeta"></div>
+        <div class="info-section"><div class="info-section-title" id="infoGoalTitle">🎯 Objectif</div><div class="goal-text" id="mGoal"></div></div>
+        <div class="info-section"><div class="info-section-title" id="infoLearnTitle">📚 Tu vas apprendre</div><div class="info-learn" id="mLearn"></div></div>
+        <div class="info-section"><div class="info-section-title" id="mNeedsLabel">🧰 Tu as besoin de</div><ul class="needs-list" id="mNeeds"></ul></div>
         <div class="tip-box" id="mTip"></div>
       </div>
       <div class="tab-panel" id="tab-blocks">
@@ -3680,8 +3695,47 @@ function openModal(){
 
   $("mTitle").textContent = `#${a.id} — ${ta(a,"title")}`;
   $("mTags").innerHTML = tagHTML(a);
+
+  // Info tab: meta chips
+  const diffLabels = {1:lang==="ar"?"مبتدئ":lang==="en"?"Beginner":"Débutant", 2:lang==="ar"?"متوسط":lang==="en"?"Intermediate":"Intermédiaire", 3:lang==="ar"?"متقدم":lang==="en"?"Advanced":"Avancé"};
+  let metaH = `<span class="meta-chip diff-${a.difficulty}">${'⭐'.repeat(a.difficulty)} ${diffLabels[a.difficulty]}</span>`;
+  metaH += `<span class="meta-chip time-chip">⏱ ${esc(a.time)}</span>`;
+  metaH += `<span class="meta-chip">${a.part==="simple"?(lang==="ar"?"بسيط":lang==="en"?"Simple":"Simple"):(lang==="ar"?"متقدم":lang==="en"?"Advanced":"Avancé")}</span>`;
+  if(a.v2) metaH += `<span class="meta-chip v2-chip">V2</span>`;
+  if(a.ia) metaH += `<span class="meta-chip ia-chip">${lang==="ar"?"🧠 ذكاء اصطناعي":lang==="en"?"🧠 AI":"🧠 IA"}</span>`;
+  $("infoMeta").innerHTML = metaH;
+
+  // Section titles
+  $("infoGoalTitle").textContent = lang==="ar"?"🎯 الهدف":lang==="en"?"🎯 Goal":"🎯 Objectif";
+  $("infoLearnTitle").textContent = lang==="ar"?"📚 ستتعلّم":lang==="en"?"📚 You'll learn":"📚 Tu vas apprendre";
+  $("mNeedsLabel").textContent = lang==="ar"?"🧰 تحتاج إلى":lang==="en"?"🧰 You need":"🧰 Tu as besoin de";
+
+  // Goal
   $("mGoal").textContent = ta(a,"goal");
+
+  // "You'll learn" — auto-generated from activity metadata
+  const learnItems = [];
+  if(a.difficulty===1) learnItems.push(lang==="ar"?"المفاهيم الأساسية للبرمجة":lang==="en"?"Basic programming concepts":"Les bases de la programmation");
+  if(a.part==="advanced") learnItems.push(lang==="ar"?"مهارات متقدمة":lang==="en"?"Advanced skills":"Des compétences avancées");
+  if(a.v2) learnItems.push(lang==="ar"?"ميزات micro:bit V2":lang==="en"?"micro:bit V2 features":"Les fonctionnalités micro:bit V2");
+  if(a.ia) learnItems.push(lang==="ar"?"مبادئ الذكاء الاصطناعي":lang==="en"?"AI / Machine Learning principles":"Les principes de l'IA");
+  // Detect concepts from code
+  if(a.codeJS.includes("onButtonPressed")) learnItems.push(lang==="ar"?"التعامل مع الأزرار":lang==="en"?"Button events":"Les événements boutons");
+  if(a.codeJS.includes("onGesture")||a.codeJS.includes("Shake")) learnItems.push(lang==="ar"?"مستشعر الحركة":lang==="en"?"Motion sensor":"Le capteur de mouvement");
+  if(a.codeJS.includes("forever")) learnItems.push(lang==="ar"?"الحلقات اللانهائية":lang==="en"?"Infinite loops":"Les boucles infinies");
+  if(a.codeJS.includes("if")) learnItems.push(lang==="ar"?"الشروط (إذا/وإلا)":lang==="en"?"Conditions (if/else)":"Les conditions (si/sinon)");
+  if(a.codeJS.includes("randint")) learnItems.push(lang==="ar"?"الأرقام العشوائية":lang==="en"?"Random numbers":"Les nombres aléatoires");
+  if(a.codeJS.includes("radio")) learnItems.push(lang==="ar"?"الاتصال اللاسلكي":lang==="en"?"Wireless communication":"La communication radio");
+  if(a.codeJS.includes("pins.")) learnItems.push(lang==="ar"?"التحكم بالمنافذ":lang==="en"?"Pin I/O control":"Le contrôle des broches");
+  if(a.codeJS.includes("music.")) learnItems.push(lang==="ar"?"إنتاج الأصوات":lang==="en"?"Sound generation":"La génération de sons");
+  if(a.codeJS.includes("let ")||a.codeJS.includes("let\n")) learnItems.push(lang==="ar"?"المتغيرات":lang==="en"?"Variables":"Les variables");
+  const uniqueLearn = [...new Set(learnItems)];
+  $("mLearn").innerHTML = uniqueLearn.length>0 ? "<ul>"+uniqueLearn.map(l=>`<li>${esc(l)}</li>`).join("")+"</ul>" : "";
+
+  // Tip
   $("mTip").textContent = "💡 " + ta(a,"tip");
+
+  // Needs
   const needs = ta(a,"needs");
   $("mNeeds").innerHTML = (Array.isArray(needs)?needs:a.needs).map(n => `<li>${esc(n)}</li>`).join("");
 
