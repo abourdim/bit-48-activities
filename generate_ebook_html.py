@@ -329,7 +329,7 @@ out.append('''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Micro:bit - 58 Activites - Web Book</title>
+<title>Micro:bit - 48 Activites - Web Book</title>
 <style>
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -795,7 +795,7 @@ out.append('''
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <h1>Micro:bit</h1>
-    <div class="sub">58 Activites Pratiques</div>
+    <div class="sub">48 Activites Pratiques</div>
   </div>
   <nav class="sidebar-nav">
     <a class="nav-cover-link" href="#cover">Couverture</a>
@@ -808,7 +808,7 @@ out.append(sidebar_links(simple_acts))
 out.append('''
     </div>
     <div class="nav-section open" data-target="advanced-group">
-      Avance (23-58) <span class="arrow">&#9654;</span>
+      Avance (23-48) <span class="arrow">&#9654;</span>
     </div>
     <div class="nav-group open" id="advanced-group">
 ''')
@@ -867,7 +867,7 @@ out.append('''
     </svg>
   </div>
   <h1>Micro:bit</h1>
-  <h2>58 Activites Pratiques</h2>
+  <h2>48 Activites Pratiques</h2>
   <div class="cover-sub">Blocs &middot; JavaScript &middot; Python</div>
   <div class="cover-sub">Du clignotement LED aux robots IA</div>
   <div class="cover-author">Workshop DIY &mdash; abourdim</div>
@@ -990,7 +990,7 @@ for a in activities:
         out.append('</div>')
 
     # Footer
-    out.append(f'<div class="act-footer"><span>Activite #{aid}</span><span>micro:bit &middot; 58 Activites</span></div>')
+    out.append(f'<div class="act-footer"><span>Activite #{aid}</span><span>micro:bit &middot; 48 Activites</span></div>')
 
     out.append('</section>')
 
