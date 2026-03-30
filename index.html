@@ -144,6 +144,18 @@ button.primary:hover:not(:disabled){box-shadow:0 8px 28px var(--glow),0 0 0 2px 
 .info-learn ul{margin:4px 0 0 16px;padding:0}
 .info-learn li{margin-bottom:3px}
 .goal-text{font-size:.85rem;line-height:1.5;margin-bottom:0}
+/* Block chips (mini MakeCode blocks in Info tab) */
+.info-blocks-used{display:flex;flex-wrap:wrap;gap:6px}
+.block-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:.72rem;font-weight:600;color:#fff;border-bottom:2px solid rgba(0,0,0,.2);font-family:system-ui,-apple-system,sans-serif}
+.block-chip .bc-icon{font-size:.8rem}
+/* Code keys (JS + Python side by side) */
+.info-code-keys{display:flex;flex-direction:column;gap:4px}
+.code-key-row{display:flex;gap:6px;align-items:center;font-size:.72rem;padding:4px 8px;border-radius:8px;background:rgba(0,0,0,.1);border:1px solid rgba(255,255,255,.05)}
+.code-key-row .ck-block{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.code-key-row .ck-label{color:var(--text-muted);min-width:100px}
+.code-key-row .ck-js{font-family:"SF Mono",ui-monospace,Menlo,monospace;color:#F7DF1E;font-size:.68rem}
+.code-key-row .ck-py{font-family:"SF Mono",ui-monospace,Menlo,monospace;color:#4B8BBE;font-size:.68rem}
+.code-key-row .ck-sep{color:var(--text-muted);opacity:.4}
 .needs-list{list-style:none;padding:0;display:flex;gap:6px;flex-wrap:wrap}
 .needs-list li{padding:4px 10px;border-radius:999px;font-size:.72rem;border:1px solid var(--border);background:rgba(0,0,0,.25);color:var(--text-muted)}
 .tip-box{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px dashed rgba(255,214,107,.3);background:linear-gradient(135deg,rgba(255,214,107,.06),rgba(255,214,107,.02));font-size:.78rem;color:rgba(255,214,107,.9);line-height:1.4;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);box-shadow:inset 0 0 20px rgba(255,214,107,.03)}
@@ -427,6 +439,8 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <div class="info-meta" id="infoMeta"></div>
         <div class="info-section"><div class="info-section-title" id="infoGoalTitle">🎯 Objectif</div><div class="goal-text" id="mGoal"></div></div>
         <div class="info-section"><div class="info-section-title" id="infoLearnTitle">📚 Tu vas apprendre</div><div class="info-learn" id="mLearn"></div></div>
+        <div class="info-section"><div class="info-section-title" id="infoBlocksTitle">🧩 Blocs utilisés</div><div class="info-blocks-used" id="mBlocksUsed"></div></div>
+        <div class="info-section"><div class="info-section-title" id="infoCodeTitle">💻 Instructions clés</div><div class="info-code-keys" id="mCodeKeys"></div></div>
         <div class="info-section"><div class="info-section-title" id="mNeedsLabel">🧰 Tu as besoin de</div><ul class="needs-list" id="mNeeds"></ul></div>
         <div class="tip-box" id="mTip"></div>
       </div>
@@ -3731,6 +3745,60 @@ function openModal(){
   if(a.codeJS.includes("let ")||a.codeJS.includes("let\n")) learnItems.push(lang==="ar"?"المتغيرات":lang==="en"?"Variables":"Les variables");
   const uniqueLearn = [...new Set(learnItems)];
   $("mLearn").innerHTML = uniqueLearn.length>0 ? "<ul>"+uniqueLearn.map(l=>`<li>${esc(l)}</li>`).join("")+"</ul>" : "";
+
+  // Section titles (blocks/code)
+  $("infoBlocksTitle").textContent = lang==="ar"?"🧩 المكعبات المستخدمة":lang==="en"?"🧩 Blocks used":"🧩 Blocs utilisés";
+  $("infoCodeTitle").textContent = lang==="ar"?"💻 التعليمات الرئيسية":lang==="en"?"💻 Key instructions":"💻 Instructions clés";
+
+  // Auto-detect blocks & instructions from JS code
+  const blockMap = [
+    {re:/basic\.showString/,cat:"basic",color:"#1E90FF",label:"afficher texte",js:"basic.showString()",py:"basic.show_string()"},
+    {re:/basic\.showIcon/,cat:"basic",color:"#1E90FF",label:"montrer icône",js:"basic.showIcon()",py:"basic.show_icon()"},
+    {re:/basic\.showNumber/,cat:"basic",color:"#1E90FF",label:"afficher nombre",js:"basic.showNumber()",py:"basic.show_number()"},
+    {re:/basic\.showLeds/,cat:"basic",color:"#1E90FF",label:"montrer LEDs",js:"basic.showLeds()",py:"basic.show_leds()"},
+    {re:/basic\.clearScreen/,cat:"basic",color:"#1E90FF",label:"effacer écran",js:"basic.clearScreen()",py:"basic.clear_screen()"},
+    {re:/basic\.pause/,cat:"basic",color:"#1E90FF",label:"pause",js:"basic.pause(ms)",py:"basic.pause(ms)"},
+    {re:/basic\.forever/,cat:"loops",color:"#00AA00",label:"répéter indéfiniment",js:"basic.forever()",py:"basic.forever()"},
+    {re:/input\.onButtonPressed/,cat:"input",color:"#D400D4",label:"quand bouton pressé",js:"input.onButtonPressed()",py:"input.on_button_pressed()"},
+    {re:/input\.onGesture/,cat:"input",color:"#D400D4",label:"quand geste",js:"input.onGesture()",py:"input.on_gesture()"},
+    {re:/input\.onLogoEvent/,cat:"input",color:"#D400D4",label:"quand logo touché",js:"input.onLogoEvent()",py:"input.on_logo_event()"},
+    {re:/input\.temperature/,cat:"input",color:"#D400D4",label:"température",js:"input.temperature()",py:"input.temperature()"},
+    {re:/input\.lightLevel/,cat:"input",color:"#D400D4",label:"niveau lumière",js:"input.lightLevel()",py:"input.light_level()"},
+    {re:/input\.soundLevel/,cat:"input",color:"#D400D4",label:"niveau sonore",js:"input.soundLevel()",py:"input.sound_level()"},
+    {re:/input\.compassHeading/,cat:"input",color:"#D400D4",label:"direction boussole",js:"input.compassHeading()",py:"input.compass_heading()"},
+    {re:/input\.acceleration/,cat:"input",color:"#D400D4",label:"accélération",js:"input.acceleration()",py:"input.acceleration()"},
+    {re:/randint/,cat:"math",color:"#9400D3",label:"au hasard",js:"randint(min, max)",py:"randint(min, max)"},
+    {re:/music\.playTone/,cat:"music",color:"#E63022",label:"jouer tonalité",js:"music.playTone()",py:"music.play_tone()"},
+    {re:/music\.startMelody/,cat:"music",color:"#E63022",label:"jouer mélodie",js:"music.startMelody()",py:"music.start_melody()"},
+    {re:/radio\.setGroup/,cat:"radio",color:"#E3008C",label:"radio groupe",js:"radio.setGroup()",py:"radio.set_group()"},
+    {re:/radio\.sendNumber/,cat:"radio",color:"#E3008C",label:"radio envoyer",js:"radio.sendNumber()",py:"radio.send_number()"},
+    {re:/radio\.onReceivedNumber/,cat:"radio",color:"#E3008C",label:"radio reçu",js:"radio.onReceivedNumber()",py:"radio.on_received_number()"},
+    {re:/pins\.analogReadPin/,cat:"pins",color:"#3BDDD4",label:"lire analogique",js:"pins.analogReadPin()",py:"pins.analog_read_pin()"},
+    {re:/pins\.digitalReadPin/,cat:"pins",color:"#3BDDD4",label:"lire numérique",js:"pins.digitalReadPin()",py:"pins.digital_read_pin()"},
+    {re:/pins\.digitalWritePin/,cat:"pins",color:"#3BDDD4",label:"écriture numérique",js:"pins.digitalWritePin()",py:"pins.digital_write_pin()"},
+    {re:/pins\.analogWritePin/,cat:"pins",color:"#3BDDD4",label:"écriture analogique",js:"pins.analogWritePin()",py:"pins.analog_write_pin()"},
+    {re:/pins\.servoWritePin/,cat:"pins",color:"#3BDDD4",label:"servo écrire",js:"pins.servoWritePin()",py:"pins.servo_write_pin()"},
+    {re:/led\.plot/,cat:"game",color:"#7600A8",label:"allumer LED",js:"led.plot(x,y)",py:"led.plot(x,y)"},
+    {re:/led\.plotBarGraph/,cat:"game",color:"#7600A8",label:"graphique barres",js:"led.plotBarGraph()",py:"led.plot_bar_graph()"},
+    {re:/game\.createSprite/,cat:"game",color:"#7600A8",label:"créer sprite",js:"game.createSprite()",py:"game.create_sprite()"},
+    {re:/neopixel\.create/,cat:"neopixel",color:"#7600A8",label:"NeoPixel",js:"neopixel.create()",py:"neopixel.create()"},
+    {re:/bluetooth\./,cat:"bluetooth",color:"#0082FB",label:"Bluetooth",js:"bluetooth.*",py:"bluetooth.*"},
+    {re:/sonar\.ping/,cat:"sonar",color:"#00A4A6",label:"sonar distance",js:"sonar.ping()",py:"sonar.ping()"},
+    {re:/huskylens\./,cat:"input",color:"#D400D4",label:"HuskyLens IA",js:"huskylens.*",py:"huskylens.*"},
+    {re:/function\s+\w+/,cat:"functions",color:"#3455DB",label:"fonction",js:"function name()",py:"def name():"}
+  ];
+
+  const detected = blockMap.filter(b => b.re.test(a.codeJS));
+
+  // Render block chips
+  $("mBlocksUsed").innerHTML = detected.map(b =>
+    `<span class="block-chip" style="background:${b.color}">${esc(b.label)}</span>`
+  ).join("") || `<span style="font-size:.72rem;color:var(--text-muted)">${lang==="ar"?"(لا مكعبات مكتشفة)":lang==="en"?"(no blocks detected)":"(aucun bloc détecté)"}</span>`;
+
+  // Render code key rows (JS + Python)
+  $("mCodeKeys").innerHTML = detected.slice(0, 8).map(b =>
+    `<div class="code-key-row"><span class="ck-block" style="background:${b.color}"></span><span class="ck-label">${esc(b.label)}</span><span class="ck-js">${esc(b.js)}</span><span class="ck-sep">│</span><span class="ck-py">${esc(b.py)}</span></div>`
+  ).join("") || "";
 
   // Tip
   $("mTip").textContent = "💡 " + ta(a,"tip");
