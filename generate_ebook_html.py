@@ -915,7 +915,7 @@ for a in activities:
     # Block chips
     blocks = detect_blocks(a["codeJS"])
     if blocks:
-        out.append('<div class="sec-label">Blocs utilises</div>')
+        out.append('<div class="sec-label">Concepts utilises</div>')
         out.append('<div class="blocks-wrap">')
         for label, color in blocks:
             out.append(f'  <span class="block-chip" style="background:{color}">{esc(label)}</span>')
