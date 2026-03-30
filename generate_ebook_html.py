@@ -580,7 +580,14 @@ body {
   letter-spacing: 0.2px;
 }
 
-/* Visual MakeCode Blocks */
+/* MakeCode Rendered Blocks */
+.mc-blocks { min-height: 60px; padding: 12px; background: rgba(0,0,0,0.1); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; text-align: center; }
+.mc-blocks img { max-width: 100%; height: auto; border-radius: 6px; }
+.mc-loading { font-size: 12px; color: #5e7499; padding: 20px; }
+.mc-loading::after { content: ""; display: inline-block; width: 12px; height: 12px; border: 2px solid #3b82f6; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; margin-left: 8px; vertical-align: middle; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* CSS Fallback Blocks (hidden when MakeCode loads) */
 .vblock-canvas { display: flex; flex-direction: column; gap: 3px; padding: 12px; background: rgba(0,0,0,0.15); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; }
 .vb { position: relative; border-radius: 4px; padding: 6px 10px; font-size: 12px; font-weight: 600; color: #fff; display: flex; flex-wrap: wrap; align-items: center; gap: 5px; line-height: 1.5; border-bottom: 2px solid rgba(0,0,0,0.25); font-family: system-ui, sans-serif; }
 .vb.hat { border-radius: 14px 14px 4px 4px; padding: 7px 12px 4px; flex-direction: column; align-items: stretch; }
@@ -759,6 +766,7 @@ body {
 </style>
 </head>
 <body>
+<script>var mcQueue = [];</script>
 ''')
 
 # --- SIDEBAR ---
@@ -901,12 +909,10 @@ for a in activities:
             out.append(f'  <span class="block-chip" style="background:{color}">{esc(label)}</span>')
         out.append('</div>')
 
-    # Visual MakeCode blocks
-    bt_text = parse_bt_for_activity(aid)
-    block_html = render_block_html(bt_text)
-    if block_html:
-        out.append('<div class="sec-label">Blocs MakeCode</div>')
-        out.append(block_html)
+    # MakeCode rendered blocks (via iframe)
+    out.append('<div class="sec-label">Blocs MakeCode</div>')
+    out.append(f'<div class="mc-blocks" id="mc-{aid}"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>')
+    out.append(f'<script>mcQueue.push({{id:"mc-{aid}",code:{json.dumps(a["codeJS"])}}});</script>')
 
     # Flowchart
     out.append('<div class="sec-label">Algorithme</div>')
@@ -1052,6 +1058,53 @@ out.append('''
 })();
 </script>
 ''')
+
+# MakeCode block renderer iframe + JS
+out.append("""
+<!-- MakeCode block renderer -->
+<iframe id="mcRenderFrame" src="https://makecode.microbit.org/--docs?render=1" style="position:absolute;width:1px;height:1px;border:0;opacity:0;pointer-events:none"></iframe>
+<script>
+var mcQueue = window.mcQueue || [];
+var mcReady = false;
+
+window.addEventListener("message", function(ev){
+  var msg = ev.data;
+  if(!msg || typeof msg !== "object") return;
+  if(msg.source === "makecode" || msg.type === "renderready"){
+    mcReady = true;
+    processQueue();
+  }
+  if(msg.type === "renderblocks" && msg.id){
+    var container = document.getElementById(msg.id);
+    if(container && msg.uri){
+      var img = document.createElement("img");
+      img.src = msg.uri;
+      img.style.maxWidth = "100%";
+      img.style.height = "auto";
+      img.alt = "MakeCode blocks";
+      container.innerHTML = "";
+      container.appendChild(img);
+    }
+  }
+});
+
+function processQueue(){
+  if(!mcReady) return;
+  var frame = document.getElementById("mcRenderFrame");
+  if(!frame || !frame.contentWindow) return;
+  while(mcQueue.length > 0){
+    var req = mcQueue.shift();
+    frame.contentWindow.postMessage({
+      type: "renderblocks",
+      id: req.id,
+      code: req.code
+    }, "https://makecode.microbit.org");
+  }
+}
+// Try processing after delay if ready signal was missed
+setTimeout(function(){ mcReady = true; processQueue(); }, 10000);
+</script>
+""")
 
 out.append('</body>\n</html>')
 

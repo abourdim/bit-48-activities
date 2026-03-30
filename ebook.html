@@ -261,7 +261,14 @@ body {
   letter-spacing: 0.2px;
 }
 
-/* Visual MakeCode Blocks */
+/* MakeCode Rendered Blocks */
+.mc-blocks { min-height: 60px; padding: 12px; background: rgba(0,0,0,0.1); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; text-align: center; }
+.mc-blocks img { max-width: 100%; height: auto; border-radius: 6px; }
+.mc-loading { font-size: 12px; color: #5e7499; padding: 20px; }
+.mc-loading::after { content: ""; display: inline-block; width: 12px; height: 12px; border: 2px solid #3b82f6; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; margin-left: 8px; vertical-align: middle; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* CSS Fallback Blocks (hidden when MakeCode loads) */
 .vblock-canvas { display: flex; flex-direction: column; gap: 3px; padding: 12px; background: rgba(0,0,0,0.15); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; }
 .vb { position: relative; border-radius: 4px; padding: 6px 10px; font-size: 12px; font-weight: 600; color: #fff; display: flex; flex-wrap: wrap; align-items: center; gap: 5px; line-height: 1.5; border-bottom: 2px solid rgba(0,0,0,0.25); font-family: system-ui, sans-serif; }
 .vb.hat { border-radius: 14px 14px 4px 4px; padding: 7px 12px 4px; flex-direction: column; align-items: stretch; }
@@ -440,6 +447,7 @@ body {
 </style>
 </head>
 <body>
+<script>var mcQueue = [];</script>
 
 
 <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle sidebar">&#9776;</button>
@@ -588,7 +596,8 @@ body {
   <span class="block-chip" style="background:#1E90FF">afficher texte</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">Bonjour</span></div></div><div class="vb cat-basic">afficher texte</div></div>
+<div class="mc-blocks" id="mc-1"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-1",code:"// Affiche le texte \"Bonjour\" sur les 25 LEDs, lettre par lettre\nbasic.showString(\"Bonjour\")"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -651,7 +660,8 @@ basic.show_string(<span <span class="hl-kw">class</span>="hl-str">&quot;Bonjour&
   <span class="block-chip" style="background:#00AA00">repeter</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">HELLO</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">afficher texte</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-2"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-2",code:"// \"forever\" = boucle infinie, le code se r\u00e9p\u00e8te sans fin\nbasic.forever(function () {\n    basic.showString(\"HELLO\")   // D\u00e9file le texte sur les LEDs\n    basic.pause(200)            // Petite pause avant de recommencer\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -727,7 +737,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#1E90FF">montrer icone</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">❤️ Cœur</span></div></div><div class="vb cat-basic">montrer l&#x27;icône</div></div>
+<div class="mc-blocks" id="mc-3"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-3",code:"// showIcon affiche une ic\u00f4ne pr\u00e9d\u00e9finie (ici un c\u0153ur)\n// Liste compl\u00e8te : Heart, Happy, Sad, Duck, House, Skull\u2026\nbasic.showIcon(IconNames.Heart)"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -797,7 +808,8 @@ basic.show_icon(IconNames.HEART)</div>
   <span class="block-chip" style="background:#00AA00">repeter</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">❤️ Cœur</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">montrer l&#x27;icône</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">effacer l&#x27;écran</div></div>
+<div class="mc-blocks" id="mc-5"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-5",code:"// Clignoter = afficher \u2192 pause \u2192 effacer \u2192 pause \u2192 recommencer\nbasic.forever(function () {\n    basic.showIcon(IconNames.Heart)  // Affiche le c\u0153ur\n    basic.pause(300)                 // Attend 300 ms (visible)\n    basic.clearScreen()              // \u00c9teint tout\n    basic.pause(300)                 // Attend 300 ms (invisible)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -881,7 +893,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#D400D4">bouton</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg">A</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg">B</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A+B pressé <span class="varg str">❤️ Cœur</span></div></div><div class="vb cat-basic">afficher texte</div><div class="vb cat-basic">montrer l&#x27;icône</div></div>
+<div class="mc-blocks" id="mc-6"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-6",code:"// onButtonPressed = \"quand le bouton est press\u00e9, fais ceci\"\n// 3 boutons possibles : A (gauche), B (droite), A+B (les deux)\ninput.onButtonPressed(Button.A, function () {\n    basic.showString(\"A\")           // Bouton gauche \u2192 affiche \"A\"\n})\ninput.onButtonPressed(Button.B, function () {\n    basic.showString(\"B\")           // Bouton droit \u2192 affiche \"B\"\n})\ninput.onButtonPressed(Button.AB, function () {\n    basic.showIcon(IconNames.Heart) // Les deux \u2192 c\u0153ur\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -976,7 +989,8 @@ input.on_button_pressed(Button.AB, on_button_ab)</div>
   <span class="block-chip" style="background:#D400D4">geste</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque secouer <span class="varg str">⚡ Éclair</span></div></div><div class="vb cat-basic">montrer l&#x27;icône</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">effacer l&#x27;écran</div></div>
+<div class="mc-blocks" id="mc-7"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-7",code:"input.onGesture(Gesture.Shake, function () {\n    basic.showIcon(IconNames.Flash)\n    basic.pause(500)\n    basic.clearScreen()\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1049,7 +1063,8 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#E63022">melodie</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque logo pressé <span class="varg str">♪ Dadadadum</span></div></div><div class="vb cat-music">jouer mélodie</div></div>
+<div class="mc-blocks" id="mc-8"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-8",code:"input.onLogoEvent(TouchButtonEvent.Pressed, function () {\n    music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1121,7 +1136,8 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo_pressed)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">niveau sonore &gt; 120</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😴 Asleep</span></div></div>
+<div class="mc-blocks" id="mc-9"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-9",code:"basic.forever(function () {\n    if (input.soundLevel() > 120) {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Asleep)\n    }\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI input.soundLevel( ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1200,7 +1216,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque secouer <span class="varg str">au hasard 1 – 6</span></div></div><div class="vb cat-variables">définir roll</div><div class="vb cat-basic">afficher nombre <span class="varg str">roll</span></div></div>
+<div class="mc-blocks" id="mc-10"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-10",code:"let roll = 0  // Variable qui stocke le r\u00e9sultat du d\u00e9\ninput.onGesture(Gesture.Shake, function () {\n    roll = randint(1, 6)       // Nombre au hasard entre 1 et 6\n    basic.showNumber(roll)     // Affiche le r\u00e9sultat sur les LEDs\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1281,7 +1298,8 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque secouer <span class="varg str">au hasard 0 – 2</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">n = 1</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir n</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">▪ Feuille</span></div></div>
+<div class="mc-blocks" id="mc-11"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-11",code:"// Pierre-feuille-ciseaux : 0=pierre, 1=ciseaux, 2=feuille\nlet n = 0\ninput.onGesture(Gesture.Shake, function () {\n    n = randint(0, 2)              // 3 choix possibles : 0, 1 ou 2\n    if (n == 0) {\n        basic.showIcon(IconNames.SmallSquare)  // Pierre \u270a\n    } else if (n == 1) {\n        basic.showIcon(IconNames.Scissors)     // Ciseaux \u2702\n    } else {\n        basic.showIcon(IconNames.Square)       // Feuille \ud83d\udd90\n    }\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI n == 0 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1374,7 +1392,8 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#D400D4">temperature</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">température (°C)</span></div></div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">afficher texte <span class="varg">C</span></div></div>
+<div class="mc-blocks" id="mc-12"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-12",code:"input.onButtonPressed(Button.A, function () {\n    basic.showNumber(input.temperature())\n    basic.showString(\"C\")\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1444,7 +1463,8 @@ input.on_button_pressed(Button.A, on_button_a)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">direction boussole (°)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">dir &lt; 225</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir dir</div><div class="vb cat-basic">afficher texte <span class="varg">O</span></div></div>
+<div class="mc-blocks" id="mc-13"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-13",code:"basic.forever(function () {\n    let dir = input.compassHeading()\n    if (dir < 45 || dir >= 315) {\n        basic.showString(\"N\")\n    } else if (dir < 135) {\n        basic.showString(\"E\")\n    } else if (dir < 225) {\n        basic.showString(\"S\")\n    } else {\n        basic.showString(\"O\")\n    }\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI dir &lt; 45 || dir &gt;= 315 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1543,7 +1563,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">lire analogique P0</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">v &gt; 500</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir v</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😐 Meh</span></div></div>
+<div class="mc-blocks" id="mc-14"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-14",code:"basic.forever(function () {\n    let v = pins.analogReadPin(AnalogPin.P0)\n    if (v > 500) {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Meh)\n    }\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI v &gt; 500 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1632,7 +1653,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque secouer</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">steps</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb cat-variables">définir steps</div><div class="vb cat-variables">modifier steps de</div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✓ Yes</span></div></div>
+<div class="mc-blocks" id="mc-15"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-15",code:"let steps = 0\ninput.onGesture(Gesture.Shake, function () {\n    steps += 1\n})\ninput.onButtonPressed(Button.A, function () {\n    basic.showNumber(steps)\n})\ninput.onButtonPressed(Button.B, function () {\n    steps = 0\n    basic.showIcon(IconNames.Yes)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1728,7 +1750,8 @@ input.on_button_pressed(Button.B, on_button_b)</div>
   <span class="block-chip" style="background:#7600A8">graphique</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">niveau de lumière</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">tracer graphique barres</div></div>
+<div class="mc-blocks" id="mc-16"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-16",code:"input.onButtonPressed(Button.A, function () {\n    basic.showNumber(input.lightLevel())\n})\nbasic.forever(function () {\n    led.plotBarGraph(input.lightLevel(), 255)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1811,7 +1834,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb hat cat-radio"><div class="hat-label">quand reçu receivedNumber <span class="varg str">receivedNumber = 1</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-radio">radio définir groupe</div><div class="vb cat-radio">radio envoyer nombre</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div></div>
+<div class="mc-blocks" id="mc-17"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-17",code:"// RADIO : les 2 cartes doivent avoir le M\u00caME groupe (ici 7)\nradio.setGroup(7)\ninput.onButtonPressed(Button.A, function () {\n    radio.sendNumber(1)              // Envoie le nombre 1 par radio\n    basic.showIcon(IconNames.Happy)  // Confirme l'envoi\n})\ninput.onButtonPressed(Button.B, function () {\n    radio.sendNumber(2)              // Envoie le nombre 2\n    basic.showIcon(IconNames.Sad)\n})\n// Quand l'autre carte envoie un nombre, on le re\u00e7oit ici\nradio.onReceivedNumber(function (receivedNumber) {\n    if (receivedNumber == 1) {\n        basic.showIcon(IconNames.Happy)  // L'autre a appuy\u00e9 A\n    } else {\n        basic.showIcon(IconNames.Sad)    // L'autre a appuy\u00e9 B\n    }\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI receivedNumber == 1 ?</div><div class="fc-arrow"></div><div class="fc-node process">Envoyer radio</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -1922,7 +1946,8 @@ radio.on_received_number(on_received)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">t &gt; 0</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">tant que</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir t</div><div class="vb cat-variables">modifier t de</div><div class="vb cat-basic">afficher nombre <span class="varg">t</span></div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">afficher texte <span class="varg">OK</span></div><div class="vb cat-music">jouer tonalité</div></div>
+<div class="mc-blocks" id="mc-18"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-18",code:"let t = 0\ninput.onButtonPressed(Button.A, function () {\n    t += 1\n    basic.showNumber(t)\n})\ninput.onButtonPressed(Button.B, function () {\n    while (t > 0) {\n        basic.showNumber(t)\n        basic.pause(1000)\n        t -= 1\n    }\n    basic.showString(\"OK\")\n    music.playTone(988, 500)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2020,7 +2045,8 @@ input.on_button_pressed(Button.B, on_button_b)</div>
   <span class="block-chip" style="background:#E63022">melodie</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">♪ Dadadadum</span></div></div><div class="vb cat-music">jouer mélodie</div></div>
+<div class="mc-blocks" id="mc-19"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-19",code:"input.onButtonPressed(Button.A, function () {\n    music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2094,7 +2120,8 @@ input.on_button_pressed(Button.A, on_button_a)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">au hasard 0 – 9</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">n = 5</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir n</div><div class="vb cat-basic">afficher nombre <span class="varg">n</span></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div></div>
+<div class="mc-blocks" id="mc-20"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-20",code:"let n = 0\ninput.onButtonPressed(Button.A, function () {\n    n = randint(0, 9)\n    basic.showNumber(n)\n})\ninput.onButtonPressed(Button.B, function () {\n    if (n == 5) {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Sad)\n    }\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI n == 5 ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2191,7 +2218,8 @@ input.on_button_pressed(Button.B, on_button_b)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">obstacle touche player</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-game">créer sprite</div><div class="vb cat-variables">définir score</div><div class="vb cat-game">player changer X de</div><div class="vb cat-game">obstacle changer Y de</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-game">game over</div><div class="vb cat-variables">modifier score de</div><div class="vb cat-game">obstacle Y ← 0</div><div class="vb cat-game">obstacle X ← hasard 0–4</div></div>
+<div class="mc-blocks" id="mc-21"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-21",code:"let player = game.createSprite(2, 4)\nlet score = 0\nlet obstacle = game.createSprite(randint(0, 4), 0)\n\ninput.onButtonPressed(Button.A, function () {\n    player.change(LedSpriteProperty.X, -1)\n})\ninput.onButtonPressed(Button.B, function () {\n    player.change(LedSpriteProperty.X, 1)\n})\nbasic.forever(function () {\n    obstacle.change(LedSpriteProperty.Y, 1)\n    basic.pause(400)\n    if (obstacle.get(LedSpriteProperty.Y) == 4) {\n        if (obstacle.isTouching(player)) {\n            game.gameOver()\n        } else {\n            score += 1\n            obstacle.set(LedSpriteProperty.Y, 0)\n            obstacle.set(LedSpriteProperty.X, randint(0, 4))\n        }\n    }\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node decision">SI obstacle.get(LedSpriteProperty.Y ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2320,7 +2348,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque logo pressé <span class="varg str">code = \</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir code</div><div class="vb cat-variables">code ← code + \</div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div><div class="vb cat-music">jouer mélodie <span class="varg str">♪ Wawawawaa</span></div></div>
+<div class="mc-blocks" id="mc-22"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-22",code:"let code = \"\"\ninput.onButtonPressed(Button.A, function () {\n    code += \"A\"\n    music.playTone(262, 100)\n})\ninput.onButtonPressed(Button.B, function () {\n    code += \"B\"\n    music.playTone(330, 100)\n})\ninput.onLogoEvent(TouchButtonEvent.Pressed, function () {\n    if (code == \"ABA\") {\n        basic.showIcon(IconNames.Happy)\n        music.startMelody(music.builtInMelody(Melodies.PowerUp), MelodyOptions.Once)\n    } else {\n        basic.showIcon(IconNames.Sad)\n        music.startMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.Once)\n    }\n    code = \"\"\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI code == &quot;ABA&quot; ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2441,7 +2470,8 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">accélération (force)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">|force − 1024| &lt; 100</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir progress <span class="varg str">min(progress + 1, 25)</span></div><div class="vb cat-variables">définir force</div><div class="vb cat-basic">allumer LED</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✕ No</span></div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">effacer l&#x27;écran</div></div>
+<div class="mc-blocks" id="mc-23"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-23",code:"let progress = 0\nbasic.forever(function () {\n    let force = input.acceleration(Dimension.Strength)\n    if (Math.abs(force - 1024) < 100) {\n        progress = Math.min(progress + 1, 25)\n        led.plot(progress % 5, Math.floor(progress / 5))\n    } else {\n        basic.showIcon(IconNames.No)\n        basic.pause(500)\n        basic.clearScreen()\n        progress = 0\n    }\n    basic.pause(200)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI Math.abs(force - 1024 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2543,7 +2573,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonction pluie() <span class="varg str">au hasard 0 – 4</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">pour y de 0 à 4</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir x</div><div class="vb cat-basic">allumer LED</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">éteindre LED</div><div class="vb cat-functions">appeler pluie()</div></div>
+<div class="mc-blocks" id="mc-24"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-24",code:"function rain() {\n    let x = randint(0, 4)\n    for (let y = 0; y <= 4; y++) {\n        led.plot(x, y)\n        basic.pause(80)\n        led.unplot(x, y)\n    }\n}\nbasic.forever(function () {\n    rain()\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2630,7 +2661,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#3BDDD4">servo</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg">0°</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque logo pressé <span class="varg str">90°</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">180°</span></div></div><div class="vb cat-pins">servo écrire P0</div></div>
+<div class="mc-blocks" id="mc-25"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-25",code:"input.onButtonPressed(Button.A, function () {\n    pins.servoWritePin(AnalogPin.P0, 0)\n})\ninput.onButtonPressed(Button.B, function () {\n    pins.servoWritePin(AnalogPin.P0, 180)\n})\ninput.onLogoEvent(TouchButtonEvent.Pressed, function () {\n    pins.servoWritePin(AnalogPin.P0, 90)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2722,7 +2754,8 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">lire analogique P0</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">v &gt; 500</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir v</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-26"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-26",code:"basic.forever(function () {\n    let v = pins.analogReadPin(AnalogPin.P0)\n    if (v > 500) {\n        basic.showIcon(IconNames.Happy)\n        music.playTone(880, 200)\n    } else {\n        basic.showIcon(IconNames.Sad)\n    }\n    basic.pause(300)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI v &gt; 500 ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2822,7 +2855,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">lire analogique P0</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">lire analogique P0</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">v &lt; 600</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-variables">définir v</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😀 Happy</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-27"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-27",code:"input.onButtonPressed(Button.A, function () {\n    basic.showNumber(pins.analogReadPin(AnalogPin.P0))\n})\nbasic.forever(function () {\n    let v = pins.analogReadPin(AnalogPin.P0)\n    if (v < 300) {\n        basic.showIcon(IconNames.Sad)\n    } else if (v < 600) {\n        basic.showIcon(IconNames.Meh)\n    } else {\n        basic.showIcon(IconNames.Happy)\n    }\n    basic.pause(2000)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI v &lt; 300 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -2923,7 +2957,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">arrondi(P0 × 0.1)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir temp</div><div class="vb cat-basic">afficher nombre <span class="varg str">temp</span></div><div class="vb cat-basic">afficher texte <span class="varg">C</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-28"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-28",code:"basic.forever(function () {\n    let t = pins.analogReadPin(AnalogPin.P0)\n    let temp = Math.round(t * 0.1)\n    basic.showNumber(temp)\n    basic.showString(\"C\")\n    basic.pause(10000)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3003,7 +3038,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#E63022">melodie</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">♪ Birthday</span></div></div><div class="vb cat-music">régler tempo</div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-music">jouer mélodie</div></div>
+<div class="mc-blocks" id="mc-29"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-29",code:"music.setTempo(120)\ninput.onButtonPressed(Button.A, function () {\n    music.playTone(262, music.beat(BeatFraction.Whole))\n    music.playTone(330, music.beat(BeatFraction.Whole))\n    music.playTone(392, music.beat(BeatFraction.Whole))\n})\ninput.onButtonPressed(Button.B, function () {\n    music.startMelody(music.builtInMelody(Melodies.Birthday), MelodyOptions.Once)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3095,7 +3131,8 @@ input.on_button_pressed(Button.B, on_button_b)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-bluetooth"><div class="hat-label">lors connexion Bluetooth <span class="varg str">😀 Happy</span></div></div><div class="vb hat cat-bluetooth"><div class="hat-label">lors déconnexion Bluetooth <span class="varg str">😢 Sad</span></div></div><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-bluetooth"><div class="hat-label">quand données UART reçues <span class="varg str">lire UART</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">msg = \</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✕ No</span></div><div class="vb cat-bluetooth">démarrer service UART</div><div class="vb cat-variables">définir msg</div><div class="vb cat-pins">écriture numérique P0</div><div class="vb cat-basic">afficher texte <span class="varg str">msg</span></div></div>
+<div class="mc-blocks" id="mc-30"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-30",code:"bluetooth.onBluetoothConnected(function () {\n    basic.showIcon(IconNames.Happy)\n})\nbluetooth.onBluetoothDisconnected(function () {\n    basic.showIcon(IconNames.Sad)\n})\nbluetooth.startUartService()\nbluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), function () {\n    let msg = bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine))\n    if (msg == \"1\") {\n        basic.showIcon(IconNames.Yes)\n        pins.digitalWritePin(DigitalPin.P0, 1)\n    } else if (msg == \"0\") {\n        basic.showIcon(IconNames.No)\n        pins.digitalWritePin(DigitalPin.P0, 0)\n    } else {\n        basic.showString(msg)\n    }\n})\ninput.onButtonPressed(Button.A, function () {\n    bluetooth.uartWriteString(\"Salut!\" + \"\\\\n\")\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI msg == &quot;1&quot; ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3217,7 +3254,8 @@ input.on_button_pressed(Button.A, on_button_a)</div>
   <span class="block-chip" style="background:#7600A8">graphique</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">lire analogique P0</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">tracer graphique barres</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-31"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-31",code:"input.onButtonPressed(Button.A, function () {\n    basic.showNumber(pins.analogReadPin(AnalogPin.P0))\n})\nbasic.forever(function () {\n    led.plotBarGraph(pins.analogReadPin(AnalogPin.P0), 1023)\n    basic.pause(200)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3297,7 +3335,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">TM1637.create(P1, P2)</span></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">température</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir tm</div><div class="vb cat-variables">tm afficher nombre</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-32"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-32",code:"// N\u00e9cessite extension TM1637\nlet tm = TM1637.create(DigitalPin.P1, DigitalPin.P2, 7, 4)\nbasic.forever(function () {\n    tm.showNumber(input.temperature())\n    basic.pause(5000)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3376,7 +3415,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">200 + lumière × 3</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir freq</div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-33"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-33",code:"basic.forever(function () {\n    let freq = 200 + input.lightLevel() * 3\n    music.playTone(freq, 100)\n    basic.pause(50)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3455,7 +3495,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">sonar.ping (cm)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">d &lt; 10</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir d</div><div class="vb cat-basic">afficher nombre <span class="varg">d</span></div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-34"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-34",code:"// N\u00e9cessite extension sonar\nbasic.forever(function () {\n    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)\n    basic.showNumber(d)\n    if (d < 10) {\n        music.playTone(880, 200)\n    }\n    basic.pause(500)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &lt; 10 ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3549,7 +3590,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">faux</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque logo pressé</div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">armed = vrai</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">armed ET |lumière − baseline| &gt; 30</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir armed</div><div class="vb cat-variables">définir baseline</div><div class="vb cat-variables">armed ← non armed</div><div class="vb cat-variables">baseline ← lumière</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">💀 Skull</span></div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-35"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-35",code:"let armed = false\nlet baseline = 0\ninput.onLogoEvent(TouchButtonEvent.Pressed, function () {\n    armed = !armed\n    if (armed) {\n        baseline = input.lightLevel()\n        basic.showIcon(IconNames.Target)\n    } else {\n        basic.showIcon(IconNames.Asleep)\n    }\n})\nbasic.forever(function () {\n    if (armed && Math.abs(input.lightLevel() - baseline) > 30) {\n        music.playTone(880, 500)\n        basic.showIcon(IconNames.Skull)\n        basic.pause(500)\n    }\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI armed ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3667,7 +3709,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">faux</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">armed</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">armed ET P0 = 1</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir armed</div><div class="vb cat-variables">armed ← non armed</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">💀 Skull</span></div><div class="vb cat-music">jouer tonalité</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-36"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-36",code:"let armed = false\ninput.onButtonPressed(Button.A, function () {\n    armed = !armed\n    basic.showIcon(armed ? IconNames.Target : IconNames.Asleep)\n})\nbasic.forever(function () {\n    if (armed && pins.digitalReadPin(DigitalPin.P0) == 1) {\n        music.playTone(988, 300)\n        basic.showIcon(IconNames.Skull)\n        basic.pause(300)\n    }\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI condition ?</div><div class="fc-arrow"></div><div class="fc-node process">Jouer son</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3766,7 +3809,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-neopixel">créer strip NeoPixel</div><div class="vb cat-neopixel">strip afficher arc-en-ciel</div><div class="vb cat-neopixel">strip rotation 1</div><div class="vb cat-neopixel">strip afficher</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-37"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-37",code:"// N\u00e9cessite extension neopixel\nlet strip = neopixel.create(DigitalPin.P0, 8, NeoPixelMode.RGB)\nstrip.showRainbow(1, 360)\nbasic.forever(function () {\n    strip.rotate(1)\n    strip.show()\n    basic.pause(100)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3849,7 +3893,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#7600A8">graphique</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">tracer graphique barres</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-38"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-38",code:"basic.forever(function () {\n    led.plotBarGraph(input.soundLevel(), 255)\n    basic.pause(100)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -3921,7 +3966,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonction avancer(ms)</div></div><div class="vb hat cat-functions"><div class="hat-label">fonction tournerDroite()</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter 4 fois</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">écriture analogique P0</div><div class="vb cat-pins">écriture analogique P1</div><div class="vb cat-basic">pause (ms) <span class="varg">ms</span></div><div class="vb cat-functions">appeler avancer(1000)</div><div class="vb cat-functions">appeler tournerDroite()</div></div>
+<div class="mc-blocks" id="mc-39"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-39",code:"// Adapter les pins/vitesses \u00e0 ton robot\nfunction forward(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 512)\n    basic.pause(ms)\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction turnRight() {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.pause(500)\n    pins.analogWritePin(AnalogPin.P0, 0)\n}\ninput.onButtonPressed(Button.A, function () {\n    for (let i = 0; i < 4; i++) {\n        forward(1000)\n        turnRight()\n    }\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4033,7 +4079,8 @@ input.on_button_pressed(Button.A, on_button_a)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonctions avancer / stop / reculer / tourner</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">sonar.ping (cm)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">d &gt; 0 ET d &lt; 15</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">(contrôle moteurs via P0, P1)</div><div class="vb cat-variables">définir d</div><div class="vb cat-functions">appeler stop()</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">↑ Nord</span></div><div class="vb cat-functions">appeler reculer(400)</div><div class="vb cat-functions">appeler tourner(400)</div><div class="vb cat-functions">appeler avancer()</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-40"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-40",code:"// Extension sonar \u2014 adapter les pins/vitesses \u00e0 ton robot\nfunction forward() {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 512)\n}\nfunction stop() {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction backward(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    pins.analogWritePin(AnalogPin.P0, -512)\n    pins.analogWritePin(AnalogPin.P1, -512)\n    basic.pause(ms)\n    stop()\n}\nfunction turnRight(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.pause(ms)\n    stop()\n}\nbasic.forever(function () {\n    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)\n    if (d > 0 && d < 15) {\n        stop()\n        basic.showIcon(IconNames.No)\n        backward(400)\n        turnRight(400)\n    } else {\n        forward()\n        basic.showIcon(IconNames.ArrowNorth)\n    }\n    basic.pause(200)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &gt; 0 &amp;&amp; d &lt; 15 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4181,7 +4228,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonctions avancer / stop / reculer / tourner</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">P0 = 1 OU P1 = 1</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">(contrôle moteurs via P13, P14)</div><div class="vb cat-functions">appeler stop()</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">↑ Nord</span></div><div class="vb cat-functions">appeler reculer(400)</div><div class="vb cat-functions">appeler tourner(500)</div><div class="vb cat-functions">appeler avancer()</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-41"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-41",code:"// Adapter les pins/vitesses \u00e0 ton robot\nfunction forward() {\n    pins.analogWritePin(AnalogPin.P13, 512)\n    pins.analogWritePin(AnalogPin.P14, 512)\n}\nfunction stop() {\n    pins.analogWritePin(AnalogPin.P13, 0)\n    pins.analogWritePin(AnalogPin.P14, 0)\n}\nfunction backward(ms: number) {\n    pins.analogWritePin(AnalogPin.P13, -512)\n    pins.analogWritePin(AnalogPin.P14, -512)\n    basic.pause(ms)\n    stop()\n}\nfunction turnRight(ms: number) {\n    pins.analogWritePin(AnalogPin.P13, 512)\n    pins.analogWritePin(AnalogPin.P14, 0)\n    basic.pause(ms)\n    stop()\n}\nbasic.forever(function () {\n    if (pins.digitalReadPin(DigitalPin.P0) == 1 || pins.digitalReadPin(DigitalPin.P1) == 1) {\n        stop()\n        basic.showIcon(IconNames.No)\n        backward(400)\n        turnRight(500)\n    } else {\n        forward()\n        basic.showIcon(IconNames.ArrowNorth)\n    }\n    basic.pause(100)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI pins.digitalReadPin(DigitalPin.P0 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4325,7 +4373,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonctions avancer / stop / tournerDroite</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">sonar.ping (cm)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">d &gt; 0 ET d &lt; 12</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">(contrôle moteurs via P0, P1)</div><div class="vb cat-variables">définir d</div><div class="vb cat-functions">appeler stop()</div><div class="vb cat-basic">afficher texte <span class="varg">D</span></div><div class="vb cat-functions">appeler tournerDroite(500)</div><div class="vb cat-functions">appeler avancer()</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">↑ Nord</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-42"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-42",code:"// Extension sonar \u2014 adapter les pins/vitesses \u00e0 ton robot\nfunction forward() {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 512)\n}\nfunction stop() {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction turnRight(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.pause(ms)\n    stop()\n}\n// Strat\u00e9gie : longer le mur \u00e0 droite\nbasic.forever(function () {\n    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)\n    if (d > 0 && d < 12) {\n        stop()\n        basic.showString(\"D\")\n        turnRight(500)\n    } else {\n        forward()\n        basic.showIcon(IconNames.ArrowNorth)\n    }\n    basic.pause(200)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &gt; 0 &amp;&amp; d &lt; 12 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4462,7 +4511,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonctions avancer / stop / reculer / tournerG / tournerD</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">sonar.ping (cm)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">hasard 0–1 = 0</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">(contrôle moteurs via P0, P1)</div><div class="vb cat-variables">définir d</div><div class="vb cat-functions">appeler stop()</div><div class="vb cat-functions">appeler reculer(300)</div><div class="vb cat-basic">afficher texte <span class="varg">D</span></div><div class="vb cat-functions">appeler tournerG(500)</div><div class="vb cat-functions">appeler tournerD(500)</div><div class="vb cat-functions">appeler avancer()</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">↑ Nord</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-43"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-43",code:"// Extension sonar \u2014 adapter les pins/vitesses \u00e0 ton robot\nfunction forward() {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 512)\n}\nfunction stop() {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction turnLeft(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 512)\n    basic.pause(ms)\n    stop()\n}\nfunction turnRight(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.pause(ms)\n    stop()\n}\nfunction backward(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, -512)\n    pins.analogWritePin(AnalogPin.P1, -512)\n    basic.pause(ms)\n    stop()\n}\nbasic.forever(function () {\n    let d = sonar.ping(DigitalPin.P1, DigitalPin.P2, PingUnit.Centimeters)\n    if (d > 0 && d < 15) {\n        stop()\n        backward(300)\n        if (randint(0, 1) == 0) {\n            basic.showString(\"G\")\n            turnLeft(500)\n        } else {\n            basic.showString(\"D\")\n            turnRight(500)\n        }\n    } else {\n        forward()\n        basic.showIcon(IconNames.ArrowNorth)\n    }\n    basic.pause(200)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI d &gt; 0 &amp;&amp; d &lt; 15 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4621,7 +4671,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#E3008C">radio envoyer</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">1 (avant)</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">2 (stop)</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque incliner droite <span class="varg str">3 (droite)</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque incliner gauche <span class="varg str">4 (gauche)</span></div></div><div class="vb cat-radio">radio définir groupe</div><div class="vb cat-radio">radio envoyer nombre</div></div>
+<div class="mc-blocks" id="mc-44"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-44",code:"// \u00c9METTEUR\nradio.setGroup(7)\ninput.onButtonPressed(Button.A, function () {\n    radio.sendNumber(1) // avant\n})\ninput.onButtonPressed(Button.B, function () {\n    radio.sendNumber(2) // stop\n})\ninput.onGesture(Gesture.TiltRight, function () {\n    radio.sendNumber(3)\n})\ninput.onGesture(Gesture.TiltLeft, function () {\n    radio.sendNumber(4)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node process">Envoyer radio</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4724,7 +4775,8 @@ input.on_gesture(Gesture.TILT_LEFT, on_tilt_left)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">lire numérique P0 = 1</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">servo écrire P1 <span class="varg">0°</span></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✕ No</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-45"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-45",code:"basic.forever(function () {\n    if (pins.digitalReadPin(DigitalPin.P0) == 1) {\n        pins.servoWritePin(AnalogPin.P1, 90)\n        basic.showIcon(IconNames.Yes)\n        basic.pause(3000)\n        pins.servoWritePin(AnalogPin.P1, 0)\n        basic.showIcon(IconNames.No)\n    }\n    basic.pause(200)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI pins.digitalReadPin(DigitalPin.P0 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4815,7 +4867,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque logo pressé <span class="varg str">code = secret</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir code</div><div class="vb cat-variables">définir secret <span class="varg str">ABBA</span></div><div class="vb cat-variables">code ← code + \</div><div class="vb cat-basic">afficher texte <span class="varg">B</span></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div></div>
+<div class="mc-blocks" id="mc-46"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-46",code:"let code = \"\"\nlet secret = \"ABBA\"\ninput.onButtonPressed(Button.A, function () {\n    code += \"A\"\n    basic.showString(\"A\")\n})\ninput.onButtonPressed(Button.B, function () {\n    code += \"B\"\n    basic.showString(\"B\")\n})\ninput.onLogoEvent(TouchButtonEvent.Pressed, function () {\n    if (code == secret) {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Sad)\n    }\n    code = \"\"\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Logo touche</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI code == secret ?</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -4926,7 +4979,8 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)</div>
   <span class="block-chip" style="background:#3BDDD4">ecrire numer.</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">1 (Vert)</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">écriture numérique P0</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-pins">écriture numérique P1 <span class="varg str">1 (Orange)</span></div><div class="vb cat-pins">écriture numérique P2 <span class="varg str">1 (Rouge)</span></div></div>
+<div class="mc-blocks" id="mc-47"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-47",code:"basic.forever(function () {\n    pins.digitalWritePin(DigitalPin.P0, 1) // Vert\n    basic.pause(5000)\n    pins.digitalWritePin(DigitalPin.P0, 0)\n    pins.digitalWritePin(DigitalPin.P1, 1) // Orange\n    basic.pause(2000)\n    pins.digitalWritePin(DigitalPin.P1, 0)\n    pins.digitalWritePin(DigitalPin.P2, 1) // Rouge\n    basic.pause(5000)\n    pins.digitalWritePin(DigitalPin.P2, 0)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5019,7 +5073,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">lumière &lt; 50</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-pins">écriture numérique P0</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">❤️ Heart</span></div><div class="vb cat-basic">effacer l&#x27;écran</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-48"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-48",code:"basic.forever(function () {\n    if (input.lightLevel() < 50) {\n        pins.digitalWritePin(DigitalPin.P0, 1)\n        basic.showIcon(IconNames.Heart)\n    } else {\n        pins.digitalWritePin(DigitalPin.P0, 0)\n        basic.clearScreen()\n    }\n    basic.pause(500)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI input.lightLevel( ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5110,7 +5165,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#9400D3">hasard</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage (Vittascience)</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">température</span></div></div><div class="vb cat-basic">(ouvrir vittascience.com)</div><div class="vb cat-basic">(créer projet → mode blocs)</div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">afficher texte <span class="varg">C</span></div></div>
+<div class="mc-blocks" id="mc-49"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-49",code:"// Vittascience g\u00e9n\u00e8re du Python, pas du JS MakeCode\n// Exemple en mode blocs \u2192 Python :\ninput.onButtonPressed(Button.A, function () {\n    basic.showNumber(input.temperature())\n    basic.showString(\"C\")\n})\n// Puis recr\u00e9er l'activit\u00e9 10 (d\u00e9s) :\ninput.onGesture(Gesture.Shake, function () {\n    basic.showNumber(randint(1, 6))\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5212,7 +5268,8 @@ input.onGesture(Gesture.Shake, <span class="hl-kw">function</span> () {
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">HuskyLens détecte bloc</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">x &gt; 220</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">initialiser HuskyLens I2C</div><div class="vb cat-variables">définir x <span class="varg str">position X du bloc</span></div><div class="vb cat-basic">afficher texte <span class="varg">D</span></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✕ No</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-50"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-50",code:"// N\u00e9cessite extension HuskyLens\nbasic.forever(function () {\n    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {\n        let x = huskylens.readBox_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.xCenter)\n        if (x < 100) {\n            basic.showString(\"G\")\n        } else if (x > 220) {\n            basic.showString(\"D\")\n        } else {\n            basic.showIcon(IconNames.ArrowNorth)\n        }\n    } else {\n        basic.showIcon(IconNames.No)\n    }\n    basic.pause(200)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI x &lt; 100 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5327,7 +5384,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">HuskyLens détecte visage</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">initialiser HuskyLens I2C</div><div class="vb cat-basic">afficher texte <span class="varg">GO</span></div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😐 Meh</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-51"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-51",code:"// N\u00e9cessite extension HuskyLens\ninput.onButtonPressed(Button.A, function () {\n    huskylens.initI2c()\n    basic.showString(\"GO\")\n})\nbasic.forever(function () {\n    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Meh)\n    }\n    basic.pause(500)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI condition ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5427,7 +5485,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">HuskyLens détecte tag</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir id <span class="varg str">ID du tag</span></div><div class="vb cat-basic">afficher nombre <span class="varg">id</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-52"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-52",code:"// N\u00e9cessite extension HuskyLens en mode Tag\nbasic.forever(function () {\n    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {\n        let id = huskylens.readBox_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.ID)\n        basic.showNumber(id)\n    }\n    basic.pause(500)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Afficher nombre</div><div class="fc-arrow"></div><div class="fc-node decision">SI condition ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5517,7 +5576,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00AA00">repeter</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage (Create AI)</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">prédiction = classe 1</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">(aller sur createai.microbit.org)</div><div class="vb cat-basic">(créer 2 classes : calme / bouge)</div><div class="vb cat-basic">(collecter 20+ exemples par classe)</div><div class="vb cat-basic">(entraîner → exporter .hex)</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-53"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-53",code:"// Code g\u00e9n\u00e9r\u00e9 par Create AI \u2014 adapter\nbasic.forever(function () {\n    // Le mod\u00e8le ML est int\u00e9gr\u00e9 au fichier .hex\n    // Si pr\u00e9diction = classe 1\n    basic.showIcon(IconNames.Happy)\n    // Si pr\u00e9diction = classe 2\n    // basic.showIcon(IconNames.Sad)\n    basic.pause(500)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5609,7 +5669,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#00A4A6">si/sinon</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage (Make: AI Robots)</div></div><div class="vb cblock cat-loops"><div class="cb-row">répéter indéfiniment <span class="varg str">son &gt; 100</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cblock cat-logic"><div class="cb-row">si</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-basic">(aller sur makeairobots.com)</div><div class="vb cat-basic">(choisir tutoriel → connecter)</div><div class="vb cat-basic">(collecter données → entraîner)</div><div class="vb cat-basic">(télécharger .hex → flasher)</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😴 Asleep</span></div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-54"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-54",code:"// Code d\u00e9pend du tutoriel choisi\n// Exemple: r\u00e9agir \u00e0 un son\nbasic.forever(function () {\n    if (input.soundLevel() > 100) {\n        basic.showIcon(IconNames.Happy)\n        // action robot\n    } else {\n        basic.showIcon(IconNames.Asleep)\n    }\n    basic.pause(200)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node loop">Repeter indefiniment</div><div class="fc-arrow"></div><div class="fc-node process">Montrer icone</div><div class="fc-arrow"></div><div class="fc-node decision">SI input.soundLevel( ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5705,7 +5766,8 @@ basic.forever(on_forever)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage <span class="varg str">[ ] (vide)</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">température</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg">v</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque secouer</div></div><div class="vb cblock cat-loops"><div class="cb-row">pour chaque v dans mesures</div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir mesures</div><div class="vb cat-variables">ajouter à mesures</div><div class="vb cat-basic">afficher nombre <span class="varg str">max</span></div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-variables">trouver min et max dans mesures</div><div class="vb cat-basic">afficher texte <span class="varg str">max</span></div></div>
+<div class="mc-blocks" id="mc-55"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-55",code:"let mesures: number[] = []\ninput.onButtonPressed(Button.A, function () {\n    mesures.push(input.temperature())\n    basic.showNumber(mesures.length)\n})\ninput.onButtonPressed(Button.B, function () {\n    for (let v of mesures) {\n        basic.showNumber(v)\n        basic.pause(500)\n    }\n})\ninput.onGesture(Gesture.Shake, function () {\n    if (mesures.length > 0) {\n        let min = mesures[0]\n        let max = mesures[0]\n        for (let v of mesures) {\n            if (v < min) min = v\n            if (v > max) max = v\n        }\n        basic.showString(\"min\")\n        basic.showNumber(min)\n        basic.showString(\"max\")\n        basic.showNumber(max)\n    }\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI mesures.length &gt; 0 ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5838,7 +5900,8 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque secouer <span class="varg str">longueur de mot</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">mot = \</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir mot</div><div class="vb cat-variables">mot ← mot + \</div><div class="vb cat-basic">afficher texte <span class="varg str">mot</span></div><div class="vb cat-basic">afficher nombre</div><div class="vb cat-basic">pause (ms)</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">😢 Sad</span></div></div>
+<div class="mc-blocks" id="mc-56"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-56",code:"let mot = \"\"\ninput.onButtonPressed(Button.A, function () {\n    mot += \"O\"\n    basic.showString(mot)\n})\ninput.onButtonPressed(Button.B, function () {\n    mot += \"UI\"\n    basic.showString(mot)\n})\ninput.onGesture(Gesture.Shake, function () {\n    basic.showNumber(mot.length)\n    basic.pause(500)\n    if (mot == \"OUI\") {\n        basic.showIcon(IconNames.Happy)\n    } else {\n        basic.showIcon(IconNames.Sad)\n    }\n    mot = \"\"\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI mot == &quot;OUI&quot; ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -5961,7 +6024,8 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#3455DB">fonction</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-functions"><div class="hat-label">fonctions avancer / reculer / tourner</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé <span class="varg str">↑ Nord</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé <span class="varg str">↓ Sud</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A+B pressé <span class="varg">D</span></div></div><div class="vb hat cat-input"><div class="hat-label">lorsque secouer</div></div><div class="vb cat-pins">(contrôle moteurs via P0, P1)</div><div class="vb cat-basic">montrer l&#x27;icône <span class="varg str">✕ No</span></div><div class="vb cat-functions">appeler avancer(1000)</div><div class="vb cat-basic">effacer l&#x27;écran</div><div class="vb cat-functions">appeler reculer(1000)</div><div class="vb cat-basic">afficher texte</div><div class="vb cat-functions">appeler tourner(500)</div><div class="vb cat-pins">écriture analogique P0</div><div class="vb cat-pins">écriture analogique P1</div></div>
+<div class="mc-blocks" id="mc-57"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-57",code:"// Adapter les pins \u00e0 ton robot\nfunction forward(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 512)\n    basic.pause(ms)\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction backward(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, -512)\n    pins.analogWritePin(AnalogPin.P1, -512)\n    basic.pause(ms)\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n}\nfunction turnRight(ms: number) {\n    pins.analogWritePin(AnalogPin.P0, 512)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.pause(ms)\n    pins.analogWritePin(AnalogPin.P0, 0)\n}\ninput.onButtonPressed(Button.A, function () {\n    basic.showIcon(IconNames.ArrowNorth)\n    forward(1000)\n    basic.clearScreen()\n})\ninput.onButtonPressed(Button.B, function () {\n    basic.showIcon(IconNames.ArrowSouth)\n    backward(1000)\n    basic.clearScreen()\n})\ninput.onButtonPressed(Button.AB, function () {\n    basic.showString(\"D\")\n    turnRight(500)\n    basic.clearScreen()\n})\ninput.onGesture(Gesture.Shake, function () {\n    pins.analogWritePin(AnalogPin.P0, 0)\n    pins.analogWritePin(AnalogPin.P1, 0)\n    basic.showIcon(IconNames.No)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -6116,7 +6180,8 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   <span class="block-chip" style="background:#DC143C">variable</span>
 </div>
 <div class="sec-label">Blocs MakeCode</div>
-<div class="vblock-canvas"><div class="vb hat cat-basic"><div class="hat-label">au démarrage</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton A pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque bouton B pressé</div></div><div class="vb hat cat-input"><div class="hat-label">lorsque secouer <span class="varg">?</span></div></div><div class="vb cblock cat-logic"><div class="cb-row">si <span class="varg str">countA ≥ countB</span></div><div class="cb-body"></div><div class="cb-cap"></div></div><div class="vb cat-variables">définir countA</div><div class="vb cat-variables">définir countB</div><div class="vb cat-variables">modifier countA de</div><div class="vb cat-basic">afficher texte <span class="varg str">countA + \</span></div><div class="vb cat-variables">modifier countB de</div><div class="vb cat-basic">pause (ms)</div></div>
+<div class="mc-blocks" id="mc-58"><div class="mc-loading">Chargement des blocs MakeCode...</div></div>
+<script>mcQueue.push({id:"mc-58",code:"let countA = 0\nlet countB = 0\ninput.onButtonPressed(Button.A, function () {\n    countA += 1\n    basic.showString(\"A\")\n})\ninput.onButtonPressed(Button.B, function () {\n    countB += 1\n    basic.showString(\"B\")\n})\ninput.onGesture(Gesture.Shake, function () {\n    basic.showString(\"?\")\n    basic.pause(500)\n    if (countA >= countB) {\n        basic.showString(\"A!\")\n    } else {\n        basic.showString(\"B!\")\n    }\n    basic.pause(1000)\n    basic.showString(countA + \"/\" + countB)\n})"});</script>
 <div class="sec-label">Algorithme</div>
 <div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node io">Bouton A presse</div><div class="fc-arrow"></div><div class="fc-node io">Bouton B presse</div><div class="fc-arrow"></div><div class="fc-node io">Secouer</div><div class="fc-arrow"></div><div class="fc-node process">Afficher texte</div><div class="fc-arrow"></div><div class="fc-node decision">SI countA &gt;= countB ?</div><div class="fc-arrow"></div><div class="fc-node process">Pause</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
 <div class="sec-label">Pseudo-code</div>
@@ -6292,6 +6357,51 @@ input.on_gesture(Gesture.SHAKE, on_shake)</div>
   });
   updateScrollSpy();
 })();
+</script>
+
+
+<!-- MakeCode block renderer -->
+<iframe id="mcRenderFrame" src="https://makecode.microbit.org/--docs?render=1" style="position:absolute;width:1px;height:1px;border:0;opacity:0;pointer-events:none"></iframe>
+<script>
+var mcQueue = window.mcQueue || [];
+var mcReady = false;
+
+window.addEventListener("message", function(ev){
+  var msg = ev.data;
+  if(!msg || typeof msg !== "object") return;
+  if(msg.source === "makecode" || msg.type === "renderready"){
+    mcReady = true;
+    processQueue();
+  }
+  if(msg.type === "renderblocks" && msg.id){
+    var container = document.getElementById(msg.id);
+    if(container && msg.uri){
+      var img = document.createElement("img");
+      img.src = msg.uri;
+      img.style.maxWidth = "100%";
+      img.style.height = "auto";
+      img.alt = "MakeCode blocks";
+      container.innerHTML = "";
+      container.appendChild(img);
+    }
+  }
+});
+
+function processQueue(){
+  if(!mcReady) return;
+  var frame = document.getElementById("mcRenderFrame");
+  if(!frame || !frame.contentWindow) return;
+  while(mcQueue.length > 0){
+    var req = mcQueue.shift();
+    frame.contentWindow.postMessage({
+      type: "renderblocks",
+      id: req.id,
+      code: req.code
+    }, "https://makecode.microbit.org");
+  }
+}
+// Try processing after delay if ready signal was missed
+setTimeout(function(){ mcReady = true; processQueue(); }, 10000);
 </script>
 
 </body>
