@@ -246,6 +246,13 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .vblock.cat-sonar{background:#00A4A6}       /* Sonar: Teal */
 .vblock.cat-functions{background:#3455DB}   /* Functions: RoyalBlue */
 
+/* ── MAKECODE RENDERED BLOCKS ── */
+.makecode-blocks{min-height:60px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 0}
+.makecode-blocks img{max-width:100%;height:auto;border-radius:6px}
+.makecode-blocks .mc-loading{font-size:.75rem;color:var(--text-muted);padding:16px;text-align:center}
+.makecode-blocks .mc-loading::after{content:"";display:inline-block;width:14px;height:14px;border:2px solid var(--accent);border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;margin-inline-start:8px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 /* ── CODE EDITOR (editable textarea) ── */
 .code-editor{width:100%;min-height:160px;max-height:300px;resize:vertical;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.5);padding:12px 14px;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.76rem;line-height:1.5;color:var(--text);white-space:pre;overflow:auto;direction:ltr;text-align:left;box-shadow:inset 0 2px 6px rgba(0,0,0,.25);outline:none;tab-size:4}
 .code-editor:focus{border-color:var(--accent);box-shadow:inset 0 2px 6px rgba(0,0,0,.25),0 0 0 2px var(--glow)}
@@ -401,7 +408,10 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <ul class="needs-list" id="mNeeds"></ul>
         <div class="tip-box" id="mTip"></div>
       </div>
-      <div class="tab-panel" id="tab-blocks"><div id="mBlocks"></div></div>
+      <div class="tab-panel" id="tab-blocks">
+        <div id="mBlocksMC" class="makecode-blocks"></div>
+        <div id="mBlocksFallback" style="display:none"></div>
+      </div>
       <div class="tab-panel" id="tab-js">
         <div class="code-actions"><button class="copy-btn" id="copyJSBtn">📋 Copier</button><button class="open-makecode-btn" id="openMCJS">🚀 Ouvrir MakeCode</button></div>
         <textarea class="code-editor" id="codeBlockJS" spellcheck="false"></textarea>
@@ -419,6 +429,9 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
       </div>
     </div>
   </div>
+
+  <!-- MakeCode block rendering iframe (hidden) -->
+  <iframe id="mcRenderFrame" src="https://makecode.microbit.org/--docs?render=1" style="position:absolute;width:1px;height:1px;border:0;opacity:0;pointer-events:none" sandbox="allow-scripts allow-same-origin"></iframe>
 
   <div id="toast" class="toast-indicator"><div class="toast-inner"><div class="toast-text" id="toastMsg"></div></div></div>
 
@@ -3431,7 +3444,107 @@ function renderOneBlock(b){
   h += `</div>`;
   return h;
 }
-function highlightPython(code){
+// ═══════════════════════════════════════════════════════════════════
+// MAKECODE IFRAME BLOCK RENDERER
+// Protocol: https://makecode.com/blocks-embed (gh-pages-embed.js)
+// ═══════════════════════════════════════════════════════════════════
+let mcRenderReady = false;
+const mcRenderQueue = [];
+const mcRenderCache = {};
+
+window.addEventListener("message", function(ev){
+  if(!ev.data || typeof ev.data !== "object") return;
+  const msg = ev.data;
+  if(msg.source === "makecode" || msg.type === "renderready"){
+    mcRenderReady = true;
+    // Process queued requests
+    while(mcRenderQueue.length > 0){
+      const req = mcRenderQueue.shift();
+      sendMCRender(req.id, req.code);
+    }
+  }
+  if(msg.type === "renderblocks" && msg.id){
+    // Cache the result
+    mcRenderCache[msg.id] = {uri:msg.uri, width:msg.width, height:msg.height, svg:msg.svg};
+    // Update the DOM if this activity is still displayed
+    const container = $("mBlocksMC");
+    if(container && container.dataset.mcId === msg.id){
+      container.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = msg.uri;
+      img.width = msg.width;
+      img.height = msg.height;
+      img.alt = "MakeCode blocks";
+      img.style.maxWidth = "100%";
+      img.style.height = "auto";
+      container.appendChild(img);
+    }
+  }
+});
+
+function sendMCRender(id, code){
+  const frame = $("mcRenderFrame");
+  if(!frame || !frame.contentWindow) return;
+  frame.contentWindow.postMessage({
+    type: "renderblocks",
+    id: id,
+    code: code
+  }, "https://makecode.microbit.org");
+}
+
+function renderMakeCodeBlocks(a){
+  const mcContainer = $("mBlocksMC");
+  const fallback = $("mBlocksFallback");
+  const mcId = "act-" + a.id;
+  mcContainer.dataset.mcId = mcId;
+
+  // Show CSS fallback immediately
+  if(a.blockTree){
+    fallback.innerHTML = renderBlocks(a.blockTree);
+  } else {
+    const blocks = ta(a,"blocks");
+    fallback.innerHTML = (Array.isArray(blocks)?blocks:a.blocks).map((b,i) => `<div class="block-step"><span class="step-num">${i+1}</span>${esc(b)}</div>`).join("");
+  }
+
+  // Check cache first
+  if(mcRenderCache[mcId]){
+    const c = mcRenderCache[mcId];
+    mcContainer.innerHTML = "";
+    const img = document.createElement("img");
+    img.src = c.uri;
+    img.width = c.width;
+    img.height = c.height;
+    img.alt = "MakeCode blocks";
+    img.style.maxWidth = "100%";
+    img.style.height = "auto";
+    mcContainer.appendChild(img);
+    mcContainer.style.display = "";
+    fallback.style.display = "none";
+    return;
+  }
+
+  // Show loading + CSS fallback while waiting
+  mcContainer.innerHTML = '<div class="mc-loading">' + (lang==="ar"?"جاري تحميل المكعبات من MakeCode":lang==="en"?"Loading blocks from MakeCode":"Chargement des blocs MakeCode") + '</div>';
+  mcContainer.style.display = "";
+  fallback.style.display = "";
+
+  // Request rendering from iframe
+  if(mcRenderReady){
+    sendMCRender(mcId, a.codeJS);
+  } else {
+    mcRenderQueue.push({id: mcId, code: a.codeJS});
+  }
+
+  // Timeout: if no response in 5s, hide MC container and show fallback only
+  setTimeout(() => {
+    if(mcContainer.dataset.mcId === mcId && !mcRenderCache[mcId]){
+      mcContainer.style.display = "none";
+      fallback.style.display = "";
+    }
+  }, 5000);
+}
+
+
   // Tokenize to avoid nested spans
   const escaped = esc(code);
   const tokens = [];
@@ -3559,13 +3672,8 @@ function openModal(){
   const needs = ta(a,"needs");
   $("mNeeds").innerHTML = (Array.isArray(needs)?needs:a.needs).map(n => `<li>${esc(n)}</li>`).join("");
 
-  // Render visual blocks if blockTree exists, else fall back to text steps
-  if(a.blockTree){
-    $("mBlocks").innerHTML = renderBlocks(a.blockTree);
-  } else {
-    const blocks = ta(a,"blocks");
-    $("mBlocks").innerHTML = (Array.isArray(blocks)?blocks:a.blocks).map((b,i) => `<div class="block-step"><span class="step-num">${i+1}</span>${esc(b)}</div>`).join("");
-  }
+  // Render blocks: try MakeCode iframe first, CSS fallback
+  renderMakeCodeBlocks(a);
 
   updateCode(a);
 
