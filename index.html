@@ -4529,7 +4529,7 @@ applyLang();
 // ═══════════════════════════════════════════════════════════════════
 let simReady = false;
 let simPending = null;
-const SIM_URL = "https://makecode.microbit.org/?controller=1&norun=1&nocookiebanner=1";
+const SIM_URL = "https://makecode.microbit.org?controller=1";
 
 window.addEventListener("message", function(ev){
   if(!ev.data || typeof ev.data !== "object") return;
