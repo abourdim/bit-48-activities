@@ -4546,34 +4546,51 @@ function handleSimMsg(msg){
   const frame = $("simFrame");
   if(!frame || !frame.contentWindow) return;
 
-  // MakeCode asks for workspace — respond with empty workspace
+  // Log all MakeCode messages for debugging
+  if(msg.type === "pxteditor" || msg.type === "pxthost"){
+    console.log("[SIM]", msg.type, msg.action, msg.id ? "id:"+msg.id : "");
+  }
+
+  // MakeCode asks for workspace — respond with empty project list
   if(msg.type === "pxthost" && msg.action === "workspacesync"){
     console.log("[SIM] Responding to workspacesync");
     frame.contentWindow.postMessage({
       type: "pxthost",
-      action: "workspacesync",
+      id: msg.id,
       success: true,
-      editor: "tsprj",
       controllerId: "bit54activities",
-      response: true,
+      editor: {},
       projects: []
     }, "*");
-    // Now ready to import
-    simReady = true;
-    if(simPending){ setTimeout(()=>loadSimCode(simPending), 1000); simPending = null; }
     return;
   }
 
-  // MakeCode signals editor loaded
-  if(msg.type === "pxteditor" && msg.action === "editorcontentloaded"){
-    console.log("[SIM] Editor content loaded");
-    simReady = true;
-    if(simPending){ setTimeout(()=>loadSimCode(simPending), 500); simPending = null; }
+  // MakeCode wants to save workspace — acknowledge
+  if(msg.type === "pxthost" && msg.action === "workspacesave"){
+    console.log("[SIM] Acknowledging workspacesave");
+    if(msg.response){
+      frame.contentWindow.postMessage({
+        type: "pxthost",
+        id: msg.id,
+        success: true
+      }, "*");
+    }
+    return;
   }
 
-  // Log other messages for debugging
-  if(msg.type === "pxteditor" || msg.type === "pxthost"){
-    console.log("[SIM] msg:", msg.type, msg.action);
+  // MakeCode signals editor fully loaded — NOW we can import
+  if(msg.type === "pxthost" && msg.action === "editorcontentloaded"){
+    console.log("[SIM] Editor content loaded — ready to import");
+    simReady = true;
+    if(simPending){ setTimeout(()=>loadSimCode(simPending), 500); simPending = null; }
+    return;
+  }
+
+  // Also catch pxteditor version of editorcontentloaded
+  if(msg.type === "pxteditor" && msg.action === "editorcontentloaded"){
+    console.log("[SIM] Editor ready (pxteditor)");
+    simReady = true;
+    if(simPending){ setTimeout(()=>loadSimCode(simPending), 500); simPending = null; }
   }
 }
 
