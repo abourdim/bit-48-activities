@@ -592,7 +592,7 @@ body {
 
 /* MakeCode Rendered Blocks */
 .mc-blocks { min-height: 60px; padding: 12px; background: rgba(0,0,0,0.1); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; text-align: center; }
-.mc-blocks img { max-width: 400px; max-height: 300px; width: auto; height: auto; border-radius: 6px; object-fit: contain; }
+.mc-blocks img { max-width: 280px; max-height: 200px; width: auto; height: auto; border-radius: 4px; object-fit: contain; }
 .mc-loading { font-size: 12px; color: #5e7499; padding: 20px; }
 .mc-loading::after { content: ""; display: inline-block; width: 12px; height: 12px; border: 2px solid #3b82f6; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; margin-left: 8px; vertical-align: middle; }
 @keyframes spin { to { transform: rotate(360deg); } }
