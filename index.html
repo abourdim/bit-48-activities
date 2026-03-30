@@ -3438,7 +3438,6 @@ function saveP(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
 let progress = loadP();
 let currentList = [];
 let currentIndex = -1;
-let codeLang = "js";
 let lang = "fr";
 let currentTopic = "all";
 
@@ -4055,33 +4054,6 @@ function generateFlowAndPseudo(a){
 
   $("mPseudo").innerHTML = lines.join("\n");
 }
-
-function highlightPython(code){
-  // Tokenize to avoid nested spans
-  const escaped = esc(code);
-  const tokens = [];
-  let remaining = escaped;
-  while(remaining.length > 0){
-    // Comments first (# to end of line)
-    let m = remaining.match(/^(#[^\n]*)/);
-    if(m){ tokens.push('<span class="py-comment">'+m[1]+'</span>'); remaining=remaining.slice(m[0].length); continue; }
-    // Strings (double-quoted via &quot;)
-    m = remaining.match(/^(&quot;[^&]*?&quot;)/);
-    if(m){ tokens.push('<span class="py-string">'+m[1]+'</span>'); remaining=remaining.slice(m[0].length); continue; }
-    // Strings (single-quoted)
-    m = remaining.match(/^('[^']*?')/);
-    if(m){ tokens.push('<span class="py-string">'+m[1]+'</span>'); remaining=remaining.slice(m[0].length); continue; }
-    // Keywords
-    m = remaining.match(/^(def|if|elif|else|while|for|in|return|import|from|global|not|and|or|True|False|range|len|min|max|abs)\b/);
-    if(m){ tokens.push('<span class="py-keyword">'+m[1]+'</span>'); remaining=remaining.slice(m[0].length); continue; }
-    // Numbers
-    m = remaining.match(/^(\d+)/);
-    if(m){ tokens.push('<span class="py-number">'+m[1]+'</span>'); remaining=remaining.slice(m[0].length); continue; }
-    // Everything else: one char at a time
-    tokens.push(remaining[0]); remaining=remaining.slice(1);
-  }
-  return tokens.join('');
-}
 function renderBlocks(tree){
   if(!tree || !Array.isArray(tree)) return "";
   let h = `<div class="block-canvas">`;
@@ -4400,12 +4372,12 @@ $("copyPYBtn").addEventListener("click", async () => {
 });
 // Open in MakeCode — copy code to clipboard then open MakeCode
 $("openMCJS").addEventListener("click", async () => {
-  try{ await navigator.clipboard.writeText($("codeBlockJS").value); }catch{}
+  try{ await navigator.clipboard.writeText($("codeBlockJS").value); }catch(e){/* clipboard may fail silently */}
   showToast(lang==="ar"?"تم النسخ! الصق في MakeCode ← JavaScript":lang==="en"?"Copied! Paste in MakeCode → JavaScript":"Copié ! Colle dans MakeCode → JavaScript");
   window.open("https://makecode.microbit.org/#editor","_blank");
 });
 $("openMCPY").addEventListener("click", async () => {
-  try{ await navigator.clipboard.writeText($("codeBlockPY").value); }catch{}
+  try{ await navigator.clipboard.writeText($("codeBlockPY").value); }catch(e){/* clipboard may fail silently */}
   showToast(lang==="ar"?"تم النسخ! الصق في MakeCode ← Python":lang==="en"?"Copied! Paste in MakeCode → Python":"Copié ! Colle dans MakeCode → Python");
   window.open("https://makecode.microbit.org/#editor","_blank");
 });
@@ -4430,7 +4402,6 @@ function markCodeModified(){
 
 function markCodeSynced(){
   const ss = $("syncStatus");
-  const sb = $("syncBlocksBtn");
   const syncLabel = lang==="ar"?"✅ متزامن":lang==="en"?"✅ Synced":"✅ Synchronisé";
   ss.textContent = syncLabel;
   ss.className = "sync-status synced";
@@ -4475,7 +4446,7 @@ $("syncBlocksBtn").addEventListener("click", () => {
 
 // Edit blocks in MakeCode — copies JS code + opens editor
 $("openMCBlocks").addEventListener("click", async () => {
-  try{ await navigator.clipboard.writeText($("codeBlockJS").value); }catch{}
+  try{ await navigator.clipboard.writeText($("codeBlockJS").value); }catch(e){/* clipboard may fail silently */}
   showToast(lang==="ar"?"تم النسخ! الصق في MakeCode ← JavaScript ← ثم عدّل المكعبات":lang==="en"?"Copied! Paste in MakeCode → JavaScript → then edit blocks":"Copié ! Colle dans MakeCode → JavaScript → puis modifie les blocs");
   window.open("https://makecode.microbit.org/#editor","_blank");
 });
