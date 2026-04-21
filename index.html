@@ -3127,50 +3127,43 @@ function renderMakeCodeBlocks(a){
   lastSyncedCode = a.codeJS;
   markCodeSynced();
 
-  // Show CSS fallback immediately
+  // Populate fallback from blockTree (if any) or the step list.
   if(a.blockTree){
     fallback.innerHTML = renderBlocks(a.blockTree);
   } else {
     const blocks = ta(a,"blocks");
-    fallback.innerHTML = (Array.isArray(blocks)?blocks:a.blocks).map((b,i) => `<div class="block-step"><span class="step-num">${i+1}</span>${esc(b)}</div>`).join("");
+    const arr = Array.isArray(blocks) ? blocks : a.blocks;
+    fallback.innerHTML = (arr || []).map((b,i) =>
+      `<div class="block-step"><span class="step-num">${i+1}</span>${esc(b)}</div>`
+    ).join("");
   }
+  fallback.style.display = "";
 
-  // Check cache first
+  // Use cached MakeCode render if we have one.
   if(mcRenderCache[mcId]){
     const c = mcRenderCache[mcId];
     mcContainer.innerHTML = "";
     const img = document.createElement("img");
     img.src = c.uri;
-    img.width = c.width;
-    img.height = c.height;
+    img.width = c.width; img.height = c.height;
     img.alt = "MakeCode blocks";
-    img.style.maxWidth = "100%";
-    img.style.height = "auto";
+    img.style.maxWidth = "100%"; img.style.height = "auto";
     mcContainer.appendChild(img);
     mcContainer.style.display = "";
     fallback.style.display = "none";
     return;
   }
 
-  // Show loading + CSS fallback while waiting
-  mcContainer.innerHTML = '<div class="mc-loading">' + (lang==="ar"?"جاري تحميل المكعبات من MakeCode":lang==="en"?"Loading blocks from MakeCode":"Chargement des blocs MakeCode") + '</div>';
-  mcContainer.style.display = "";
-  fallback.style.display = "";
-
-  // Request rendering from iframe
+  // No cache: hide the MakeCode iframe container, keep fallback visible.
+  // Kick off a render request; if/when it returns, the postMessage handler
+  // swaps in the image and hides the fallback.
+  mcContainer.innerHTML = "";
+  mcContainer.style.display = "none";
   if(mcRenderReady){
     sendMCRender(mcId, a.codeJS);
   } else {
     mcRenderQueue.push({id: mcId, code: a.codeJS});
   }
-
-  // Timeout: if no response in 5s, hide MC container and show fallback only
-  setTimeout(() => {
-    if(mcContainer.dataset.mcId === mcId && !mcRenderCache[mcId]){
-      mcContainer.style.display = "none";
-      fallback.style.display = "";
-    }
-  }, 5000);
 }
 
 // ═══════════════════════════════════════════════════════════════════
