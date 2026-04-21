@@ -354,7 +354,7 @@ for a in activities:
             elems.append(Paragraph(f"<font color='{color}'><b>{stars_ch}</b></font> {esc(ch['t'])}", styles['ChalStyle']))
 
     # QR link
-    qr_url = f"https://abourdim.github.io/bit-48-activities/?a={a['id']}"
+    qr_url = f"https://abourdim.github.io/bit-activities/?a={a['id']}"
     elems.append(Spacer(1, 3*mm))
     elems.append(Paragraph(f"<font color='#aaa' size='7'>Ouvrir : {qr_url}</font>", styles['Body']))
 

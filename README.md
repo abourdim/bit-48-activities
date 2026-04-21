@@ -1,4 +1,4 @@
-# 🎯 Bit-48 Activities
+# 🎯 Bit Activities
 
 **48 hands-on activities for BBC micro:bit** — from blinking LEDs to BLE robots and AI, beginner to advanced.
 
