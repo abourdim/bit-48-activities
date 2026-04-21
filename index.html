@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Micro:bit · 48 activités — Workshop DIY</title>
+  <title>Micro:bit · activités — Workshop DIY</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='4' y='8' width='24' height='16' rx='3' fill='%233b82f6'/><circle cx='11' cy='16' r='2.5' fill='%23fff'/><circle cx='21' cy='16' r='2.5' fill='%23fff'/><rect x='14' y='14' width='4' height='4' rx='1' fill='%23fff' opacity='.6'/></svg>" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Micro%3Abit%2058%20Activities%22%2C%22short_name%22%3A%22Micro%3Abit%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a0f1e%22%2C%22theme_color%22%3A%22%233b82f6%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%2520viewBox%3D'0%25200%2520192%2520192'%253E%253Crect%2520x%3D'24'%2520y%3D'48'%2520width%3D'144'%2520height%3D'96'%2520rx%3D'18'%2520fill%3D'%25233b82f6'%2F%253E%253Ccircle%2520cx%3D'66'%2520cy%3D'96'%2520r%3D'15'%2520fill%3D'%2523fff'%2F%253E%253Ccircle%2520cx%3D'126'%2520cy%3D'96'%2520r%3D'15'%2520fill%3D'%2523fff'%2F%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
@@ -459,7 +459,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 id="mainTitle">Micro:bit · 48 activités</h1>
+            <h1 id="mainTitle">Micro:bit · activités</h1>
             <div class="subtitle" id="mainSub">🧩 blocs · 💻 code · 🚀 défis</div>
           </div>
         </div>
@@ -599,13 +599,13 @@ const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6.0 3.214
 
 const UI = {
 fr:{
-  title:"Micro:bit · 48 activités",sub:"🧩 blocs · 💻 code · 🚀 défis",
+  title:"Micro:bit · activités",sub:"🧩 blocs · 💻 code · 🚀 défis",
   search:"🔍 Recherche",ph:"dés, radio, IA, servo…",part:"📂 Partie",diff:"⭐ Difficulté",status:"📊 Statut",
   allParts:"Toutes",simple:"Simple",advanced:"Avancée",
   allDiff:"Toutes",d1:"⭐ Débutant",d2:"⭐⭐ Inter.",d3:"⭐⭐⭐ Avancé",
   allStat:"Tous",todo:"À faire",done:"Fait ✅",fav:"Favoris ⭐",
   v2only:"V2 uniquement",iaonly:"IA uniquement",reset:"🔄 Réinit.",random:"🎲 Au hasard",
-  results:"Résultats",of:"/ 48",doneL:"Fait",favL:"Favoris",
+  results:"Résultats",of:"",doneL:"Fait",favL:"Favoris",
   tabInfo:"🎯 Info",tabBlocks:"🧩 Blocs",tabChal:"🚀 Défis",
   needsLabel:"Tu as besoin de :",codeTip:"💡 Ouvre <strong>MakeCode</strong> → passe en mode <strong>JavaScript</strong> ou <strong>Python</strong> → colle le code → reviens en <strong>Blocs</strong> si tu veux.",
   markDone:"Marquer Fait ✅",unmarkDone:"Annuler Fait ✅",markFav:"Favori ⭐",unmarkFav:"Retirer ⭐",
@@ -615,13 +615,13 @@ fr:{
   sbAll:"Tout",sbSimple:"Simple",sbAdvanced:"Avancé",sbLed:"Affichage",sbInput:"Entrées",sbGames:"Jeux",sbSensors:"Capteurs",sbComm:"Communication",sbSound:"Son",sbProg:"Programmation",sbElec:"Électronique",sbRobot:"Robotique"
 },
 en:{
-  title:"Micro:bit · 48 Activities",sub:"🧩 blocks · 💻 code · 🚀 challenges",
+  title:"Micro:bit · Activities",sub:"🧩 blocks · 💻 code · 🚀 challenges",
   search:"🔍 Search",ph:"dice, radio, AI, servo…",part:"📂 Part",diff:"⭐ Difficulty",status:"📊 Status",
   allParts:"All",simple:"Simple",advanced:"Advanced",
   allDiff:"All",d1:"⭐ Beginner",d2:"⭐⭐ Inter.",d3:"⭐⭐⭐ Advanced",
   allStat:"All",todo:"To do",done:"Done ✅",fav:"Favorites ⭐",
   v2only:"V2 only",iaonly:"AI only",reset:"🔄 Reset",random:"🎲 Random",
-  results:"Results",of:"/ 48",doneL:"Done",favL:"Favorites",
+  results:"Results",of:"",doneL:"Done",favL:"Favorites",
   tabInfo:"🎯 Info",tabBlocks:"🧩 Blocks",tabChal:"🚀 Challenges",
   needsLabel:"You need:",codeTip:"💡 Open <strong>MakeCode</strong> → switch to <strong>JavaScript</strong> or <strong>Python</strong> → paste the code → switch back to <strong>Blocks</strong> if you like.",
   markDone:"Mark Done ✅",unmarkDone:"Undo Done ✅",markFav:"Favorite ⭐",unmarkFav:"Remove ⭐",
@@ -631,13 +631,13 @@ en:{
   sbAll:"All",sbSimple:"Simple",sbAdvanced:"Advanced",sbLed:"Display",sbInput:"Inputs",sbGames:"Games",sbSensors:"Sensors",sbComm:"Communication",sbSound:"Sound",sbProg:"Programming",sbElec:"Electronics",sbRobot:"Robotics"
 },
 ar:{
-  title:"Micro:bit · 48 نشاطاً",sub:"🧩 مكعبات · 💻 كود · 🚀 تحديات",
+  title:"Micro:bit · أنشطة",sub:"🧩 مكعبات · 💻 كود · 🚀 تحديات",
   search:"🔍 بحث",ph:"نرد، راديو، ذكاء اصطناعي…",part:"📂 القسم",diff:"⭐ الصعوبة",status:"📊 الحالة",
   allParts:"الكل",simple:"بسيط",advanced:"متقدم",
   allDiff:"الكل",d1:"⭐ مبتدئ",d2:"⭐⭐ متوسط",d3:"⭐⭐⭐ متقدم",
   allStat:"الكل",todo:"للعمل",done:"تم ✅",fav:"مفضل ⭐",
   v2only:"V2 فقط",iaonly:"ذ.إ. فقط",reset:"🔄 إعادة",random:"🎲 عشوائي",
-  results:"النتائج",of:"/ 48",doneL:"تم",favL:"مفضل",
+  results:"النتائج",of:"",doneL:"تم",favL:"مفضل",
   tabInfo:"🎯 معلومات",tabBlocks:"🧩 المكعبات",tabChal:"🚀 التحديات",
   needsLabel:"تحتاج إلى:",codeTip:"💡 افتح <strong>MakeCode</strong> ← انتقل إلى وضع <strong>JavaScript</strong> أو <strong>Python</strong> ← الصق الكود ← عُد إلى <strong>المكعبات</strong> إن أردت.",
   markDone:"تم الإنجاز ✅",unmarkDone:"إلغاء الإنجاز ✅",markFav:"مفضل ⭐",unmarkFav:"إزالة ⭐",
@@ -3543,7 +3543,7 @@ function render(){
   const doneC = Object.keys(progress.done).length;
   const favC = Object.keys(progress.fav).length;
   $("statsRow").innerHTML = `<span>${t("results")} : <strong>${list.length}</strong> ${t("of")}</span><span>${t("doneL")} : <strong>${doneC}</strong></span><span>${t("favL")} : <strong>${favC}</strong></span>`;
-  $("statsText").textContent = `${doneC} / 48 (${Math.round(doneC/48*100)}%)`;
+  $("statsText").textContent = `${doneC} / ${A.length} (${Math.round(doneC/A.length*100)}%)`;
 
   if(list.length === 0){
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">${t("noResults")}</div>`;
