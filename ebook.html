@@ -479,6 +479,7 @@ body {
 <a class="nav-link" href="#act-1" data-id="1">1. Afficher un texte</a>
 <a class="nav-link" href="#act-2" data-id="2">2. Faire défiler un texte</a>
 <a class="nav-link" href="#act-3" data-id="3">3. Afficher un dessin</a>
+<a class="nav-link" href="#act-4" data-id="4">4. Créer sa propre icône</a>
 <a class="nav-link" href="#act-5" data-id="5">5. Faire clignoter une icône</a>
 <a class="nav-link" href="#act-6" data-id="6">6. Utiliser les boutons</a>
 <a class="nav-link" href="#act-7" data-id="7">7. Secouer la carte</a>
@@ -828,6 +829,82 @@ basic.show_icon(IconNames.HEART)</div>
   <div class="chal-item"><span class="chal-dot" style="background:#40BF4A"></span><span>Change l&#x27;icône : IconNames.House, IconNames.Happy, IconNames.Duck…</span></div>
 </div>
 <div class="act-footer"><span>Activite #3</span><span>micro:bit &middot; 48 Activites</span></div>
+</section>
+<section class="act-section" id="act-4">
+<div class="act-header-bar" style="--hdr-color:#40BF4A">
+  <div class="act-num-badge" style="background:#40BF4A">4</div>
+  <div class="act-title-area">
+    <div class="act-title-text">Créer sa propre icône</div>
+    <div class="act-header-tags">
+      <span class="tag-chip diff" style="--dc:#40BF4A"><span class="tag-stars">&#9733;&#9734;&#9734;</span> Debutant</span>
+      <span class="tag-chip time">10–15 min</span>
+    </div>
+  </div>
+</div>
+<div class="glass-card">
+  <div class="sec-label">Objectif</div>
+  <div class="goal-text">Dessiner ta propre icône en LED (5x5 pixels).</div>
+</div>
+<div class="content-row">
+<div class="info-col">
+  <div class="sec-label">Materiel</div>
+  <div class="needs-wrap">
+    <span class="need-pill">micro:bit</span>
+    <span class="need-pill">MakeCode</span>
+  </div>
+</div></div>
+<div class="sec-label">Programme (Blocs)</div>
+<div class="mc-blocks" id="mc-4"><div class="mc-loading">Chargement des blocs...</div></div>
+<script>mcQueue.push({id:"mc-4",code:"basic.showLeds(\\`\n    # . # . #\n    . # . # .\n    # . # . #\n    . # . # .\n    # . # . #\n\\`)"});</script>
+<div class="sec-label">Blocs utilises</div>
+<div class="blocks-ref-list">
+<div class="block-ref-item">
+  <div class="block-ref-chip" style="background:#1E90FF">montrer LEDs</div>
+  <div class="block-ref-desc">Allume des LEDs specifiques avec un motif 5x5 personnalise.</div>
+</div>
+</div>
+<div class="sec-label">Algorithme</div>
+<div class="flowchart"><div class="fc-node start">DEBUT</div><div class="fc-arrow"></div><div class="fc-node end">FIN</div></div>
+<div class="sec-label">Pseudo-code</div>
+<div class="pseudo-box"><span class="pk">DEBUT</span>
+
+<span class="pk">FIN</span></div>
+<div class="sec-label">Etapes</div>
+<ol class="steps-list">
+  <li class="step-item"><span class="step-num">1</span><span class="step-text">Au démarrage → Montrer LEDs (dessine ton motif 5×5)</span></li>
+</ol>
+<div class="tip-box"><span class="tip-icon">&#128161;</span> Une lettre simple (A, M, O) marche très bien.</div>
+<div class="sec-label">Code</div>
+<div class="code-grid">
+<div class="code-panel">
+  <div class="code-panel-header js-header"><span class="code-lang-dot js-dot"></span> JavaScript</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block js-code">basic.showLeds(\`
+    # . # . #
+    . # . # .
+    # . # . #
+    . # . # .
+    # . # . #
+\`)</div>
+</div>
+<div class="code-panel">
+  <div class="code-panel-header py-header"><span class="code-lang-dot py-dot"></span> Python</div>
+  <button class="copy-btn no-print" onclick="navigator.clipboard.writeText(this.parentElement.querySelector(&quot;.code-block&quot;).textContent);this.textContent=&quot;Copie!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copier&quot;,2000)">Copier</button>
+  <div class="code-block py-code">basic.show_leds(<span class="hl-str">&quot;&quot;</span><span class="hl-str">&quot;
+    # . # . #
+    . # . # .
+    # . # . #
+    . # . # .
+    # . # . #
+&quot;</span><span class="hl-str">&quot;&quot;</span>)</div>
+</div>
+</div>
+<div class="sec-label">Defis</div>
+<div class="chal-list">
+  <div class="chal-item"><span class="chal-dot" style="background:#40BF4A"></span><span>Dessine ta première lettre (initiale)</span></div>
+  <div class="chal-item"><span class="chal-dot" style="background:#F7DF1E"></span><span>Fais 2 dessins qui alternent avec une pause</span></div>
+</div>
+<div class="act-footer"><span>Activite #4</span><span>micro:bit &middot; 48 Activites</span></div>
 </section>
 <section class="act-section" id="act-5">
 <div class="act-header-bar" style="--hdr-color:#40BF4A">

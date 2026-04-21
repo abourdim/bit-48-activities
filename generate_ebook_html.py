@@ -1,5 +1,5 @@
 """
-Generate a beautiful standalone interactive HTML web-book from micro:bit 58 activities.
+Generate a beautiful standalone interactive HTML web-book from micro:bit 48 activities.
 Dark elegant theme with sidebar navigation, glassmorphism cards, and scroll-spy.
 """
 import re, html as html_mod, json, os
@@ -13,7 +13,7 @@ js = js_match.group(1) if js_match else ""
 
 activities = []
 mk_pattern = re.compile(
-    r'mk\((\d+),"([^"]+)","(\w+)",\{([^}]+)\},\s*"([^"]+)",\s*\[([^\]]+)\],\s*"([^"]+)",\s*\[([^\]]*)\],\s*`([^`]*)`\s*,\s*`([^`]*)`\s*,\s*\[([^\]]*)\]\s*\)',
+    r'mk\((\d+),"([^"]+)","(\w+)",\{([^}]+)\},\s*"([^"]+)",\s*\[([^\]]+)\],\s*"([^"]+)",\s*\[([^\]]*)\],\s*`((?:\\.|[^`\\])*)`\s*,\s*`((?:\\.|[^`\\])*)`\s*,\s*\[([^\]]*)\]\s*\)',
     re.DOTALL
 )
 for m in mk_pattern.finditer(js):
@@ -36,6 +36,8 @@ for m in mk_pattern.finditer(js):
         "challenges": challenges
     })
 activities.sort(key=lambda a: a["id"])
+EXPECTED = 48
+assert len(activities) == EXPECTED, f"Parsed {len(activities)}; expected {EXPECTED}. IDs: {[a['id'] for a in activities]}"
 print(f"Extracted {len(activities)} activities")
 
 # ── LED Patterns ──

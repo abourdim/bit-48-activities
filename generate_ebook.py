@@ -1,5 +1,5 @@
 """
-Generate rich visual PDF ebook from micro:bit 58 activities
+Generate rich visual PDF ebook from micro:bit 48 activities
 With: colored blocks, LED grids, syntax-highlighted code, diagrams
 """
 import re, json, math
@@ -25,7 +25,7 @@ js = js_match.group(1) if js_match else ""
 
 activities = []
 mk_pattern = re.compile(
-    r'mk\((\d+),"([^"]+)","(\w+)",\{([^}]+)\},\s*"([^"]+)",\s*\[([^\]]+)\],\s*"([^"]+)",\s*\[([^\]]*)\],\s*`([^`]*)`\s*,\s*`([^`]*)`\s*,\s*\[([^\]]*)\]\s*\)',
+    r'mk\((\d+),"([^"]+)","(\w+)",\{([^}]+)\},\s*"([^"]+)",\s*\[([^\]]+)\],\s*"([^"]+)",\s*\[([^\]]*)\],\s*`((?:\\.|[^`\\])*)`\s*,\s*`((?:\\.|[^`\\])*)`\s*,\s*\[([^\]]*)\]\s*\)',
     re.DOTALL
 )
 for m in mk_pattern.finditer(js):
@@ -48,6 +48,8 @@ for m in mk_pattern.finditer(js):
         "challenges": challenges
     })
 activities.sort(key=lambda a: a["id"])
+EXPECTED = 48
+assert len(activities) == EXPECTED, f"Parsed {len(activities)}; expected {EXPECTED}. IDs: {[a['id'] for a in activities]}"
 print(f"Extracted {len(activities)} activities")
 
 # ── LED Icon Patterns ──
@@ -236,7 +238,7 @@ def detect_block_chips(code):
     return chips
 
 # ── Build PDF ──
-output_path = "ebook-microbit-58-activities.pdf"
+output_path = "ebook-microbit-48-activities.pdf"
 doc = SimpleDocTemplate(output_path, pagesize=A4,
                         topMargin=1.8*cm, bottomMargin=1.8*cm,
                         leftMargin=1.8*cm, rightMargin=1.8*cm)
@@ -247,7 +249,7 @@ story.append(Spacer(1, 3*cm))
 story.append(MicrobitDiagram(show_pins=True))
 story.append(Spacer(1, 1*cm))
 story.append(Paragraph("Micro:bit", styles['BookTitle']))
-story.append(Paragraph("58 Activites Pratiques", styles['BookTitle']))
+story.append(Paragraph("48 Activites Pratiques", styles['BookTitle']))
 story.append(Spacer(1, 0.5*cm))
 story.append(Paragraph("Blocs + JavaScript + Python", styles['BookSub']))
 story.append(Paragraph("Du clignotement LED aux robots IA", styles['BookSub']))
@@ -262,7 +264,7 @@ cur_part = ""
 for a in activities:
     if a["part"] != cur_part:
         cur_part = a["part"]
-        story.append(Paragraph("<b>SIMPLE (1-22)</b>" if cur_part=="simple" else "<b>AVANCE (23-58)</b>", styles['TOCHead']))
+        story.append(Paragraph("<b>SIMPLE (1-22)</b>" if cur_part=="simple" else "<b>AVANCE (23-48)</b>", styles['TOCHead']))
     stars = "*" * a["difficulty"]
     tags = f"{stars} {a['time']}"
     if a["v2"]: tags += " V2"
@@ -352,7 +354,7 @@ for a in activities:
             elems.append(Paragraph(f"<font color='{color}'><b>{stars_ch}</b></font> {esc(ch['t'])}", styles['ChalStyle']))
 
     # QR link
-    qr_url = f"https://abourdim.github.io/bit-54-activities/?a={a['id']}"
+    qr_url = f"https://abourdim.github.io/bit-48-activities/?a={a['id']}"
     elems.append(Spacer(1, 3*mm))
     elems.append(Paragraph(f"<font color='#aaa' size='7'>Ouvrir : {qr_url}</font>", styles['Body']))
 
@@ -364,7 +366,7 @@ def footer(c, doc):
     c.saveState()
     c.setFont('Helvetica', 7)
     c.setFillColor(HexColor("#999"))
-    c.drawCentredString(W/2, 1.2*cm, f"Micro:bit 58 Activites - p.{c.getPageNumber()}")
+    c.drawCentredString(W/2, 1.2*cm, f"Micro:bit 48 Activites - p.{c.getPageNumber()}")
     c.restoreState()
 
 doc.build(story, onFirstPage=footer, onLaterPages=footer)

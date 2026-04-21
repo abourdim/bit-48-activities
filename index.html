@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Micro:bit · 58 activités — Workshop DIY</title>
+  <title>Micro:bit · 48 activités — Workshop DIY</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='4' y='8' width='24' height='16' rx='3' fill='%233b82f6'/><circle cx='11' cy='16' r='2.5' fill='%23fff'/><circle cx='21' cy='16' r='2.5' fill='%23fff'/><rect x='14' y='14' width='4' height='4' rx='1' fill='%23fff' opacity='.6'/></svg>" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Micro%3Abit%2058%20Activities%22%2C%22short_name%22%3A%22Micro%3Abit%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a0f1e%22%2C%22theme_color%22%3A%22%233b82f6%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%2520viewBox%3D'0%25200%2520192%2520192'%253E%253Crect%2520x%3D'24'%2520y%3D'48'%2520width%3D'144'%2520height%3D'96'%2520rx%3D'18'%2520fill%3D'%25233b82f6'%2F%253E%253Ccircle%2520cx%3D'66'%2520cy%3D'96'%2520r%3D'15'%2520fill%3D'%2523fff'%2F%253E%253Ccircle%2520cx%3D'126'%2520cy%3D'96'%2520r%3D'15'%2520fill%3D'%2523fff'%2F%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
@@ -459,7 +459,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 id="mainTitle">Micro:bit · 58 activités</h1>
+            <h1 id="mainTitle">Micro:bit · 48 activités</h1>
             <div class="subtitle" id="mainSub">🧩 blocs · 💻 code · 🚀 défis</div>
           </div>
         </div>
@@ -475,7 +475,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
               <option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option>
             </select>
           </div>
-          <div class="status-pill"><span class="status-dot"></span><span id="statsText">0 / 58</span></div>
+          <div class="status-pill"><span class="status-dot"></span><span id="statsText">0 / 48</span></div>
           <button onclick="window.print()" aria-label="Export / Print" style="font-size:.7rem;padding:4px 10px">&#128214; Export</button>
           <button class="sidebar-toggle" id="sidebarToggle" aria-label="Menu">☰</button>
         </div>
@@ -485,7 +485,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="app-body">
       <nav class="sidebar" id="sidebar">
-        <button class="sidebar-item active" data-topic="all"><span class="sidebar-icon">📋</span><span class="sidebar-label" id="sbAll">Tout</span><span class="sidebar-count" id="sbAllC">58</span></button>
+        <button class="sidebar-item active" data-topic="all"><span class="sidebar-icon">📋</span><span class="sidebar-label" id="sbAll">Tout</span><span class="sidebar-count" id="sbAllC">48</span></button>
         <div class="sidebar-title" id="sbSimple">Simple</div>
         <button class="sidebar-item" data-topic="led"><span class="sidebar-icon">💡</span><span class="sidebar-label" id="sbLed">Affichage</span><span class="sidebar-count" id="sbLedC">5</span></button>
         <button class="sidebar-item" data-topic="input"><span class="sidebar-icon">🎮</span><span class="sidebar-label" id="sbInput">Entrées</span><span class="sidebar-count" id="sbInputC">4</span></button>
@@ -497,7 +497,6 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
         <button class="sidebar-item" data-topic="prog"><span class="sidebar-icon">⏱</span><span class="sidebar-label" id="sbProg">Programmation</span><span class="sidebar-count" id="sbProgC">4</span></button>
         <button class="sidebar-item" data-topic="elec"><span class="sidebar-icon">🔌</span><span class="sidebar-label" id="sbElec">Électronique</span><span class="sidebar-count" id="sbElecC">15</span></button>
         <button class="sidebar-item" data-topic="robot"><span class="sidebar-icon">🤖</span><span class="sidebar-label" id="sbRobot">Robotique</span><span class="sidebar-count" id="sbRobotC">7</span></button>
-        <button class="sidebar-item" data-topic="ai"><span class="sidebar-icon">🧠</span><span class="sidebar-label" id="sbAi">IA</span><span class="sidebar-count" id="sbAiC">6</span></button>
         <div class="badge-shelf" id="badgeShelf"></div>
         <button class="sidebar-item roadmap-btn" id="roadmapBtn"><span class="sidebar-icon">🗺</span><span class="sidebar-label" id="sbRoadmap">Parcours</span></button>
       </nav>
@@ -600,52 +599,52 @@ const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6.0 3.214
 
 const UI = {
 fr:{
-  title:"Micro:bit · 58 activités",sub:"🧩 blocs · 💻 code · 🚀 défis",
+  title:"Micro:bit · 48 activités",sub:"🧩 blocs · 💻 code · 🚀 défis",
   search:"🔍 Recherche",ph:"dés, radio, IA, servo…",part:"📂 Partie",diff:"⭐ Difficulté",status:"📊 Statut",
   allParts:"Toutes",simple:"Simple",advanced:"Avancée",
   allDiff:"Toutes",d1:"⭐ Débutant",d2:"⭐⭐ Inter.",d3:"⭐⭐⭐ Avancé",
   allStat:"Tous",todo:"À faire",done:"Fait ✅",fav:"Favoris ⭐",
   v2only:"V2 uniquement",iaonly:"IA uniquement",reset:"🔄 Réinit.",random:"🎲 Au hasard",
-  results:"Résultats",of:"/ 58",doneL:"Fait",favL:"Favoris",
+  results:"Résultats",of:"/ 48",doneL:"Fait",favL:"Favoris",
   tabInfo:"🎯 Info",tabBlocks:"🧩 Blocs",tabChal:"🚀 Défis",
   needsLabel:"Tu as besoin de :",codeTip:"💡 Ouvre <strong>MakeCode</strong> → passe en mode <strong>JavaScript</strong> ou <strong>Python</strong> → colle le code → reviens en <strong>Blocs</strong> si tu veux.",
   markDone:"Marquer Fait ✅",unmarkDone:"Annuler Fait ✅",markFav:"Favori ⭐",unmarkFav:"Retirer ⭐",
   saveHint:"Sauvegardé sur cet appareil",prev:"◀ Préc.",next:"Suiv. ▶",
   copied:"Copié !",copyBtn:"📋 Copier",resetConfirm:"Réinitialiser la progression ?",resetDone:"Progression réinitialisée",
   noResults:"Aucune activité trouvée.",simpleTag:"Simple",advTag:"Avancée",chipDone:"Fait ✅",chipFav:"Favori ⭐",chipTodo:"À faire",go:"GO ▶",
-  sbAll:"Tout",sbSimple:"Simple",sbAdvanced:"Avancé",sbLed:"Affichage",sbInput:"Entrées",sbGames:"Jeux",sbSensors:"Capteurs",sbComm:"Communication",sbSound:"Son",sbProg:"Programmation",sbElec:"Électronique",sbRobot:"Robotique",sbAi:"IA"
+  sbAll:"Tout",sbSimple:"Simple",sbAdvanced:"Avancé",sbLed:"Affichage",sbInput:"Entrées",sbGames:"Jeux",sbSensors:"Capteurs",sbComm:"Communication",sbSound:"Son",sbProg:"Programmation",sbElec:"Électronique",sbRobot:"Robotique"
 },
 en:{
-  title:"Micro:bit · 58 Activities",sub:"🧩 blocks · 💻 code · 🚀 challenges",
+  title:"Micro:bit · 48 Activities",sub:"🧩 blocks · 💻 code · 🚀 challenges",
   search:"🔍 Search",ph:"dice, radio, AI, servo…",part:"📂 Part",diff:"⭐ Difficulty",status:"📊 Status",
   allParts:"All",simple:"Simple",advanced:"Advanced",
   allDiff:"All",d1:"⭐ Beginner",d2:"⭐⭐ Inter.",d3:"⭐⭐⭐ Advanced",
   allStat:"All",todo:"To do",done:"Done ✅",fav:"Favorites ⭐",
   v2only:"V2 only",iaonly:"AI only",reset:"🔄 Reset",random:"🎲 Random",
-  results:"Results",of:"/ 58",doneL:"Done",favL:"Favorites",
+  results:"Results",of:"/ 48",doneL:"Done",favL:"Favorites",
   tabInfo:"🎯 Info",tabBlocks:"🧩 Blocks",tabChal:"🚀 Challenges",
   needsLabel:"You need:",codeTip:"💡 Open <strong>MakeCode</strong> → switch to <strong>JavaScript</strong> or <strong>Python</strong> → paste the code → switch back to <strong>Blocks</strong> if you like.",
   markDone:"Mark Done ✅",unmarkDone:"Undo Done ✅",markFav:"Favorite ⭐",unmarkFav:"Remove ⭐",
   saveHint:"Saved on this device",prev:"◀ Prev",next:"Next ▶",
   copied:"Copied!",copyBtn:"📋 Copy",resetConfirm:"Reset progress?",resetDone:"Progress reset",
   noResults:"No activity found.",simpleTag:"Simple",advTag:"Advanced",chipDone:"Done ✅",chipFav:"Favorite ⭐",chipTodo:"To do",go:"GO ▶",
-  sbAll:"All",sbSimple:"Simple",sbAdvanced:"Advanced",sbLed:"Display",sbInput:"Inputs",sbGames:"Games",sbSensors:"Sensors",sbComm:"Communication",sbSound:"Sound",sbProg:"Programming",sbElec:"Electronics",sbRobot:"Robotics",sbAi:"AI"
+  sbAll:"All",sbSimple:"Simple",sbAdvanced:"Advanced",sbLed:"Display",sbInput:"Inputs",sbGames:"Games",sbSensors:"Sensors",sbComm:"Communication",sbSound:"Sound",sbProg:"Programming",sbElec:"Electronics",sbRobot:"Robotics"
 },
 ar:{
-  title:"Micro:bit · 58 نشاطاً",sub:"🧩 مكعبات · 💻 كود · 🚀 تحديات",
+  title:"Micro:bit · 48 نشاطاً",sub:"🧩 مكعبات · 💻 كود · 🚀 تحديات",
   search:"🔍 بحث",ph:"نرد، راديو، ذكاء اصطناعي…",part:"📂 القسم",diff:"⭐ الصعوبة",status:"📊 الحالة",
   allParts:"الكل",simple:"بسيط",advanced:"متقدم",
   allDiff:"الكل",d1:"⭐ مبتدئ",d2:"⭐⭐ متوسط",d3:"⭐⭐⭐ متقدم",
   allStat:"الكل",todo:"للعمل",done:"تم ✅",fav:"مفضل ⭐",
   v2only:"V2 فقط",iaonly:"ذ.إ. فقط",reset:"🔄 إعادة",random:"🎲 عشوائي",
-  results:"النتائج",of:"/ 58",doneL:"تم",favL:"مفضل",
+  results:"النتائج",of:"/ 48",doneL:"تم",favL:"مفضل",
   tabInfo:"🎯 معلومات",tabBlocks:"🧩 المكعبات",tabChal:"🚀 التحديات",
   needsLabel:"تحتاج إلى:",codeTip:"💡 افتح <strong>MakeCode</strong> ← انتقل إلى وضع <strong>JavaScript</strong> أو <strong>Python</strong> ← الصق الكود ← عُد إلى <strong>المكعبات</strong> إن أردت.",
   markDone:"تم الإنجاز ✅",unmarkDone:"إلغاء الإنجاز ✅",markFav:"مفضل ⭐",unmarkFav:"إزالة ⭐",
   saveHint:"محفوظ على هذا الجهاز",prev:"السابق ◀",next:"▶ التالي",
   copied:"تم النسخ!",copyBtn:"📋 نسخ",resetConfirm:"إعادة تعيين التقدم؟",resetDone:"تمت إعادة التعيين",
   noResults:"لم يُعثر على نشاط.",simpleTag:"بسيط",advTag:"متقدم",chipDone:"تم ✅",chipFav:"مفضل ⭐",chipTodo:"للعمل",go:"▶ ابدأ",
-  sbAll:"الكل",sbSimple:"بسيط",sbAdvanced:"متقدم",sbLed:"العرض",sbInput:"المدخلات",sbGames:"الألعاب",sbSensors:"المستشعرات",sbComm:"الاتصال",sbSound:"الصوت",sbProg:"البرمجة",sbElec:"الإلكترونيات",sbRobot:"الروبوتات",sbAi:"الذكاء الاصطناعي"
+  sbAll:"الكل",sbSimple:"بسيط",sbAdvanced:"متقدم",sbLed:"العرض",sbInput:"المدخلات",sbGames:"الألعاب",sbSensors:"المستشعرات",sbComm:"الاتصال",sbSound:"الصوت",sbProg:"البرمجة",sbElec:"الإلكترونيات",sbRobot:"الروبوتات"
 }
 };
 function mk(id,title,part,meta,goal,needs,tip,blocks,codeJS,codePY,challenges){
@@ -1238,7 +1237,7 @@ input.on_logo_event(TouchButtonEvent.PRESSED, on_logo)`,
 [{t:'Change le code secret : <code>"ABA"</code> → <code>"ABBA"</code>',d:1},{t:"Inventez 3 codes différents en équipe",d:2}]
 ),
 
-// ── ADVANCED 23–58 ──
+// ── ADVANCED 23–48 ──
 
 mk(23,"Jeu du yoga","advanced",{difficulty:2,time:"20–30 min"},
 "Rester immobile : si tu bouges trop, tu perds.",
@@ -2240,440 +2239,15 @@ basic.forever(on_forever)`,
 [{t:"Couvre l'écran : la lampe s'allume",d:1},{t:"Ajuste le seuil <code>50</code>",d:1}]
 ),
 
-mk(49,"Vittascience","advanced",{difficulty:2,time:"20–35 min"},
-"Découvrir Vittascience : un éditeur en ligne alternatif à MakeCode, avec blocs et Python.",
-["micro:bit","Navigateur web","Compte Vittascience (vittascience.com)"],
-"Vittascience est français et propose des blocs + Python. Commence par recréer l'activité 12 (température) puis l'activité 10 (dés).",
-["Aller sur vittascience.com → Micro:bit","Créer un nouveau projet en mode blocs","Recréer l'activité 12 : bouton A → afficher température","Téléverser sur la carte et tester","Basculer en mode Python et comparer le code"],
-`// Vittascience génère du Python, pas du JS MakeCode
-// Exemple en mode blocs → Python :
-input.onButtonPressed(Button.A, function () {
-    basic.showNumber(input.temperature())
-    basic.showString("C")
-})
-// Puis recréer l'activité 10 (dés) :
-input.onGesture(Gesture.Shake, function () {
-    basic.showNumber(randint(1, 6))
-})`,
-`# Vittascience utilise du MicroPython natif
-# Activité 12 (température) :
-from microbit import *
-while True:
-    if button_a.was_pressed():
-        display.scroll(temperature())
-        display.scroll("C")
 
-# Activité 10 (dés) :
-# from microbit import *
-# import random
-# while True:
-#     if accelerometer.was_gesture("shake"):
-#         display.show(random.randint(1, 6))`,
-[{t:"Compare les menus Vittascience vs MakeCode : quelles différences ?",d:1},{t:"Refais l'activité 10 (dés) dans Vittascience",d:1},{t:"Essaie le mode Python de Vittascience et modifie le code à la main",d:2}]
-),
 
-mk(50,"Caméra IA : suivre un objet","advanced",{difficulty:3,time:"60–90 min",ia:true},
-"Utiliser une caméra IA (HuskyLens) pour suivre un objet coloré et diriger un véhicule vers lui.",
-["Robot (micro:bit)","Caméra IA (HuskyLens)","Câble I2C","MakeCode"],
-"Entraîne d'abord la caméra sur un objet coloré (bouton d'apprentissage sur la HuskyLens). La position X va de 0 (gauche) à 320 (droite).",
-["Initialiser HuskyLens en mode I2C","Répéter → lire caméra → position X de l'objet","Si X < 100 → tourner à gauche","Si X > 220 → tourner à droite","Sinon → avancer tout droit","Si rien détecté → stop"],
-`// Nécessite extension HuskyLens
-basic.forever(function () {
-    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
-        let x = huskylens.readBox_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.xCenter)
-        if (x < 100) {
-            basic.showString("G")
-        } else if (x > 220) {
-            basic.showString("D")
-        } else {
-            basic.showIcon(IconNames.ArrowNorth)
-        }
-    } else {
-        basic.showIcon(IconNames.No)
-    }
-    basic.pause(200)
-})`,
-`# Nécessite extension HuskyLens
-def on_forever():
-    if huskylens.is_appear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock):
-        x = huskylens.read_box_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.xCenter)
-        if x < 100:
-            basic.show_string("G")
-        elif x > 220:
-            basic.show_string("D")
-        else:
-            basic.show_icon(IconNames.ARROW_NORTH)
-    else:
-        basic.show_icon(IconNames.NO)
-    basic.pause(200)
-basic.forever(on_forever)`,
-[{t:"Commence à faible vitesse, puis augmente",d:1},{t:"Entraîne la caméra sur un objet de couleur",d:2}]
-),
 
-mk(51,"Caméra IA : reconnaître un visage","advanced",{difficulty:3,time:"60–90 min",ia:true},
-"Utiliser la caméra IA (HuskyLens) pour enregistrer un visage et le reconnaître automatiquement.",
-["Caméra IA (HuskyLens)","micro:bit","Câble I2C","MakeCode"],
-"Mode Face Recognition sur la HuskyLens. Appuie sur le bouton d'apprentissage en regardant la caméra. Entraîne 1–2 visages pour tester.",
-["Initialiser HuskyLens en I2C","Bouton A → basculer en mode apprentissage","Répéter → si visage reconnu → 😀 + afficher ID","Si visage inconnu → 😐"],
-`// Nécessite extension HuskyLens
-input.onButtonPressed(Button.A, function () {
-    huskylens.initI2c()
-    basic.showString("GO")
-})
-basic.forever(function () {
-    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
-        basic.showIcon(IconNames.Happy)
-    } else {
-        basic.showIcon(IconNames.Meh)
-    }
-    basic.pause(500)
-})`,
-`# Nécessite extension HuskyLens
-def on_button_a():
-    huskylens.init_i2c()
-    basic.show_string("GO")
-input.on_button_pressed(Button.A, on_button_a)
 
-def on_forever():
-    if huskylens.is_appear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock):
-        basic.show_icon(IconNames.HAPPY)
-    else:
-        basic.show_icon(IconNames.MEH)
-    basic.pause(500)
-basic.forever(on_forever)`,
-[{t:"Teste différentes distances et lumières",d:1},{t:"Ajoute une action différente par visage reconnu",d:2}]
-),
 
-mk(52,"Caméra IA : lire un QR code","advanced",{difficulty:3,time:"60–90 min",ia:true},
-"Utiliser la caméra IA (HuskyLens) en mode Tag pour lire des codes (AprilTag) et déclencher des actions différentes.",
-["Caméra IA (HuskyLens)","micro:bit","Câble I2C","Tags imprimés (AprilTag)","MakeCode"],
-"Imprime des AprilTags (pas des QR codes classiques). La HuskyLens en mode Tag reconnaît chaque tag par son ID unique.",
-["Initialiser HuskyLens en mode Tag","Répéter → lire le tag détecté → récupérer ID","Si ID = 1 → action A (ex: son)","Si ID = 2 → action B (ex: LED)","Si rien → attendre"],
-`// Nécessite extension HuskyLens en mode Tag
-basic.forever(function () {
-    if (huskylens.isAppear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
-        let id = huskylens.readBox_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.ID)
-        basic.showNumber(id)
-    }
-    basic.pause(500)
-})`,
-`# Nécessite extension HuskyLens en mode Tag
-def on_forever():
-    if huskylens.is_appear_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock):
-        id = huskylens.read_box_s(HUSKYLENSResultType_t.HUSKYLENSResultBlock, Content1.ID)
-        basic.show_number(id)
-    basic.pause(500)
-basic.forever(on_forever)`,
-[{t:"Fais un jeu : 'scanne le bon code pour gagner'",d:1},{t:"Associe chaque code à un son/action différent",d:2}]
-),
 
-mk(53,"Micro:bit Create AI V2","advanced",{difficulty:3,time:"60–90 min",ia:true,v2:true},
-"Créer un modèle de Machine Learning avec le site Create AI de micro:bit, puis l'utiliser sur ta carte.",
-["micro:bit V2","Site createai.microbit.org","MakeCode"],
-"ML = la carte apprend à reconnaître des mouvements. Commence avec 2 classes simples : 'calme' (immobile) vs 'bouge' (secouer). Collecte au moins 20 exemples par classe.",
-["Aller sur createai.microbit.org","Créer 2 catégories : 'calme' et 'bouge'","Connecter la micro:bit et collecter 20+ exemples par classe","Entraîner le modèle → vérifier la précision","Exporter le fichier .hex vers la carte","Répéter → si classe 'calme' → 😀, si 'bouge' → ⚡"],
-`// Code généré par Create AI — adapter
-basic.forever(function () {
-    // Le modèle ML est intégré au fichier .hex
-    // Si prédiction = classe 1
-    basic.showIcon(IconNames.Happy)
-    // Si prédiction = classe 2
-    // basic.showIcon(IconNames.Sad)
-    basic.pause(500)
-})`,
-`# Code généré par Create AI — adapter
-def on_forever():
-    # Le modèle ML est intégré au fichier .hex
-    basic.show_icon(IconNames.HAPPY)
-    basic.pause(500)
-basic.forever(on_forever)`,
-[{t:"Ajoute un son différent par classe",d:1},{t:"Crée 3 classes au lieu de 2",d:2}]
-),
 
-mk(54,"Make: AI Robots V2","advanced",{difficulty:3,time:"60–90 min",ia:true,v2:true},
-"Projet robot IA guidé par la plateforme Make: AI Robots — entraîner un modèle et piloter un robot avec.",
-["micro:bit V2","Plateforme makeairobots.com","Robot compatible (option)"],
-"La plateforme guide pas à pas. Commence par le tutoriel 'détecter un son / réagir'. Le modèle ML tourne directement sur la micro:bit V2.",
-["Aller sur makeairobots.com et choisir un tutoriel","Connecter la micro:bit V2","Collecter des données (son, mouvement…)","Entraîner le modèle sur la plateforme","Télécharger le .hex et flasher la carte","Tester → ajuster les seuils → améliorer"],
-`// Code dépend du tutoriel choisi
-// Exemple: réagir à un son
-basic.forever(function () {
-    if (input.soundLevel() > 100) {
-        basic.showIcon(IconNames.Happy)
-        // action robot
-    } else {
-        basic.showIcon(IconNames.Asleep)
-    }
-    basic.pause(200)
-})`,
-`# Code dépend du tutoriel choisi
-def on_forever():
-    if input.sound_level() > 100:
-        basic.show_icon(IconNames.HAPPY)
-    else:
-        basic.show_icon(IconNames.ASLEEP)
-    basic.pause(200)
-basic.forever(on_forever)`,
-[{t:"Garde un carnet : ce que tu changes et ce que ça fait",d:1},{t:"Combine 2 capteurs pour une décision plus maline",d:3}]
-),
 
-mk(55,"Utiliser les tableaux","advanced",{difficulty:2,time:"20–30 min"},
-"Stocker plusieurs valeurs dans un tableau et les parcourir.",
-["micro:bit","MakeCode"],
-"Un tableau = une liste ordonnée de valeurs. Idéal pour stocker des mesures ou des scores.",
-["Au démarrage → créer tableau vide","Bouton A → ajouter température au tableau","Bouton B → afficher toutes les valeurs","Secouer → afficher min et max"],
-`let mesures: number[] = []
-input.onButtonPressed(Button.A, function () {
-    mesures.push(input.temperature())
-    basic.showNumber(mesures.length)
-})
-input.onButtonPressed(Button.B, function () {
-    for (let v of mesures) {
-        basic.showNumber(v)
-        basic.pause(500)
-    }
-})
-input.onGesture(Gesture.Shake, function () {
-    if (mesures.length > 0) {
-        let min = mesures[0]
-        let max = mesures[0]
-        for (let v of mesures) {
-            if (v < min) min = v
-            if (v > max) max = v
-        }
-        basic.showString("min")
-        basic.showNumber(min)
-        basic.showString("max")
-        basic.showNumber(max)
-    }
-})`,
-`mesures = []
 
-def on_button_a():
-    mesures.append(input.temperature())
-    basic.show_number(len(mesures))
-input.on_button_pressed(Button.A, on_button_a)
-
-def on_button_b():
-    for v in mesures:
-        basic.show_number(v)
-        basic.pause(500)
-input.on_button_pressed(Button.B, on_button_b)
-
-def on_shake():
-    if len(mesures) > 0:
-        mn = mesures[0]
-        mx = mesures[0]
-        for v in mesures:
-            if v < mn:
-                mn = v
-            if v > mx:
-                mx = v
-        basic.show_string("min")
-        basic.show_number(mn)
-        basic.show_string("max")
-        basic.show_number(mx)
-input.on_gesture(Gesture.SHAKE, on_shake)`,
-[{t:"Stocke 5 mesures puis affiche la moyenne",d:2},{t:"Fais un histogramme LED des valeurs (barres)",d:3}]
-),
-
-mk(56,"Manipuler du texte","advanced",{difficulty:2,time:"15–25 min"},
-"Construire, découper et comparer des chaînes de texte.",
-["micro:bit","MakeCode"],
-"Une chaîne = du texte entre guillemets. Tu peux coller (+), mesurer (.length) et comparer (==).",
-["Bouton A → construire un message lettre par lettre","Bouton B → afficher la longueur","Secouer → vérifier si le mot == 'OUI'"],
-`let mot = ""
-input.onButtonPressed(Button.A, function () {
-    mot += "O"
-    basic.showString(mot)
-})
-input.onButtonPressed(Button.B, function () {
-    mot += "UI"
-    basic.showString(mot)
-})
-input.onGesture(Gesture.Shake, function () {
-    basic.showNumber(mot.length)
-    basic.pause(500)
-    if (mot == "OUI") {
-        basic.showIcon(IconNames.Happy)
-    } else {
-        basic.showIcon(IconNames.Sad)
-    }
-    mot = ""
-})`,
-`mot = ""
-
-def on_button_a():
-    global mot
-    mot += "O"
-    basic.show_string(mot)
-input.on_button_pressed(Button.A, on_button_a)
-
-def on_button_b():
-    global mot
-    mot += "UI"
-    basic.show_string(mot)
-input.on_button_pressed(Button.B, on_button_b)
-
-def on_shake():
-    global mot
-    basic.show_number(len(mot))
-    basic.pause(500)
-    if mot == "OUI":
-        basic.show_icon(IconNames.HAPPY)
-    else:
-        basic.show_icon(IconNames.SAD)
-    mot = ""
-input.on_gesture(Gesture.SHAKE, on_shake)`,
-[{t:"Crée un mot secret et vérifie-le avec secouer",d:1},{t:"Fais un jeu : tape A/B pour écrire en binaire (A=0, B=1)",d:2}]
-),
-
-mk(57,"Premier pas en robotique","advanced",{difficulty:1,time:"20–30 min"},
-"Faire avancer, reculer et tourner un robot avec les boutons.",
-["Robot (micro:bit)","MakeCode"],
-"C'est l'activité d'introduction à la robotique. Branche les moteurs sur P0 et P1. Teste chaque commande une par une.",
-["Bouton A → avancer 1 seconde","Bouton B → reculer 1 seconde","A+B → tourner à droite 0.5 seconde","Secouer → tout arrêter"],
-`// Adapter les pins à ton robot
-function forward(ms: number) {
-    pins.analogWritePin(AnalogPin.P0, 512)
-    pins.analogWritePin(AnalogPin.P1, 512)
-    basic.pause(ms)
-    pins.analogWritePin(AnalogPin.P0, 0)
-    pins.analogWritePin(AnalogPin.P1, 0)
-}
-function backward(ms: number) {
-    pins.analogWritePin(AnalogPin.P0, -512)
-    pins.analogWritePin(AnalogPin.P1, -512)
-    basic.pause(ms)
-    pins.analogWritePin(AnalogPin.P0, 0)
-    pins.analogWritePin(AnalogPin.P1, 0)
-}
-function turnRight(ms: number) {
-    pins.analogWritePin(AnalogPin.P0, 512)
-    pins.analogWritePin(AnalogPin.P1, 0)
-    basic.pause(ms)
-    pins.analogWritePin(AnalogPin.P0, 0)
-}
-input.onButtonPressed(Button.A, function () {
-    basic.showIcon(IconNames.ArrowNorth)
-    forward(1000)
-    basic.clearScreen()
-})
-input.onButtonPressed(Button.B, function () {
-    basic.showIcon(IconNames.ArrowSouth)
-    backward(1000)
-    basic.clearScreen()
-})
-input.onButtonPressed(Button.AB, function () {
-    basic.showString("D")
-    turnRight(500)
-    basic.clearScreen()
-})
-input.onGesture(Gesture.Shake, function () {
-    pins.analogWritePin(AnalogPin.P0, 0)
-    pins.analogWritePin(AnalogPin.P1, 0)
-    basic.showIcon(IconNames.No)
-})`,
-`# Adapter les pins à ton robot
-def forward(ms):
-    pins.analog_write_pin(AnalogPin.P0, 512)
-    pins.analog_write_pin(AnalogPin.P1, 512)
-    basic.pause(ms)
-    pins.analog_write_pin(AnalogPin.P0, 0)
-    pins.analog_write_pin(AnalogPin.P1, 0)
-
-def backward(ms):
-    pins.analog_write_pin(AnalogPin.P0, -512)
-    pins.analog_write_pin(AnalogPin.P1, -512)
-    basic.pause(ms)
-    pins.analog_write_pin(AnalogPin.P0, 0)
-    pins.analog_write_pin(AnalogPin.P1, 0)
-
-def turn_right(ms):
-    pins.analog_write_pin(AnalogPin.P0, 512)
-    pins.analog_write_pin(AnalogPin.P1, 0)
-    basic.pause(ms)
-    pins.analog_write_pin(AnalogPin.P0, 0)
-
-def on_button_a():
-    basic.show_icon(IconNames.ARROW_NORTH)
-    forward(1000)
-    basic.clear_screen()
-input.on_button_pressed(Button.A, on_button_a)
-
-def on_button_b():
-    basic.show_icon(IconNames.ARROW_SOUTH)
-    backward(1000)
-    basic.clear_screen()
-input.on_button_pressed(Button.B, on_button_b)
-
-def on_button_ab():
-    basic.show_string("D")
-    turn_right(500)
-    basic.clear_screen()
-input.on_button_pressed(Button.AB, on_button_ab)
-
-def on_shake():
-    pins.analog_write_pin(AnalogPin.P0, 0)
-    pins.analog_write_pin(AnalogPin.P1, 0)
-    basic.show_icon(IconNames.NO)
-input.on_gesture(Gesture.SHAKE, on_shake)`,
-[{t:"Fais avancer puis reculer automatiquement (sans bouton)",d:1},{t:"Fais un parcours : avancer, tourner, avancer, stop",d:2}]
-),
-
-mk(58,"Comprendre l'IA","advanced",{difficulty:1,time:"15–20 min"},
-"Découvrir ce qu'est l'intelligence artificielle avec un jeu de devinettes sur la micro:bit.",
-["micro:bit","MakeCode"],
-"L'IA apprend à partir d'exemples, comme toi ! Ici on simule un 'apprentissage' : la carte retient tes choix et essaie de deviner le prochain.",
-["Au démarrage → compteur A=0, compteur B=0","Bouton A → A+=1, afficher 'A'","Bouton B → B+=1, afficher 'B'","Secouer → la carte 'prédit' : si A > B → 'Tu vas dire A !' sinon 'B !'"],
-`let countA = 0
-let countB = 0
-input.onButtonPressed(Button.A, function () {
-    countA += 1
-    basic.showString("A")
-})
-input.onButtonPressed(Button.B, function () {
-    countB += 1
-    basic.showString("B")
-})
-input.onGesture(Gesture.Shake, function () {
-    basic.showString("?")
-    basic.pause(500)
-    if (countA >= countB) {
-        basic.showString("A!")
-    } else {
-        basic.showString("B!")
-    }
-    basic.pause(1000)
-    basic.showString(countA + "/" + countB)
-})`,
-`count_a = 0
-count_b = 0
-
-def on_button_a():
-    global count_a
-    count_a += 1
-    basic.show_string("A")
-input.on_button_pressed(Button.A, on_button_a)
-
-def on_button_b():
-    global count_b
-    count_b += 1
-    basic.show_string("B")
-input.on_button_pressed(Button.B, on_button_b)
-
-def on_shake():
-    basic.show_string("?")
-    basic.pause(500)
-    if count_a >= count_b:
-        basic.show_string("A!")
-    else:
-        basic.show_string("B!")
-    basic.pause(1000)
-    basic.show_string(str(count_a) + "/" + str(count_b))
-input.on_gesture(Gesture.SHAKE, on_shake)`,
-[{t:"Essaie de tromper la 'prédiction' de la carte",d:1},{t:"Ajoute un score : +1 si la carte devine juste",d:2},{t:"Réfléchis : en quoi c'est similaire à une vraie IA ?",d:1}]
-),
 ];
 
 // ═══════════════════════════════════════════════════════════════════
@@ -3167,150 +2741,6 @@ const BT = {
   ]},
   {cat:"basic",type:"stack",label:"pause (ms)",arg:500}
 ]}],
-49:[{cat:"basic",type:"hat",label:"au démarrage (Vittascience)",children:[
-  {cat:"basic",type:"stack",label:"(ouvrir vittascience.com)"},
-  {cat:"basic",type:"stack",label:"(créer projet → mode blocs)"}
-]},{cat:"input",type:"hat",label:"lorsque bouton A pressé",children:[
-  {cat:"basic",type:"stack",label:"afficher nombre",arg:{cat:"input",type:"value",label:"température"}},
-  {cat:"basic",type:"stack",label:"afficher texte",arg:"C"}
-]}],
-50:[{cat:"basic",type:"hat",label:"au démarrage",children:[
-  {cat:"variables",type:"stack",label:"initialiser HuskyLens I2C"}
-]},{cat:"loops",type:"cblock",label:"répéter indéfiniment",children:[
-  {cat:"logic",type:"cblock",label:"si",arg:{cat:"logic",type:"value",label:"HuskyLens détecte bloc"},children:[
-    {cat:"variables",type:"stack",label:"définir x",arg:{cat:"variables",type:"value",label:"position X du bloc"}},
-    {cat:"logic",type:"cblock",label:"si",arg:{cat:"logic",type:"value",label:"x < 100"},children:[
-      {cat:"basic",type:"stack",label:"afficher texte",arg:"G"}
-    ],else:[
-      {cat:"logic",type:"cblock",label:"si",arg:{cat:"logic",type:"value",label:"x > 220"},children:[
-        {cat:"basic",type:"stack",label:"afficher texte",arg:"D"}
-      ],else:[
-        {cat:"basic",type:"stack",label:"montrer l'icône",arg:"↑ Nord"}
-      ]}
-    ]}
-  ],else:[
-    {cat:"basic",type:"stack",label:"montrer l'icône",arg:"✕ No"}
-  ]},
-  {cat:"basic",type:"stack",label:"pause (ms)",arg:200}
-]}],
-51:[{cat:"input",type:"hat",label:"lorsque bouton A pressé",children:[
-  {cat:"variables",type:"stack",label:"initialiser HuskyLens I2C"},
-  {cat:"basic",type:"stack",label:"afficher texte",arg:"GO"}
-]},{cat:"loops",type:"cblock",label:"répéter indéfiniment",children:[
-  {cat:"logic",type:"cblock",label:"si",arg:{cat:"logic",type:"value",label:"HuskyLens détecte visage"},children:[
-    {cat:"basic",type:"stack",label:"montrer l'icône",arg:"😀 Happy"}
-  ],else:[
-    {cat:"basic",type:"stack",label:"montrer l'icône",arg:"😐 Meh"}
-  ]},
-  {cat:"basic",type:"stack",label:"pause (ms)",arg:500}
-]}],
-52:[{cat:"loops",type:"cblock",label:"répéter indéfiniment",children:[
-  {cat:"logic",type:"cblock",label:"si",arg:{cat:"logic",type:"value",label:"HuskyLens détecte tag"},children:[
-    {cat:"variables",type:"stack",label:"définir id",arg:{cat:"variables",type:"value",label:"ID du tag"}},
-    {cat:"basic",type:"stack",label:"afficher nombre",arg:{cat:"variables",type:"value",label:"id"}}
-  ]},
-  {cat:"basic",type:"stack",label:"pause (ms)",arg:500}
-]}],
-53:[{cat:"basic",type:"hat",label:"au démarrage (Create AI)",children:[
-  {cat:"basic",type:"stack",label:"(aller sur createai.microbit.org)"},
-  {cat:"basic",type:"stack",label:"(créer 2 classes : calme / bouge)"},
-  {cat:"basic",type:"stack",label:"(collecter 20+ exemples par classe)"},
-  {cat:"basic",type:"stack",label:"(entraîner → exporter .hex)"}
-]},{cat:"loops",type:"cblock",label:"répéter indéfiniment",children:[
-  {cat:"logic",type:"cblock",label:"si",arg:{cat:"logic",type:"value",label:"prédiction = classe 1"},children:[
-    {cat:"basic",type:"stack",label:"montrer l'icône",arg:"😀 Happy"}
-  ],else:[
-    {cat:"basic",type:"stack",label:"montrer l'icône",arg:"😢 Sad"}
-  ]},
-  {cat:"basic",type:"stack",label:"pause (ms)",arg:500}
-]}],
-54:[{cat:"basic",type:"hat",label:"au démarrage (Make: AI Robots)",children:[
-  {cat:"basic",type:"stack",label:"(aller sur makeairobots.com)"},
-  {cat:"basic",type:"stack",label:"(choisir tutoriel → connecter)"},
-  {cat:"basic",type:"stack",label:"(collecter données → entraîner)"},
-  {cat:"basic",type:"stack",label:"(télécharger .hex → flasher)"}
-]},{cat:"loops",type:"cblock",label:"répéter indéfiniment",children:[
-  {cat:"logic",type:"cblock",label:"si",arg:{cat:"logic",type:"value",label:"son > 100"},children:[
-    {cat:"basic",type:"stack",label:"montrer l'icône",arg:"😀 Happy"}
-  ],else:[
-    {cat:"basic",type:"stack",label:"montrer l'icône",arg:"😴 Asleep"}
-  ]},
-  {cat:"basic",type:"stack",label:"pause (ms)",arg:200}
-]}],
-55:[{cat:"basic",type:"hat",label:"au démarrage",children:[
-  {cat:"variables",type:"stack",label:"définir mesures",arg:"[ ] (vide)"}
-]},{cat:"input",type:"hat",label:"lorsque bouton A pressé",children:[
-  {cat:"variables",type:"stack",label:"ajouter à mesures",arg:{cat:"input",type:"value",label:"température"}},
-  {cat:"basic",type:"stack",label:"afficher nombre",arg:{cat:"variables",type:"value",label:"longueur de mesures"}}
-]},{cat:"input",type:"hat",label:"lorsque bouton B pressé",children:[
-  {cat:"loops",type:"cblock",label:"pour chaque v dans mesures",children:[
-    {cat:"basic",type:"stack",label:"afficher nombre",arg:{cat:"variables",type:"value",label:"v"}},
-    {cat:"basic",type:"stack",label:"pause (ms)",arg:500}
-  ]}
-]},{cat:"input",type:"hat",label:"lorsque secouer",children:[
-  {cat:"variables",type:"stack",label:"trouver min et max dans mesures"},
-  {cat:"basic",type:"stack",label:"afficher texte",arg:"min"},
-  {cat:"basic",type:"stack",label:"afficher nombre",arg:{cat:"variables",type:"value",label:"min"}},
-  {cat:"basic",type:"stack",label:"afficher texte",arg:"max"},
-  {cat:"basic",type:"stack",label:"afficher nombre",arg:{cat:"variables",type:"value",label:"max"}}
-]}],
-56:[{cat:"basic",type:"hat",label:"au démarrage",children:[
-  {cat:"variables",type:"stack",label:"définir mot",arg:""}
-]},{cat:"input",type:"hat",label:"lorsque bouton A pressé",children:[
-  {cat:"variables",type:"stack",label:"mot ← mot + \"O\""},
-  {cat:"basic",type:"stack",label:"afficher texte",arg:{cat:"variables",type:"value",label:"mot"}}
-]},{cat:"input",type:"hat",label:"lorsque bouton B pressé",children:[
-  {cat:"variables",type:"stack",label:"mot ← mot + \"UI\""},
-  {cat:"basic",type:"stack",label:"afficher texte",arg:{cat:"variables",type:"value",label:"mot"}}
-]},{cat:"input",type:"hat",label:"lorsque secouer",children:[
-  {cat:"basic",type:"stack",label:"afficher nombre",arg:{cat:"variables",type:"value",label:"longueur de mot"}},
-  {cat:"basic",type:"stack",label:"pause (ms)",arg:500},
-  {cat:"logic",type:"cblock",label:"si",arg:{cat:"logic",type:"value",label:"mot = \"OUI\""},children:[
-    {cat:"basic",type:"stack",label:"montrer l'icône",arg:"😀 Happy"}
-  ],else:[
-    {cat:"basic",type:"stack",label:"montrer l'icône",arg:"😢 Sad"}
-  ]},
-  {cat:"variables",type:"stack",label:"définir mot",arg:""}
-]}],
-57:[{cat:"functions",type:"hat",label:"fonctions avancer / reculer / tourner",children:[
-  {cat:"pins",type:"stack",label:"(contrôle moteurs via P0, P1)"}
-]},{cat:"input",type:"hat",label:"lorsque bouton A pressé",children:[
-  {cat:"basic",type:"stack",label:"montrer l'icône",arg:"↑ Nord"},
-  {cat:"functions",type:"stack",label:"appeler avancer(1000)"},
-  {cat:"basic",type:"stack",label:"effacer l'écran"}
-]},{cat:"input",type:"hat",label:"lorsque bouton B pressé",children:[
-  {cat:"basic",type:"stack",label:"montrer l'icône",arg:"↓ Sud"},
-  {cat:"functions",type:"stack",label:"appeler reculer(1000)"},
-  {cat:"basic",type:"stack",label:"effacer l'écran"}
-]},{cat:"input",type:"hat",label:"lorsque bouton A+B pressé",children:[
-  {cat:"basic",type:"stack",label:"afficher texte",arg:"D"},
-  {cat:"functions",type:"stack",label:"appeler tourner(500)"},
-  {cat:"basic",type:"stack",label:"effacer l'écran"}
-]},{cat:"input",type:"hat",label:"lorsque secouer",children:[
-  {cat:"pins",type:"stack",label:"écriture analogique P0",arg:0},
-  {cat:"pins",type:"stack",label:"écriture analogique P1",arg:0},
-  {cat:"basic",type:"stack",label:"montrer l'icône",arg:"✕ No"}
-]}],
-58:[{cat:"basic",type:"hat",label:"au démarrage",children:[
-  {cat:"variables",type:"stack",label:"définir countA",arg:0},
-  {cat:"variables",type:"stack",label:"définir countB",arg:0}
-]},{cat:"input",type:"hat",label:"lorsque bouton A pressé",children:[
-  {cat:"variables",type:"stack",label:"modifier countA de",arg:1},
-  {cat:"basic",type:"stack",label:"afficher texte",arg:"A"}
-]},{cat:"input",type:"hat",label:"lorsque bouton B pressé",children:[
-  {cat:"variables",type:"stack",label:"modifier countB de",arg:1},
-  {cat:"basic",type:"stack",label:"afficher texte",arg:"B"}
-]},{cat:"input",type:"hat",label:"lorsque secouer",children:[
-  {cat:"basic",type:"stack",label:"afficher texte",arg:"?"},
-  {cat:"basic",type:"stack",label:"pause (ms)",arg:500},
-  {cat:"logic",type:"cblock",label:"si",arg:{cat:"logic",type:"value",label:"countA ≥ countB"},children:[
-    {cat:"basic",type:"stack",label:"afficher texte",arg:"A!"}
-  ],else:[
-    {cat:"basic",type:"stack",label:"afficher texte",arg:"B!"}
-  ]},
-  {cat:"basic",type:"stack",label:"pause (ms)",arg:1000},
-  {cat:"basic",type:"stack",label:"afficher texte",arg:{cat:"variables",type:"value",label:"countA + \"/\" + countB"}}
-]}]
 };
 // Assign blockTree to each activity
 A.forEach(a => { if(BT[a.id]) a.blockTree = BT[a.id]; });
@@ -3366,16 +2796,6 @@ const TR = { en: {
 46:{t:"Digital coded lock",g:"Build a lock with a password! Enter a sequence of letters (A/B) and touch the logo to check. The right sequence = unlock!",tip:"Store each press in a text variable: A adds 'A', B adds 'B'. When logo touched: compare the text to the password. After checking: reset to empty.",n:["micro:bit","MakeCode editor"],b:["A → add 'A' to code + show 'A'","B → add 'B' to code + show 'B'","Logo → check: correct = 😀 / wrong = 😢 → reset"],c:["Increase password length: <code>\"ABBA\"</code> → <code>\"AABBA\"</code> — harder to guess!","Add a 3-attempt limit before total lockout!"]},
 47:{t:"Traffic light simulator",g:"Build a realistic traffic light simulation with 3 LEDs! Green → amber → red with realistic timing.",tip:"Connect 3 LEDs (with resistors!) on P0 (green), P1 (amber), P2 (red). Correct order: green 5s → amber 2s → red 5s.",n:["micro:bit","3 LEDs (green/amber/red) + 3 resistors","MakeCode editor"],b:["Forever → Green P0 for 5s","→ Amber P1 for 2s","→ Red P2 for 5s"],c:["Button A for 'pedestrian' mode: longer red (10s) to allow crossing","Show a countdown on the LED screen during each phase"]},
 48:{t:"Automatic smart lamp",g:"Build a lamp that turns on automatically when it gets dark! Like smart street lights.",tip:"Simple principle: if light level < threshold (e.g. 50) → turn on LED on P0. Otherwise → turn it off. The threshold determines when 'dark' starts.",n:["micro:bit","External LED or relay","MakeCode editor"],b:["Forever → L = light level","If L < 50 → turn on P0 + heart icon","Else → turn off P0 + clear screen"],c:["Cover the screen with your hand: the lamp turns on! Lift it: turns off!","Adjust threshold <code>50</code>: try 30 (darker) or 80 (more sensitive)"]},
-49:{t:"Discover Vittascience",g:"Explore Vittascience: a French alternative to MakeCode! It offers visual blocks AND real MicroPython. Compare both platforms.",tip:"Vittascience (vittascience.com) is a free French platform supporting micro:bit. Key advantage: it generates real MicroPython code (not MakeCode Python). Start by recreating the temperature activity (#12) then dice (#10).",n:["micro:bit","Web browser","Free Vittascience account (vittascience.com)"],b:["Go to vittascience.com → choose Micro:bit","Create a new project in visual block mode","Recreate activity 12: button A → show temperature","Upload to board and test","Switch to Python mode → compare with MakeCode version"],c:["Compare Vittascience vs MakeCode menus: what's similar? What's different?","Redo activity 10 (dice) in Vittascience — is the code different?","Try editing Python code manually in Vittascience — what happens?"]},
-50:{t:"AI camera: object tracking",g:"Use an AI camera (HuskyLens) to track a colored object and steer a robot toward it! Your first computer vision experiment.",tip:"Train the camera first: press the learning button on HuskyLens while pointing at the colored object. It will track it automatically! X position: 0 (left) to 320 (right). Center is around 160.",n:["Robot (micro:bit)","HuskyLens AI camera","I2C cable","MakeCode editor"],b:["Initialize HuskyLens via I2C","Forever → read camera → object X position","If X < 100 → turn left 'L'","If X > 220 → turn right 'R'","Else → drive forward","If nothing detected → stop"],c:["Start at slow speed then gradually increase when it works","Train the camera on a colored ball and watch the robot chase it!"]},
-51:{t:"AI camera: face recognition",g:"Teach the AI camera to recognize your face! Register one or more faces and watch the camera identify them.",tip:"Enable Face Recognition mode on HuskyLens. Press the learning button while facing the camera from 30-50cm. You can register multiple faces (each gets a different ID).",n:["HuskyLens AI camera","micro:bit","I2C cable","MakeCode editor"],b:["Initialize HuskyLens via I2C","Button A → activate learning mode + show 'GO'","Forever → if known face → 😀 + show ID number","If unknown face → 😐"],c:["Test from different distances (close/far) and lighting — when does it fail?","Add a personalized greeting per person: ID 1 = 'Hi Alex!', ID 2 = 'Hey Sam!'"]},
-52:{t:"AI camera: read AprilTags",g:"Use the AI camera to read AprilTag markers and trigger different actions for each one. Like a smart barcode system!",tip:"Note: HuskyLens reads AprilTags, not regular QR codes! Print the tags from the internet. Each tag has a unique ID (1, 2, 3…).",n:["HuskyLens AI camera","micro:bit","I2C cable","Printed AprilTags","MakeCode editor"],b:["Initialize HuskyLens in Tag mode","Forever → read detected tag","If ID = 1 → action A (e.g. sound)","If ID = 2 → action B (e.g. LED)","If nothing → wait…"],c:["Build a scavenger hunt: hide tags around the room and scan them with the camera!","Link each tag to a different robot movement: 1=forward, 2=right, 3=left"]},
-53:{t:"Build an AI model V2",g:"Create a real Machine Learning model on the official micro:bit Create AI website! Train it to recognize movements then run it on your board.",tip:"Machine Learning = the board learns from YOUR examples! Create 2 classes: 'calm' (still) and 'moving' (shake). Collect 20+ examples per class — more examples = better accuracy!",n:["micro:bit V2","createai.microbit.org","MakeCode editor"],b:["Open createai.microbit.org","Create 2 categories: 'calm' and 'moving'","Connect board → collect 20+ examples per class","Press 'Train' → check accuracy","Export .hex file → load on board","Forever → if 'calm' → 😀, if 'moving' → ⚡"],c:["Add a unique sound for each class — calm music vs energetic sound","Challenge: create 3 classes instead of 2 (e.g.: still / walking / jumping)"]},
-54:{t:"AI robot project V2",g:"Complete project: train an AI model on the Make: AI Robots platform then use it to drive a real robot!",tip:"The makeairobots.com platform guides you step by step. Start with the 'detect sound / react' tutorial — the simplest. The ML model runs directly on the micro:bit V2 processor!",n:["micro:bit V2","makeairobots.com","Compatible robot (optional)"],b:["Open makeairobots.com and choose a tutorial","Connect micro:bit V2 to browser","Collect training data (sound, movement…)","Train the model → check accuracy","Download .hex → flash to board → test!","Iterate: adjust thresholds → retrain → improve"],c:["Keep an experiment notebook: what you changed and the result — that's what real scientists do!","Challenge: combine 2 sensors (sound + movement) for a smarter decision"]},
-55:{t:"Use arrays (lists)",g:"Learn to store multiple values in an array (list) and loop through them! You'll store temperature readings and find the minimum and maximum.",tip:"An array = an ordered list you can add to and read from. Like a box holding several numbers. push() adds, length counts, and you can loop through every element with a for loop.",n:["micro:bit","MakeCode editor"],b:["On start → create empty array []","Button A → add current temperature + show count","Button B → show all values one by one","Shake → find and show minimum and maximum"],c:["Store 5 readings then calculate the average (sum ÷ count) — a weather station!","Make an LED histogram of the stored values"]},
-56:{t:"Work with text strings",g:"Learn to build, measure, and compare text strings! You'll build a word letter by letter and check it — the foundation of text programming.",tip:"A string = text in quotes. You can: join with (+), measure length with (.length), and compare with (==). Each button press adds a letter to the string!",n:["micro:bit","MakeCode editor"],b:["On start → define word = \"\" (empty)","Button A → add letter 'O' + show current word","Button B → add 'UI' + show word","Shake → show length + check: is it == 'OUI'?"],c:["Create a secret word and use shake to check — did it match?","Build a binary writing game: A=0, B=1 — write a binary number!"]},
-57:{t:"First steps in robotics",g:"Introductory robotics activity! Learn basic controls: forward, backward, turn, stop. Each button triggers a different movement.",tip:"This is the FIRST robot activity — start here before activities 39-44! Connect motors to P0 and P1. Test each command separately before combining them.",n:["Robot (micro:bit)","MakeCode editor"],b:["Button A → forward 1 second + up arrow","Button B → backward 1 second + down arrow","A+B → turn right 0.5 second + show 'R'","Shake → emergency stop all motors"],c:["Make it drive forward then backward automatically (no buttons) — sequential programming!","Create a full course: forward → turn → forward → stop — like a racing circuit!"]},
-58:{t:"Understanding AI",g:"Discover the principles of artificial intelligence through a simple guessing game! The board 'learns' from your choices and tries to predict the next one.",tip:"This isn't real AI, but it simulates the basic principle: learning from data! The board counts: if you pressed A more → it predicts A. Think: how could you improve this 'intelligence'?",n:["micro:bit","MakeCode editor"],b:["On start → counter A=0, counter B=0","Button A → increment A + show 'A'","Button B → increment B + show 'B'","Shake → board predicts: '?' → if A >= B → 'A!' else 'B!' → show ratio"],c:["Try to trick the board's 'prediction' — can you be truly random?","Add a score counter: +1 each time the board guesses right — what's its success rate?","Discuss: how is this similar to real AI like ChatGPT?"]}
 }, ar: {
 1:{t:"عرض نص على الشاشة",g:"تعلّم كيف تعرض رسالة نصية على شاشة الـ 25 LED في المايكروبت. ستتعرّف على أول مكعب برمجي: «عرض نص».",tip:"💡 ابدأ بكلمة قصيرة مثل «مرحبا» أو اسمك. النص يمرّ حرفاً بحرف على الشاشة. جرّب كلمات مختلفة وراقب السرعة!",n:["micro:bit","كابل USB","محرر MakeCode"],b:["عند البدء ← عرض نص \"مرحبا\""],c:["غيّر النص إلى اسمك — هل يظهر كاملاً؟","أضف أيقونة قلب بعد النص بـ <code>basic.showIcon(IconNames.Heart)</code>"]},
 2:{t:"تمرير نص متكرر",g:"اجعل رسالة تتمرّر باستمرار على الشاشة في حلقة لا نهائية. ستتعرّف على مكعب «تكرار دائم» وأهمية التوقف.",tip:"💡 بدون «توقف»، النص يعيد نفسه فوراً! أضف pause بعد النص ليكون مقروءاً. جرّب قيماً مختلفة: 100 (سريع جداً) إلى 600 (بطيء).",n:["micro:bit","محرر MakeCode"],b:["تكرار دائم ← عرض نص \"HELLO\"","توقف 200 مللي ثانية"],c:["غيّر التوقف: جرّب <code>100</code> أو <code>300</code> أو <code>600</code> مللي ثانية — ما الأنسب؟","مرّر رسالتين مختلفتين بالتناوب"]},
@@ -3425,16 +2845,6 @@ const TR = { en: {
 46:{t:"قفل رقمي مشفّر 🔐",g:"اصنع قفلاً بكلمة سر! أدخل تسلسل أحرف (A/B) والمس الشعار للتحقق. التسلسل الصحيح = فتح!",tip:"💡 خزّن كل ضغطة في نص: A يضيف 'A'، B يضيف 'B'. عند لمس الشعار: قارن النص بكلمة السر. بعد التحقق: أعِد النص لفارغ.",n:["micro:bit","محرر MakeCode"],b:["A ← إضافة 'A' للرمز + عرض 'A'","B ← إضافة 'B' للرمز + عرض 'B'","الشعار ← التحقق: صحيح = 😀 / خطأ = 😢 ← إعادة تعيين"],c:["زِد طول الرمز: <code>\"ABBA\"</code> ← <code>\"AABBA\"</code> — أصعب للتخمين! 🔒","أضف حدّ 3 محاولات فقط قبل الحظر الكامل! ⛔"]},
 47:{t:"إشارات مرور ضوئية 🚦",g:"اصنع محاكاة لإشارة مرور حقيقية بـ 3 أضواء LED! أخضر ← برتقالي ← أحمر بتوقيتات واقعية.",tip:"💡 وصّل 3 أضواء LED (مع مقاومات!) على P0 (أخضر)، P1 (برتقالي)، P2 (أحمر). الترتيب الصحيح: أخضر 5 ثوانٍ ← برتقالي 2 ثانية ← أحمر 5 ثوانٍ.",n:["micro:bit","3 أضواء LED (أخضر/برتقالي/أحمر) + 3 مقاومات","محرر MakeCode"],b:["تكرار ← أخضر P0 لمدة 5 ثوانٍ 🟢","← برتقالي P1 لمدة 2 ثانية 🟡","← أحمر P2 لمدة 5 ثوانٍ 🔴"],c:["زر A لتفعيل وضع «مشاة»: أحمر أطول (10 ثوانٍ) للسماح بالعبور 🚶","اعرض عدّاً تنازلياً على شاشة LED أثناء كل مرحلة ⏱"]},
 48:{t:"مصباح ذكي تلقائي 💡",g:"اصنع مصباحاً يُضيء تلقائياً عندما يحلّ الظلام! مثل أضواء الشوارع الذكية.",tip:"💡 المبدأ بسيط: إذا مستوى الضوء < عتبة (مثلاً 50) ← شغّل LED على P0. وإلا ← أطفئها. العتبة تحدد متى «يحلّ الظلام».",n:["micro:bit","LED خارجية أو مُرَحِّل (relay)","محرر MakeCode"],b:["تكرار ← L = مستوى الضوء","إذا L < 50 ← تشغيل P0 + أيقونة قلب 💡","وإلا ← إيقاف P0 + مسح الشاشة"],c:["غطِّ الشاشة بيدك: المصباح يضيء! ارفعها: ينطفئ! 🖐","اضبط العتبة <code>50</code>: جرّب 30 (أكثر ظلاماً) أو 80 (أكثر حساسية)"]},
-49:{t:"اكتشاف منصة Vittascience 🌐",g:"اكتشف Vittascience: محرر برمجة فرنسي بديل لـ MakeCode! يقدم برمجة بالمكعبات وبايثون حقيقي. قارن بين المنصتين.",tip:"💡 Vittascience (vittascience.com) منصة فرنسية مجانية تدعم micro:bit. الميزة: تُنتج كود MicroPython حقيقي وليس MakeCode Python. ابدأ بإعادة نشاط الحرارة (#12) ثم النرد (#10).",n:["micro:bit","متصفح ويب","حساب مجاني على vittascience.com"],b:["اذهب إلى vittascience.com ← اختر Micro:bit","إنشاء مشروع جديد بوضع المكعبات البصرية","إعادة النشاط 12: زر A ← عرض الحرارة","رفع الكود للبطاقة واختبار","التبديل لوضع بايثون ← مقارنة الكود بنسخة MakeCode"],c:["قارن قوائم Vittascience و MakeCode: ما المتشابه وما المختلف؟ 🔍","أعد النشاط 10 (نرد 🎲) في Vittascience — هل الكود مختلف؟","جرّب تعديل كود بايثون يدوياً في Vittascience — ماذا يحدث؟ 🐍"]},
-50:{t:"كاميرا ذكية: تتبع الأجسام 📷🎯",g:"استخدم كاميرا ذكاء اصطناعي (HuskyLens) لتتبع جسم ملون وتوجيه روبوت نحوه! أول تجربة مع رؤية الآلة.",tip:"💡 درّب الكاميرا أولاً: اضغط زر التعلم على HuskyLens وهي تنظر للجسم الملون. ستتعقبه بعدها تلقائياً! موقع X: 0 (يسار الصورة) إلى 320 (يمين الصورة). الوسط ≈ 160.",n:["روبوت (micro:bit)","كاميرا HuskyLens","كابل I2C","محرر MakeCode"],b:["تهيئة HuskyLens عبر I2C","تكرار ← قراءة الكاميرا ← موقع X للجسم","إذا X < 100 ← دُر يساراً 'G'","إذا X > 220 ← دُر يميناً 'D'","وإلا ← تقدم مستقيماً ↑","إذا لا شيء مكتشف ← توقف ✕"],c:["ابدأ بسرعة بطيئة ثم زِدها تدريجياً عند النجاح 🐢→🐇","درّب الكاميرا على كرة ملونة وشاهد الروبوت يلاحقها! ⚽"]},
-51:{t:"كاميرا ذكية: التعرف على الوجوه 👤",g:"علّم الكاميرا الذكية التعرف على وجهك! سجّل وجهاً واحداً أو أكثر وشاهد الكاميرا تميّز بينهم.",tip:"💡 فعّل وضع Face Recognition على HuskyLens. اضغط زر التعلم وأنت تنظر للكاميرا من مسافة 30-50 سم. يمكنك تسجيل عدة وجوه (كل وجه = ID مختلف).",n:["كاميرا HuskyLens","micro:bit","كابل I2C","محرر MakeCode"],b:["تهيئة HuskyLens عبر I2C","زر A ← تفعيل وضع التعلم + عرض 'GO'","تكرار ← إذا وجه معروف ← 😀 + عرض رقم ID","إذا وجه غير معروف ← 😐"],c:["اختبر من مسافات مختلفة (قريب/بعيد) وإضاءات مختلفة — متى يفشل؟ 🔬","أضف ترحيباً مختلفاً لكل شخص: ID 1 = «مرحباً أحمد!»، ID 2 = «أهلاً سارة!» 👋"]},
-52:{t:"كاميرا ذكية: قراءة العلامات 🏷",g:"استخدم الكاميرا الذكية لقراءة علامات AprilTag وتنفيذ إجراءات مختلفة لكل علامة. مثل نظام باركود ذكي!",tip:"💡 انتبه: HuskyLens تقرأ علامات AprilTag وليس رموز QR العادية! اطبع العلامات من الإنترنت. كل علامة لها ID فريد (1، 2، 3…).",n:["كاميرا HuskyLens","micro:bit","كابل I2C","علامات AprilTag مطبوعة","محرر MakeCode"],b:["تهيئة HuskyLens في وضع Tag","تكرار ← قراءة العلامة المكتشفة","إذا ID = 1 ← إجراء A (مثلاً: صوت 🔊)","إذا ID = 2 ← إجراء B (مثلاً: تشغيل LED 💡)","إذا لا علامة ← انتظار…"],c:["اصنع لعبة البحث: وزّع العلامات في الغرفة واجمعها بالكاميرا! 🏃","اربط كل علامة بحركة روبوت مختلفة: 1=أمام، 2=يمين، 3=يسار 🤖"]},
-53:{t:"إنشاء نموذج ذكاء اصطناعي V2 🧠",g:"أنشئ نموذج تعلّم آلي حقيقي على موقع Create AI الرسمي من micro:bit! درّبه على التعرف على الحركات ثم شغّله على بطاقتك.",tip:"💡 التعلّم الآلي = البطاقة تتعلّم من أمثلتك! أنشئ فئتين: «هادئ» (ثابت) و«يتحرك» (هزّ). اجمع 20 مثالاً على الأقل لكل فئة — كلما زادت الأمثلة، زادت الدقة!",n:["micro:bit V2","موقع createai.microbit.org","محرر MakeCode"],b:["افتح createai.microbit.org في المتصفح","أنشئ فئتين: «هادئ» 😌 و«يتحرك» 🏃","وصّل البطاقة ← اجمع 20+ مثالاً لكل فئة","اضغط «تدريب» ← تحقق من دقة النموذج 📊","صدّر ملف .hex ← حمّله على البطاقة","تكرار ← إذا «هادئ» ← 😀 | إذا «يتحرك» ← ⚡"],c:["أضف صوتاً مميزاً لكل فئة — موسيقى هادئة مقابل صوت حماسي 🎵","تحدٍّ: أنشئ 3 فئات بدل 2 (مثلاً: ثابت / يمشي / يقفز) 🏅"]},
-54:{t:"مشروع روبوت ذكي V2 🤖🧠",g:"مشروع متكامل: درّب نموذج ذكاء اصطناعي على منصة Make: AI Robots ثم استخدمه لتشغيل روبوت حقيقي!",tip:"💡 المنصة makeairobots.com ترشدك خطوة بخطوة. ابدأ بدرس «اكتشاف الصوت والتفاعل» — الأبسط. نموذج ML يعمل مباشرة على معالج micro:bit V2!",n:["micro:bit V2","منصة makeairobots.com","روبوت متوافق (اختياري)"],b:["افتح makeairobots.com واختر درساً تعليمياً","وصّل micro:bit V2 بالمتصفح","اجمع بيانات التدريب (صوت 🎤، حركة 🏃…)","درّب النموذج على المنصة ← تحقق من الدقة","حمّل ملف .hex على البطاقة ← اختبر!","كرّر: اضبط العتبات ← أعد التدريب ← حسّن 🔄"],c:["احتفظ بدفتر تجارب: ماذا غيّرت وما النتيجة — هذا ما يفعله العلماء! 📓","تحدٍّ: ادمج مستشعرين (صوت + حركة) لاتخاذ قرار أذكى 🧪"]},
-55:{t:"استخدام المصفوفات (القوائم) 📋",g:"تعلّم تخزين عدة قيم في مصفوفة (قائمة) والتنقل بينها! ستخزّن قراءات حرارة وتجد الأصغر والأكبر.",tip:"💡 المصفوفة = قائمة مرتبة يمكنك الإضافة إليها وقراءتها. مثل صندوق فيه عدة أرقام. push() تضيف، length تحسب العدد، ويمكنك المرور على كل عنصر بحلقة for.",n:["micro:bit","محرر MakeCode"],b:["عند البدء ← إنشاء مصفوفة فارغة []","زر A ← إضافة درجة الحرارة الحالية + عرض عدد القراءات","زر B ← عرض كل القيم واحدة تلو الأخرى","هزّ ← البحث عن القيمة الأصغر والأكبر وعرضهما"],c:["خزّن 5 قياسات ثم احسب المتوسط (المجموع ÷ العدد) — محطة أرصاد! 🌡","اصنع رسماً بيانياً LED للقيم المخزّنة 📊"]},
-56:{t:"التعامل مع النصوص (السلاسل) 📝",g:"تعلّم بناء وقياس ومقارنة سلاسل نصية! ستبني كلمة حرفاً بحرف وتتحقق منها — أساس البرمجة النصية.",tip:"💡 السلسلة النصية = نص بين علامتي تنصيص. يمكنك: الدمج بـ (+)، قياس الطول بـ (.length)، والمقارنة بـ (==). كل ضغطة زر تضيف حرفاً للسلسلة!",n:["micro:bit","محرر MakeCode"],b:["عند البدء ← تعريف متغير mot = \"\" (فارغ)","زر A ← إضافة الحرف 'O' + عرض الكلمة الحالية","زر B ← إضافة 'UI' + عرض الكلمة","هزّ ← عرض طول الكلمة + التحقق: هل == 'OUI'؟"],c:["أنشئ كلمة سرية واستخدم الهزّ للتحقق — هل طابقت؟ 🔐","اصنع لعبة كتابة ثنائية: A=0، B=1 — اكتب رقماً ثنائياً! 🖥"]},
-57:{t:"أول خطوة في الروبوتات 🤖👶",g:"نشاط تعريفي بالروبوتات! تعلّم التحكم الأساسي: أمام، خلف، دوران، توقف. كل زر = حركة مختلفة.",tip:"💡 هذا أول نشاط روبوت — ابدأ هنا قبل الأنشطة 39-44! وصّل المحركات على P0 و P1. اختبر كل أمر على حدة أولاً قبل الجمع بينها.",n:["روبوت (micro:bit)","محرر MakeCode"],b:["زر A ← تقدم لمدة ثانية واحدة + أيقونة ↑","زر B ← رجوع لمدة ثانية + أيقونة ↓","A+B ← دوران يمين 0.5 ثانية + عرض 'D'","هزّ ← إيقاف طارئ لكل المحركات ✕"],c:["اجعله يتقدم ثم يرجع تلقائياً بدون أي زر — برمجة تسلسلية! 🔄","اصنع مساراً كاملاً: تقدم ← دوران ← تقدم ← توقف — مثل مسار سباق! 🏎"]},
-58:{t:"فهم الذكاء الاصطناعي 🧠💡",g:"اكتشف مبادئ الذكاء الاصطناعي بلعبة تخمين بسيطة! البطاقة «تتعلّم» من اختياراتك وتحاول التنبؤ بالتالي.",tip:"💡 هذا ليس ذكاءً اصطناعياً حقيقياً، لكنه يُحاكي المبدأ الأساسي: التعلّم من البيانات! البطاقة تحسب: إذا ضغطت A أكثر ← تتنبأ بـ A. فكّر: كيف يمكن تحسين هذا «الذكاء»؟",n:["micro:bit","محرر MakeCode"],b:["عند البدء ← عدّاد A = 0، عدّاد B = 0","زر A ← زيادة عدّاد A + عرض 'A'","زر B ← زيادة عدّاد B + عرض 'B'","هزّ ← البطاقة تتنبأ: '?' ← إذا A ≥ B ← 'A!' وإلا 'B!' ← عرض النسبة"],c:["حاول خداع «تنبؤ» البطاقة — هل تستطيع أن تكون عشوائياً حقاً؟ 🎲","أضف عدّاد نقاط: +1 كلما نجحت البطاقة في التنبؤ — ما نسبة نجاحها؟ 📊","فكّر وناقش: كيف يشبه هذا الذكاء الاصطناعي الحقيقي مثل ChatGPT؟ 🤔"]}
 }};
 
 // ═══════════════════════════════════════════════════════════════════
@@ -3462,8 +2872,7 @@ const BADGES = [
   {id:"sound",icon:"🔊",fr:"Artiste Son",en:"Sound Artist",ar:"فنان الصوت",topic:"sound",need:4},
   {id:"elec",icon:"🔌",fr:"Hardware Hacker",en:"Hardware Hacker",ar:"هاكر الأجهزة",topic:"elec",need:8},
   {id:"robot",icon:"🤖",fr:"Robot Builder",en:"Robot Builder",ar:"بنّاء الروبوتات",topic:"robot",need:4},
-  {id:"ai",icon:"🧠",fr:"AI Pioneer",en:"AI Pioneer",ar:"رائد الذكاء",topic:"ai",need:3},
-  {id:"master",icon:"🏆",fr:"Grand Maître",en:"Grand Master",ar:"الأستاذ الكبير",topic:null,need:58}
+  {id:"master",icon:"🏆",fr:"Grand Maître",en:"Grand Master",ar:"الأستاذ الكبير",topic:null,need:48}
 ];
 
 function checkBadges(){
@@ -3517,10 +2926,9 @@ const TOPICS = {
   sensors:{ ids:[12,13,14,15,16,23] },
   comm:   { ids:[17,30] },
   sound:  { ids:[19,29,33,38] },
-  prog:   { ids:[18,24,55,56] },
-  elec:   { ids:[25,26,27,28,31,32,34,35,36,37,45,46,47,48,49] },
-  robot:  { ids:[39,40,41,42,43,44,57] },
-  ai:    { ids:[50,51,52,53,54,58] }
+  prog:   { ids:[18,24] },
+  elec:   { ids:[25,26,27,28,31,32,34,35,36,37,45,46,47,48] },
+  robot:  { ids:[39,40,41,42,43,44] }
 };
 
 const $ = id => document.getElementById(id);
@@ -3603,7 +3011,6 @@ function applyLang(){
   $("sbProg").textContent = t("sbProg");
   $("sbElec").textContent = t("sbElec");
   $("sbRobot").textContent = t("sbRobot");
-  $("sbAi").textContent = t("sbAi");
 
   document.title = t("title") + " — Workshop DIY";
   render();
@@ -4143,7 +3550,7 @@ function render(){
   const doneC = Object.keys(progress.done).length;
   const favC = Object.keys(progress.fav).length;
   $("statsRow").innerHTML = `<span>${t("results")} : <strong>${list.length}</strong> ${t("of")}</span><span>${t("doneL")} : <strong>${doneC}</strong></span><span>${t("favL")} : <strong>${favC}</strong></span>`;
-  $("statsText").textContent = `${doneC} / 58 (${Math.round(doneC/58*100)}%)`;
+  $("statsText").textContent = `${doneC} / 48 (${Math.round(doneC/48*100)}%)`;
 
   if(list.length === 0){
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">${t("noResults")}</div>`;
@@ -4750,7 +4157,7 @@ $("roadmapBody").addEventListener("click", e => {
 // Auto-open activity from URL param ?a=ID (for QR codes)
 const urlParams = new URLSearchParams(window.location.search);
 const autoOpen = urlParams.get("a");
-if(autoOpen){ const id=Number(autoOpen); if(id>=1&&id<=58) setTimeout(()=>openById(id),300); }
+if(autoOpen){ const id=Number(autoOpen); if(id>=1&&id<=48) setTimeout(()=>openById(id),300); }
 
 // ── PWA Service Worker Registration ──
 if('serviceWorker' in navigator){
